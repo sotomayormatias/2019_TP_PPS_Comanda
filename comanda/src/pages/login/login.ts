@@ -52,4 +52,30 @@ export class LoginPage {
       }
     });
   }
+
+  cargarUsuario(usuario: string) {
+    switch (usuario) {
+      case "admin":
+        this.cuenta.usuario = "admin@gmail.com";
+        this.cuenta.password = "1111";
+        break;
+      case "cocinero":
+        this.cuenta.usuario = "cocinero@gmail.com";
+        this.cuenta.password = "2222";
+        break;
+      case "supervisor":
+        this.cuenta.usuario = "supervisor@gmail.com";
+        this.cuenta.password = "3333";
+        break;
+      default:
+        this.cuenta.usuario = "";
+        this.cuenta.password = "";
+        break;
+    }
+  }
+
+  // pruebaAlta(){
+  //   let usuario = {clave: 1234, correo: "prueba@gmail.com", id: 9, nick: "prueba", perfil: "trucho"};
+  //   this.baseProvider.addItem("usuarios", usuario);
+  // }
 }

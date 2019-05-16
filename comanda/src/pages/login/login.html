@@ -17,4 +17,14 @@
   <div class="error-page">
     <div class="try-again">Error: Try again?</div>
   </div>
+  <ion-fab right bottom>
+    <button ion-fab>
+      <ion-icon name="person"></ion-icon>
+    </button>
+    <ion-fab-list side="left">
+      <button ion-fab (click)="cargarUsuario('admin')">Admin</button>
+      <button ion-fab (click)="cargarUsuario('cocinero')">Cocinero</button>
+      <button ion-fab (click)="cargarUsuario('supervisor')">Super</button>
+    </ion-fab-list>
+  </ion-fab>
 </ion-content>
