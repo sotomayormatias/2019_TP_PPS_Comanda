@@ -33,7 +33,7 @@
     "zone.js": "0.8.29"
   },
   "devDependencies": {
-    "@ionic/app-scripts": "3.2.2",
+    "@ionic/app-scripts": "^3.2.2",
     "@ionic/lab": "1.0.24",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-ionic-keyboard": "^2.1.3",
