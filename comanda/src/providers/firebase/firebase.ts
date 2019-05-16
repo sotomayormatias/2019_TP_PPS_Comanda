@@ -32,7 +32,12 @@ export class FirebaseProvider {
         resolve(this.snapshotToArray(resp));
       });
     });
-    
+  }
+
+  addItem(nombreReferencia: string, objeto: any){
+    let ref = firebase.database().ref(nombreReferencia + '/');
+    let newItem = ref.push();
+    newItem.set(objeto);
   }
 
 }
