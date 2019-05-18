@@ -1,0 +1,39 @@
+<ion-content>
+  <div class="login">
+    <div class="login-header">
+      <h1>Comanda</h1>
+    </div>
+    <div class="login-form">
+
+      <!-- <h3>Usuario:</h3> -->
+
+      <input type="text" [(ngModel)]="cuenta.usuario" placeholder="Usuario" /><br>
+      <!-- <h3>Contraseña:</h3> -->
+      <input type="password" [(ngModel)]="cuenta.password" placeholder="Contraseña" />
+      <br>
+      <input type="button" (click)="doLogin()" value="Login" class="login-button" />
+    </div>
+  </div>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="person"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list  side="start">
+      <ion-fab-button (click)="cargarUsuario('admin')">Admin</ion-fab-button>
+      <ion-fab-button (click)="cargarUsuario('cocinero')">Cocinero</ion-fab-button>
+      <ion-fab-button (click)="cargarUsuario('supervisor')">Super</ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+</ion-content>
+<!-- 
+  <ion-fab right bottom>
+    <button ion-fab>
+      <ion-icon name="person"></ion-icon>
+    </button>
+    <ion-fab-list side="left">
+      <button ion-fab (click)="cargarUsuario('admin')">Admin</button>
+      <button ion-fab (click)="cargarUsuario('cocinero')">Cocinero</button>
+      <button ion-fab (click)="cargarUsuario('supervisor')">Super</button>
+    </ion-fab-list>
+  </ion-fab> -->
