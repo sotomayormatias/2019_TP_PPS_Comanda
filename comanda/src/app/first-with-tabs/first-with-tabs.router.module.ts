@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FirstWithTabsPage } from './first-with-tabs.page';
+// import { HomePage } from './../home/home.page';
+
 
 const routes: Routes = [
   {
@@ -11,32 +13,16 @@ const routes: Routes = [
         path: 'tab1',
         children: [
           {
-            path: '',
-            loadChildren: './home/home.module#HomePageModule'
+            path: ''
+            // loadChildren: './home/home.module#HomePageModule'
+            // loadChildren: './home/'
             // loadChildren: '../login/login.module#LoginPageModule'
 
 
           }
         ]
       },
-      {
-        path: 'tabimage',
-        children: [
-          {
-            path: '',
-            loadChildren: '../tabimage/tabimage.module#TabimagePageModule'
-          }
-        ]
-      },
-      {
-        path: 'tab3',
-        children: [
-          {
-            path: '',
-            loadChildren: '../tab3/tab3.module#Tab3PageModule'
-          }
-        ]
-      },
+    
       {
         path: '',
         redirectTo: '/tabs/tab1',
