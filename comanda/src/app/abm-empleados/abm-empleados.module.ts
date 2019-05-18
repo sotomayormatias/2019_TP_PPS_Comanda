@@ -7,6 +7,8 @@ import { IonicModule } from '@ionic/angular';
 
 import { AbmEmpleadosPage } from './abm-empleados.page';
 
+import { ReactiveFormsModule} from '@angular/forms';
+
 const routes: Routes = [
   {
     path: '',
@@ -19,6 +21,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    ReactiveFormsModule,
     RouterModule.forChild(routes)
   ],
   declarations: [AbmEmpleadosPage]

@@ -7,7 +7,6 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Camera } from "@ionic-native/camera/ngx";
 import { FirebaseService } from "../app/services/firebase.service";
-import { ReactiveFormsModule} from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
@@ -18,7 +17,6 @@ import { AppRoutingModule } from './app-routing.module';
   entryComponents: [],
   imports: [
     BrowserModule,
-    ReactiveFormsModule,
     FormsModule,
     IonicModule.forRoot(),
     AppRoutingModule
