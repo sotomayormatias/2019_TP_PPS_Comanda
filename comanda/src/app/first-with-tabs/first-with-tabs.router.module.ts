@@ -13,7 +13,7 @@ const routes: Routes = [
         path: 'tab1',
         children: [
           {
-            path: '',
+            path: ''
             // loadChildren: './home/home.module#HomePageModule'
             // loadChildren: './home/'
             // loadChildren: '../login/login.module#LoginPageModule'
