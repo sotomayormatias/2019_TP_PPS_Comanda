@@ -26,6 +26,11 @@ export class AppComponent {
       title: 'Alta de producto',
       url: '/abm-producto',
       icon: 'add'
+    },
+    {
+      title: 'Alta de Empleados',
+      url: '/abm-empleados',
+      icon: 'person'
     }
   ];
 
