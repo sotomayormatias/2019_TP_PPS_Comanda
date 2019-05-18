@@ -27,6 +27,16 @@ const routes: Routes = [
     path: 'login',
     loadChildren: './login/login.module#LoginPageModule'
   },
+
+  {
+    path: 'abm-producto', 
+    loadChildren: './abm-producto/abm-producto.module#AbmProductoPageModule'
+  },
+  {
+    path: '', 
+    loadChildren: './abm-producto/abm-producto.module#AbmProductoPageModule'
+  },
+
   {
     path: '',
     loadChildren: './login/login.module#LoginPageModule'
