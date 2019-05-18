@@ -21,6 +21,11 @@ export class AppComponent {
       title: 'List',
       url: '/list',
       icon: 'list'
+    },
+    {
+      title: 'Alta de producto',
+      url: '/abm-producto',
+      icon: 'add'
     }
   ];
 
