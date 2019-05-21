@@ -117,13 +117,19 @@ html,body {
 	}
 }
 
+#signup {
+	text-align: center;
+	font-family: "Pacifico", cursive;
+}
+
 .form-structor {
 	background-color: #222;
 	border-radius: 15px;
 	height: 98%;
 	width: 98%; 
 	overflow: hidden;
-	
+	margin: auto;
+
 	&::after {
 		content: '';
 		opacity: .8;

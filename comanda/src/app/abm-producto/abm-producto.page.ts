@@ -17,6 +17,7 @@ export class AbmProductoPage implements OnInit {
   precio: number;
   captureDataUrl: Array<string>;
   hayFotos: boolean = false;
+  cantidadFotos: number = 0;
 
   constructor(
     private camera: Camera,
@@ -47,6 +48,7 @@ export class AbmProductoPage implements OnInit {
     this.camera.getPicture(options).then((imageData) => {
       this.captureDataUrl.push('data:image/jpeg;base64,' + imageData);
       this.hayFotos = true;
+      this.cantidadFotos += 1;
     }, (err) => {
       this.presentAlert(err);
     });

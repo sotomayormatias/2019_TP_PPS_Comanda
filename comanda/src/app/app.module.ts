@@ -6,6 +6,7 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Camera } from "@ionic-native/camera/ngx";
+import { QRScanner } from "@ionic-native/qr-scanner/ngx";
 import { FirebaseService } from "../app/services/firebase.service";
 
 
@@ -25,6 +26,7 @@ import { AppRoutingModule } from './app-routing.module';
     SplashScreen,
     FirebaseService,
     Camera,
+    QRScanner,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
