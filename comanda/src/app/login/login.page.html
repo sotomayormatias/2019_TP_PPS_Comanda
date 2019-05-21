@@ -29,9 +29,9 @@
 		<img  src="../../assets/imgs/icon2.png">	
 	</div>
 		<div class="contenedorPresentacion">
-		<div> COMIRADIX </div><br>
-		<div> PRACTICA PROFESIONAL</div>
-		<div> SUPERVISADA 4A</div>
+		<div>COMIRADIX</div><br>
+		<div>PRACTICA PROFESIONAL</div>
+		<div>SUPERVISADA 4A</div>
 	</div>
 </div>
 
@@ -47,11 +47,11 @@
 			<ion-spinner *ngIf="spinner" class="form-title" id="signup"  style="color:white; font-size: 30px;" name="dots"></ion-spinner>
 			<ion-spinner *ngIf="spinner" class="form-title" id="signup"  style="color:white; font-size: 30px;" name="dots"></ion-spinner>
 	
-		<h2 *ngIf="!spinner" class="form-title" id="signup"><span>or</span>LOGIN</h2>
+		<h2 *ngIf="!spinner" class="form-title" id="signup">Comiradix</h2>
 		<div *ngIf="!spinner" class="form-holder">
 			<!-- <input type="text" class="input" placeholder="Name" /> -->
-			<input type="email" class="input" [(ngModel)]="cuenta.usuario"  placeholder="Email" />
-			<input type="password" class="input" [(ngModel)]="cuenta.password" placeholder="Password" />
+			<input type="email" class="input" [(ngModel)]="cuenta.usuario"  placeholder="Usuario" />
+			<input type="password" class="input" [(ngModel)]="cuenta.password" placeholder="Contraseña" />
 		</div>
 		<button  *ngIf="!spinner" class="submit-btn" (click)="login()">ENTRAR</button>
 		<button  *ngIf="!spinner" expand="block" class="submit-btn-acceso" fill="outline"  (click)="creoSheet()">Acc.Rápido</button>
