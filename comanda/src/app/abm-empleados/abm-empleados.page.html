@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>ABM Empleados</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [(formGroup)]="formEmpleado" (submit)="agregarEmpleado()">
+    <ion-list>
+      <ion-item>
+        <ion-label position="floating">Nombre</ion-label>
+        <ion-input [(ngModel)]="nombre" formControlName="nombreCtrl" type="text" name="nombre"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Apellido</ion-label>
+        <ion-input [(ngModel)]="apellido" formControlName="apellidoCtrl" type="text" name="apellido"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">DNI</ion-label>
+        <ion-input [(ngModel)]="DNI" formControlName="DNICtrl" type="text" name="DNI"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">CUIL</ion-label>
+        <ion-input [(ngModel)]="CUIL" formControlName="CUILCtrl" type="text" name="CUIL"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Tipo de Empleado</ion-label>
+        <ion-input [(ngModel)]="TEMPLEADO" formControlName="tEmpleadoCtrl" type="text" name="tEmpleado"></ion-input>
+      </ion-item>
+      
+    </ion-list>
+    <ion-slides>
+      <ion-slide *ngFor="let foto of captureDataUrl">
+        <img [src]="foto" *ngIf="captureDataUrl" />
+      </ion-slide>
+    </ion-slides>
+    <ion-button type="button" shape="round" color="secondary" (click)="tomarFoto()">Agregar foto</ion-button>
+    <ion-button type="submit" expand="block" color="primary" [disabled]="!formEmpleado.valid">Agregar</ion-button>
+  </form>
+</ion-content>
