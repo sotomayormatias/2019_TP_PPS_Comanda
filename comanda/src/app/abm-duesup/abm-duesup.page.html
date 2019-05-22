@@ -1,0 +1,47 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>
+        ABM Dueño / Supervisor
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+<ion-content>
+  <div id="formulario" *ngIf="!escaneando">
+    <form [formGroup]="formProducto" (submit)="agregarProducto()">
+      <ion-list>
+        <ion-item>
+          <ion-label position="floating">Nombre</ion-label>
+          <ion-input [(ngModel)]="nombre" formControlName="nombreCtrl" type="text" name="nombre"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Apellido</ion-label>
+          <ion-input [(ngModel)]="descripcion" formControlName="descCtrl" type="text" name="descripcion"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">DNI</ion-label>
+          <ion-input [(ngModel)]="tiempo" formControlName="tiempoCtrl" type="number" name="tiempo"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">CUIL</ion-label>
+          <ion-input [(ngModel)]="precio" formControlName="precioCtrl" type="number" name="precio"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label position="floating">PERFIL</ion-label>
+            <ion-input [(ngModel)]="precio" formControlName="precioCtrl" type="number" name="precio"></ion-input>
+          </ion-item>
+      </ion-list>
+      <ion-slides>
+        <ion-slide *ngFor="let foto of captureDataUrl">
+          <img [src]="foto" *ngIf="captureDataUrl" />
+        </ion-slide>
+      </ion-slides>
+      <ion-button type="button" shape="round" color="secondary" [disabled]="cantidadFotos >= 3" (click)="tomarFoto()">Agregar foto</ion-button>
+      <ion-button type="submit" expand="block" color="primary" [disabled]="!formProducto.valid || !hayFotos">Agregar
+      </ion-button>
+    </form>
+  </div>
+</ion-content>
