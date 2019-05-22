@@ -744,7 +744,7 @@
 		}
 
 		#header.alt {
-			height: 20em;
+			// height: 20em;
 			min-height: 20em;
 			min-height: 75vh;
 		}
@@ -758,6 +758,7 @@
 				-webkit-transition-delay: 1s;
 				-ms-transition-delay: 1s;
 				transition-delay: 1s;
+				height: 125%;
 			}
 
 			#header.alt h1 {
