@@ -17,13 +17,18 @@ export class AppComponent {
       url: '/home',
       icon: 'home'
     },
+    // {
+    //   title: 'List',
+    //   url: '/list',
+    //   icon: 'list'
+    // },
     {
-      title: 'List',
-      url: '/list',
-      icon: 'list'
+      title: 'Alta de Dueño/Supervisor',
+      url: '/abm-duesup',
+      icon: 'add-circle'
     },
     {
-      title: 'Alta de producto',
+      title: 'Alta de Producto',
       url: '/abm-producto',
       icon: 'add'
     },
@@ -31,6 +36,11 @@ export class AppComponent {
       title: 'Alta de Empleados',
       url: '/abm-empleados',
       icon: 'person'
+    },
+    {
+      title: 'Cerrar Sesion',
+      url: '/login',
+      icon: 'log-out'
     }
   ];
 
