@@ -60,8 +60,8 @@ export class LoginPage implements OnInit {
 
       if (usuarioLogueado !== undefined) {
         sessionStorage.setItem('usuario', JSON.stringify(usuarioLogueado));
-            this.creoToast(true);
-            this.router.navigateByUrl('/home');
+        this.creoToast(true);
+        this.router.navigateByUrl('/home');
       } else {
         // this.presentToast();
         this.creoToast(false);
@@ -102,7 +102,7 @@ export class LoginPage implements OnInit {
         message: 'Autenticación exitosa.',
         color: 'success',
         showCloseButton: false,
-        position: 'top',
+        position: 'bottom',
         closeButtonText: 'Done',
         duration: 2000
       });
