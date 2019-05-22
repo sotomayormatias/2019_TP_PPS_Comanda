@@ -53,7 +53,9 @@ export class LoginPage implements OnInit {
   }
 
   login() {
+    this.spinner = true;
     this.baseService.getItems("usuarios").then(users => {
+      setTimeout(() => this.spinner = false , 2000);
       this.usuarios = users;
 
       let usuarioLogueado = this.usuarios.find(elem => (elem.correo == this.cuenta.usuario && elem.clave == this.cuenta.password));
@@ -64,6 +66,7 @@ export class LoginPage implements OnInit {
         this.router.navigateByUrl('/home');
       } else {
         // this.presentToast();
+        setTimeout(() => this.spinner = false , 2000);
         this.creoToast(false);
       }
     });
