@@ -7,6 +7,9 @@ import { IonicModule } from '@ionic/angular';
 
 import { AbmDuesupPage } from './abm-duesup.page';
 
+import { ReactiveFormsModule} from '@angular/forms';
+
+
 const routes: Routes = [
   {
     path: '',
@@ -19,6 +22,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    ReactiveFormsModule,
     RouterModule.forChild(routes)
   ],
   declarations: [AbmDuesupPage]
