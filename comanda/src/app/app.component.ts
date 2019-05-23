@@ -17,24 +17,24 @@ export class AppComponent {
       url: '/home',
       icon: 'home'
     },
-    // {
-    //   title: 'List',
-    //   url: '/list',
-    //   icon: 'list'
-    // },
     {
       title: 'Alta de Dueño/Supervisor',
       url: '/abm-duesup',
       icon: 'add-circle'
     },
     {
-      title: 'Alta de Producto',
+      title: 'Alta de productos',
       url: '/abm-producto',
       icon: 'add'
     },
     {
       title: 'Alta de Empleados',
       url: '/abm-empleados',
+      icon: 'person'
+    },
+    {
+      title: 'Alta de Clientes',
+      url: '/abm-cliente',
       icon: 'person'
     },
     {
