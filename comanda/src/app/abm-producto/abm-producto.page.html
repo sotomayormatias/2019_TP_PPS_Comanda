@@ -1,16 +1,16 @@
-<i<ion-header>
-    <ion-toolbar color="dark">
-      <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-      <ion-title>
-        Alta Productos
-      </ion-title>
-      <ion-buttons slot="end">
-          <img id="iconToolBar" src="../../assets/imgs/icon.png">
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Alta Productos
+    </ion-title>
+    <ion-buttons slot="end">
+      <img id="iconToolBar" src="../../assets/imgs/icon.png">
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content>
   <div id="formulario">
@@ -38,8 +38,9 @@
           <img [src]="foto" *ngIf="captureDataUrl" />
         </ion-slide>
       </ion-slides>
-      <ion-button type="button" shape="round" color="secondary" [disabled]="cantidadFotos >= 3" (click)="tomarFoto()">Agregar foto</ion-button>
-      <ion-button type="submit" expand="block" color="primary" >Agregar
+      <ion-button type="button" shape="round" color="secondary" [disabled]="cantidadFotos >= 3" (click)="tomarFoto()">
+        Agregar foto</ion-button>
+      <ion-button type="submit" expand="block" color="primary">Agregar
       </ion-button>
     </form>
   </div>
