@@ -17,17 +17,13 @@ export class AppComponent {
       url: '/home',
       icon: 'home'
     },
-    // {
-    //   title: 'List',
-    //   url: '/list',
-    //   icon: 'list'
-    // },
     {
       title: 'Alta Dueño/Supervisor',
       url: '/abm-duesup',
       icon: 'key'
     },
     {
+
       title: 'Alta Mesas',
       url: '/abm-mesa',
       icon: 'help-buoy'
@@ -40,6 +36,11 @@ export class AppComponent {
     {
       title: 'Alta Empleados',
       url: '/abm-empleados',
+      icon: 'person'
+    },
+    {
+      title: 'Alta de Clientes',
+      url: '/abm-cliente',
       icon: 'person'
     },
     {
