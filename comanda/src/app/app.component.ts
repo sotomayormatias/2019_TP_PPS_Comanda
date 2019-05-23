@@ -23,13 +23,18 @@ export class AppComponent {
       icon: 'list'
     },
     {
-      title: 'Alta de producto',
+      title: 'Alta de productos',
       url: '/abm-producto',
       icon: 'add'
     },
     {
       title: 'Alta de Empleados',
       url: '/abm-empleados',
+      icon: 'person'
+    },
+    {
+      title: 'Alta de Clientes',
+      url: '/abm-cliente',
       icon: 'person'
     }
   ];

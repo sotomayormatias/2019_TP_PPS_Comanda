@@ -40,8 +40,6 @@ const routes: Routes = [
     path: '', 
     loadChildren: './abm-empleados/abm-empleados.module#AbmEmpleadosPageModule'
   },
-
-
   {
     path: '',
     loadChildren: './login/login.module#LoginPageModule'
@@ -50,9 +48,9 @@ const routes: Routes = [
   { path: 'tab1', loadChildren: './tab1/tab1.module#Tab1PageModule' },
   { path: 'tab2', loadChildren: './tab2/tab2.module#Tab2PageModule' },
   { path: 'first-with-tabs', loadChildren: './first-with-tabs/first-with-tabs.module#FirstWithTabsPageModule' },
-  { path: 'abm-empleados', loadChildren: './abm-empleados/abm-empleados.module#AbmEmpleadosPageModule' }
-
-
+  { path: 'abm-empleados', loadChildren: './abm-empleados/abm-empleados.module#AbmEmpleadosPageModule' },
+  { path: 'abm-cliente', loadChildren: './abm-cliente/abm-cliente.module#AbmClientePageModule' },
+  { path: '', loadChildren: './abm-cliente/abm-cliente.module#AbmClientePageModule' }
 
 ];
 
