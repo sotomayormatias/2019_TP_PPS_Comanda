@@ -1,36 +1,42 @@
 <ion-header>
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-      <ion-title>
-        ABM Empleados
-      </ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Alta Empleados
+    </ion-title>
+    <ion-buttons slot="end">
+        <img id="iconToolBar" src="../../assets/imgs/icon.png">
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
 <!-- ABM Empleados -->
 <ion-content>
   <form class="formGral" [(formGroup)]="formEmpleado" (submit)="agregarEmpleado()">
-  
+
     <ion-list class="row">
-  
+
       <!-- <ion-item> -->
-        <!-- <ion-label position="floating">Nombre</ion-label> -->
-        <span>
-        <input [(ngModel)]="nombre" class="swing" formControlName="nombreCtrl" type="text" name="nombre"><label>Nombre</label>
-    </span>
-    <!-- </ion-item> -->
-<!--     
+      <!-- <ion-label position="floating">Nombre</ion-label> -->
+      <span>
+        <input [(ngModel)]="nombre" class="swing" formControlName="nombreCtrl" type="text"
+          name="nombre"><label>Nombre</label>
+      </span>
+      <!-- </ion-item> -->
+      <!--     
       <span>
        <input [(ngModel)]="nombre" class="swing" formControlName="nombreCtrl" type="text" name="nombre"><label>Nombre</label>
         </span> -->
-   
+
       <!-- <ion-item>
         <ion-label position="floating">Apellido</ion-label>
         <ion-input [(ngModel)]="apellido" formControlName="apellidoCtrl" type="text" name="apellido"></ion-input>
       </ion-item> -->
       <span>
-          <input [(ngModel)]="apellido" class="swing" formControlName="apellidoCtrl" type="text" name="apellido"><label>Apellido</label>
+        <input [(ngModel)]="apellido" class="swing" formControlName="apellidoCtrl" type="text"
+          name="apellido"><label>Apellido</label>
       </span>
 
 
@@ -44,26 +50,29 @@
 
       <span>
         <!-- <ion-label position="floating">CUIL</ion-label> -->
-        <input [(ngModel)]="cuil"  class="swing" formControlName="cuilCtrl" type="number" name="cuil"><label>CUIL</label>
+        <input [(ngModel)]="cuil" class="swing" formControlName="cuilCtrl" type="number" name="cuil"><label>CUIL</label>
       </span>
 
 
       <span>
         <!-- <ion-label position="floating">Tipo de Empleado</ion-label> -->
-        <input [(ngModel)]="templeado"  class="swing" formControlName="templeadoCtrl" type="text" name="tEmpleado"><label>T.Empleado</label>
-      </span> 
-      
-   
+        <input [(ngModel)]="templeado" class="swing" formControlName="templeadoCtrl" type="text"
+          name="tEmpleado"><label>T.Empleado</label>
+      </span>
 
-    
-    <ion-slides>
-      <ion-slide *ngFor="let foto of captureDataUrl">
-        <img [src]="foto" *ngIf="captureDataUrl" />
-      </ion-slide>
-    </ion-slides>
 
-    <ion-button type="button" shape="round" color="secondary" fill="outline" (click)="tomarFoto()">Agregar foto</ion-button>
-    <ion-button type="submit" expand="block" color="primary" fill="outline" [disabled]="!formEmpleado.valid">Agregar</ion-button>
-  </ion-list>
+
+
+      <ion-slides>
+        <ion-slide *ngFor="let foto of captureDataUrl">
+          <img [src]="foto" *ngIf="captureDataUrl" />
+        </ion-slide>
+      </ion-slides>
+
+      <ion-button type="button" shape="round" color="secondary" fill="outline" (click)="tomarFoto()">Agregar foto
+      </ion-button>
+      <ion-button type="submit" expand="block" color="primary" fill="outline" [disabled]="!formEmpleado.valid">Agregar
+      </ion-button>
+    </ion-list>
   </form>
 </ion-content>

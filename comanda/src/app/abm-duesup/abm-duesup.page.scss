@@ -29,6 +29,11 @@ body {
         @content;
     }
 }
+
+#iconToolBar {
+  width: 50px;
+}
+
 .row {
   max-width: 800px;
   margin: 0 auto;
