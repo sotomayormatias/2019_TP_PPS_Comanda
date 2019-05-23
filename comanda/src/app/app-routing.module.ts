@@ -33,6 +33,14 @@ const routes: Routes = [
     loadChildren: './abm-producto/abm-producto.module#AbmProductoPageModule'
   },
   {
+    path: 'abm-mesas', 
+    loadChildren: './abm-mesa/abm-mesa.module#AbmMesaPageModule'
+  },
+  {
+    path: '', 
+    loadChildren: './abm-mesa/abm-mesa.module#AbmMesaPageModule'
+  },
+  {
     path: '', 
     loadChildren: './abm-producto/abm-producto.module#AbmProductoPageModule'
   },
@@ -52,7 +60,8 @@ const routes: Routes = [
   { path: 'abm-cliente', loadChildren: './abm-cliente/abm-cliente.module#AbmClientePageModule' },
   { path: '', loadChildren: './abm-cliente/abm-cliente.module#AbmClientePageModule' },
   { path: '', loadChildren: './abm-duesup/abm-duesup.module#AbmDuesupPageModule' },
-  { path: 'abm-duesup', loadChildren: './abm-duesup/abm-duesup.module#AbmDuesupPageModule' }
+  { path: 'abm-duesup', loadChildren: './abm-duesup/abm-duesup.module#AbmDuesupPageModule' },
+  { path: 'abm-mesa', loadChildren: './abm-mesa/abm-mesa.module#AbmMesaPageModule' }
 ];
 
 @NgModule({

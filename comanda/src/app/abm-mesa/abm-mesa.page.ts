@@ -4,18 +4,17 @@ import { Camera, CameraOptions, PictureSourceType } from "@ionic-native/camera/n
 import { AlertController } from '@ionic/angular';
 import * as firebase from "firebase";
 
+
 @Component({
-  selector: 'app-abm-empleados',
-  templateUrl: './abm-empleados.page.html',
-  styleUrls: ['./abm-empleados.page.scss'],
+  selector: 'app-abm-mesa',
+  templateUrl: './abm-mesa.page.html',
+  styleUrls: ['./abm-mesa.page.scss'],
 })
-export class AbmEmpleadosPage implements OnInit {
-  formEmpleado: FormGroup;
-  nombre: string;
-  apellido: string;
-  dni: number;
-  cuil: number;
-  templeado: string;
+export class AbmMesaPage implements OnInit {
+  formMesas: FormGroup;
+  nromesa: number;
+  cantcomen: number;
+  tmesa: number;
   captureDataUrl: Array<string>;
   hayFotos: boolean = false;
   cantidadFotos: number = 0;
@@ -24,12 +23,10 @@ export class AbmEmpleadosPage implements OnInit {
     private camera: Camera,
     private alertCtrl: AlertController
     ) {
-    this.formEmpleado = new FormGroup({
-      nombreCtrl: new FormControl('', Validators.required),
-      apellidoCtrl: new FormControl('', Validators.required),
-      dniCtrl: new FormControl('', Validators.required),
-      cuilCtrl: new FormControl('', Validators.required),
-      templeadoCtrl: new FormControl('', Validators.required)
+    this.formMesas = new FormGroup({
+      nromesaCtrl: new FormControl('', Validators.required),
+      cantcomenCtrl: new FormControl('', Validators.required),
+      tmesaCtrl: new FormControl('', Validators.required)
     });
     this.captureDataUrl = new Array<string>();
   }
@@ -67,17 +64,17 @@ export class AbmEmpleadosPage implements OnInit {
     await alert.present();
   }
 
-  agregarEmpleado() {
+  agregarMesas() {
     // let usuario = JSON.parse(sessionStorage.getItem('usuario'));
     let storageRef = firebase.storage().ref();
     let errores: number = 0;
     let contador: number = 0;
 
     this.captureDataUrl.forEach(foto => {
-      let filename: string = this.nombre + "_" + contador;
-      const imageRef = storageRef.child(`empleados/${filename}.jpg`);
+      let filename: string = this.nromesa + "_" + contador;
+      const imageRef = storageRef.child(`mesas/${filename}.jpg`);
 
-      let datos: any = { 'nombre': this.nombre, 'apellido': this.apellido, 'dni': this.dni, 'cuil': this.cuil, 'templeado': this.templeado };
+      let datos: any = { 'nromesa': this.nromesa, 'cantcomen': this.cantcomen, 'tmesa': this.tmesa};
       this.guardardatosDeProducto(datos);
 
       imageRef.putString(foto, firebase.storage.StringFormat.DATA_URL).then((snapshot) => {
@@ -94,7 +91,7 @@ export class AbmEmpleadosPage implements OnInit {
   }
 
   guardardatosDeProducto(datos) {
-    let storageRef = firebase.database().ref('empleados/');
+    let storageRef = firebase.database().ref('mesas/');
     let imageData = storageRef.push();
     imageData.set(datos);
   }
@@ -123,5 +120,6 @@ export class AbmEmpleadosPage implements OnInit {
     await alert.present();
   }
 }
+
 
 
