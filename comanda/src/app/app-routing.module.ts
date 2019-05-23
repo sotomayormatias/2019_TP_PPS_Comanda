@@ -33,6 +33,14 @@ const routes: Routes = [
     loadChildren: './abm-producto/abm-producto.module#AbmProductoPageModule'
   },
   {
+    path: 'abm-mesas', 
+    loadChildren: './abm-mesa/abm-mesa.module#AbmMesaPageModule'
+  },
+  {
+    path: '', 
+    loadChildren: './abm-mesa/abm-mesa.module#AbmMesaPageModule'
+  },
+  {
     path: '', 
     loadChildren: './abm-producto/abm-producto.module#AbmProductoPageModule'
   },
@@ -53,7 +61,9 @@ const routes: Routes = [
   { path: 'abm-empleados', loadChildren: './abm-empleados/abm-empleados.module#AbmEmpleadosPageModule' },
   { path: '', loadChildren: './abm-duesup/abm-duesup.module#AbmDuesupPageModule' },
   
-  { path: 'abm-duesup', loadChildren: './abm-duesup/abm-duesup.module#AbmDuesupPageModule' }
+  { path: 'abm-duesup', loadChildren: './abm-duesup/abm-duesup.module#AbmDuesupPageModule' },
+  { path: 'abm-mesa', loadChildren: './abm-mesa/abm-mesa.module#AbmMesaPageModule' }
+
 
 
 

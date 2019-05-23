@@ -20,10 +20,10 @@ Link: https://docs.google.com/document/d/1oEnzlbxtO-LMAgVBkn0KqyZpL6Fi04EdTZu34W
 2.- Creación de estructura general de la aplicacion  
 3.- Servicio Firebase  
 4.- Login  
-5.- Icono
-6.- Splash Screen animado con Logo de la aplicación
-7.- Formulario de entrada de datos y alta de producto en Firebase
-8.- Tomar foto desde galería para subir a FB
+5.- Icono  
+6.- Splash Screen animado con Logo de la aplicación  
+7.- Formulario de entrada de datos y alta de producto en Firebase  
+8.- Tomar foto desde galería para subir a FB  
 9.- Organización interna
 
 ###Status Sprint 1
@@ -34,16 +34,10 @@ Tareas
 
 ## Sprint 2 18/05 - 25/05
 
-1.- Generación de repositorio  
-2.- Creación de estructura general de la aplicacion  
-3.- Servicio Firebase  
-4.- Login  
-5.- Icono
-6.- Splash Screen animado con Logo de la aplicación
-7.- Formulario de entrada de datos y alta de producto en Firebase
-8.- Tomar foto desde galería para subir a FB
-9.- Organización interna
-
+1.- Codigo QR
+2.- Finalizar las altas pendientes
+3.- Listado de imagenes u objetos en array  
+4.- Manejo de distintos perfiles y usuarios
 
 ## Responsabilidades para entrega 18/05 Sprint1
 Nombre: Julián Graziano  
@@ -93,7 +87,7 @@ Fecha fin:
 branch: msotomayor  
 
 En común:
-**Funcionalidad QR**
-**OK ALTA FOTO**
-**ESTILOS**
+**Funcionalidad QR**  
+**OK ALTA FOTO**  
+**ESTILOS**  
 **ORGANIACIÓN INTERNA**
