@@ -18,17 +18,23 @@ export class AppComponent {
       icon: 'home'
     },
     {
-      title: 'Alta de Dueño/Supervisor',
+      title: 'Alta Dueño/Supervisor',
       url: '/abm-duesup',
-      icon: 'add-circle'
+      icon: 'key'
     },
     {
-      title: 'Alta de productos',
+
+      title: 'Alta Mesas',
+      url: '/abm-mesa',
+      icon: 'help-buoy'
+    },
+    {
+      title: 'Alta Productos',
       url: '/abm-producto',
-      icon: 'add'
+      icon: 'beer'
     },
     {
-      title: 'Alta de Empleados',
+      title: 'Alta Empleados',
       url: '/abm-empleados',
       icon: 'person'
     },
