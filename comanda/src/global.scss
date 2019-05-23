@@ -9,3 +9,13 @@
 @import '~@ionic/angular/css/text-alignment.css';
 @import '~@ionic/angular/css/text-transformation.css';
 @import '~@ionic/angular/css/flex-utils.css';
+
+@import url("https://fonts.googleapis.com/css?family=Pacifico|Source+Sans+Pro:200,400");
+
+#iconToolBar {
+    width: 50px;
+}
+
+#titleMenu {
+    font-family: "Pacifico", cursive;
+}

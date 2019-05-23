@@ -1,44 +1,53 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="dark">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>
-      Alta de Mesas
+      Alta Mesas
     </ion-title>
+    <ion-buttons slot="end">
+      <img id="iconToolBar" src="../../assets/imgs/icon.png">
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<!-- ABM Empleados -->
-<ion-content>
-<form class="formGral" [(formGroup)]="formMesas" (submit)="agregarMesas()">
 
-  <ion-list class="row">
+<!-- ABM Mesa -->
+<ion-content>
+  <form class="formGral" [(formGroup)]="formMesas" (submit)="agregarMesas()">
+
+    <ion-list class="row">
 
       <span>
-      <input [(ngModel)]="nromesa" class="swing" formControlName="nromesaCtrl" type="number" name="nromesa"><label>Nro.Mesa</label>
-  </span>
+        <input [(ngModel)]="nromesa" class="swing" formControlName="nromesaCtrl" type="number"
+          name="nromesa"><label>Nro.Mesa</label>
+      </span>
 
-    <span>
-        <input [(ngModel)]="cantcomen" class="swing" formControlName="cantcomenCtrl" type="numer" name="cantcomen"><label>Nro.Personas</label>
-    </span>
+      <span>
+        <input [(ngModel)]="cantcomen" class="swing" formControlName="cantcomenCtrl" type="numer"
+          name="cantcomen"><label>Nro.Personas</label>
+      </span>
 
 
-    <span>
-      <!-- <ion-label position="floating">Tipo de Empleado</ion-label> -->
-      <input [(ngModel)]="tmesa"  class="swing" formControlName="tmesaCtrl" type="text" name="tmesa"><label>T.Mesa</label>
-    </span> 
-    
- 
+      <span>
+        <!-- <ion-label position="floating">Tipo de Empleado</ion-label> -->
+        <input [(ngModel)]="tmesa" class="swing" formControlName="tmesaCtrl" type="text"
+          name="tmesa"><label>T.Mesa</label>
+      </span>
 
-  
-  <ion-slides>
-    <ion-slide *ngFor="let foto of captureDataUrl">
-      <img [src]="foto" *ngIf="captureDataUrl" />
-    </ion-slide>
-  </ion-slides>
 
-  <ion-button type="button" shape="round" color="secondary" fill="outline" (click)="tomarFoto()">Agregar foto</ion-button>
-  <ion-button type="submit" expand="block" color="primary" fill="outline" [disabled]="!formEmpleado.valid">Agregar</ion-button>
-</ion-list>
-</form>
+
+
+      <ion-slides>
+        <ion-slide *ngFor="let foto of captureDataUrl">
+          <img [src]="foto" *ngIf="captureDataUrl" />
+        </ion-slide>
+      </ion-slides>
+
+      <ion-button type="button" shape="round" color="secondary" fill="outline" (click)="tomarFoto()">Agregar foto
+      </ion-button>
+      <ion-button type="submit" expand="block" color="primary" fill="outline" [disabled]="!formEmpleado.valid">Agregar
+      </ion-button>
+    </ion-list>
+  </form>
 </ion-content>
