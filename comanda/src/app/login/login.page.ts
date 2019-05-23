@@ -53,17 +53,20 @@ export class LoginPage implements OnInit {
   }
 
   login() {
+    this.spinner = true;
     this.baseService.getItems("usuarios").then(users => {
+      setTimeout(() => this.spinner = false , 2000);
       this.usuarios = users;
 
       let usuarioLogueado = this.usuarios.find(elem => (elem.correo == this.cuenta.usuario && elem.clave == this.cuenta.password));
 
       if (usuarioLogueado !== undefined) {
         sessionStorage.setItem('usuario', JSON.stringify(usuarioLogueado));
-            this.creoToast(true);
-            this.router.navigateByUrl('/home');
+        this.creoToast(true);
+        this.router.navigateByUrl('/home');
       } else {
         // this.presentToast();
+        setTimeout(() => this.spinner = false , 2000);
         this.creoToast(false);
       }
     });
@@ -102,7 +105,7 @@ export class LoginPage implements OnInit {
         message: 'Autenticación exitosa.',
         color: 'success',
         showCloseButton: false,
-        position: 'top',
+        position: 'bottom',
         closeButtonText: 'Done',
         duration: 2000
       });

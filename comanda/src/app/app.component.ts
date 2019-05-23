@@ -18,9 +18,9 @@ export class AppComponent {
       icon: 'home'
     },
     {
-      title: 'List',
-      url: '/list',
-      icon: 'list'
+      title: 'Alta de Dueño/Supervisor',
+      url: '/abm-duesup',
+      icon: 'add-circle'
     },
     {
       title: 'Alta de productos',
@@ -36,6 +36,11 @@ export class AppComponent {
       title: 'Alta de Clientes',
       url: '/abm-cliente',
       icon: 'person'
+    },
+    {
+      title: 'Cerrar Sesion',
+      url: '/login',
+      icon: 'log-out'
     }
   ];
 

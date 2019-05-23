@@ -1,8 +1,13 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>abm-producto</ion-title>
-  </ion-toolbar>
-</ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>
+        ABM Producto
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
 
 <ion-content>
   <div id="formulario">
@@ -31,7 +36,7 @@
         </ion-slide>
       </ion-slides>
       <ion-button type="button" shape="round" color="secondary" [disabled]="cantidadFotos >= 3" (click)="tomarFoto()">Agregar foto</ion-button>
-      <ion-button type="submit" expand="block" color="primary" [disabled]="!formProducto.valid || !hayFotos">Agregar
+      <ion-button type="submit" expand="block" color="primary" >Agregar
       </ion-button>
     </form>
   </div>

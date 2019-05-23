@@ -1,0 +1,119 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>
+        ABM Dueño / Supervisor
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+<ion-content>
+  <!-- <div id="formulario" *ngIf="!escaneando"> -->
+
+     
+          
+
+   
+    <form class="formGral" [formGroup]="formDueSup" (submit)="agregarDueSup()">
+        <!-- <div> -->
+      <ion-list  class="row">
+      
+        <!-- <ion-item> -->
+          <!-- <ion-label position="floating">Nombre</ion-label> -->
+          <span>
+          <!-- <ion-input [(ngModel)]="nombre" id="artist" class="swing" formControlName="nombreCtrl" type="text" name="nombre"><label for="artist">Nombre</label> -->
+          <input [(ngModel)]="nombre" class="swing" formControlName="nombreCtrl" type="text" name="nombre"><label>Nombre</label>
+          </span>
+        
+        <!-- </ion-item> -->
+
+        <!-- <ion-item>
+          <ion-label position="floating">Apellido</ion-label> -->
+          <!-- <ion-input [(ngModel)]="apellido" formControlName="apellidoCtrl" type="text" name="apellido"></ion-input> -->
+          <span>
+          <input [(ngModel)]="apellido" class="swing" formControlName="apellidoCtrl" type="text" name="apellido"><label>Apellido</label>
+          </span>
+        <!-- </ion-item> -->
+     
+     
+        <!-- <ion-item>
+          <ion-label position="floating">DNI</ion-label> -->
+          <span>
+          <!-- <ion-input [(ngModel)]="DNI" formControlName="DNICtrl" type="number" name="DNI"></ion-input> -->
+          <input [(ngModel)]="DNI" class="swing" formControlName="DNICtrl" type="number" name="DNI"><label>DNI</label>
+
+          </span>
+        <!-- </ion-item> -->
+
+     
+
+        <!-- <ion-item> -->
+          <!-- <ion-label position="floating">CUIL</ion-label> -->
+          <span>
+          <!-- <ion-input [(ngModel)]="CUIL" formControlName="CUILCtrl" type="number" name="CUIL"></ion-input> -->
+          <input [(ngModel)]="CUIL" class="swing" formControlName="CUILCtrl" type="number" name="CUIL"><label>CUIL</label>
+          
+          </span>
+        <!-- </ion-item> -->
+
+     
+
+        <!-- SELECCION DE PERFIL -->
+          <ion-list  class="round">
+            <ion-radio-group>
+              <ion-list-header>
+                <ion-label>Perfil</ion-label>
+              </ion-list-header>
+          
+              <ion-item>
+                <ion-label>Dueño</ion-label>
+                <ion-radio slot="start" value="duenio" checked></ion-radio>
+              </ion-item>
+          
+              <ion-item>
+                <ion-label>Supervisor</ion-label>
+                <ion-radio slot="start" value="supervisor"></ion-radio>
+              </ion-item>
+            </ion-radio-group>
+          </ion-list>
+
+      
+        
+
+      <!-- <ion-item>
+            <ion-label position="floating">PERFIL</ion-label>
+            <ion-input [(ngModel)]="precio" formControlName="precioCtrl" type="number" name="precio"></ion-input>
+      </ion-item> -->
+
+    
+          <ion-slides>
+            <ion-slide *ngFor="let foto of captureDataUrl">
+              <img [src]="foto" *ngIf="captureDataUrl" />
+            </ion-slide>
+          </ion-slides>
+
+          
+         <div padding>
+          <ion-button type="button"   color="secondary" fill="outline" [disabled]="cantidadFotos >= 3" (click)="tomarFoto()">Agregar foto</ion-button>
+          <ion-button type="submit"  expand="block"  color="primary" fill="outline" [disabled]="!formDueSup.valid || !hayFotos">Agregar
+          </ion-button> 
+        </div>
+      
+      </ion-list>
+    
+     
+     
+ 
+    
+       
+      
+
+
+
+    <!-- </div> -->
+    </form>
+
+  <!-- </div> -->
+</ion-content>

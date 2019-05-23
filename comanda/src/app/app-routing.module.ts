@@ -50,8 +50,9 @@ const routes: Routes = [
   { path: 'first-with-tabs', loadChildren: './first-with-tabs/first-with-tabs.module#FirstWithTabsPageModule' },
   { path: 'abm-empleados', loadChildren: './abm-empleados/abm-empleados.module#AbmEmpleadosPageModule' },
   { path: 'abm-cliente', loadChildren: './abm-cliente/abm-cliente.module#AbmClientePageModule' },
-  { path: '', loadChildren: './abm-cliente/abm-cliente.module#AbmClientePageModule' }
-
+  { path: '', loadChildren: './abm-cliente/abm-cliente.module#AbmClientePageModule' },
+  { path: '', loadChildren: './abm-duesup/abm-duesup.module#AbmDuesupPageModule' },
+  { path: 'abm-duesup', loadChildren: './abm-duesup/abm-duesup.module#AbmDuesupPageModule' }
 ];
 
 @NgModule({
