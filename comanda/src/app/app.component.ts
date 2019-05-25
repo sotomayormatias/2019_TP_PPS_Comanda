@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 
+import { Router } from '@angular/router';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import * as firebase from 'firebase';
 import { FIREBASE_CONFIG } from './app.firebase.config';
 
+import { Events } from '@ionic/angular';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html'
@@ -50,12 +52,36 @@ export class AppComponent {
     }
   ];
 
+
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private router: Router,
+    public events: Events
   ) {
     this.initializeApp();
+
+    this.events.subscribe('usuarioLogueado', ( (data) => {
+      console.log('event received');
+      console.log('perfil recibidos:', data);
+
+   // ROUTING DEL MENU
+      this.appPages = [
+        {
+          title: 'Home',
+          url: '/home',
+          icon: 'home'
+        },
+        {
+          title: 'Alta Dueño/Supervisor',
+          url: '/abm-duesup',
+          icon: 'key'
+        }
+      ];
+
+    }) );
+  
   }
 
   initializeApp() {
@@ -65,4 +91,9 @@ export class AppComponent {
     });
     firebase.initializeApp(FIREBASE_CONFIG);
   }
+
+  navegoPagina(pagina) {
+    this.router.navigateByUrl(pagina);
+  }
+
 }
