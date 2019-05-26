@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Estadísticas de satisfacción
+    </ion-title>
+    <ion-buttons slot="end">
+      <img id="iconToolBar" src="../../assets/imgs/icon.png">
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card>
+    <ion-card-header>
+      Conformidad
+    </ion-card-header>
+    <ion-card-content>
+      <canvas #canvasConformidad></canvas>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      Destacado
+    </ion-card-header>
+    <ion-card-content>
+      <canvas #canvasDestacado></canvas>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

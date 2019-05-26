@@ -24,7 +24,7 @@
       </span>
 
       <span>
-        <input [(ngModel)]="cantcomen" class="swing" formControlName="cantcomenCtrl" type="numer"
+        <input [(ngModel)]="cantcomen" class="swing" formControlName="cantcomenCtrl" type="number"
           name="cantcomen"><label>Nro.Personas</label>
       </span>
 
@@ -46,7 +46,7 @@
 
       <ion-button type="button" shape="round" color="secondary" fill="outline" (click)="tomarFoto()">Agregar foto
       </ion-button>
-      <ion-button type="submit" expand="block" color="primary" fill="outline" [disabled]="!formEmpleado.valid">Agregar
+      <ion-button type="submit" expand="block" color="primary" fill="outline" [disabled]="!formMesas.valid">Agregar
       </ion-button>
     </ion-list>
   </form>

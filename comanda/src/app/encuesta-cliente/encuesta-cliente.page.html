@@ -1,0 +1,91 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Alta Clientes
+    </ion-title>
+    <ion-buttons slot="end">
+        <ion-button color="light" size="small" (click)="enviar()">Enviar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <!-- range para elegir conformidad del 1 al 10 -->
+    <ion-item-group>
+      <ion-item-divider color="primary"><h4>Conformidad</h4></ion-item-divider>
+      <ion-item>
+        <ion-range color="primary" min="1" max="10" pin="true" snaps="true" [(ngModel)]="conformidad"
+          [ngModelOptions]="{standalone: true}">
+          <ion-label slot="start">1</ion-label>
+          <ion-label slot="end">10</ion-label>
+        </ion-range>
+      </ion-item>
+    </ion-item-group>
+
+    <!-- checkbox para elegir lo mas destacado -->
+    <ion-item-group>
+      <ion-item-divider color="primary"><h4>¿Qué le pareció lo más destacado?</h4></ion-item-divider>
+      <ion-item>
+        <ion-label>Servicio de mesa</ion-label>
+        <ion-checkbox [(ngModel)]="destacado.servicio"></ion-checkbox>
+      </ion-item>
+      <ion-item>
+        <ion-label>Comida</ion-label>
+        <ion-checkbox [(ngModel)]="destacado.comida"></ion-checkbox>
+      </ion-item>
+      <ion-item>
+        <ion-label>Bebida</ion-label>
+        <ion-checkbox [(ngModel)]="destacado.bebida"></ion-checkbox>
+      </ion-item>
+      <ion-item>
+        <ion-label>Instalaciones</ion-label>
+        <ion-checkbox [(ngModel)]="destacado.instalaciones"></ion-checkbox>
+      </ion-item>
+      <ion-item>
+        <ion-label>Atención del personal</ion-label>
+        <ion-checkbox [(ngModel)]="destacado.atencion"></ion-checkbox>
+      </ion-item>
+    </ion-item-group>
+
+    <!-- radio para elegir si recomendaria el lugar a alguien -->
+    <ion-item-group>
+      <ion-item-divider color="primary"><h4>¿Recomendaría este lugar a algún conocido?</h4></ion-item-divider>
+      <ion-radio-group [(ngModel)]="recomienda">
+        <ion-item>
+          <ion-label>Sí</ion-label>
+          <ion-radio slot="start" value="si" checked></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-label>No</ion-label>
+          <ion-radio slot="start" value="no"></ion-radio>
+        </ion-item>
+      </ion-radio-group>
+    </ion-item-group>
+
+    <!-- Combo para determinar la limpieza del lugar -->
+    <ion-item-group>
+      <ion-item-divider color="primary"><h4>Limpieza del lugar</h4></ion-item-divider>
+      <ion-item>
+        <ion-select [(ngModel)]="limpieza" [interfaceOptions]="customActionSheetOptions" interface="action-sheet" value="impoluto">
+          <ion-select-option value="impoluto">Impoluto</ion-select-option>
+          <ion-select-option value="limpio">Limpio</ion-select-option>
+          <ion-select-option value="sucio">Sucio</ion-select-option>
+          <ion-select-option value="consti">Parece el baño de Constitución</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-item-group>
+
+    <!-- textarea para comentarios adicionales -->
+    <ion-item-group>
+      <ion-item-divider color="primary"><h4>Deje su comentario</h4></ion-item-divider>
+      <ion-item>
+        <ion-textarea [(ngModel)]="comentarios"></ion-textarea>
+      </ion-item>
+    </ion-item-group>
+  </ion-list>
+
+</ion-content>
