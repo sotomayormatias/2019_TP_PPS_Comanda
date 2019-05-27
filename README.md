@@ -39,6 +39,12 @@ Tareas
 3.- Listado de imagenes u objetos en array  
 4.- Manejo de distintos perfiles y usuarios
 
+###Status Sprint 2
+Funcionalidades
+![alt text](Screenshots/Sprint2-25-05-AvanceFuncionalidades.jpg)
+Tareas
+![alt text](Screenshots/Sprint2-25-05-AvanceTareas.jpg)
+
 ## Responsabilidades para entrega 18/05 Sprint1
 Nombre: Julián Graziano  
 Módulo: Alta dueño/supervisor  
@@ -69,21 +75,21 @@ En común:
 
 ## Responsabilidades para entrega 25/05 Sprint2
 Nombre: Julián Graziano  
-Módulo:   
+Módulo: Estilos / Alta / QR
 Fecha inicio: 18/05  
-Fecha fin:  
+Fecha fin:  25/05
 branch: jngraziano  
 
 Nombre: Leandro Pollola  
-Módulo: 
+Módulo: Navegacion / Altas / QR
 Fecha inicio: 18/05  
-Fecha fin:   
+Fecha fin:   25/05
 branch: lnpollola  
   
 Nombre: Matías Sotomayor  
-Módulo:   
+Módulo:   SERVICIOS / ALTA / QR
 Fecha inicio: 18/05  
-Fecha fin:   
+Fecha fin:   25/05
 branch: msotomayor  
 
 En común:
@@ -91,3 +97,26 @@ En común:
 **OK ALTA FOTO**  
 **ESTILOS**  
 **ORGANIACIÓN INTERNA**
+**PERFILES Y NAVEGACION**
+
+## Responsabilidades para entrega 02/06 Sprint3
+Nombre: Julián Graziano  
+Módulo: QR / Estilos / Encuesta
+Fecha inicio: 25/05  
+Fecha fin: 
+branch: jngraziano  
+
+Nombre: Leandro Pollola  
+Módulo: Perfiles / Encuesta / Estilos
+Fecha inicio: 25/05 
+Fecha fin:   
+branch: lnpollola  
+  
+Nombre: Matías Sotomayor  
+Módulo:   SERVICIOS / QR / Encuesta
+Fecha inicio: 25/05  
+Fecha fin:   
+branch: msotomayor  
+
+En común:
+**ESTILOS**
