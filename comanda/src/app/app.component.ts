@@ -13,44 +13,46 @@ import { Events } from '@ionic/angular';
   templateUrl: 'app.component.html'
 })
 export class AppComponent {
-  public appPages = [
-    {
-      title: 'Home',
-      url: '/home',
-      icon: 'home'
-    },
-    {
-      title: 'Alta Dueño/Supervisor',
-      url: '/abm-duesup',
-      icon: 'key'
-    },
-    {
+  public appPages;
 
-      title: 'Alta Mesas',
-      url: '/abm-mesa',
-      icon: 'help-buoy'
-    },
-    {
-      title: 'Alta Productos',
-      url: '/abm-producto',
-      icon: 'beer'
-    },
-    {
-      title: 'Alta Empleados',
-      url: '/abm-empleados',
-      icon: 'person'
-    },
-    {
-      title: 'Alta de Clientes',
-      url: '/abm-cliente',
-      icon: 'person'
-    },
-    {
-      title: 'Cerrar Sesion',
-      url: '/login',
-      icon: 'log-out'
-    }
-  ];
+  // public appPages = [
+  //   {
+  //     title: 'Home',
+  //     url: '/home',
+  //     icon: 'home'
+  //   },
+  //   {
+  //     title: 'Alta Dueño/Supervisor',
+  //     url: '/abm-duesup',
+  //     icon: 'key'
+  //   },
+  //   {
+
+  //     title: 'Alta Mesas',
+  //     url: '/abm-mesa',
+  //     icon: 'help-buoy'
+  //   },
+  //   {
+  //     title: 'Alta Productos',
+  //     url: '/abm-producto',
+  //     icon: 'beer'
+  //   },
+  //   {
+  //     title: 'Alta Empleados',
+  //     url: '/abm-empleados',
+  //     icon: 'person'
+  //   },
+  //   {
+  //     title: 'Alta de Clientes',
+  //     url: '/abm-cliente',
+  //     icon: 'person'
+  //   },
+  //   {
+  //     title: 'Cerrar Sesion',
+  //     url: '/login',
+  //     icon: 'log-out'
+  //   }
+  // ];
 
 
   constructor(
@@ -62,7 +64,13 @@ export class AppComponent {
   ) {
     this.initializeApp();
 
-    this.events.subscribe('usuarioLogueado', ( (data) => {
+
+  //   this.events.subscribe('stats', statsData => {
+  //     console.log(statsData);
+  //   });
+  // }
+
+    this.events.subscribe('usuarioLogueado', data => {
       console.log('event received');
       console.log('perfil recibidos:', data);
 
@@ -78,10 +86,18 @@ export class AppComponent {
           url: '/abm-duesup',
           icon: 'key'
         }
+        ,
+        {
+              title: 'Alta Empleados',
+              url: '/abm-empleados',
+              icon: 'person'
+            }
+
+
       ];
 
-    }) );
-  
+    }) ;
+    
   }
 
   initializeApp() {
