@@ -13,6 +13,11 @@ body {
   color: #fff;
   background: #efefef;
 }
+
+#iconToolBar {
+  width: 50px;
+}
+
 @mixin epic-sides() { // https://codepen.io/MichaelArestad/pen/qltuk
     position: relative;
     z-index: 1;

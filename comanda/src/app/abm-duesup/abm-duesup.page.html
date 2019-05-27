@@ -1,16 +1,20 @@
 <ion-header>
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-      <ion-title>
-        ABM Dueño / Supervisor
-      </ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Alta Dueño/Supervisor
+    </ion-title>
+    <ion-buttons slot="end">
+      <img id="iconToolBar" src="../../assets/imgs/icon.png">
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content>
   <!-- <div id="formulario" *ngIf="!escaneando"> -->
+
 
      
           
@@ -81,14 +85,8 @@
           </ion-list>
 
       
-        
+     
 
-      <!-- <ion-item>
-            <ion-label position="floating">PERFIL</ion-label>
-            <ion-input [(ngModel)]="precio" formControlName="precioCtrl" type="number" name="precio"></ion-input>
-      </ion-item> -->
-
-    
           <ion-slides>
             <ion-slide *ngFor="let foto of captureDataUrl">
               <img [src]="foto" *ngIf="captureDataUrl" />
@@ -114,8 +112,9 @@
 
 
 
+
     <!-- </div> -->
-    </form>
+  </form>
 
   <!-- </div> -->
 </ion-content>
