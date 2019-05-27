@@ -16,7 +16,7 @@
           
 
    
-    <form class="formGral" [formGroup]="formDueSup" (submit)="agregarDueSup()">
+    <form class="formGral" [(formGroup)]="formDueSup" (submit)="agregarDueSup()">
         <!-- <div> -->
       <ion-list  class="row">
       
@@ -24,7 +24,7 @@
           <!-- <ion-label position="floating">Nombre</ion-label> -->
           <span>
           <!-- <ion-input [(ngModel)]="nombre" id="artist" class="swing" formControlName="nombreCtrl" type="text" name="nombre"><label for="artist">Nombre</label> -->
-          <input [(ngModel)]="nombre" class="swing" formControlName="nombreCtrl" type="text" name="nombre"><label>Nombre</label>
+          <input  [(ngModel)]="nombre" class="swing" formControlName="nombreCtrl" type="text" name="nombre"><label>Nombre</label>
           </span>
         
         <!-- </ion-item> -->
@@ -33,7 +33,7 @@
           <ion-label position="floating">Apellido</ion-label> -->
           <!-- <ion-input [(ngModel)]="apellido" formControlName="apellidoCtrl" type="text" name="apellido"></ion-input> -->
           <span>
-          <input [(ngModel)]="apellido" class="swing" formControlName="apellidoCtrl" type="text" name="apellido"><label>Apellido</label>
+          <input  [(ngModel)]="apellido" class="swing" formControlName="apellidoCtrl" type="text" name="apellido"><label>Apellido</label>
           </span>
         <!-- </ion-item> -->
      
@@ -42,7 +42,7 @@
           <ion-label position="floating">DNI</ion-label> -->
           <span>
           <!-- <ion-input [(ngModel)]="DNI" formControlName="DNICtrl" type="number" name="DNI"></ion-input> -->
-          <input [(ngModel)]="DNI" class="swing" formControlName="DNICtrl" type="number" name="DNI"><label>DNI</label>
+          <input  [(ngModel)]="DNI" class="swing" formControlName="DNICtrl" type="number" name="DNI"><label>DNI</label>
 
           </span>
         <!-- </ion-item> -->
@@ -61,20 +61,21 @@
      
 
         <!-- SELECCION DE PERFIL -->
-          <ion-list  class="round">
-            <ion-radio-group>
+          <ion-list class="round" >
+           <ion-radio-group >
+            
               <ion-list-header>
                 <ion-label>Perfil</ion-label>
               </ion-list-header>
           
               <ion-item>
                 <ion-label>Dueño</ion-label>
-                <ion-radio slot="start" value="duenio" checked></ion-radio>
+                <ion-radio formControlName="perfilCtrl" slot="start" value="duenio" checked></ion-radio>
               </ion-item>
           
               <ion-item>
                 <ion-label>Supervisor</ion-label>
-                <ion-radio slot="start" value="supervisor"></ion-radio>
+                <ion-radio formControlName="perfilCtrl" slot="start" value="supervisor"></ion-radio>
               </ion-item>
             </ion-radio-group>
           </ion-list>
@@ -97,7 +98,8 @@
           
          <div padding>
           <ion-button type="button"   color="secondary" fill="outline" [disabled]="cantidadFotos >= 3" (click)="tomarFoto()">Agregar foto</ion-button>
-          <ion-button type="submit"  expand="block"  color="primary" fill="outline" [disabled]="!formDueSup.valid || !hayFotos">Agregar
+          <ion-button type="button" shape="round" fill="outline" color="secondary" (click)="doScan()">Cargar desde DNI</ion-button>
+          <ion-button type="submit"  expand="block"  color="primary" fill="outline" [disabled]="!formDueSup.valid">Agregar
           </ion-button> 
         </div>
       
