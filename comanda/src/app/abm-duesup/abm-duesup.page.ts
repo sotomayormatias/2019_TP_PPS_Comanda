@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Camera, CameraOptions, PictureSourceType } from "@ionic-native/camera/ngx";
+import { BarcodeScanner, BarcodeScannerOptions } from "@ionic-native/barcode-scanner/ngx";
 import { AlertController } from '@ionic/angular';
 import * as firebase from "firebase";
 
@@ -16,26 +17,31 @@ export class AbmDuesupPage implements OnInit {
   apellido: string;
   DNI: number;
   CUIL: string;
+  perfil:string;
 
   nombreCtrl;
   apellidoCtrl;
   DNICtrl;
   CUILCtrl;
-
+  perfilCtrl;
 
   captureDataUrl: Array<string>;
   hayFotos: boolean = false;
   cantidadFotos: number = 0;
+  datosEscaneados: any;
+  datos: any;
 
   constructor(
     private camera: Camera,
+    private scanner: BarcodeScanner,
     private alertCtrl: AlertController
     ) {
     this.formDueSup = new FormGroup({
       nombreCtrl: new FormControl('', Validators.required),
       apellidoCtrl: new FormControl('', Validators.required),
       DNICtrl: new FormControl('', Validators.required),
-      CUILCtrl: new FormControl('', Validators.required)
+      CUILCtrl: new FormControl('', Validators.required),
+      perfilCtrl: new FormControl('', Validators.required)
     });
     this.captureDataUrl = new Array<string>();
   }
@@ -83,7 +89,9 @@ export class AbmDuesupPage implements OnInit {
       let filename: string = this.nombre + "_" + contador;
       const imageRef = storageRef.child(`dueSup/${filename}.jpg`);
 
-      let datos: any = { 'nombre': this.nombre, 'apellido': this.apellido, 'DNI': this.DNI, 'CUIL': this.CUIL };
+      this.perfil = this.perfilCtrl.value;
+
+      let datos: any = { 'nombre': this.nombre, 'apellido': this.apellido, 'DNI': this.DNI, 'CUIL': this.CUIL , 'perfil':this.perfil };
       this.guardardatosDeDueSup(datos);
 
       imageRef.putString(foto, firebase.storage.StringFormat.DATA_URL).then((snapshot) => {
@@ -128,5 +136,32 @@ export class AbmDuesupPage implements OnInit {
 
     await alert.present();
   }
+
+  doScan() {
+    this.scanner.scan({ "formats": "PDF_417" }).then((data) => {
+      this.datosEscaneados = data;
+      this.cargarDatosDesdeDni(this.datosEscaneados);
+    }, (err) => {
+      console.log("Error: " + err);
+    });
+  }
+
+  cargarDatosDesdeDni(datos: any) {
+    let parsedData = datos.text.split('@');
+    let nombre = parsedData[2].toString();
+    let apellido = parsedData[1].toString();
+    let dni: number = +parsedData[4];
+    
+    // this.guardardatosDeDueSup(datos);
+
+    this.formDueSup.get('nombreCtrl').setValue(nombre);
+      this.formDueSup.get('apellidoCtrl').setValue(apellido);
+      this.formDueSup.get('DNICtrl').setValue(dni);
+  }
+
+//   radioGroupChange(event) {
+// console.log(“radioGroupChange”,event.detail);
+// this.selectedRadioGroup = event.detail;
+// }
 
 }
