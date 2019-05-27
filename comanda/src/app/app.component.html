@@ -4,7 +4,7 @@
       <ion-toolbar color="dark">
         <ion-title id="titleMenu">ComiRadix</ion-title>
         <ion-buttons slot="end">
-          <img id="iconToolBar" src="../../assets/imgs/icon.png">
+          <ion-icon name="contacts"></ion-icon>
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
@@ -13,7 +13,8 @@
 
       <ion-list color="dark" style="padding: 0px">
         <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages" color="dark">
-          <ion-item [routerDirection]="'root'" [routerLink]="[p.url]" color="dark">
+          <!-- <ion-item [routerDirection]="'forward'" [routerLink]="[p.url]" color="dark"> -->
+              <ion-item (click) = "navegoPagina(p.url)" color="dark">
             <ion-icon slot="start" [name]="p.icon"></ion-icon>
             <ion-label>
               {{p.title}}
