@@ -30,10 +30,15 @@ body {
     }
 }
 .row {
-  max-width: 800px;
+  // max-width: 800px;
   margin: 0 auto;
-  padding: 60px 30px;
-  background: #032429;
+  // padding: 60px 30px;
+  background: url('../../assets/altas/fondoMesa.jpg')  no-repeat center center fixed;
+  // background-size: contain;
+  // background-repeat: no-repeat;
+
+  // background: url(images/phone/home.png)
+  background-size: cover;
   @include epic-sides() {background: inherit;}
   text-align: center;
   
@@ -510,7 +515,7 @@ span:nth-child(3) .card-slide:active {
   border: 0;
   border-radius: 3px;
   outline: 0;
-  text-indent: 60px; // Arbitrary.
+  text-indent: 130px; // Arbitrary.
   transition: all .3s ease-in-out;
   
   &::-webkit-input-placeholder {
@@ -655,9 +660,32 @@ span:nth-child(3) .card-slide:active {
   
   
   
+ion-list{
+  --background: white;
+}
+
+ion-select{
+--color: white;
+-ms-text-align-last: center;
+}
+
+.round,ion-label{ 
+font-family: "Open Sans", sans-serif;
+border-radius: 20px !important; 
+text-align: center;
+// padding-left: 10px;
+//  padding-right: 10px; 
+//  padding-bottom: 5px; 
+//  padding-top: 5px; 
+} 
   
 ion-list{
-    --background: #032429;
+    --background: white;
 }  
   
+.fondoContent
+{
+  --background: rgb(255, 8, 8);
+}
+
 .round{ border-radius: 20px !important; padding-left: 10px; padding-right: 10px; padding-bottom: 5px; padding-top: 5px; } 

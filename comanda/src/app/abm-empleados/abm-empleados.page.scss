@@ -35,10 +35,17 @@ body {
     }
 }
 .row {
-  max-width: 800px;
+  // max-width: 800px;
   margin: 0 auto;
-  padding: 60px 30px;
-  background: #032429;
+  // padding: 60px 30px;
+  // padding: 60px 30px;
+  background: url('../../assets/altas/fondoEmpleados.JPG')  no-repeat center center fixed;
+  // background-size: contain;
+  // background-repeat: no-repeat;
+
+  // background: url(images/phone/home.png)
+  background-size: cover;
+
   @include epic-sides() {background: inherit;}
   text-align: center;
   
