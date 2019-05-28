@@ -107,6 +107,16 @@ export class AppComponent {
               icon: 'basket'
             },
             {
+              title: 'Encuesta Satisfacción',
+              url: '/encuesta-cliente',
+              icon: 'book'
+            },
+            {
+              title: 'Estadística Satisfacción',
+              url: '/est-satisfaccion',
+              icon: 'pie'
+            },
+            {
               title: 'Cerrar Sesion',
               url: '/login',
               icon: 'log-out'
