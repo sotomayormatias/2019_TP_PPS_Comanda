@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Camera, CameraOptions, PictureSourceType } from "@ionic-native/camera/ngx";
 import { BarcodeScanner, BarcodeScannerOptions } from "@ionic-native/barcode-scanner/ngx";
 import { AlertController } from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
 import * as firebase from "firebase";
 
 @Component({
@@ -34,6 +35,7 @@ export class AbmDuesupPage implements OnInit {
   constructor(
     private camera: Camera,
     private scanner: BarcodeScanner,
+    public toastController: ToastController,
     private alertCtrl: AlertController
     ) {
     this.formDueSup = new FormGroup({
@@ -89,7 +91,7 @@ export class AbmDuesupPage implements OnInit {
       let filename: string = this.nombre + "_" + contador;
       const imageRef = storageRef.child(`dueSup/${filename}.jpg`);
 
-      this.perfil = this.perfilCtrl.value;
+      // this.perfil = this.perfilCtrl.value;
 
       let datos: any = { 'nombre': this.nombre, 'apellido': this.apellido, 'DNI': this.DNI, 'CUIL': this.CUIL , 'perfil':this.perfil };
       this.guardardatosDeDueSup(datos);
@@ -102,9 +104,9 @@ export class AbmDuesupPage implements OnInit {
     });
 
     if (errores == 0)
-      this.subidaExitosa("Las imagenes se han subido correctamente");
+      this.subidaExitosa("El alta se realizó de manera exitosa.");
     else
-      this.subidaErronea("Error en al menos una foto");
+      this.subidaErronea("Error al realizar el alta.");
   }
 
   guardardatosDeDueSup(datos) {
@@ -114,27 +116,41 @@ export class AbmDuesupPage implements OnInit {
   }
 
   async subidaExitosa(mensaje) {
-    const alert = await this.alertCtrl.create({
-      header: 'Alert',
-      subHeader: 'Éxito',
+    // const alert = await this.alertCtrl.create({
+    //   header: 'Alert',
+    //   subHeader: 'Éxito',
+    //   message: mensaje,
+    //   buttons: ['OK']
+    // });
+
+    // await alert.present();
+    const toast = await this.toastController.create({
       message: mensaje,
-      buttons: ['OK']
+      color: 'success',
+      showCloseButton: false,
+      position: 'top',
+      closeButtonText: 'Done',
+      duration: 2000
     });
 
-    await alert.present();
+    toast.present();
     // clear the previous photo data in the variable
     this.captureDataUrl.length = 0;
+
+    this.clearInputs();
   }
 
   async subidaErronea(mensaje: string) {
-    const alert = await this.alertCtrl.create({
-      header: 'Alert',
-      subHeader: 'Éxito',
+    const toast = await this.toastController.create({
       message: mensaje,
-      buttons: ['OK']
+      color: 'danger',
+      showCloseButton: false,
+      position: 'bottom',
+      closeButtonText: 'Done',
+      duration: 2000
     });
 
-    await alert.present();
+    toast.present();
   }
 
   doScan() {
@@ -157,6 +173,23 @@ export class AbmDuesupPage implements OnInit {
     this.formDueSup.get('nombreCtrl').setValue(nombre);
       this.formDueSup.get('apellidoCtrl').setValue(apellido);
       this.formDueSup.get('DNICtrl').setValue(dni);
+  }
+
+  clearInputs(){
+      this.formDueSup.get('nombreCtrl').setValue("");
+      this.formDueSup.get('apellidoCtrl').setValue("");
+      this.formDueSup.get('DNICtrl').setValue("");
+      this.formDueSup.get('CUILCtrl').setValue("");
+      this.formDueSup.get('PerfilCtrl').setValue("");
+
+
+  }
+
+  radioResp(questionID,answer){
+
+    if
+
+
   }
 
 //   radioGroupChange(event) {

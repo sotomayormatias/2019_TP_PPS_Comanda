@@ -28,7 +28,8 @@
           <!-- <ion-label position="floating">Nombre</ion-label> -->
           <span>
           <!-- <ion-input [(ngModel)]="nombre" id="artist" class="swing" formControlName="nombreCtrl" type="text" name="nombre"><label for="artist">Nombre</label> -->
-          <input  [(ngModel)]="nombre" class="swing" formControlName="nombreCtrl" type="text" name="nombre"><label>Nombre</label>
+          <input  [(ngModel)]="nombre" class="balloon" formControlName="nombreCtrl" type="text" name="nombre"><label>Nombre</label>
+    
           </span>
         
         <!-- </ion-item> -->
@@ -37,7 +38,7 @@
           <ion-label position="floating">Apellido</ion-label> -->
           <!-- <ion-input [(ngModel)]="apellido" formControlName="apellidoCtrl" type="text" name="apellido"></ion-input> -->
           <span>
-          <input  [(ngModel)]="apellido" class="swing" formControlName="apellidoCtrl" type="text" name="apellido"><label>Apellido</label>
+          <input  [(ngModel)]="apellido" class="balloon" formControlName="apellidoCtrl" type="text" name="apellido"><label>Apellido</label>
           </span>
         <!-- </ion-item> -->
      
@@ -46,7 +47,7 @@
           <ion-label position="floating">DNI</ion-label> -->
           <span>
           <!-- <ion-input [(ngModel)]="DNI" formControlName="DNICtrl" type="number" name="DNI"></ion-input> -->
-          <input  [(ngModel)]="DNI" class="swing" formControlName="DNICtrl" type="number" name="DNI"><label>DNI</label>
+          <input  [(ngModel)]="DNI" class="balloon" formControlName="DNICtrl" type="number" name="DNI"><label>DNI</label>
 
           </span>
         <!-- </ion-item> -->
@@ -57,7 +58,7 @@
           <!-- <ion-label position="floating">CUIL</ion-label> -->
           <span>
           <!-- <ion-input [(ngModel)]="CUIL" formControlName="CUILCtrl" type="number" name="CUIL"></ion-input> -->
-          <input [(ngModel)]="CUIL" class="swing" formControlName="CUILCtrl" type="number" name="CUIL"><label>CUIL</label>
+          <input [(ngModel)]="CUIL" class="balloon" formControlName="CUILCtrl" type="number" name="CUIL"><label>CUIL</label>
           
           </span>
         <!-- </ion-item> -->
@@ -65,7 +66,7 @@
      
 
         <!-- SELECCION DE PERFIL -->
-          <ion-list class="round" >
+          <!-- <ion-list class="round" >
            <ion-radio-group >
             
               <ion-list-header>
@@ -75,14 +76,22 @@
               <ion-item>
                 <ion-label>Dueño</ion-label>
                 <ion-radio formControlName="perfilCtrl" slot="start" value="duenio" checked></ion-radio>
+                <ion-radio  value="dueño" slot="start"  (ionSelect)="radioResp(i,1)" checked></ion-radio>
               </ion-item>
           
               <ion-item>
                 <ion-label>Supervisor</ion-label>
                 <ion-radio formControlName="perfilCtrl" slot="start" value="supervisor"></ion-radio>
+                <ion-radio  value="supervisor" slot="start"  (ionSelect)="radioResp(i,)" checked></ion-radio>
               </ion-item>
             </ion-radio-group>
-          </ion-list>
+          </ion-list> -->
+
+          <span>
+            <input [(ngModel)]="perfil" class="balloon" formControlName="perfilCtrl" type="text"
+              name="perfil"><label>Tipo</label>
+          </span>
+    
 
       
      
