@@ -66,32 +66,48 @@
      
 
         <!-- SELECCION DE PERFIL -->
-          <!-- <ion-list class="round" >
-           <ion-radio-group >
+
+     
+
+     
+
+
+
+          <ion-list class="round" >
+           <!-- <ion-radio-group > -->
             
               <ion-list-header>
                 <ion-label>Perfil</ion-label>
               </ion-list-header>
           
-              <ion-item>
-                <ion-label>Dueño</ion-label>
+           
+                <!-- <ion-label></ion-label>
                 <ion-radio formControlName="perfilCtrl" slot="start" value="duenio" checked></ion-radio>
-                <ion-radio  value="dueño" slot="start"  (ionSelect)="radioResp(i,1)" checked></ion-radio>
-              </ion-item>
+                <ion-radio  value="dueño" slot="start"  (ionSelect)="radioResp(i,1)" checked></ion-radio> -->
+
+                <ion-select class="round" placeholder="Seleccione">
+                  <ion-select-option value="dueño">Dueño</ion-select-option>
+                  <ion-select-option value="supervisor">Supervisor</ion-select-option>
+                </ion-select>
+              
+             
           
-              <ion-item>
+              <!-- <ion-item>
                 <ion-label>Supervisor</ion-label>
                 <ion-radio formControlName="perfilCtrl" slot="start" value="supervisor"></ion-radio>
                 <ion-radio  value="supervisor" slot="start"  (ionSelect)="radioResp(i,)" checked></ion-radio>
-              </ion-item>
-            </ion-radio-group>
-          </ion-list> -->
+              </ion-item> -->
 
-          <span>
+
+             
+            <!-- </ion-radio-group> -->
+          </ion-list>
+
+          <!-- <span>
             <input [(ngModel)]="perfil" class="balloon" formControlName="perfilCtrl" type="text"
               name="perfil"><label>Tipo</label>
           </span>
-    
+     -->
 
       
      
