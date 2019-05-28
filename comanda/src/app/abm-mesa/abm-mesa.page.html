@@ -33,10 +33,9 @@
       <input [(ngModel)]="tmesa" class="swing" formControlName="tmesaCtrl" type="text"
           name="tmesa"><label>T.Mesa</label>
       </span> -->
-<br>
       <ion-list class="round" >
-
-        <ion-select [(ngModel)]="tmesa" formControlName="tmesaCtrl"  class="round" placeholder="Tipo de Mesa">
+        <label>Seleccione tipo de mesa </label>
+        <ion-select [(ngModel)]="tmesa" formControlName="tmesaCtrl"  class="select" placeholder="Tipo">
 
          <ion-select-option value="cocinero">VIP</ion-select-option>
          <ion-select-option value="bartender">Discapacitados</ion-select-option>
@@ -50,11 +49,13 @@
           <img [src]="foto" *ngIf="captureDataUrl" />
         </ion-slide>
       </ion-slides>
-      <br><br>
+
+     <div class="botones" padding>
       <ion-button type="button" shape="round" color="secondary" fill="solid" (click)="tomarFoto()">Agregar foto
       </ion-button>
       <ion-button type="submit" expand="block" color="primary" fill="solid" [disabled]="!formMesas.valid">Agregar
       </ion-button>
+      </div>
     </ion-list>
   </form>
 </ion-content>

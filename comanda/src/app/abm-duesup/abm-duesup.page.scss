@@ -38,11 +38,7 @@
     background: url("../../assets/imgs/corporative.jpg") ;
     background-repeat:no-repeat;
     padding: 4%;
-    -moz-transition: opacity 2s ease;
-				-webkit-transition: opacity 2s ease;
-				-ms-transition: opacity 2s ease;
-				transition: opacity 2s ease;
-				opacity: 1;
+   
 			
   }
 
@@ -124,17 +120,13 @@
     transform: translateY(-40px);
     
     &:after {
-      border-top: 4px solid rgba(122,184,147,1);
+      border-top: 4px solid #a2b9bc;
     }
   }
 }
   
   
   
-  
-// ion-list{
-//     --background: #032429;
-// }
 
 
 ion-select{
