@@ -185,12 +185,12 @@ export class AbmDuesupPage implements OnInit {
 
   }
 
-  radioResp(questionID,answer){
+  // radioResp(questionID,answer){
 
-    if
+  //   if
 
 
-  }
+  // }
 
 //   radioGroupChange(event) {
 // console.log(“radioGroupChange”,event.detail);
