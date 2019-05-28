@@ -10,6 +10,7 @@ import { LoadingController } from '@ionic/angular';
 
 
 import { FirebaseService } from '../services/firebase.service';
+import { Events } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -38,6 +39,7 @@ export class LoginPage implements OnInit {
               public loadingController: LoadingController,
               private baseService: FirebaseService,
               public alertController: AlertController,
+              public events: Events ,
               // private auth: AuthService,
               private router: Router,
               public toastController: ToastController,
@@ -62,6 +64,7 @@ export class LoginPage implements OnInit {
 
       if (usuarioLogueado !== undefined) {
         sessionStorage.setItem('usuario', JSON.stringify(usuarioLogueado));
+        this.events.publish('usuarioLogueado',  usuarioLogueado.perfil  );
         this.creoToast(true);
         this.router.navigateByUrl('/home');
       } else {
@@ -70,33 +73,11 @@ export class LoginPage implements OnInit {
         this.creoToast(false);
       }
     });
+
+   
+
   }
 
-  // async alertaMensaje(estado: boolean) {
-
-  //   if (estado === true) {
-  //     const alert = await this.alertController.create({
-  //       header: 'Bienvenido.',
-  //       subHeader: '',
-  //       message: 'Autenticación exitosa.',
-  //       buttons: ['OK']
-  //     });
-
-  //     await alert.present();
-
-
-  //   } else {
-  //     const alert = await this.alertController.create({
-  //       header: 'Error',
-  //       subHeader: '',
-  //       message: 'Usuario/Contraseña incorrectos.',
-  //       buttons: ['OK']
-  //     });
-
-  //     await alert.present();
-
-  //   }
-  // }
 
   async creoToast(rta: boolean) {
 
@@ -172,26 +153,5 @@ export class LoginPage implements OnInit {
   }
 
 
-  // async creoSheet() {
-  //   const actionSheet = await this.actionSheetController.create({{
-  //   switch (usuario) {
-  //     case 'admin':
-  //       this.cuenta.usuario = 'admin@gmail.com';
-  //       this.cuenta.password = '1111';
-  //       break;
-  //     case 'cocinero':
-  //       this.cuenta.usuario = 'cocinero@gmail.com';
-  //       this.cuenta.password = '2222';
-  //       break;
-  //     case 'supervisor':
-  //       this.cuenta.usuario = 'supervisor@gmail.com';
-  //       this.cuenta.password = '3333';
-  //       break;
-  //     default:
-  //       this.cuenta.usuario = '';
-  //       this.cuenta.password = '';
-  //       break;
-  //   }
-  // }
 
 }
