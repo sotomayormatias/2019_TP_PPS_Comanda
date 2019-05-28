@@ -118,14 +118,21 @@
         <!-- </ion-card-content>
         </ion-card> -->
           
-         <div padding>
-          <ion-button type="button"   color="secondary" fill="outline" [disabled]="cantidadFotos >= 3" (click)="tomarFoto()">Agregar foto</ion-button>
-          <ion-button type="button" shape="round" fill="outline" color="secondary" (click)="doScan()">Cargar desde DNI</ion-button>
-          <ion-button type="submit"  expand="block"  color="primary" fill="outline" [disabled]="!formDueSup.valid">Agregar
+     
+        <div padding>
+          <ion-button    shape="round"  color="medium"  [disabled]="cantidadFotos >= 3" (click)="tomarFoto()">Agregar foto  
+              <ion-icon  name="image"></ion-icon>
+          </ion-button>
+          <ion-button   shape="round"  color="medium" (click)="doScan()">Cargar desde DNI
+              <ion-icon name="copy"></ion-icon>
+          </ion-button>
+
+          
+          <ion-button type="submit"  expand="block"  color="dark"  [disabled]="!formDueSup.valid">Agregar
           </ion-button> 
         </div>
-      
       </ion-list>
+      
     
      
      

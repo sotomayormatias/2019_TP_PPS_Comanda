@@ -37,7 +37,9 @@
     // padding: 40px 30px;
     background: url("../../assets/imgs/corporative.jpg") ;
     background-repeat:no-repeat;
-    padding: 10%;
+    padding: 4%;
+   
+			
   }
 
   
@@ -118,17 +120,14 @@
     transform: translateY(-40px);
     
     &:after {
-      border-top: 4px solid rgba(122,184,147,1);
+      border-top: 4px solid #a2b9bc;
     }
   }
 }
   
   
   
-  
-ion-list{
-    --background: #032429;
-}
+
 
 ion-select{
   --color: black;
@@ -136,7 +135,7 @@ ion-select{
 }
 
   
-.round,ion-label{ 
+.round{ 
   font-family: "Open Sans", sans-serif;
   border-radius: 20px !important; 
   text-align: center;
@@ -145,6 +144,7 @@ ion-select{
   //  padding-bottom: 5px; 
   //  padding-top: 5px; 
   } 
+
   .vistaprevia{
     padding: 10%;
   }

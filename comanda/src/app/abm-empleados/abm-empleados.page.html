@@ -48,14 +48,15 @@
         </ion-slide>
       </ion-slides>
 
-      <br>
+      <div padding>
 
       <ion-button type="button" shape="round" color="secondary" fill="solid" (click)="tomarFoto()">Agregar foto
       </ion-button>
       <ion-button type="button" shape="round" fill="solid" color="secondary" (click)="doScan()">Cargar desde DNI</ion-button>
-    <br>
+    
       <ion-button type="submit" expand="block" color="primary" fill="solid" [disabled]="!formEmpleado.valid">Agregar
       </ion-button>
+      </div>
     </ion-list>
   </form>
 </ion-content>

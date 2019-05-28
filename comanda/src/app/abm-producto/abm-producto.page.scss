@@ -26,29 +26,17 @@
   max-width: 800px;
   margin: 0 auto;
   padding: 60px 30px;
-  background: #032429;
+
   @include epic-sides() {background: inherit;}
   text-align: center;
   
   &:first-child {
-    padding: 40px 30px;
+    background: url("../../assets/altas/producto.jpg");
+    background-repeat:no-repeat;
+    background-size: 360px 581px;
+    padding: 8%;
   }
-  &:nth-child(2),
-  &:nth-child(8),
-  &:nth-child(10){
-    background: #134A46;
-  }
-  &:nth-child(3),
-  &:nth-child(7) {
-    background: #377D6A;
-  }
-  &:nth-child(4),
-  &:nth-child(6) {
-    background: #7AB893;
-  }
-  &:nth-child(5) {
-    background: #B2E3AF;
-  }
+ 
   
   span {
     position: relative;
@@ -137,9 +125,7 @@
   
   
   
-ion-list{
-    --background: #032429;
-}
+
 
 ion-select{
   --color: black;
@@ -147,7 +133,7 @@ ion-select{
 }
 
   
-.round,ion-label{ 
+.round{ 
   font-family: "Open Sans", sans-serif;
   border-radius: 20px !important; 
   text-align: center;
