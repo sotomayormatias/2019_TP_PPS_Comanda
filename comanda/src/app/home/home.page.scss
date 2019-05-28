@@ -1,11 +1,6 @@
-.welcome-card ion-img {
-  max-height: 35vh;
-  overflow: hidden;
-}
 
-.homecontent{
-    // --ion-background-color:#3C3744;
-    background-color: #3C3744;
+#iconToolBar {
+	width: 50px;
 }
 
 //AGREGADO
@@ -680,7 +675,8 @@
 		-ms-flex-direction: column;
 		flex-direction: column;
 		padding: 8em 0 6em 0;
-		background-image: url("../../assets/imgs/banner.jpg") no-repeat;
+		background-image: url("../../assets/imgs/banner.jpg");
+		background-repeat:no-repeat;
 		background-size: cover;
 		background-position: center;
 		background-attachment: fixed;
@@ -732,6 +728,7 @@
 			height: 100%;
 			background-color: rgba(0, 0, 0, 0.25);
 			background-image: url("../../assets/imgs/banner.jpg");
+			background-repeat:no-repeat;
 		}
 
 		#header h1 {
@@ -745,8 +742,9 @@
 
 		#header.alt {
 			// height: 20em;
-			min-height: 20em;
-			min-height: 75vh;
+			// min-height: 20em;
+			// min-height: 75vh;
+			height: 100%;
 		}
 
 			#header.alt:before {
@@ -785,6 +783,7 @@
 				-ms-transition: opacity 2s ease;
 				transition: opacity 2s ease;
 				opacity: 1;
+				padding-bottom: 50%;
 			}
 
 		body.is-loading #header.alt:before {

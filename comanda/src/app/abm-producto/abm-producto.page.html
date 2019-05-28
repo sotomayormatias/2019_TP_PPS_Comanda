@@ -13,35 +13,46 @@
 </ion-header>
 
 <ion-content>
-  <div id="formulario">
+    
     <form [formGroup]="formProducto" (submit)="agregarProducto()">
-      <ion-list>
-        <ion-item>
-          <ion-label position="floating">Nombre</ion-label>
-          <ion-input [(ngModel)]="nombre" formControlName="nombreCtrl" type="text" name="nombre"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating">Descripción</ion-label>
-          <ion-input [(ngModel)]="descripcion" formControlName="descCtrl" type="text" name="descripcion"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating">Tiempo de elaboración (en minutos)</ion-label>
-          <ion-input [(ngModel)]="tiempo" formControlName="tiempoCtrl" type="number" name="tiempo"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating">Precio</ion-label>
-          <ion-input [(ngModel)]="precio" formControlName="precioCtrl" type="number" name="precio"></ion-input>
-        </ion-item>
-      </ion-list>
+        <ion-list  class="row">
+
+        <span>
+          <!-- <ion-label position="floating">Nombre</ion-label> -->
+          <input [(ngModel)]="nombre" class="clean-slide" formControlName="nombreCtrl" type="text" name="nombre"><label>Nombre</label>
+        </span>
+
+        <span>
+          <!-- <ion-label position="floating">Descripción</ion-label> -->
+          <input [(ngModel)]="descripcion"  class="clean-slide" formControlName="descCtrl" type="text" name="descripcion"><label>Descrip.</label>
+        </span>
+        <span>
+          <!-- <ion-label position="floating">Tiempo de elaboración (en minutos)</ion-label> -->
+          <input [(ngModel)]="tiempo"  class="clean-slide"  formControlName="tiempoCtrl" type="number" name="tiempo"><label>Tiempo</label>
+        </span>
+        <span>
+          <!-- <ion-label position="floating">Precio</ion-label> -->
+          <input [(ngModel)]="precio" class="clean-slide" formControlName="precioCtrl" type="number" name="precio"><label>Precio</label>
+        </span>
+      
+
+
+
       <ion-slides>
         <ion-slide *ngFor="let foto of captureDataUrl">
           <img [src]="foto" *ngIf="captureDataUrl" />
         </ion-slide>
       </ion-slides>
-      <ion-button type="button" shape="round" color="secondary" [disabled]="cantidadFotos >= 3" (click)="tomarFoto()">
+
+
+
+      <div padding>
+
+      <ion-button type="button" color="secondary" fill="outline" [disabled]="cantidadFotos >= 3" (click)="tomarFoto()">
         Agregar foto</ion-button>
-      <ion-button type="submit" expand="block" color="primary">Agregar
-      </ion-button>
+      <ion-button type="submit" expand="block" color="primary"  fill="outline">Agregar</ion-button>
+    </div>
+  </ion-list>
     </form>
-  </div>
+ 
 </ion-content>

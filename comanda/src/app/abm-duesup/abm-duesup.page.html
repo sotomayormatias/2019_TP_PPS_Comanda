@@ -76,17 +76,13 @@
           <ion-list class="round" >
            <!-- <ion-radio-group > -->
             
-              <ion-list-header>
-                <ion-label>Perfil</ion-label>
-              </ion-list-header>
-          
-           
+                        
                 <!-- <ion-label></ion-label>
                 <ion-radio formControlName="perfilCtrl" slot="start" value="duenio" checked></ion-radio>
                 <ion-radio  value="dueño" slot="start"  (ionSelect)="radioResp(i,1)" checked></ion-radio> -->
 
-                <ion-select class="round" placeholder="Seleccione">
-                  <ion-select-option value="dueño">Dueño</ion-select-option>
+                <ion-select [(ngModel)]="perfil" class="round" formControlName="perfilCtrl" placeholder="Seleccione perfil" >
+                  <ion-select-option value="dueño" checked>Dueño</ion-select-option>
                   <ion-select-option value="supervisor">Supervisor</ion-select-option>
                 </ion-select>
               
@@ -110,14 +106,17 @@
      -->
 
       
-     
 
-          <ion-slides>
+        <!-- <ion-card hidden>
+            <ion-card-header> <ion-card-title>Vista previa:</ion-card-title> </ion-card-header>
+        <ion-card-content> -->
+            <ion-slides>
             <ion-slide *ngFor="let foto of captureDataUrl">
-              <img [src]="foto" *ngIf="captureDataUrl" />
+              <img class="vistaprevia" [src]="foto" *ngIf="captureDataUrl" />
             </ion-slide>
           </ion-slides>
-
+        <!-- </ion-card-content>
+        </ion-card> -->
           
          <div padding>
           <ion-button type="button"   color="secondary" fill="outline" [disabled]="cantidadFotos >= 3" (click)="tomarFoto()">Agregar foto</ion-button>
