@@ -77,22 +77,41 @@ export class AppComponent {
    // ROUTING DEL MENU
       this.appPages = [
         {
-          title: 'Home',
-          url: '/home',
-          icon: 'home'
-        },
-        {
-          title: 'Alta Dueño/Supervisor',
-          url: '/abm-duesup',
-          icon: 'key'
-        }
-        ,
-        {
+              title: 'Home',
+              url: '/home',
+              icon: 'home'
+            },
+            {
+              title: 'Alta Dueño/Supervisor',
+              url: '/abm-duesup',
+              icon: 'key'
+            },
+            {
+        
+              title: 'Alta Mesas',
+              url: '/abm-mesa',
+              icon: 'help-buoy'
+            },
+            {
+              title: 'Alta Productos',
+              url: '/abm-producto',
+              icon: 'beer'
+            },
+            {
               title: 'Alta Empleados',
               url: '/abm-empleados',
               icon: 'person'
+            },
+            {
+              title: 'Alta de Clientes',
+              url: '/abm-cliente',
+              icon: 'basket'
+            },
+            {
+              title: 'Cerrar Sesion',
+              url: '/login',
+              icon: 'log-out'
             }
-
 
       ];
 

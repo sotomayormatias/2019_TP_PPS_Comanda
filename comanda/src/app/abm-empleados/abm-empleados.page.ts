@@ -3,6 +3,9 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Camera, CameraOptions, PictureSourceType } from "@ionic-native/camera/ngx";
 import { AlertController } from '@ionic/angular';
 import * as firebase from "firebase";
+import { ToastController } from '@ionic/angular';
+import { BarcodeScanner, BarcodeScannerOptions } from "@ionic-native/barcode-scanner/ngx";
+
 
 @Component({
   selector: 'app-abm-empleados',
@@ -19,9 +22,13 @@ export class AbmEmpleadosPage implements OnInit {
   captureDataUrl: Array<string>;
   hayFotos: boolean = false;
   cantidadFotos: number = 0;
+  datosEscaneados: any;
+  datos: any;
 
   constructor(
     private camera: Camera,
+    private scanner: BarcodeScanner,
+    public toastController: ToastController,
     private alertCtrl: AlertController
     ) {
     this.formEmpleado = new FormGroup({
@@ -121,6 +128,39 @@ export class AbmEmpleadosPage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  
+  doScan() {
+    this.scanner.scan({ "formats": "PDF_417" }).then((data) => {
+      this.datosEscaneados = data;
+      this.cargarDatosDesdeDni(this.datosEscaneados);
+    }, (err) => {
+      console.log("Error: " + err);
+    });
+  }
+
+  cargarDatosDesdeDni(datos: any) {
+    let parsedData = datos.text.split('@');
+    let nombre = parsedData[2].toString();
+    let apellido = parsedData[1].toString();
+    let dni: number = +parsedData[4];
+    
+    // this.guardardatosDeDueSup(datos);
+
+    this.formEmpleado.get('nombreCtrl').setValue(nombre);
+    this.formEmpleado.get('apellidoCtrl').setValue(apellido);
+    this.formEmpleado.get('dniCtrl').setValue(dni);
+  }
+
+  clearInputs() {
+      this.formEmpleado.get('nombreCtrl').setValue("");
+      this.formEmpleado.get('apellidoCtrl').setValue("");
+      this.formEmpleado.get('dniCtrl').setValue("");
+      this.formEmpleado.get('cuilCtrl').setValue("");
+      this.formEmpleado.get('templeadoCtrl').setValue("");
+
+
   }
 }
 
