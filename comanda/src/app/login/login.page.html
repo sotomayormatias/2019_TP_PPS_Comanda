@@ -1,35 +1,9 @@
-<!-- <ion-content>
-  <div class="login">
-    <div class="login-header">
-      <h1>Comanda</h1>
-    </div>
-    <div class="login-form">
-
-      <input type="text" [(ngModel)]="cuenta.usuario" placeholder="Usuario" /><br>
-      <input type="password" [(ngModel)]="cuenta.password" placeholder="Contraseña" />
-      <br>
-      <input type="button" (click)="doLogin()" value="Login" class="login-button" />
-    </div>
-  </div>
-
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button>
-      <ion-icon name="person"></ion-icon>
-    </ion-fab-button>
-    <ion-fab-list  side="start">
-      <ion-fab-button (click)="cargarUsuario('admin')">Admin</ion-fab-button>
-      <ion-fab-button (click)="cargarUsuario('cocinero')">Cocinero</ion-fab-button>
-      <ion-fab-button (click)="cargarUsuario('supervisor')">Super</ion-fab-button>
-    </ion-fab-list>
-  </ion-fab>
-</ion-content> -->
-
 <div id="custom-overlay" [style.display]=" splash ? 'block' : 'none' ">
 	<div class="logoPresentacion">
-		<img  src="../../assets/imgs/icon2.png">	
+		<img src="../../assets/imgs/icon2.png">
 	</div>
-		<div class="contenedorPresentacion">
-		<div>COMIRADIX</div><br>
+	<div class="contenedorPresentacion">
+		<div>COMIRADIX</div>
 		<div>PRACTICA PROFESIONAL</div>
 		<div>SUPERVISADA 4A</div>
 	</div>
@@ -39,20 +13,27 @@
 <div class="form-structor" [style.display]=" splash ? 'none' : 'block' ">
 	<div class="signup">
 
-			<ion-spinner *ngIf="spinner" class="form-title" id="signup"  style="color:white; font-size: 30px;" name="dots"></ion-spinner>
-			<ion-spinner *ngIf="spinner" class="form-title" id="signup"  style="color:white; font-size: 30px;" name="dots"></ion-spinner>
-			<ion-spinner *ngIf="spinner" class="form-title" id="signup"  style="color:white; font-size: 30px;" name="dots"></ion-spinner>
-			<ion-spinner *ngIf="spinner" class="form-title" id="signup"  style="color:white; font-size: 30px;" name="dots"></ion-spinner>
-			<ion-spinner *ngIf="spinner" class="form-title" id="signup"  style="color:white; font-size: 30px;" name="dots"></ion-spinner>
-			<ion-spinner *ngIf="spinner" class="form-title" id="signup"  style="color:white; font-size: 30px;" name="dots"></ion-spinner>
-		
+		<ion-spinner *ngIf="spinner" class="form-title" id="signup" style="color:white; font-size: 30px;" name="dots">
+		</ion-spinner>
+		<ion-spinner *ngIf="spinner" class="form-title" id="signup" style="color:white; font-size: 30px;" name="dots">
+		</ion-spinner>
+		<ion-spinner *ngIf="spinner" class="form-title" id="signup" style="color:white; font-size: 30px;" name="dots">
+		</ion-spinner>
+		<ion-spinner *ngIf="spinner" class="form-title" id="signup" style="color:white; font-size: 30px;" name="dots">
+		</ion-spinner>
+		<ion-spinner *ngIf="spinner" class="form-title" id="signup" style="color:white; font-size: 30px;" name="dots">
+		</ion-spinner>
+		<ion-spinner *ngIf="spinner" class="form-title" id="signup" style="color:white; font-size: 30px;" name="dots">
+		</ion-spinner>
+
 		<h2 *ngIf="!spinner" class="form-title" id="signup">Comiradix</h2>
 		<div *ngIf="!spinner" class="form-holder">
 			<!-- <input type="text" class="input" placeholder="Name" /> -->
-			<input type="email" class="input" [(ngModel)]="cuenta.usuario"  placeholder="Usuario" />
+			<input type="email" class="input" [(ngModel)]="cuenta.usuario" placeholder="Usuario" />
 			<input type="password" class="input" [(ngModel)]="cuenta.password" placeholder="Contraseña" />
 		</div>
-		<button  *ngIf="!spinner" class="submit-btn" (click)="login()">ENTRAR</button>
-		<button  *ngIf="!spinner" expand="block" class="submit-btn-acceso" fill="outline"  (click)="creoSheet()">Acc.Rápido</button>
+		<button *ngIf="!spinner" class="submit-btn" (click)="login()">ENTRAR</button>
+		<button *ngIf="!spinner" expand="block" class="submit-btn-acceso" fill="outline"
+			(click)="creoSheet()">Acc.Rápido</button>
 	</div>
 </div>
