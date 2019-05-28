@@ -146,8 +146,6 @@ export class AbmEmpleadosPage implements OnInit {
     let apellido = parsedData[1].toString();
     let dni: number = +parsedData[4];
     
-    // this.guardardatosDeDueSup(datos);
-
     this.formEmpleado.get('nombreCtrl').setValue(nombre);
     this.formEmpleado.get('apellidoCtrl').setValue(apellido);
     this.formEmpleado.get('dniCtrl').setValue(dni);

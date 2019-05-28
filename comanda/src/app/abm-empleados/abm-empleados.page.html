@@ -18,27 +18,30 @@
 
     <ion-list class="row">
       <span>
-        <input [(ngModel)]="nombre" class="swing" formControlName="nombreCtrl" type="text"
-          name="nombre"><label>Nombre</label>
+        <input [(ngModel)]="nombre" class="card-slide" formControlName="nombreCtrl" type="text" name="nombre"><label>Nombre</label>
       </span>
-   
       <span>
-        <input [(ngModel)]="apellido" class="swing" formControlName="apellidoCtrl" type="text"
-          name="apellido"><label>Apellido</label>
+        <input [(ngModel)]="apellido" class="card-slide" formControlName="apellidoCtrl" type="text" name="apellido"><label>Apellido</label>
+      </span>
+      <span>
+        <input [(ngModel)]="dni" class="card-slide" formControlName="dniCtrl" type="number" name="dni"><label>DNI</label>
+      </span>
+      <span>
+        <input [(ngModel)]="cuil" class="card-slide" formControlName="cuilCtrl" type="number" name="cuil"><label>CUIL</label>
       </span>
 
-      <span>
-        <input [(ngModel)]="dni" class="swing" formControlName="dniCtrl" type="number" name="dni"><label>DNI</label>
-      </span>
+      <ion-list class="round" >
 
-      <span>
-        <input [(ngModel)]="cuil" class="swing" formControlName="cuilCtrl" type="number" name="cuil"><label>CUIL</label>
-      </span>
+           <ion-select [(ngModel)]="templeado" formControlName="templeadoCtrl"  class="round" placeholder="Tipo de Empleado">
 
-      <span>
-        <input [(ngModel)]="templeado" class="swing" formControlName="templeadoCtrl" type="text"
-          name="tEmpleado"><label>T.Empleado</label>
-      </span>
+            <ion-select-option value="cocinero">Cocinero</ion-select-option>
+            <ion-select-option value="bartender">Bartender</ion-select-option>
+            <ion-select-option value="mozo">Mozo</ion-select-option>
+            <ion-select-option value="delivery">Delivery</ion-select-option>
+          </ion-select>
+       </ion-list>
+
+       <br>
 
       <ion-slides>
         <ion-slide *ngFor="let foto of captureDataUrl">
@@ -49,6 +52,7 @@
       <ion-button type="button" shape="round" color="secondary" fill="outline" (click)="tomarFoto()">Agregar foto
       </ion-button>
       <ion-button type="button" shape="round" fill="outline" color="secondary" (click)="doScan()">Cargar desde DNI</ion-button>
+    <br>
       <ion-button type="submit" expand="block" color="primary" fill="outline" [disabled]="!formEmpleado.valid">Agregar
       </ion-button>
     </ion-list>
