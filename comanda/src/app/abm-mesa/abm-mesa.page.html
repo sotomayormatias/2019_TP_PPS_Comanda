@@ -28,14 +28,21 @@
           name="cantcomen"><label>Nro.Personas</label>
       </span>
 
-
+<!-- 
       <span>
-        <!-- <ion-label position="floating">Tipo de Empleado</ion-label> -->
-        <input [(ngModel)]="tmesa" class="swing" formControlName="tmesaCtrl" type="text"
+      <input [(ngModel)]="tmesa" class="swing" formControlName="tmesaCtrl" type="text"
           name="tmesa"><label>T.Mesa</label>
-      </span>
+      </span> -->
+<br>
+      <ion-list class="round" >
 
+        <ion-select [(ngModel)]="tmesa" formControlName="tmesaCtrl"  class="round" placeholder="Tipo de Mesa">
 
+         <ion-select-option value="cocinero">VIP</ion-select-option>
+         <ion-select-option value="bartender">Discapacitados</ion-select-option>
+         <ion-select-option value="mozo">Normal</ion-select-option>
+       </ion-select>
+    </ion-list>
 
 
       <ion-slides>
@@ -43,10 +50,10 @@
           <img [src]="foto" *ngIf="captureDataUrl" />
         </ion-slide>
       </ion-slides>
-
-      <ion-button type="button" shape="round" color="secondary" fill="outline" (click)="tomarFoto()">Agregar foto
+      <br><br>
+      <ion-button type="button" shape="round" color="secondary" fill="solid" (click)="tomarFoto()">Agregar foto
       </ion-button>
-      <ion-button type="submit" expand="block" color="primary" fill="outline" [disabled]="!formEmpleado.valid">Agregar
+      <ion-button type="submit" expand="block" color="primary" fill="solid" [disabled]="!formEmpleado.valid">Agregar
       </ion-button>
     </ion-list>
   </form>

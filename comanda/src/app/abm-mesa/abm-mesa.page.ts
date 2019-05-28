@@ -3,6 +3,9 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Camera, CameraOptions, PictureSourceType } from "@ionic-native/camera/ngx";
 import { AlertController } from '@ionic/angular';
 import * as firebase from "firebase";
+import { ToastController } from '@ionic/angular';
+import { BarcodeScanner, BarcodeScannerOptions } from "@ionic-native/barcode-scanner/ngx";
+
 
 
 @Component({
@@ -18,10 +21,14 @@ export class AbmMesaPage implements OnInit {
   captureDataUrl: Array<string>;
   hayFotos: boolean = false;
   cantidadFotos: number = 0;
+  datosEscaneados: any;
+  datos: any;
 
   constructor(
     private camera: Camera,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private scanner: BarcodeScanner,
+    public toastController: ToastController
     ) {
     this.formMesas = new FormGroup({
       nromesaCtrl: new FormControl('', Validators.required),
@@ -71,7 +78,7 @@ export class AbmMesaPage implements OnInit {
     let contador: number = 0;
 
     this.captureDataUrl.forEach(foto => {
-      let filename: string = this.nromesa + "_" + contador;
+      let filename: string = this.tmesa + this.nromesa + "_" + contador;
       const imageRef = storageRef.child(`mesas/${filename}.jpg`);
 
       let datos: any = { 'nromesa': this.nromesa, 'cantcomen': this.cantcomen, 'tmesa': this.tmesa};
@@ -107,6 +114,8 @@ export class AbmMesaPage implements OnInit {
     await alert.present();
     // clear the previous photo data in the variable
     this.captureDataUrl.length = 0;
+    
+    this.clearInputs();
   }
 
   async subidaErronea(mensaje: string) {
@@ -118,6 +127,35 @@ export class AbmMesaPage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  
+  doScan() {
+    this.scanner.scan({ "formats": "PDF_417" }).then((data) => {
+      this.datosEscaneados = data;
+      this.cargarDatosDesdeDni(this.datosEscaneados);
+    }, (err) => {
+      console.log("Error: " + err);
+    });
+  }
+
+  cargarDatosDesdeDni(datos: any) {
+    let parsedData = datos.text.split('@');
+    let nombre = parsedData[2].toString();
+    let apellido = parsedData[1].toString();
+    let dni: number = +parsedData[4];
+    
+    this.formMesas.get('nromesaCtrl').setValue(nombre);
+    this.formMesas.get('cantcomenCtrl').setValue(apellido);
+    this.formMesas.get('tmesaCtrl').setValue(dni);
+  }
+
+  clearInputs() {
+      this.formMesas.get('nromesaCtrl').setValue("");
+      this.formMesas.get('cantcomenCtrl').setValue("");
+      this.formMesas.get('tmesaCtrl').setValue("");
+  
+
   }
 }
 

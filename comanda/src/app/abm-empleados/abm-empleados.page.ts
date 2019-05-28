@@ -117,6 +117,8 @@ export class AbmEmpleadosPage implements OnInit {
     await alert.present();
     // clear the previous photo data in the variable
     this.captureDataUrl.length = 0;
+
+    this.clearInputs();
   }
 
   async subidaErronea(mensaje: string) {

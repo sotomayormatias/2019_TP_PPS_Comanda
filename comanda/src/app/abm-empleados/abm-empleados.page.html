@@ -13,7 +13,7 @@
 </ion-header>
 
 <!-- ABM Empleados -->
-<ion-content>
+<ion-content class="fondoContent">
   <form class="formGral" [(formGroup)]="formEmpleado" (submit)="agregarEmpleado()">
 
     <ion-list class="row">
@@ -29,7 +29,7 @@
       <span>
         <input [(ngModel)]="cuil" class="card-slide" formControlName="cuilCtrl" type="number" name="cuil"><label>CUIL</label>
       </span>
-
+      <br>
       <ion-list class="round" >
 
            <ion-select [(ngModel)]="templeado" formControlName="templeadoCtrl"  class="round" placeholder="Tipo de Empleado">
@@ -40,8 +40,7 @@
             <ion-select-option value="delivery">Delivery</ion-select-option>
           </ion-select>
        </ion-list>
-
-       <br>
+       <span></span>
 
       <ion-slides>
         <ion-slide *ngFor="let foto of captureDataUrl">
@@ -49,11 +48,13 @@
         </ion-slide>
       </ion-slides>
 
-      <ion-button type="button" shape="round" color="secondary" fill="outline" (click)="tomarFoto()">Agregar foto
+      <br>
+
+      <ion-button type="button" shape="round" color="secondary" fill="solid" (click)="tomarFoto()">Agregar foto
       </ion-button>
-      <ion-button type="button" shape="round" fill="outline" color="secondary" (click)="doScan()">Cargar desde DNI</ion-button>
+      <ion-button type="button" shape="round" fill="solid" color="secondary" (click)="doScan()">Cargar desde DNI</ion-button>
     <br>
-      <ion-button type="submit" expand="block" color="primary" fill="outline" [disabled]="!formEmpleado.valid">Agregar
+      <ion-button type="submit" expand="block" color="primary" fill="solid" [disabled]="!formEmpleado.valid">Agregar
       </ion-button>
     </ion-list>
   </form>
