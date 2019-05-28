@@ -659,6 +659,20 @@ span:nth-child(3) .card-slide:active {
   
 ion-list{
     --background: #032429;
-}  
+}
+
+ion-select{
+  --color: black;
+  -ms-text-align-last: center;
+}
+
   
-.round{ border-radius: 20px !important; padding-left: 10px; padding-right: 10px; padding-bottom: 5px; padding-top: 5px; } 
+.round,ion-label{ 
+  font-family: "Open Sans", sans-serif;
+  border-radius: 20px !important; 
+  text-align: center;
+  // padding-left: 10px;
+  //  padding-right: 10px; 
+  //  padding-bottom: 5px; 
+  //  padding-top: 5px; 
+  } 
