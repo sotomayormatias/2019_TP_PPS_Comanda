@@ -1,68 +1,96 @@
 <ion-header>
-  <ion-toolbar color="dark">
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>
-      Alta Clientes
-    </ion-title>
-    <ion-buttons slot="end">
-      <img id="iconToolBar" src="../../assets/imgs/icon.png">
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content>
-  <ion-item>
-    <ion-label>Anónimo</ion-label>
-    <ion-toggle color="primary" [(ngModel)]="esAnonimo" [ngModelOptions]="{standalone: true}"></ion-toggle>
-  </ion-item>
-  <div id="formularioAnonimo" *ngIf="esAnonimo">
+    <ion-toolbar color="dark">
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>
+        Alta Clientes
+      </ion-title>
+      <ion-buttons slot="end">
+        <img id="iconToolBar" src="../../assets/imgs/icon.png">
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+    
+    <ion-item color="dark">
+      <ion-label>Anónimo</ion-label>
+      <ion-toggle color="dark" [(ngModel)]="esAnonimo" [ngModelOptions]="{standalone: true}"></ion-toggle>
+    </ion-item>
+  
+  
+    
+    <div *ngIf="esAnonimo">
+  
     <form [formGroup]="formClienteAnonimo" (submit)="agregarCliente()">
-      <ion-item>
-        <ion-label position="floating">Nombre</ion-label>
-        <ion-input formControlName="nombreAnonimo" type="text" name="nombre"></ion-input>
-      </ion-item>
-      <ion-slides>
-        <ion-slide *ngFor="let foto of captureDataUrl">
-          <img [src]="foto" *ngIf="captureDataUrl" />
-        </ion-slide>
-      </ion-slides>
-      <ion-button type="button" shape="round" color="secondary" [disabled]="cantidadFotos >= 1" (click)="tomarFoto()">
-        Agregar foto</ion-button>
-      <ion-button type="button" shape="round" color="secondary" (click)="doScan()">Cargar desde DNI</ion-button>
-      <ion-button type="submit" expand="block" color="primary" [disabled]="!formClienteAnonimo.valid || !hayFotos">
-        Agregar
-      </ion-button>
-    </form>
-  </div>
-  <div id="formularioRegistrado" *ngIf="!esAnonimo">
-    <form [formGroup]="formClienteRegistrado" (submit)="agregarCliente()">
-      <ion-list>
-        <ion-item>
-          <ion-label position="floating">Nombre</ion-label>
-          <ion-input formControlName="nombreRegistrado" type="text" name="nombre"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating">Apellido</ion-label>
-          <ion-input formControlName="apellidoRegistrado" type="text" name="apellido"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating">DNI</ion-label>
-          <ion-input formControlName="dniRegistrado" type="number" name="dni"></ion-input>
-        </ion-item>
+        <ion-list class="row">
+   
+         <span>
+          <input class="gate" formControlName="nombreAnonimo"   type="text" name="nombre"><label>Nombre</label>
+        </span>
+  
+  
+  
+        <ion-slides>
+          <ion-slide *ngFor="let foto of captureDataUrl">
+            <img [src]="foto" *ngIf="captureDataUrl" />
+          </ion-slide>
+        </ion-slides>
+  
+  
+  
+        <ion-button type="button" shape="round" fill="outline" color="secondary" [disabled]="cantidadFotos >= 1" (click)="tomarFoto()">
+          Agregar foto</ion-button>
+        <ion-button type="button" shape="round" fill="outline" color="secondary" (click)="doScan()">Cargar desde DNI</ion-button>
+        <ion-button type="submit" expand="block" fill="outline" color="primary" [disabled]="!formClienteAnonimo.valid || !hayFotos">
+          Agregar
+        </ion-button>
       </ion-list>
-      <ion-slides>
-        <ion-slide *ngFor="let foto of captureDataUrl">
-          <img [src]="foto" *ngIf="captureDataUrl" />
-        </ion-slide>
-      </ion-slides>
-      <ion-button type="button" shape="round" color="secondary" [disabled]="cantidadFotos >= 1" (click)="tomarFoto()">
-        Agregar foto</ion-button>
-      <ion-button type="button" shape="round" color="secondary" (click)="doScan()">Cargar desde DNI</ion-button>
-      <ion-button type="submit" expand="block" color="primary" [disabled]="!formClienteRegistrado.valid || !hayFotos">
-        Agregar
-      </ion-button>
-    </form>
-  </div>
-</ion-content>
+      </form>
+    </div>
+  
+  
+  
+  
+    <div id="formularioRegistrado" *ngIf="!esAnonimo">
+      <form [formGroup]="formClienteRegistrado" (submit)="agregarCliente()">
+      <ion-list class="row">
+         
+          <span>
+            <input class="gate" formControlName="nombreRegistrado" type="text" name="nombre"><label>Nombre</label>
+          </span>
+         
+          <span>
+            <input class="gate" formControlName="apellidoRegistrado" type="text" name="apellido"><label>Apellido</label>
+          </span>
+          
+          <span>
+            <input class="gate" formControlName="dniRegistrado" type="number" name="dni"><label>DNI</label>
+          </span>
+       
+        <ion-slides>
+          <ion-slide *ngFor="let foto of captureDataUrl">
+            <img [src]="foto" *ngIf="captureDataUrl" />
+          </ion-slide>
+        </ion-slides>
+  
+  
+      
+        <ion-button type="button" shape="round" fill="outline" color="secondary" [disabled]="cantidadFotos >= 1" (click)="tomarFoto()">
+          Agregar foto</ion-button>
+        <ion-button type="button" shape="round" fill="outline" color="secondary" (click)="doScan()">Cargar desde DNI</ion-button>
+        <ion-button type="submit" expand="block" fill="outline" color="primary" [disabled]="!formClienteRegistrado.valid || !hayFotos">
+          Agregar
+        </ion-button>
+     
+  
+  
+      
+      </ion-list>
+      </form>
+    </div>
+  </ion-content>
+  
+  
+  
