@@ -54,7 +54,6 @@ export class AppComponent {
   //   }
   // ];
 
-
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -106,6 +105,16 @@ export class AppComponent {
               title: 'Alta de Clientes',
               url: '/abm-cliente',
               icon: 'basket'
+            },
+            {
+              title: 'Encuesta Satisfacción',
+              url: '/encuesta-cliente',
+              icon: 'book'
+            },
+            {
+              title: 'Estadística Satisfacción',
+              url: '/est-satisfaccion',
+              icon: 'pie'
             },
             {
               title: 'Cerrar Sesion',
