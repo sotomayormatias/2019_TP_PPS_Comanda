@@ -12,13 +12,13 @@ import * as firebase from "firebase";
   styleUrls: ['./abm-duesup.page.scss'],
 })
 export class AbmDuesupPage implements OnInit {
-  //Datos Dueño/Sup
+  // Datos Dueño/Sup
   formDueSup: FormGroup;
   nombre: string;
   apellido: string;
   DNI: number;
   CUIL: string;
-  perfil:string;
+  perfil: string;
 
   nombreCtrl;
   apellidoCtrl;
@@ -82,7 +82,6 @@ export class AbmDuesupPage implements OnInit {
   }
 
   agregarDueSup() {
-    // let usuario = JSON.parse(sessionStorage.getItem('usuario'));
     let storageRef = firebase.storage().ref();
     let errores: number = 0;
     let contador: number = 0;
@@ -91,9 +90,7 @@ export class AbmDuesupPage implements OnInit {
       let filename: string = this.nombre + "_" + contador;
       const imageRef = storageRef.child(`dueSup/${filename}.jpg`);
 
-      // this.perfil = this.perfilCtrl.value;
-
-      let datos: any = { 'nombre': this.nombre, 'apellido': this.apellido, 'DNI': this.DNI, 'CUIL': this.CUIL , 'perfil':this.perfil };
+      let datos: any = { 'nombre': this.nombre, 'apellido': this.apellido, 'DNI': this.DNI, 'CUIL': this.CUIL , 'perfil': this.perfil };
       this.guardardatosDeDueSup(datos);
 
       imageRef.putString(foto, firebase.storage.StringFormat.DATA_URL).then((snapshot) => {
@@ -116,14 +113,6 @@ export class AbmDuesupPage implements OnInit {
   }
 
   async subidaExitosa(mensaje) {
-    // const alert = await this.alertCtrl.create({
-    //   header: 'Alert',
-    //   subHeader: 'Éxito',
-    //   message: mensaje,
-    //   buttons: ['OK']
-    // });
-
-    // await alert.present();
     const toast = await this.toastController.create({
       message: mensaje,
       color: 'success',
@@ -171,11 +160,11 @@ export class AbmDuesupPage implements OnInit {
     // this.guardardatosDeDueSup(datos);
 
     this.formDueSup.get('nombreCtrl').setValue(nombre);
-      this.formDueSup.get('apellidoCtrl').setValue(apellido);
-      this.formDueSup.get('DNICtrl').setValue(dni);
+    this.formDueSup.get('apellidoCtrl').setValue(apellido);
+    this.formDueSup.get('DNICtrl').setValue(dni);
   }
 
-  clearInputs(){
+  clearInputs() {
       this.formDueSup.get('nombreCtrl').setValue("");
       this.formDueSup.get('apellidoCtrl').setValue("");
       this.formDueSup.get('DNICtrl').setValue("");
