@@ -37,7 +37,13 @@
     // padding: 40px 30px;
     background: url("../../assets/imgs/corporative.jpg") ;
     background-repeat:no-repeat;
-    padding: 10%;
+    padding: 4%;
+    -moz-transition: opacity 2s ease;
+				-webkit-transition: opacity 2s ease;
+				-ms-transition: opacity 2s ease;
+				transition: opacity 2s ease;
+				opacity: 1;
+			
   }
 
   
@@ -126,9 +132,10 @@
   
   
   
-ion-list{
-    --background: #032429;
-}
+// ion-list{
+//     --background: #032429;
+// }
+
 
 ion-select{
   --color: black;
@@ -136,7 +143,7 @@ ion-select{
 }
 
   
-.round,ion-label{ 
+.round{ 
   font-family: "Open Sans", sans-serif;
   border-radius: 20px !important; 
   text-align: center;
@@ -145,6 +152,7 @@ ion-select{
   //  padding-bottom: 5px; 
   //  padding-top: 5px; 
   } 
+
   .vistaprevia{
     padding: 10%;
   }
