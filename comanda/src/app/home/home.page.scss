@@ -8,193 +8,56 @@
 @import url("https://fonts.googleapis.com/css?family=Pacifico|Source+Sans+Pro:200,400");
 
 
-/* Type */
-
-	// body {
-	// 	background-color: #f4f4f4;
-	// 	color: #666666;
-	// }
-
-	body, input, select, textarea {
-		font-family: "Source Sans Pro", Helvetica, sans-serif;
-		font-size: 17pt;
-		font-weight: 200;
-		line-height: 1.65;
-	}
-
-		@media screen and (max-width: 1680px) {
-
-			body, input, select, textarea {
-				font-size: 13pt;
-			}
-
-		}
-
-		@media screen and (max-width: 1280px) {
-
-			body, input, select, textarea {
-				font-size: 12pt;
-			}
-
-		}
-
-		@media screen and (max-width: 360px) {
-
-			body, input, select, textarea {
-				font-size: 11pt;
-			}
-
-		}
-
-
-
+//PONE LA IMAGEN DE FONDO Y LA BLUREA
+.body{
+	position: absolute;
+	top: 0px;
+	left: -20px;
+	right: -40px;
+	bottom: -40px;
+	width: auto;
+	height: auto;
+	background-image: url("../../assets/imgs/banner.jpg");
+ 	background-repeat: no-repeat;
+	background-size: cover;
+	-webkit-filter: blur(5px);
+	z-index: 0;
+}
 
 
 
 /* Header */
 
-	#header {
-		background-color: #444;
+	h1 {
+		background-color: transparent;
 		color: rgba(255, 255, 255, 0.75);
-		display: -moz-flex;
-		display: -webkit-flex;
-		display: -ms-flex;
-		display: flex;
-		-moz-align-items: center;
-		-webkit-align-items: center;
-		-ms-align-items: center;
-		align-items: center;
-		-moz-justify-content: center;
-		-webkit-justify-content: center;
-		-ms-justify-content: center;
-		justify-content: center;
-		-moz-flex-direction: column;
-		-webkit-flex-direction: column;
-		-ms-flex-direction: column;
-		flex-direction: column;
-		padding: 8em 0 6em 0;
-		
-		background-size: cover;
-		background-position: center;
-		background-attachment: fixed;
+		font-size: 4em;
+		padding: 0 0.5em 0.25em 0.5em;
+		border-bottom: solid 2px #ffffff;
+		font-weight: 200;
+		font-family: "Pacifico", cursive;
+		text-transform: none;
+		letter-spacing: 0;
+
+	}
+
+	p {
+		text-transform: uppercase;
+		letter-spacing: 0.325rem;
+		font-weight: 400;
+		font-size: 0.8em;
+		padding: 0 1.25em;
+		color: darkgray;
+	}
+
+	.card{
+		box-shadow: none !important;
+		background-color: transparent;
+		margin-top: 60%;
+
 		text-align: center;
-		position: relative;
-		cursor: default;
+	
+		
 	}
 
 	
-
-		#header strong, #header b {
-			color: #ffffff;
-		}
-
-		#header h1, #header h2, #header h3, #header h4, #header h5, #header h6 {
-			color: #ffffff;
-		}
-
-	
-		#header:before {
-			content: '';
-			display: block;
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background-color: rgba(0, 0, 0, 0.25);
-			background-image: url("../../assets/imgs/banner.jpg");
-			background-repeat:no-repeat;
-		}
-
-		#header h1 {
-			margin-bottom: 0.5em;
-		}
-
-		#header .inner {
-			position: relative;
-			z-index: 1;
-		}
-
-		#header.alt {
-			// height: 20em;
-			// min-height: 20em;
-			// min-height: 75vh;
-			height: 100%;
-		}
-
-			#header.alt:before {
-				-moz-transition: background-color 3s ease;
-				-webkit-transition: background-color 3s ease;
-				-ms-transition: background-color 3s ease;
-				transition: background-color 3s ease;
-				-moz-transition-delay: 1s;
-				-webkit-transition-delay: 1s;
-				-ms-transition-delay: 1s;
-				transition-delay: 1s;
-				height: 100%;
-			}
-
-			#header.alt h1 {
-				font-size: 4em;
-				padding: 0 0.5em 0.25em 0.5em;
-				border-bottom: solid 2px #ffffff;
-				font-weight: 200;
-				font-family: "Pacifico", cursive;
-				text-transform: none;
-				letter-spacing: 0;
-			}
-
-			#header.alt p {
-				text-transform: uppercase;
-				letter-spacing: 0.325rem;
-				font-weight: 400;
-				font-size: 0.8em;
-				padding: 0 1.25em;
-			}
-
-			#header.alt .inner {
-				-moz-transition: opacity 2s ease;
-				-webkit-transition: opacity 2s ease;
-				-ms-transition: opacity 2s ease;
-				transition: opacity 2s ease;
-				opacity: 1;
-				padding-bottom: 50%;
-			}
-
-		body.is-loading #header.alt:before {
-			background-color: black;
-		}
-
-		body.is-loading #header.alt .inner {
-			opacity: 0;
-		}
-
-		@media screen and (max-width: 1280px) {
-
-			#header {
-				background-attachment: scroll;
-			}
-
-		}
-
-		@media screen and (max-width: 736px) {
-
-			#header {
-				padding: 4em 2em 2em 2em;
-			}
-
-				#header.alt h1 {
-					font-size: 3.5em;
-					padding-left: 0;
-					padding-right: 0;
-				}
-
-				#header.alt p {
-					padding: 0;
-				}
-
-				#header.alt .inner {
-					max-width: 20em;
-				}
-
-		}

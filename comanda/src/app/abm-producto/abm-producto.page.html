@@ -15,23 +15,24 @@
 <ion-content>
     
     <form [formGroup]="formProducto" (submit)="agregarProducto()">
-        <ion-list  class="row">
+     
+      <!-- IMAGEN DE FONDO -->
+      <div class="body"></div>
+      <ion-list>
 
         <span>
-          <!-- <ion-label position="floating">Nombre</ion-label> -->
           <input [(ngModel)]="nombre" class="clean-slide" formControlName="nombreCtrl" type="text" name="nombre"><label>Nombre</label>
         </span>
 
         <span>
-          <!-- <ion-label position="floating">Descripción</ion-label> -->
           <input [(ngModel)]="descripcion"  class="clean-slide" formControlName="descCtrl" type="text" name="descripcion"><label>Descrip.</label>
         </span>
+
         <span>
-          <!-- <ion-label position="floating">Tiempo de elaboración (en minutos)</ion-label> -->
           <input [(ngModel)]="tiempo"  class="clean-slide"  formControlName="tiempoCtrl" type="number" name="tiempo"><label>Tiempo</label>
         </span>
+
         <span>
-          <!-- <ion-label position="floating">Precio</ion-label> -->
           <input [(ngModel)]="precio" class="clean-slide" formControlName="precioCtrl" type="number" name="precio"><label>Precio</label>
         </span>
       
@@ -46,7 +47,7 @@
 
 
 
-      <div padding>
+      <div class="botones">
 
       <ion-button shape="round"  color="medium"  [disabled]="cantidadFotos >= 3" (click)="tomarFoto()">
         Agregar foto</ion-button>

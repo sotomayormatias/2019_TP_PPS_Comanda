@@ -15,8 +15,11 @@
 <!-- ABM Empleados -->
 <ion-content class="fondoContent">
   <form class="formGral" [(formGroup)]="formEmpleado" (submit)="agregarEmpleado()">
+  
+      <!-- IMAGEN DE FONDO -->
+      <div class="body"></div>
 
-    <ion-list class="row">
+    <ion-list>
       <span>
         <input [(ngModel)]="nombre" class="card-slide" formControlName="nombreCtrl" type="text" name="nombre"><label>Nombre</label>
       </span>
@@ -29,8 +32,8 @@
       <span>
         <input [(ngModel)]="cuil" class="card-slide" formControlName="cuilCtrl" type="number" name="cuil"><label>CUIL</label>
       </span>
-      <br>
-      <ion-list class="round" >
+ 
+    
 
            <ion-select [(ngModel)]="templeado" formControlName="templeadoCtrl"  class="round" placeholder="Tipo de Empleado">
 
@@ -39,8 +42,8 @@
             <ion-select-option value="mozo">Mozo</ion-select-option>
             <ion-select-option value="delivery">Delivery</ion-select-option>
           </ion-select>
-       </ion-list>
-       <span></span>
+        
+       <!-- <span></span> -->
 
       <ion-slides>
         <ion-slide *ngFor="let foto of captureDataUrl">
@@ -48,11 +51,11 @@
         </ion-slide>
       </ion-slides>
 
-      <div padding>
+      <div class="botones">
 
-      <ion-button type="button" shape="round" color="secondary" fill="solid" (click)="tomarFoto()">Agregar foto
+      <ion-button  shape="round" color="secondary" fill="solid" (click)="tomarFoto()">Agregar foto
       </ion-button>
-      <ion-button type="button" shape="round" fill="solid" color="secondary" (click)="doScan()">Cargar desde DNI</ion-button>
+      <ion-button  shape="round" fill="solid" color="secondary" (click)="doScan()">Cargar desde DNI</ion-button>
     
       <ion-button type="submit" expand="block" color="primary" fill="solid" [disabled]="!formEmpleado.valid">Agregar
       </ion-button>

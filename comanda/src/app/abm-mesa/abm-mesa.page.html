@@ -16,7 +16,10 @@
 <ion-content>
   <form class="formGral" [(formGroup)]="formMesas" (submit)="agregarMesas()">
 
-    <ion-list class="row">
+     <!-- IMAGEN DE FONDO -->
+     <div class="body"></div>
+
+    <ion-list>
 
       <span>
         <input [(ngModel)]="nromesa" class="swing" formControlName="nromesaCtrl" type="number"
@@ -33,15 +36,15 @@
       <input [(ngModel)]="tmesa" class="swing" formControlName="tmesaCtrl" type="text"
           name="tmesa"><label>T.Mesa</label>
       </span> -->
-      <ion-list class="round" >
-        <label>Seleccione tipo de mesa </label>
-        <ion-select [(ngModel)]="tmesa" formControlName="tmesaCtrl"  class="select" placeholder="Tipo">
+   
+        <!-- <label>Seleccione tipo de mesa </label> -->
+        <ion-select [(ngModel)]="tmesa" formControlName="tmesaCtrl"  class="round" placeholder="Tipo">
 
          <ion-select-option value="cocinero">VIP</ion-select-option>
          <ion-select-option value="bartender">Discapacitados</ion-select-option>
          <ion-select-option value="mozo">Normal</ion-select-option>
        </ion-select>
-    </ion-list>
+    
 
 
       <ion-slides>
@@ -50,7 +53,7 @@
         </ion-slide>
       </ion-slides>
 
-     <div class="botones" padding>
+     <div class="botones">
       <ion-button type="button" shape="round" color="secondary" fill="solid" (click)="tomarFoto()">Agregar foto
       </ion-button>
       <ion-button type="submit" expand="block" color="primary" fill="solid" [disabled]="!formMesas.valid">Agregar
