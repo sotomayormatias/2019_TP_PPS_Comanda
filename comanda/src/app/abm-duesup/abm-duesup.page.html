@@ -44,7 +44,8 @@
             <ion-select-option value="supervisor">Supervisor</ion-select-option>
           </ion-select>
               
-      
+          <!-- <span></span> -->
+
           <ion-slides>
             <ion-slide *ngFor="let foto of captureDataUrl">
               <img class="vistaprevia" [src]="foto" *ngIf="captureDataUrl" />
@@ -53,11 +54,11 @@
       
      
           <div class="botones">
-            <ion-button  slot="start"  shape="round"  color="medium"  [disabled]="cantidadFotos >= 3" (click)="tomarFoto()">Agregar foto  
+            <ion-button  shape="round"  color="medium"  [disabled]="cantidadFotos >= 3" (click)="tomarFoto()">Agregar foto  
                 <ion-icon  name="image"></ion-icon>
             </ion-button>
 
-            <ion-button  slot="end"  shape="round"  color="medium" (click)="doScan()">Cargar desde DNI
+            <ion-button  shape="round"  color="medium" (click)="doScan()">Cargar desde DNI
                 <ion-icon name="copy"></ion-icon>
             </ion-button>
 
@@ -65,7 +66,5 @@
             </ion-button> 
           </div>
       </ion-list>
-  
   </form>
-
 </ion-content>
