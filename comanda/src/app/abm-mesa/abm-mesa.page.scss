@@ -1,96 +1,23 @@
-// @import "compass/css3";
+
 
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,600,300,800);
 
-
-@mixin epic-sides() { // https://codepen.io/MichaelArestad/pen/qltuk
-    position: relative;
-    z-index: 1;
-
-    &:before {
-        position: absolute;
-        content: "";
-        display: block;
-        top: 0;
-        left: -5000px;
-        height: 100%;
-        width: 15000px;
-        z-index: -1;
-        @content;
-    }
+//PONE LA IMAGEN DE FONDO Y LA BLUREA
+.body{
+	position: absolute;
+	top: 0px;
+	left: -20px;
+	right: -40px;
+	bottom: -40px;
+	width: auto;
+	height: auto;
+  background: url('../../assets/altas/fondoMesa.jpg');
+  background-repeat: no-repeat;
+	background-size: cover;
+	-webkit-filter: blur(5px);
+	z-index: 0;
 }
-.row {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 60px 30px;
- 
-  @include epic-sides() {background: inherit;}
-  text-align: center;
-  
-  &:first-child {
-    padding: 40px 30px;
-    background: url('../../assets/altas/fondoMesa.jpg');
 
-    background-repeat:no-repeat;
-    padding: 10%;
-  }
-  
-  
-  span {
-    position: relative;
-    display: inline-block;
-    margin: 30px 10px;
-  }
-}
-.basic-slide {
-  display: inline-block;
-  width: 215px;
-  padding: 10px 0 10px 15px;
-  font-family: "Open Sans", sans;
-  font-weight: 400;
-  color: #377D6A;
-  background: #efefef;
-  border: 0;
-  border-radius: 3px;
-  outline: 0;
-  text-indent: 70px; // Arbitrary.
-  transition: all .3s ease-in-out;
-  
-  &::-webkit-input-placeholder {
-    color: #efefef;
-    text-indent: 0;
-    font-weight: 300;
-  }
-
-  + label {
-    display: inline-block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    // padding: 10px 15px;
-    padding: 10px 15px 13px 15px;
-    text-shadow: 0 1px 0 rgba(19,74,70,.4);
-    background: #7AB893;
-    transition: all .3s ease-in-out;
-    border-top-left-radius: 3px;
-    border-bottom-left-radius: 3px;
-  }
-}
-.basic-slide:focus,
-.basic-slide:active {
-  color: #377D6A;
-  text-indent: 0;
-  background: #fff;
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-  
-  &::-webkit-input-placeholder {
-    color: #aaa;
-  }
-  + label {
-    transform: translateX(-100%);
-  }
-}
 
 .swing {
   display: inline-block;
@@ -125,6 +52,7 @@
     border-bottom-left-radius: 3px;
     transform-origin: 2px 2px;
     transform: rotate(0);
+    color:white;
     // There should be a better way
     animation: swing-back .4s 1 ease-in-out;
   }
@@ -175,37 +103,41 @@
 }
 
   
+span {
+  
+  position: relative;
+  display: inline-block;
+  margin: 30px 10px;
+  margin-top: 10%;
+}
   
 
-
-ion-select{
---color: white;
--ms-text-align-last: center;
-}
 
 .round{ 
-  margin-top: 25%;
-
-font-family: "Open Sans", sans-serif;
-border-radius: 20px !important; 
-text-align: center;
-// padding-left: 10px;
-//  padding-right: 10px; 
-//  padding-bottom: 5px; 
-//  padding-top: 5px; 
-} 
-.select{
   font-family: "Open Sans", sans-serif;
-border-radius: 20px !important; 
-text-align: center;
-}
+  border-radius: 20px !important; 
+  text-align: center;
+  width: 90%;
+  margin-left: 5%;
+  background-color: #efefef;
+  border: 2px solid #a2b9bc;
+  border-radius: 3px;
+  margin-top: 20%;
+
+  } 
+
+  .botones{
+    padding: 10%;
+  }
   
 
-// .fondoContent
-// {
-//   --background: rgb(255, 8, 8);
-// }
+//COMPONENTES IONIC
 
-.botones{
-  margin-top: 13%;
+ion-list{
+  background: transparent;
+  text-align: center;
+  margin-top: 40%;
+ 
+
 }
+

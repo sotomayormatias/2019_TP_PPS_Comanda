@@ -6,47 +6,23 @@
 #iconToolBar {
   width: 50px;
 }
-
-@mixin epic-sides() { // https://codepen.io/MichaelArestad/pen/qltuk
-    position: relative;
-    z-index: 1;
-
-    &:before {
-        position: absolute;
-        content: "";
-        display: block;
-        top: 0;
-        left: -5000px;
-        height: 100%;
-        width: 15000px;
-        z-index: -1;
-        @content;
-    }
-}
-.row {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 60px 30px;
- 
-
-  @include epic-sides() {background: inherit;}
-  text-align: center;
-  
-  &:first-child {
-    background: url("../../assets/altas/fondoEmpleados.JPG") ;
-    background-repeat:no-repeat;
-    padding: 10%;
-
-  }
- 
-  
-  span {
-    position: relative;
-    display: inline-block;
-    margin: 15px 10px;
-  }
+//PONE LA IMAGEN DE FONDO Y LA BLUREA
+.body{
+	position: absolute;
+	top: 0px;
+	left: -20px;
+	right: -40px;
+	bottom: -40px;
+	width: auto;
+  height: auto;
+  background-image: url("../../assets/altas/fondoEmpleados.JPG");
+  background-repeat: no-repeat;
+	background-size: cover;
+	-webkit-filter: blur(5px);
+  z-index: 0;
 }
 
+//EFECTO DE LOS INPUTS
 .card-slide {
   display: inline-block;
   width: 215px;
@@ -76,6 +52,7 @@
     padding: 10px 15px 13px 15px;
     text-shadow: 0 1px 0 rgba(19,74,70,.4);
     background: #7AB893;
+    color: white;
     transition: all .3s ease-in-out;
     border-top-left-radius: 3px;
     border-bottom-left-radius: 3px;
@@ -119,22 +96,39 @@ span:nth-child(4) .card-slide:focus {
   }
 }
 
+span {
+  position: relative;
+  display: inline-block;
+  margin: 15px 10px;
+  margin-top: 10%;
 
-
-ion-select{
---color: white;
--ms-text-align-last: center;
 }
 
-.round{ 
-font-family: "Open Sans", sans-serif;
-border-radius: 20px !important; 
-text-align: center;
-// padding-left: 10px;
-//  padding-right: 10px; 
-//  padding-bottom: 5px; 
-//  padding-top: 5px; 
-} 
-  
+//CLASES 
 
-// .round{ border-radius: 20px !important; padding-left: 10px; padding-right: 10px; padding-bottom: 5px; padding-top: 5px; } 
+.round{ 
+  font-family: "Open Sans", sans-serif;
+  border-radius: 20px !important; 
+  text-align: center;
+  margin-top:5%;
+  width: 90%;
+  margin-left: 5%;
+  background-color: #efefef;
+  border: 2px solid #a2b9bc;
+  border-radius: 3px;
+
+  } 
+
+  .botones{
+    padding: 10%;
+    margin-top: 10%;
+  }
+
+  //COMPONENTES IONIC
+
+ion-list{
+  background: transparent;
+  text-align: center;
+ 
+
+}

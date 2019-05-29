@@ -1,61 +1,28 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,600,300,800);
 
 
-@mixin epic-sides() { // https://codepen.io/MichaelArestad/pen/qltuk
-    position: relative;
-    z-index: 1;
-
-    &:before {
-        position: absolute;
-        content: "";
-        display: block;
-        top: 0;
-        left: -5000px;
-        height: 100%;
-        width: 15000px;
-        z-index: -1;
-        @content;
-    }
-}
 
 #iconToolBar {
   width: 50px;
 }
 
-.row {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 60px 30px;
-  background: #032429;
-  @include epic-sides() {background: inherit;}
-  text-align: center;
-  
-  &:first-child {
-    padding: 40px 30px;
-  }
-  &:nth-child(2),
-  &:nth-child(8),
-  &:nth-child(10){
-    background: #134A46;
-  }
-  &:nth-child(3),
-  &:nth-child(7) {
-    background: #377D6A;
-  }
-  &:nth-child(4),
-  &:nth-child(6) {
-    background: #7AB893;
-  }
-  &:nth-child(5) {
-    background: #B2E3AF;
-  }
-  
-  span {
-    position: relative;
-    display: inline-block;
-    margin: 30px 10px;
-  }
+//PONE LA IMAGEN DE FONDO Y LA BLUREA
+.body{
+	position: absolute;
+	top: 0px;
+	left: -20px;
+	right: -40px;
+	bottom: -40px;
+	width: auto;
+	height: auto;
+  background-image: url("../../assets/altas/fondoCliente.jpg");
+  background-repeat: no-repeat;
+	background-size: cover;
+	-webkit-filter: blur(5px);
+	z-index: 0;
 }
+
+//EFECTO INPUTS
 
 .gate {
     display: inline-block;
@@ -90,6 +57,7 @@
       border-bottom-left-radius: 3px;
       transform-origin: left bottom;
       z-index: 99;
+      color: white;
       
       &:before,
       &:after {
@@ -143,25 +111,48 @@
   
   
   
-ion-list{
-    --background: #032429;
-}
-
-ion-select{
-  --color: black;
-  -ms-text-align-last: center;
-}
-
+  span {
   
-.round,ion-label{ 
-  font-family: "Open Sans", sans-serif;
-  border-radius: 20px !important; 
-  text-align: center;
-  // padding-left: 10px;
-  //  padding-right: 10px; 
-  //  padding-bottom: 5px; 
-  //  padding-top: 5px; 
-  } 
-  .vistaprevia{
-    padding: 10%;
+    position: relative;
+    display: inline-block;
+    margin: 30px 10px;
+    margin-top: 15%;
   }
+  
+  //CLASES 
+  .round{ 
+    font-family: "Open Sans", sans-serif;
+    border-radius: 20px !important; 
+    text-align: center;
+    width: 90%;
+    margin-left: 5%;
+    background-color: #efefef;
+    border: 2px solid #a2b9bc;
+    border-radius: 3px;
+  
+    } 
+  
+    .botones{
+      padding: 10%;
+    }
+  
+    // .vistaprevia{
+    //   margin-top: 10%;
+    //   border: 2px solid #a2b9bc;
+    //   border-radius: 3px;
+  
+    // }
+  
+  //COMPONENTES IONIC
+  
+  ion-list{
+    background: transparent;
+    text-align: center;
+    margin-top: 10%;
+   
+  
+  }
+  
+  
+    
+  
