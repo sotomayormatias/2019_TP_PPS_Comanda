@@ -9,31 +9,28 @@
 	</div>
 </div>
 
-
 <div class="form-structor" [style.display]=" splash ? 'none' : 'block' ">
-	<div class="signup">
-
-		<ion-spinner *ngIf="spinner" class="form-title" id="signup" style="color:white; font-size: 30px;" name="dots">
-		</ion-spinner>
-		<ion-spinner *ngIf="spinner" class="form-title" id="signup" style="color:white; font-size: 30px;" name="dots">
-		</ion-spinner>
-		<ion-spinner *ngIf="spinner" class="form-title" id="signup" style="color:white; font-size: 30px;" name="dots">
-		</ion-spinner>
-		<ion-spinner *ngIf="spinner" class="form-title" id="signup" style="color:white; font-size: 30px;" name="dots">
-		</ion-spinner>
-		<ion-spinner *ngIf="spinner" class="form-title" id="signup" style="color:white; font-size: 30px;" name="dots">
-		</ion-spinner>
-		<ion-spinner *ngIf="spinner" class="form-title" id="signup" style="color:white; font-size: 30px;" name="dots">
-		</ion-spinner>
-
-		<h2 *ngIf="!spinner" class="form-title" id="signup">Comiradix</h2>
-		<div *ngIf="!spinner" class="form-holder">
-			<!-- <input type="text" class="input" placeholder="Name" /> -->
-			<input type="email" class="input" [(ngModel)]="cuenta.usuario" placeholder="Usuario" />
-			<input type="password" class="input" [(ngModel)]="cuenta.password" placeholder="Contraseña" />
+	<div *ngIf="tipoUsuario == ''">
+		<div class="signup">
+			<h2 class="form-title">Comiradix</h2>
+			<button class="submit-btn" (click)="cargarTipoUsuario('empleado')">EMPLEADO</button>
+			<button class="submit-btn" (click)="cargarTipoUsuario('cliente')">CLIENTE</button>
 		</div>
-		<button *ngIf="!spinner" class="submit-btn" (click)="login()">ENTRAR</button>
-		<button *ngIf="!spinner" expand="block" class="submit-btn-acceso" fill="outline"
-			(click)="creoSheet()">Acc.Rápido</button>
+	</div>
+
+	<div *ngIf="tipoUsuario != ''">
+		<div class="signup" *ngIf="spinner">
+			<ion-spinner name="bubbles" color="light"></ion-spinner>
+		</div>
+		<div class="signup" *ngIf="!spinner">
+			<h2 class="form-title">Comiradix</h2>
+			<div class="form-holder">
+				<input type="email" class="input" [(ngModel)]="cuenta.usuario" placeholder="Usuario" />
+				<input type="password" class="input" [(ngModel)]="cuenta.password" placeholder="Contraseña" />
+			</div>
+			<button class="submit-btn" (click)="login()">ENTRAR</button>
+			<button *ngIf="tipoUsuario == 'cliente'" class="submit-btn" (click)="loginAnonimo()">ANÓNIMO</button>
+			<button expand="block" class="submit-btn-acceso" fill="outline" (click)="creoSheet()">Acc.Rápido</button>
+		</div>
 	</div>
 </div>
