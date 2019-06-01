@@ -27,9 +27,9 @@ Link: https://docs.google.com/document/d/1oEnzlbxtO-LMAgVBkn0KqyZpL6Fi04EdTZu34W
 9.- Organización interna
 
 ###Status Sprint 1
-Funcionalidades
+##Funcionalidades
 ![alt text](Screenshots/Sprint1-18-05-AvanceFuncionalidades.jpg)
-Tareas
+##Tareas
 ![alt text](Screenshots/Sprint1-18-05-AvanceTareas.jpg)
 
 ## Sprint 2 18/05 - 25/05
@@ -40,10 +40,29 @@ Tareas
 4.- Manejo de distintos perfiles y usuarios
 
 ###Status Sprint 2
-Funcionalidades
+##Funcionalidades
 ![alt text](Screenshots/Sprint2-25-05-AvanceFuncionalidades.jpg)
-Tareas
+##Tareas
 ![alt text](Screenshots/Sprint2-25-05-AvanceTareas.jpg)
+
+## Sprint 3 18/05 - 25/05
+
+1.- QR Individuales
+2.- Servicios de encuesta
+3.- Graficos
+4.- Input / Radio buttons
+5.- Navegacion con perfiles 
+6.- Pantallas por usuario
+7.- Imagen previa al splash
+8.- Reestiling de la app menues y efectos / Fondos blurreados
+
+###Status Sprint 3
+##Funcionalidades
+![alt text](Screenshots/Sprint3-01-06-AvanceFuncionalidades.jpg)
+##Tareas
+![alt text](Screenshots/Sprint3-01-06-AvanceTareas.jpg)
+##Perfiles
+![alt text](Screenshots/Sprint3-01-06-PerfilesMenu.jpg)
 
 ## Responsabilidades para entrega 18/05 Sprint1
 Nombre: Julián Graziano  
@@ -99,7 +118,7 @@ En común:
 **ORGANIACIÓN INTERNA**
 **PERFILES Y NAVEGACION**
 
-## Responsabilidades para entrega 02/06 Sprint3
+## Responsabilidades para entrega 01/06 Sprint3
 Nombre: Julián Graziano  
 Módulo: QR / Estilos / Encuesta
 Fecha inicio: 25/05  
