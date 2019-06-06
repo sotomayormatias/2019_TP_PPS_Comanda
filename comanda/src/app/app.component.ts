@@ -73,6 +73,11 @@ export class AppComponent {
               icon: 'pie'
             },
             {
+              title: 'Encuesta Supervisor',
+              url: '/encuesta-sup',
+              icon: 'alert'
+            },
+            {
               title: 'Cerrar Sesion',
               url: '/login',
               icon: 'log-out'
