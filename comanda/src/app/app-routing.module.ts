@@ -62,7 +62,8 @@ const routes: Routes = [
   { path: '', loadChildren: './abm-duesup/abm-duesup.module#AbmDuesupPageModule' },
   { path: 'abm-duesup', loadChildren: './abm-duesup/abm-duesup.module#AbmDuesupPageModule' },
   { path: 'abm-mesa', loadChildren: './abm-mesa/abm-mesa.module#AbmMesaPageModule' },  { path: 'encuesta-cliente', loadChildren: './encuesta-cliente/encuesta-cliente.module#EncuestaClientePageModule' },
-  { path: 'est-satisfaccion', loadChildren: './est-satisfaccion/est-satisfaccion.module#EstSatisfaccionPageModule' }
+  { path: 'est-satisfaccion', loadChildren: './est-satisfaccion/est-satisfaccion.module#EstSatisfaccionPageModule' },
+  { path: 'encuesta-sup', loadChildren: './encuesta-sup/encuesta-sup.module#EncuestaSupPageModule' }
 
 ];
 
