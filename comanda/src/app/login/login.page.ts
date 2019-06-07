@@ -164,7 +164,7 @@ export class LoginPage implements OnInit {
       },
       {
         text: 'Cancelar', icon: 'close', cssClass: 'btnCancel', role: 'cancel', handler: () => { }
-      }]
+      }];
     } else {
       profileButtons = [{
         text: 'admin', icon: 'finger-print', handler: () => {
@@ -186,7 +186,7 @@ export class LoginPage implements OnInit {
       },
       {
         text: 'Cancelar', icon: 'close', cssClass: 'btnCancel', role: 'cancel', handler: () => { }
-      }]
+      }];
     }
 
     const actionSheet = await this.actionSheetController.create({

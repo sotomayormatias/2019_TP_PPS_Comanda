@@ -8,51 +8,13 @@ import * as firebase from 'firebase';
 import { FIREBASE_CONFIG } from './app.firebase.config';
 
 import { Events } from '@ionic/angular';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html'
 })
 export class AppComponent {
   public appPages;
-
-  // public appPages = [
-  //   {
-  //     title: 'Home',
-  //     url: '/home',
-  //     icon: 'home'
-  //   },
-  //   {
-  //     title: 'Alta Dueño/Supervisor',
-  //     url: '/abm-duesup',
-  //     icon: 'key'
-  //   },
-  //   {
-
-  //     title: 'Alta Mesas',
-  //     url: '/abm-mesa',
-  //     icon: 'help-buoy'
-  //   },
-  //   {
-  //     title: 'Alta Productos',
-  //     url: '/abm-producto',
-  //     icon: 'beer'
-  //   },
-  //   {
-  //     title: 'Alta Empleados',
-  //     url: '/abm-empleados',
-  //     icon: 'person'
-  //   },
-  //   {
-  //     title: 'Alta de Clientes',
-  //     url: '/abm-cliente',
-  //     icon: 'person'
-  //   },
-  //   {
-  //     title: 'Cerrar Sesion',
-  //     url: '/login',
-  //     icon: 'log-out'
-  //   }
-  // ];
 
   constructor(
     private platform: Platform,
@@ -62,12 +24,6 @@ export class AppComponent {
     public events: Events
   ) {
     this.initializeApp();
-
-
-  //   this.events.subscribe('stats', statsData => {
-  //     console.log(statsData);
-  //   });
-  // }
 
     this.events.subscribe('usuarioLogueado', data => {
       console.log('event received');
@@ -120,6 +76,11 @@ export class AppComponent {
               title: 'Confirmar Clientes',
               url: '/list-confirmar-cliente-alta',
               icon: 'key'
+            },
+            {
+              title: 'Encuesta Supervisor',
+              url: '/encuesta-sup',
+              icon: 'alert'
             },
             {
               title: 'Cerrar Sesion',
