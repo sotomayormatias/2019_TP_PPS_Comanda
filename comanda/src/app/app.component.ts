@@ -73,6 +73,11 @@ export class AppComponent {
               icon: 'pie'
             },
             {
+              title: 'Confirmar Clientes',
+              url: '/list-confirmar-cliente-alta',
+              icon: 'key'
+            },
+            {
               title: 'Encuesta Supervisor',
               url: '/encuesta-sup',
               icon: 'alert'

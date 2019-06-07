@@ -20,8 +20,7 @@ export class AbmClientePage implements OnInit {
   cantidadFotos: number = 0;
   esAnonimo: boolean = false;
   datosEscaneados: any;
-  datos: any;
-  // escaneando: boolean = false;
+  datosCliente: any;
 
   constructor(
     private camera: Camera,
@@ -31,7 +30,9 @@ export class AbmClientePage implements OnInit {
     this.formClienteRegistrado = new FormGroup({
       nombreRegistrado: new FormControl('', Validators.required),
       apellidoRegistrado: new FormControl('', Validators.required),
-      dniRegistrado: new FormControl('', Validators.required)
+      dniRegistrado: new FormControl('', Validators.required),
+      emailRegistrado: new FormControl('', Validators.required),
+      claveRegistrado: new FormControl('', Validators.required)
     });
     this.formClienteAnonimo = new FormGroup({
       nombreAnonimo: new FormControl('', Validators.required)
@@ -77,20 +78,23 @@ export class AbmClientePage implements OnInit {
     let errores: number = 0;
 
     if (this.esAnonimo) {
-      this.datos = {
+      this.datosCliente = {
         'nombre': this.formClienteAnonimo.get('nombreAnonimo').value,
         'esAnonimo': this.esAnonimo
       };
     } else {
-      this.datos = {
+      this.datosCliente = {
         'nombre': this.formClienteRegistrado.get('nombreRegistrado').value,
         'apellido': this.formClienteRegistrado.get('apellidoRegistrado').value,
         'dni': this.formClienteRegistrado.get('dniRegistrado').value,
+        'correo': this.formClienteRegistrado.get('correoRegistrado').value,
+        'clave': this.formClienteRegistrado.get('claveRegistrado').value,
+        'estado': 'pendiente',
         'esAnonimo': this.esAnonimo
       };
     }
 
-    this.guardardatosDeCliente(this.datos);
+    this.guardardatosDeCliente(this.datosCliente);
 
     this.captureDataUrl.forEach(foto => {
       let filename: string = (this.formClienteRegistrado.get('nombreRegistrado').value).replace(' ', '_');

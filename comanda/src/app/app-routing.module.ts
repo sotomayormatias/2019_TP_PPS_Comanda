@@ -61,10 +61,11 @@ const routes: Routes = [
   { path: '', loadChildren: './abm-cliente/abm-cliente.module#AbmClientePageModule' },
   { path: '', loadChildren: './abm-duesup/abm-duesup.module#AbmDuesupPageModule' },
   { path: 'abm-duesup', loadChildren: './abm-duesup/abm-duesup.module#AbmDuesupPageModule' },
-  { path: 'abm-mesa', loadChildren: './abm-mesa/abm-mesa.module#AbmMesaPageModule' },  { path: 'encuesta-cliente', loadChildren: './encuesta-cliente/encuesta-cliente.module#EncuestaClientePageModule' },
+  { path: 'abm-mesa', loadChildren: './abm-mesa/abm-mesa.module#AbmMesaPageModule' },
+  { path: 'encuesta-cliente', loadChildren: './encuesta-cliente/encuesta-cliente.module#EncuestaClientePageModule' },
   { path: 'est-satisfaccion', loadChildren: './est-satisfaccion/est-satisfaccion.module#EstSatisfaccionPageModule' },
+  { path: 'list-confirmar-cliente-alta', loadChildren: './list-confirmar-cliente-alta/list-confirmar-cliente-alta.module#ListConfirmarClienteAltaPageModule' },
   { path: 'encuesta-sup', loadChildren: './encuesta-sup/encuesta-sup.module#EncuestaSupPageModule' }
-
 ];
 
 @NgModule({
