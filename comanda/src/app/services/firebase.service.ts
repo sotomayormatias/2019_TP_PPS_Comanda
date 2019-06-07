@@ -15,11 +15,11 @@ export class FirebaseService {
       item.key = element.key;
       returnArray.push(item);
     });
-  
+
     return returnArray;
   }
-  
-  getItems(nombreReferencia: string){
+
+  getItems(nombreReferencia: string) {
     return new Promise<any>((resolve, reject) => {
       let ref = firebase.database().ref(nombreReferencia + '/');
       ref.on('value', resp => {
@@ -28,9 +28,13 @@ export class FirebaseService {
     });
   }
 
-  addItem(nombreReferencia: string, objeto: any){
+  addItem(nombreReferencia: string, objeto: any) {
     let ref = firebase.database().ref(nombreReferencia + '/');
     let newItem = ref.push();
     newItem.set(objeto);
+  }
+
+  updateItem(nombreReferencia: string, key: string, objeto: any) {
+    firebase.database().ref(nombreReferencia + '/' + key).update(objeto);
   }
 }

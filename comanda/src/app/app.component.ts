@@ -117,6 +117,11 @@ export class AppComponent {
               icon: 'pie'
             },
             {
+              title: 'Confirmar Clientes',
+              url: '/list-confirmar-cliente-alta',
+              icon: 'key'
+            },
+            {
               title: 'Cerrar Sesion',
               url: '/login',
               icon: 'log-out'

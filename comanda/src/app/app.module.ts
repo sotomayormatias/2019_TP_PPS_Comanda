@@ -7,6 +7,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Camera } from "@ionic-native/camera/ngx";
 import { BarcodeScanner } from "@ionic-native/barcode-scanner/ngx";
+import { EmailComposer } from "@ionic-native/email-composer/ngx";
 import { FirebaseService } from "../app/services/firebase.service";
 import { FormsModule } from '@angular/forms';
 
@@ -28,6 +29,7 @@ import { AppRoutingModule } from './app-routing.module';
     FirebaseService,
     Camera,
     BarcodeScanner,
+    EmailComposer,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
