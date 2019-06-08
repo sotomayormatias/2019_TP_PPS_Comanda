@@ -75,7 +75,7 @@ export class LoginPage implements OnInit {
     let usuarioLogueado = { nombre: "anonimo", perfil: "cliente" };
     setTimeout(() => this.spinner = false, 2000);
     sessionStorage.setItem('usuario', JSON.stringify(usuarioLogueado));
-    this.events.publish('usuarioLogueado', usuarioLogueado.perfil);
+    this.events.publish('usuarioLogueado: ', 'cliente');
     this.creoToast(true);
     this.router.navigateByUrl('/home');
   }
@@ -106,40 +106,87 @@ export class LoginPage implements OnInit {
 
   async creoSheetEmpleados() {
     const actionSheet = await this.actionSheetController.create({
+      
+      // SUPERVISOR - DUEÑO
+      // CLIENTE
+      // BARTENDER
+      // COCINERO
+      // MOZO
+      // DELIVERY
+     
+      // SUPERVISOR
       header: 'Ingresar como ...',
       cssClass: 'actSheet',
       buttons: [{
-        text: 'admin',
+        text: 'Supervisor',
         icon: 'finger-print',
         handler: () => {
-          this.cuenta.usuario = 'admin@gmail.com';
+          this.cuenta.usuario = 'supervisor@gmail.com';
           this.cuenta.password = '1111';
         }
       },
+
+      // DUEÑO
       {
-        text: 'cocinero',
+        text: 'Dueño',
+        icon: 'key',
+        handler: () => {
+          this.cuenta.usuario = 'dueno@gmail.com';
+          this.cuenta.password = '3333';
+        }
+      },
+
+      // CLIENTE
+      {
+        text: 'cliente',
+        icon: 'cafe',
+        handler: () => {
+          this.cuenta.usuario = 'cliente2@gmail.com';
+          this.cuenta.password = '8888';
+        }
+      },
+      
+      // BARTENDER
+      
+      {
+        text: 'Bartender',
+        icon: 'beer',
+        handler: () => {
+          this.cuenta.usuario = 'bartender@gmail.com';
+          this.cuenta.password = '5555';
+        }
+      },
+
+      // COCINERO
+      {
+        text: 'Cocinero',
         icon: 'pizza',
         handler: () => {
           this.cuenta.usuario = 'cocinero@gmail.com';
           this.cuenta.password = '2222';
         }
       },
-      {
-        text: 'supervisor',
-        icon: 'hand',
+
+       // MOZO
+       {
+        text: 'Mozo',
+        icon: 'restaurant',
         handler: () => {
-          this.cuenta.usuario = 'supervisor@gmail.com';
-          this.cuenta.password = '3333';
+          this.cuenta.usuario = 'mozo@gmail.com';
+          this.cuenta.password = '6666';
         }
       },
+
+      // DELIVERY
       {
-        text: 'cliente',
-        icon: 'cafe',
+        text: 'Delivery',
+        icon: 'logo-model-s',
         handler: () => {
-          this.cuenta.usuario = 'cliente1@gmail.com';
+          this.cuenta.usuario = 'delivery@gmail.com';
           this.cuenta.password = '7777';
         }
       },
+    
       {
         text: 'Cancelar',
         icon: 'close',
@@ -158,34 +205,92 @@ export class LoginPage implements OnInit {
     if (this.tipoUsuario == 'cliente') {
       profileButtons = [{
         text: 'cliente', icon: 'cafe', handler: () => {
-          this.cuenta.usuario = 'cliente1@gmail.com';
-          this.cuenta.password = '7777';
+          this.cuenta.usuario = 'cliente2@gmail.com';
+          this.cuenta.password = '8888';
         }
       },
       {
         text: 'Cancelar', icon: 'close', cssClass: 'btnCancel', role: 'cancel', handler: () => { }
       }];
     } else {
-      profileButtons = [{
-        text: 'admin', icon: 'finger-print', handler: () => {
-          this.cuenta.usuario = 'admin@gmail.com';
+
+      profileButtons =  [{
+        text: 'Supervisor',
+        icon: 'finger-print',
+        handler: () => {
+          this.cuenta.usuario = 'supervisor@gmail.com';
           this.cuenta.password = '1111';
         }
       },
+
+      // DUEÑO
       {
-        text: 'cocinero', icon: 'pizza', handler: () => {
+        text: 'Dueño',
+        icon: 'key',
+        handler: () => {
+          this.cuenta.usuario = 'dueno@gmail.com';
+          this.cuenta.password = '3333';
+        }
+      },
+
+      // CLIENTE
+      {
+        text: 'cliente',
+        icon: 'cafe',
+        handler: () => {
+          this.cuenta.usuario = 'cliente2@gmail.com';
+          this.cuenta.password = '8888';
+        }
+      },
+      
+      // BARTENDER
+      
+      {
+        text: 'Bartender',
+        icon: 'beer',
+        handler: () => {
+          this.cuenta.usuario = 'bartender@gmail.com';
+          this.cuenta.password = '5555';
+        }
+      },
+
+      // COCINERO
+      {
+        text: 'Cocinero',
+        icon: 'pizza',
+        handler: () => {
           this.cuenta.usuario = 'cocinero@gmail.com';
           this.cuenta.password = '2222';
         }
       },
-      {
-        text: 'supervisor', icon: 'hand', handler: () => {
-          this.cuenta.usuario = 'supervisor@gmail.com';
-          this.cuenta.password = '3333';
+
+       // MOZO
+       {
+        text: 'Mozo',
+        icon: 'restaurant',
+        handler: () => {
+          this.cuenta.usuario = 'mozo@gmail.com';
+          this.cuenta.password = '6666';
         }
       },
+
+      // DELIVERY
       {
-        text: 'Cancelar', icon: 'close', cssClass: 'btnCancel', role: 'cancel', handler: () => { }
+        text: 'Delivery',
+        icon: 'logo-model-s',
+        handler: () => {
+          this.cuenta.usuario = 'delivery@gmail.com';
+          this.cuenta.password = '7777';
+        }
+      },
+    
+      {
+        text: 'Cancelar',
+        icon: 'close',
+        cssClass: 'btnCancel',
+        role: 'cancel',
+        handler: () => {
+        }
       }];
     }
 
@@ -199,5 +304,9 @@ export class LoginPage implements OnInit {
 
   cargarTipoUsuario(tipo: string) {
     this.tipoUsuario = tipo;
+  }
+
+  vuelvoSeleccion() {
+    this.tipoUsuario = '' ;
   }
 }
