@@ -78,11 +78,11 @@ Link: https://docs.google.com/document/d/1oEnzlbxtO-LMAgVBkn0KqyZpL6Fi04EdTZu34W
 
 ###Status Sprint 4
 ##Funcionalidades
-![alt text](Screenshots/Sprint4-08-06-AvanceFuncionalidades.jpg)
+![alt text](Screenshots/Sprint4-08-06-AvanceFuncionalidades.JPG)
 ##Tareas
-![alt text](Screenshots/Sprint4-08-06-AvanceTareas.jpg)
+![alt text](Screenshots/Sprint4-08-06-AvanceTareas.JPG)
 ##Perfiles - DEFINITIVO
-![alt text](Screenshots/Sprint4-08-06-PerfilesMenu.jpg)
+![alt text](Screenshots/Sprint4-08-06-PerfilesMenu.JPG)
 
 ## Responsabilidades para entrega 18/05 Sprint1
 Nombre: Julián Graziano  
