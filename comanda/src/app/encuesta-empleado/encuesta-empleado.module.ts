@@ -5,21 +5,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { EncuestaSupPage } from './encuesta-sup.page';
-
-import { ModalPagePage } from '../modal-page/modal-page.page';
- import { ModalPagePageModule } from '../modal-page/modal-page.module';
-
-
+import { EncuestaEmpleadoPage } from './encuesta-empleado.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: EncuestaSupPage
-  },
-  {
-    path: '',
-    component: ModalPagePage
+    component: EncuestaEmpleadoPage
   }
 ];
 
@@ -30,6 +21,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [EncuestaSupPage, ModalPagePage]
+  declarations: [EncuestaEmpleadoPage]
 })
-export class EncuestaSupPageModule {}
+export class EncuestaEmpleadoPageModule {}

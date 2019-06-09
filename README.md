@@ -45,7 +45,7 @@ Link: https://docs.google.com/document/d/1oEnzlbxtO-LMAgVBkn0KqyZpL6Fi04EdTZu34W
 ##Tareas
 ![alt text](Screenshots/Sprint2-25-05-AvanceTareas.jpg)
 
-## Sprint 3 18/05 - 25/05
+## Sprint 3 25/05 - 01/06
 
 1.- QR Individuales
 2.- Servicios de encuesta
@@ -63,6 +63,26 @@ Link: https://docs.google.com/document/d/1oEnzlbxtO-LMAgVBkn0KqyZpL6Fi04EdTZu34W
 ![alt text](Screenshots/Sprint3-01-06-AvanceTareas.jpg)
 ##Perfiles
 ![alt text](Screenshots/Sprint3-01-06-PerfilesMenu.jpg)
+
+
+## Sprint 4 01/06 - 08/06
+
+1.- Servicio envío mail
+2.- Prueba envío mail
+3.- Listado de clientes
+4.- Aprobación de clientes
+5.- Menu por perfiles
+6.- Encuestas
+7.- Reveer entidades
+
+
+###Status Sprint 4
+##Funcionalidades
+![alt text](Screenshots/Sprint4-08-06-AvanceFuncionalidades.JPG)
+##Tareas
+![alt text](Screenshots/Sprint4-08-06-AvanceTareas.JPG)
+##Perfiles - DEFINITIVO
+![alt text](Screenshots/Sprint4-08-06-PerfilesMenu.JPG)
 
 ## Responsabilidades para entrega 18/05 Sprint1
 Nombre: Julián Graziano  
@@ -139,3 +159,28 @@ branch: msotomayor
 
 En común:
 **ESTILOS**
+
+
+## Responsabilidades para entrega 08/06 Sprint4
+Nombre: Julián Graziano  
+Módulo: Encuesta / Estilos / Menu
+Fecha inicio: 01/06  
+Fecha fin: 
+branch: jngraziano  
+
+Nombre: Leandro Pollola  
+Módulo: Encuesta / Navegabilidad / Menu por perfiles
+Fecha inicio: 01/06
+Fecha fin:   
+branch: lnpollola  
+  
+Nombre: Matías Sotomayor  
+Módulo:   Envío mail / Servicio QR / Gestión
+Fecha inicio: 01/06  
+Fecha fin:   
+branch: msotomayor  
+
+En común:
+**REVEER ENTIDADES**
+**FIREBASE ENCUESTAS**
+**DEFINICION DE PERFILES Y MENUES**
