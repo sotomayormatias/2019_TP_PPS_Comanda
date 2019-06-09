@@ -83,6 +83,11 @@ export class AppComponent {
               icon: 'alert'
             },
             {
+              title: 'Escanear Mesa',
+              url: '/qr-mesa',
+              icon: 'barcode'
+            },
+            {
               title: 'Cerrar Sesion',
               url: '/login',
               icon: 'log-out'
