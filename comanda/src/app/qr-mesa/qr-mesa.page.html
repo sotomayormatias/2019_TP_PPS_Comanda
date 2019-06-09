@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Escanear Mesa
+    </ion-title>
+    <ion-buttons slot="end">
+      <img id="iconToolBar" src="../../assets/imgs/icon.png">
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-button color="primary" expand="block" (click)="doScan()">Escanear</ion-button>
+  <!-- <div *ngIf="datosEscaneados && parsedEscaneados">
+    <ion-label>datos escaneados: {{datosEscaneados}}</ion-label>
+    <ion-label>datos escaneados parseados: {{parsedEscaneados}}</ion-label>
+    <ion-label>mesa: {{parsedEscaneados.mesa}}</ion-label>
+    <ion-label>mesa parseada: {{parsedEscaneados.mesa}}</ion-label>
+  </div> -->
+</ion-content>

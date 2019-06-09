@@ -92,7 +92,7 @@ export class AppComponent {
                   },
                   // (8) (9) - CONFIRMA CLIENTE Y ENVIA MAIL
                   {
-                    title: 'Confirmar Clientes',
+                    title: 'OK - Confirmar Clientes',
                     url: '/list-confirmar-cliente-alta',
                     icon: 'checkbox-outline'
                   },
@@ -238,8 +238,8 @@ export class AppComponent {
             },
              // (G) QR MESA
              {
-              title: 'NOK - QR Mesa',
-              url: '/',
+              title: 'OK - QR Mesa',
+              url: '/qr-mesa',
               icon: 'git-pull-request'
             },
             // (H) QR PROPINA
@@ -293,7 +293,6 @@ export class AppComponent {
               url: '/',
               icon: 'cafe'
             },
-   
             {
               title: 'Cerrar Sesion',
               url: '/',

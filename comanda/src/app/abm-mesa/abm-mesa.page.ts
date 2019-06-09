@@ -81,7 +81,7 @@ export class AbmMesaPage implements OnInit {
       let filename: string = this.tmesa + this.nromesa + "_" + contador;
       const imageRef = storageRef.child(`mesas/${filename}.jpg`);
 
-      let datos: any = { 'nromesa': this.nromesa, 'cantcomen': this.cantcomen, 'tmesa': this.tmesa};
+      let datos: any = { 'nromesa': this.nromesa, 'cantcomen': this.cantcomen, 'tmesa': this.tmesa, 'estado': 'libre'};
       this.guardardatosDeProducto(datos);
 
       imageRef.putString(foto, firebase.storage.StringFormat.DATA_URL).then((snapshot) => {

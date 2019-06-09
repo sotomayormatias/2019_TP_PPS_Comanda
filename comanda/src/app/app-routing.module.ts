@@ -65,7 +65,9 @@ const routes: Routes = [
   { path: 'encuesta-cliente', loadChildren: './encuesta-cliente/encuesta-cliente.module#EncuestaClientePageModule' },
   { path: 'est-satisfaccion', loadChildren: './est-satisfaccion/est-satisfaccion.module#EstSatisfaccionPageModule' },
   { path: 'list-confirmar-cliente-alta', loadChildren: './list-confirmar-cliente-alta/list-confirmar-cliente-alta.module#ListConfirmarClienteAltaPageModule' },
-  { path: 'encuesta-sup', loadChildren: './encuesta-sup/encuesta-sup.module#EncuestaSupPageModule' },  { path: 'encuesta-empleado', loadChildren: './encuesta-empleado/encuesta-empleado.module#EncuestaEmpleadoPageModule' },
+  { path: 'encuesta-sup', loadChildren: './encuesta-sup/encuesta-sup.module#EncuestaSupPageModule' },
+  { path: 'qr-mesa', loadChildren: './qr-mesa/qr-mesa.module#QrMesaPageModule' },
+  { path: 'encuesta-empleado', loadChildren: './encuesta-empleado/encuesta-empleado.module#EncuestaEmpleadoPageModule' },
   { path: 'modal-page', loadChildren: './modal-page/modal-page.module#ModalPagePageModule' }
 
 ];
