@@ -1,8 +1,7 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title></ion-title>
+  <ion-toolbar color="dark">
     <ion-buttons slot="end">
-        <ion-button color="dark" size="small" (click)="cerrar()">Cerrar</ion-button>
+        <ion-button color="light" size="small" (click)="cerrar()">Cerrar</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -12,35 +11,50 @@
 
       <ion-card>
           <ion-card-header>
-            <ion-card-subtitle>Detalles</ion-card-subtitle>
-            <!-- <ion-card-title>Card Title</ion-card-title> -->
+            <!-- <ion-card-subtitle>Detalles</ion-card-subtitle> -->
+            <ion-card-title>Detalles</ion-card-title>
           </ion-card-header>
         
           <ion-card-content>
-            <ion-list>
-              <ion-item>
-                  <ion-label >Calidad</ion-label>
-                    <ion-range min="1" max="5" snaps="true" ticks="false" pin="true" color="warning">
-                        <ion-icon size="small" slot="start" name="star-outline"></ion-icon>
-                        <ion-icon slot="end" name="star"></ion-icon>
-                    </ion-range>
-                  </ion-item>
-              <ion-item>
-                <ion-label position="floating">Comentarios</ion-label>
-              <ion-textarea placeholder="Ingrese comentario aqui..."></ion-textarea>
+            <ion-list class="round">
+             
+
+              <ion-item class="round">
+                <ion-label position="floating">Nombre</ion-label>
+                <ion-input [(ngModel)]="nombre" type="text" name="nombre"></ion-input>
               </ion-item>
 
-              <ion-label position="floating">Nombre</ion-label>
-              <ion-input [(ngModel)]="nombre" type="text" ></ion-input>
-              <ion-label position="floating">Apellido</ion-label>
-              <ion-input [(ngModel)]="apellido" type="text" ></ion-input>
-              <ion-label [(ngModel)]="labelD" position="floating">{{labelD}}</ion-label>
-              <ion-input [(ngModel)]="dataCambia" type="text" ></ion-input>
-              <ion-label position="floating">DNI</ion-label>
-              <ion-input [(ngModel)]="dni" type="text" ></ion-input>
-             
-                  <ion-button expand="block" color="dark">Agregar
-                  </ion-button> 
+              <ion-item class="round">
+                <ion-label position="floating">Apellido</ion-label>
+                <ion-input [(ngModel)]="apellido" type="text" name="apellido"></ion-input>
+              </ion-item>
+
+              <ion-item class="round">
+                <ion-label [(ngModel)]="labelD" position="floating" name="labelD">{{labelD}}</ion-label>
+                <ion-input [(ngModel)]="dataCambia" type="text" name=dataCambia></ion-input>
+              </ion-item>
+
+              <ion-item class="round">
+                <ion-label position="floating">DNI</ion-label>
+                <ion-input [(ngModel)]="dni" type="text" name="dni" ></ion-input>
+              </ion-item> 
+                <ion-item class="round">             
+                  <ion-label position="stacked">Calidad</ion-label>             
+                  <ion-range [(ngModel)]="calidad" min="1" max="5" snaps="true" ticks="false" pin="true" color="warning"  [ngModelOptions]="{standalone: true}">
+                      <ion-icon size="small" slot="start" name="star-outline"></ion-icon>
+                      <ion-icon slot="end" name="star"></ion-icon>
+                  </ion-range>
+                  <ion-label position="floating">Comentarios</ion-label>
+                  <ion-textarea [(ngModel)]="comentario" placeholder="Ingrese comentario aqui..."[ngModelOptions]="{standalone: true}"></ion-textarea>
+              
+                </ion-item>
+
+<!--               
+              <ion-item >  
+                  
+                </ion-item> -->
+            
+                  <ion-button expand="block" color="dark" (click)="guardar()">Guardar</ion-button>
                 </ion-list> 
              
           </ion-card-content>

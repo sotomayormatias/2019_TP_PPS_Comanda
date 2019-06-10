@@ -1,3 +1,23 @@
-ion-card{
-    background-color: darkgrey;
+@import url('https://fonts.googleapis.com/css?family=Quicksand&display=swap');
+
+ion-input,ion-textarea{
+    font-family: 'Quicksand', sans-serif;
 }
+
+ion-card,ion-card-title{
+    font-family: 'Quicksand', sans-serif;
+    --color: white;
+    background-color: #001f3f;
+}
+ion-content{
+    font-family: 'Quicksand', sans-serif;
+    --background: #043565;
+}
+
+.round { 
+    font-family: 'Quicksand', sans-serif;
+    border-radius: 20px !important; 
+    padding-left: 5px; 
+    padding-right: 10px; 
+    padding-bottom: 5px; 
+    padding-top: 5px; }
