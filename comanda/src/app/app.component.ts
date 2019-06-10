@@ -29,180 +29,180 @@ export class AppComponent {
       console.log('event received');
       console.log('perfil recibidos:', data);
 
-   // ROUTING DEL MENU
-      switch (data ) {
+      // ROUTING DEL MENU
+      switch (data) {
 
         // console.log('Entro en Switch', data);
 
         // SUPERVISOR - DUEÑO
-        case 'supervisor' :
-            console.log(' auto - estoy en : ', data);
-            console.log(' man - estoy en : ', "supervisor");
-              // (A) ALTA DUEÑO
-              // (B) ALTA EMPLEADO
-              // (C) ALTA PRODUCTO
-              // (E) ALTA MESAS
-              // (J) ENCUESTA EMPLEADO
-              // (I - J - K) GRAFICOS DE ENCUESTAS
-              // (N) HACER RESERVAS AGENDADAS (opcional - supervisor)
-              // (Q) NPUSH - HACER RESERVA / DELIVERY (VA PARA EL MOZO / DELIVERY)
-            
-            this.appPages = [
-              {
-                    title: 'Home',
-                    url: '/home',
-                    icon: 'home'
-                  },
-                   // (A) ALTA DUEÑO
-                  {
-                    title: 'OK - Alta Dueño/Supervisor',
-                    url: '/abm-duesup',
-                    icon: 'key'
-                  },
-                  // (B) ALTA EMPLEADO
-                  {
-                    title: 'OK - Alta Empleados',
-                    url: '/abm-empleados',
-                    icon: 'person'
-                  },
-                  // (C) ALTA PRODUCTO
-                  {
-                    title: 'OK - Alta Productos',
-                    url: '/abm-producto',
-                    icon: 'beer'
-                  },
-                   // (E) ALTA MESAS
-                  {
-                    title: 'OK - Alta Mesas',
-                    url: '/abm-mesa',
-                    icon: 'help-buoy'
-                  },
-                  // (I - J - K) GRAFICOS DE ENCUESTAS
-                  {
-                    title: 'OK - Estadística Satisfacción',
-                    url: '/est-satisfaccion',
-                    icon: 'pie'
-                  },
-                
-                  // (K) GRAFICOS DE ENCUESTAS
-                  {
-                    title: 'OK - Encuesta Supervisor',
-                    url: '/encuesta-sup',
-                    icon: 'alert'
-                  },
-                  // (8) (9) - CONFIRMA CLIENTE Y ENVIA MAIL
-                  {
-                    title: 'OK - Confirmar Clientes',
-                    url: '/list-confirmar-cliente-alta',
-                    icon: 'checkbox-outline'
-                  },
-                   // (N) HACER RESERVAS AGENDADAS (opcional - supervisor)
-                   {
-                    title: 'NOK - Hacer Reservas Agendadas',
-                    url: '/',
-                    icon: 'calendar'
-                  },
-                   // (J) ENCUESTA EMPLEADO
-                   {
-                    title: 'NOK - Encuesta Empleado',
-                    url: '/',
-                    icon: 'clipboard'
-                  },
-                  {
-                    title: 'Cerrar Sesion',
-                    url: '/',
-                    icon: 'log-out'
-                  }
-            
-            ];
-            break;
-        
-        case 'dueno' :
-            console.log(' auto - estoy en : ', data);
-            console.log(' man - estoy en : ', "dueño");
-              // (A) ALTA DUEÑO
-              // (B) ALTA EMPLEADO
-              // (C) ALTA PRODUCTO
-              // (E) ALTA MESAS
-              // (J) ENCUESTA EMPLEADO
-              // (I - J - K) GRAFICOS DE ENCUESTAS
-              // (N) HACER RESERVAS AGENDADAS (opcional - supervisor)
-              // (Q) NPUSH - HACER RESERVA / DELIVERY (VA PARA EL MOZO / DELIVERY)
-            
-            this.appPages = [
-              {
-                    title: 'Home',
-                    url: '/home',
-                    icon: 'home'
-                  },
-                    // (A) ALTA DUEÑO
-                  {
-                    title: 'OK - Alta Dueño/Supervisor',
-                    url: '/abm-duesup',
-                    icon: 'key'
-                  },
-                  // (B) ALTA EMPLEADO
-                  {
-                    title: 'OK - Alta Empleados',
-                    url: '/abm-empleados',
-                    icon: 'person'
-                  },
-                  // (C) ALTA PRODUCTO
-                  {
-                    title: 'OK - Alta Productos',
-                    url: '/abm-producto',
-                    icon: 'beer'
-                  },
-                    // (E) ALTA MESAS
-                  {
-                    title: 'OK - Alta Mesas',
-                    url: '/abm-mesa',
-                    icon: 'help-buoy'
-                  },
-                  // (I - J - K) GRAFICOS DE ENCUESTAS
-                  {
-                    title: 'OK - Estadística Satisfacción',
-                    url: '/est-satisfaccion',
-                    icon: 'pie'
-                  },
-                
-                  // (K) GRAFICOS DE ENCUESTAS
-                  {
-                    title: 'OK - Encuesta Supervisor',
-                    url: '/encuesta-sup',
-                    icon: 'alert'
-                  },
-                  // (8) (9) - CONFIRMA CLIENTE Y ENVIA MAIL
-                  {
-                    title: 'Confirmar Clientes',
-                    url: '/list-confirmar-cliente-alta',
-                    icon: 'checkbox-outline'
-                  },
-                    // (N) HACER RESERVAS AGENDADAS (opcional - supervisor)
-                    {
-                    title: 'NOK - Hacer Reservas Agendadas',
-                    url: '/',
-                    icon: 'calendar'
-                  },
-                    // (J) ENCUESTA EMPLEADO
-                    {
-                    title: 'NOK - Encuesta Empleado',
-                    url: '/',
-                    icon: 'clipboard'
-                  },
-                  {
-                    title: 'Cerrar Sesion',
-                    url: '/',
-                    icon: 'log-out'
-                  }
-            
-            ];
-            break;
-        
+        case 'supervisor':
+          console.log(' auto - estoy en : ', data);
+          console.log(' man - estoy en : ', "supervisor");
+          // (A) ALTA DUEÑO
+          // (B) ALTA EMPLEADO
+          // (C) ALTA PRODUCTO
+          // (E) ALTA MESAS
+          // (J) ENCUESTA EMPLEADO
+          // (I - J - K) GRAFICOS DE ENCUESTAS
+          // (N) HACER RESERVAS AGENDADAS (opcional - supervisor)
+          // (Q) NPUSH - HACER RESERVA / DELIVERY (VA PARA EL MOZO / DELIVERY)
+
+          this.appPages = [
+            {
+              title: 'Home',
+              url: '/home',
+              icon: 'home'
+            },
+            // (A) ALTA DUEÑO
+            {
+              title: 'OK - Alta Dueño/Supervisor',
+              url: '/abm-duesup',
+              icon: 'key'
+            },
+            // (B) ALTA EMPLEADO
+            {
+              title: 'OK - Alta Empleados',
+              url: '/abm-empleados',
+              icon: 'person'
+            },
+            // (C) ALTA PRODUCTO
+            {
+              title: 'OK - Alta Productos',
+              url: '/abm-producto',
+              icon: 'beer'
+            },
+            // (E) ALTA MESAS
+            {
+              title: 'OK - Alta Mesas',
+              url: '/abm-mesa',
+              icon: 'help-buoy'
+            },
+            // (I - J - K) GRAFICOS DE ENCUESTAS
+            {
+              title: 'OK - Estadística Satisfacción',
+              url: '/est-satisfaccion',
+              icon: 'pie'
+            },
+
+            // (K) GRAFICOS DE ENCUESTAS
+            {
+              title: 'OK - Encuesta Supervisor',
+              url: '/encuesta-sup',
+              icon: 'alert'
+            },
+            // (8) (9) - CONFIRMA CLIENTE Y ENVIA MAIL
+            {
+              title: 'OK - Confirmar Clientes',
+              url: '/list-confirmar-cliente-alta',
+              icon: 'checkbox-outline'
+            },
+            // (N) HACER RESERVAS AGENDADAS (opcional - supervisor)
+            {
+              title: 'NOK - Hacer Reservas Agendadas',
+              url: '/',
+              icon: 'calendar'
+            },
+            // (J) ENCUESTA EMPLEADO
+            {
+              title: 'NOK - Encuesta Empleado',
+              url: '/',
+              icon: 'clipboard'
+            },
+            {
+              title: 'Cerrar Sesion',
+              url: '/',
+              icon: 'log-out'
+            }
+
+          ];
+          break;
+
+        case 'dueno':
+          console.log(' auto - estoy en : ', data);
+          console.log(' man - estoy en : ', "dueño");
+          // (A) ALTA DUEÑO
+          // (B) ALTA EMPLEADO
+          // (C) ALTA PRODUCTO
+          // (E) ALTA MESAS
+          // (J) ENCUESTA EMPLEADO
+          // (I - J - K) GRAFICOS DE ENCUESTAS
+          // (N) HACER RESERVAS AGENDADAS (opcional - supervisor)
+          // (Q) NPUSH - HACER RESERVA / DELIVERY (VA PARA EL MOZO / DELIVERY)
+
+          this.appPages = [
+            {
+              title: 'Home',
+              url: '/home',
+              icon: 'home'
+            },
+            // (A) ALTA DUEÑO
+            {
+              title: 'OK - Alta Dueño/Supervisor',
+              url: '/abm-duesup',
+              icon: 'key'
+            },
+            // (B) ALTA EMPLEADO
+            {
+              title: 'OK - Alta Empleados',
+              url: '/abm-empleados',
+              icon: 'person'
+            },
+            // (C) ALTA PRODUCTO
+            {
+              title: 'OK - Alta Productos',
+              url: '/abm-producto',
+              icon: 'beer'
+            },
+            // (E) ALTA MESAS
+            {
+              title: 'OK - Alta Mesas',
+              url: '/abm-mesa',
+              icon: 'help-buoy'
+            },
+            // (I - J - K) GRAFICOS DE ENCUESTAS
+            {
+              title: 'OK - Estadística Satisfacción',
+              url: '/est-satisfaccion',
+              icon: 'pie'
+            },
+
+            // (K) GRAFICOS DE ENCUESTAS
+            {
+              title: 'OK - Encuesta Supervisor',
+              url: '/encuesta-sup',
+              icon: 'alert'
+            },
+            // (8) (9) - CONFIRMA CLIENTE Y ENVIA MAIL
+            {
+              title: 'Confirmar Clientes',
+              url: '/list-confirmar-cliente-alta',
+              icon: 'checkbox-outline'
+            },
+            // (N) HACER RESERVAS AGENDADAS (opcional - supervisor)
+            {
+              title: 'NOK - Hacer Reservas Agendadas',
+              url: '/',
+              icon: 'calendar'
+            },
+            // (J) ENCUESTA EMPLEADO
+            {
+              title: 'NOK - Encuesta Empleado',
+              url: '/',
+              icon: 'clipboard'
+            },
+            {
+              title: 'Cerrar Sesion',
+              url: '/',
+              icon: 'log-out'
+            }
+
+          ];
+          break;
+
         // CLIENTE
         case "cliente":
-            console.log(' auto - estoy en : ', data);
-            console.log(' man - estoy en : ', "cliente");
+          console.log(' auto - estoy en : ', data);
+          console.log(' man - estoy en : ', "cliente");
           // (D) ALTA CLIENTE
           // (F) QR INGRESO
           // (H) QR PROPINA
@@ -218,7 +218,7 @@ export class AppComponent {
           // (V) POSTRE GRATIS
           // (9) LE LLEGA MAIL PARA CONFIRMAR QUE ES CLIENTE
 
-            this.appPages = [
+          this.appPages = [
             {
               title: 'Home',
               url: '/home',
@@ -236,8 +236,8 @@ export class AppComponent {
               url: '/',
               icon: 'list-box'
             },
-             // (G) QR MESA
-             {
+            // (G) QR MESA
+            {
               title: 'OK - QR Mesa',
               url: '/qr-mesa',
               icon: 'git-pull-request'
@@ -248,7 +248,7 @@ export class AppComponent {
               url: '/',
               icon: 'cash'
             },
-           
+
             // (I) ENCUESTA CLIENTE
             {
               title: 'OK - Encuesta Satisfacción',
@@ -264,8 +264,8 @@ export class AppComponent {
             },
             // (L) PEDIDO PLATO / BEBIDAS
             {
-              title: 'NOK - Menu platos / bebidas',
-              url: '/',
+              title: 'OK - Menu platos / bebidas',
+              url: '/generar-pedido',
               icon: 'restaurant'
             },
             // (R) DELIV - PEDIDO GPS / DIRECCIÓN (LOGUEADO, no anonimo)
@@ -300,89 +300,97 @@ export class AppComponent {
             }
           ];
 
-            break;
+          break;
 
         // COCINERO 
         case "cocinero":
 
-            this.appPages = [
-              {
-                title: 'Home',
-                url: '/home',
-                icon: 'home'
-              },
+          this.appPages = [
+            {
+              title: 'Home',
+              url: '/home',
+              icon: 'home'
+            },
 
-              // (J) ENCUESTA EMPLEADO
-              {
-                title: 'NOK - Encuesta Empleado',
-                url: '/',
-                icon: 'clipboard'
-              },
-              // (13) LISTADO DE PEDIDOS PENDIENTES POR SECTOR
-              {
-                title: 'NOK - Pedidos Pendientes',
-                url: '/',
-                icon: 'nutrition'
-              },
+            // (J) ENCUESTA EMPLEADO
+            {
+              title: 'NOK - Encuesta Empleado',
+              url: '/',
+              icon: 'clipboard'
+            },
+            // (13) LISTADO DE PEDIDOS PENDIENTES POR SECTOR
+            {
+              title: 'NOK - Pedidos Pendientes',
+              url: '/',
+              icon: 'nutrition'
+            },
 
-              {
-                title: 'Cerrar Sesion',
-                url: '/',
-                icon: 'log-out'
-              }
-            ];
-  
+            {
+              title: 'Cerrar Sesion',
+              url: '/',
+              icon: 'log-out'
+            }
+          ];
 
-            // (K) ENCUESTA EMPLEADO
-            // (P) NPUSH - PBEB
-            // + LISTADO DE PEDIDOS PENDIENTES POR SECTOR
 
-            break;
+          // (K) ENCUESTA EMPLEADO
+          // (P) NPUSH - PBEB
+          // + LISTADO DE PEDIDOS PENDIENTES POR SECTOR
+
+          break;
 
         // BARTENDER
         case "bartender":
 
-            this.appPages = [
-              {
-                title: 'Home',
-                url: '/home',
-                icon: 'home'
-              },
-               // (J) ENCUESTA EMPLEADO
-               {
-                title: 'NOK - Encuesta Empleado',
-                url: '/',
-                icon: 'clipboard'
-              },
-              // (13) LISTADO DE PEDIDOS PENDIENTES POR SECTOR
-              {
-                title: 'NOK - Pedidos Pendientes',
-                url: '/',
-                icon: 'beer'
-              },
+          this.appPages = [
+            {
+              title: 'Home',
+              url: '/home',
+              icon: 'home'
+            },
+            // (J) ENCUESTA EMPLEADO
+            {
+              title: 'NOK - Encuesta Empleado',
+              url: '/',
+              icon: 'clipboard'
+            },
+            // (13) LISTADO DE PEDIDOS PENDIENTES POR SECTOR
+            {
+              title: 'NOK - Pedidos Pendientes',
+              url: '/',
+              icon: 'beer'
+            },
 
-              {
-                title: 'Cerrar Sesion',
-                url: '/',
-                icon: 'log-out'
-              }
-            ];
+            {
+              title: 'Cerrar Sesion',
+              url: '/',
+              icon: 'log-out'
+            }
+          ];
 
-            break;
+          break;
 
         // MOZO
         case "mozo":
 
-            // (M) TOMAR PEDIDOS
-            // (K) ENCUESTA EMPLEADO
-            // (O) NPUSH - PEDIR MESA
-            // (P) NPUSH - PBEB/CIERRE CUENTA
-            this.appPages = [
-              {
-                title: 'Home',
-                url: '/home',
-                icon: 'home'
-              },
+          // (M) TOMAR PEDIDOS
+          // (K) ENCUESTA EMPLEADO
+          // (L) PEDIDO PLATO / BEBIDAS
+          // (O) NPUSH - PEDIR MESA
+          // (P) NPUSH - PBEB/CIERRE CUENTA
+          this.appPages = [
+            {
+              title: 'Home',
+              url: '/home',
+              icon: 'home'
+            },
+
+            // (L) PEDIDO PLATO / BEBIDAS
+            {
+              title: 'OK - Menu platos / bebidas',
+              url: '/generar-pedido',
+              icon: 'restaurant'
+            },
 
             // (M) TOMAR PEDIDOS
             {
@@ -398,43 +406,43 @@ export class AppComponent {
               icon: 'clipboard'
             },
 
-              {
-                title: 'Cerrar Sesion',
-                url: '/',
-                icon: 'log-out'
-              }
-            ];
-            break;
+            {
+              title: 'Cerrar Sesion',
+              url: '/',
+              icon: 'log-out'
+            }
+          ];
+          break;
 
         // DELIVERY
         case "delivery":
-            this.appPages = [
-              {
-                title: 'Home',
-                url: '/home',
-                icon: 'home'
-              },
-              // (S) MAPA DE RUTA HASTA DOMICILIO Y DETALLE DE PEDIDO
-              {
-                title: 'NOK - Ruta H.Domicilio',
-                url: '/',
-                icon: 'logo-model-s'
-              },
-          
-              {
-                title: 'Cerrar Sesion',
-                url: '/',
-                icon: 'log-out'
-              }
-            ];
-            break;
-    }
+          this.appPages = [
+            {
+              title: 'Home',
+              url: '/home',
+              icon: 'home'
+            },
+            // (S) MAPA DE RUTA HASTA DOMICILIO Y DETALLE DE PEDIDO
+            {
+              title: 'NOK - Ruta H.Domicilio',
+              url: '/',
+              icon: 'logo-model-s'
+            },
+
+            {
+              title: 'Cerrar Sesion',
+              url: '/',
+              icon: 'log-out'
+            }
+          ];
+          break;
+      }
 
 
-   
 
-    }) ;
-    
+
+    });
+
   }
 
   initializeApp() {
@@ -449,8 +457,8 @@ export class AppComponent {
     this.router.navigateByUrl(pagina);
   }
 
-  armoMenu(perfil)  {
-    
+  armoMenu(perfil) {
+
   }
 
 }
@@ -490,7 +498,7 @@ export class AppComponent {
 //   url: '/abm-mesa',
 //   icon: 'help-buoy'
 // },
-   
+
 
 // | QR INGRESO AL LOCAL	F
 // {

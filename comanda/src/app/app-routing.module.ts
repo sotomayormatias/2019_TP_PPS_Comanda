@@ -68,7 +68,8 @@ const routes: Routes = [
   { path: 'encuesta-sup', loadChildren: './encuesta-sup/encuesta-sup.module#EncuestaSupPageModule' },
   { path: 'qr-mesa', loadChildren: './qr-mesa/qr-mesa.module#QrMesaPageModule' },
   { path: 'encuesta-empleado', loadChildren: './encuesta-empleado/encuesta-empleado.module#EncuestaEmpleadoPageModule' },
-  { path: 'modal-page', loadChildren: './modal-page/modal-page.module#ModalPagePageModule' }
+  { path: 'modal-page', loadChildren: './modal-page/modal-page.module#ModalPagePageModule' },  { path: 'generar-pedido', loadChildren: './generar-pedido/generar-pedido.module#GenerarPedidoPageModule' }
+
 
 ];
 
