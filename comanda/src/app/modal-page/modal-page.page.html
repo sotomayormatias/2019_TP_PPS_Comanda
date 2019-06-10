@@ -29,6 +29,15 @@
                 <ion-label position="floating">Comentarios</ion-label>
               <ion-textarea placeholder="Ingrese comentario aqui..."></ion-textarea>
               </ion-item>
+
+              <ion-label position="floating">Nombre</ion-label>
+              <ion-input [(ngModel)]="nombre" type="text" ></ion-input>
+              <ion-label position="floating">Apellido</ion-label>
+              <ion-input [(ngModel)]="apellido" type="text" ></ion-input>
+              <ion-label [(ngModel)]="labelD" position="floating">{{labelD}}</ion-label>
+              <ion-input [(ngModel)]="dataCambia" type="text" ></ion-input>
+              <ion-label position="floating">DNI</ion-label>
+              <ion-input [(ngModel)]="dni" type="text" ></ion-input>
              
                   <ion-button expand="block" color="dark">Agregar
                   </ion-button> 
@@ -36,6 +45,8 @@
              
           </ion-card-content>
         </ion-card>
+
+       
 
 
 </ion-content>
