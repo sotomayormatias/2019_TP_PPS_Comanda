@@ -12,10 +12,14 @@ import { ModalPagePage } from '../modal-page/modal-page.page';
 export class EncuestaSupPage implements OnInit {
 
   empleados: any[];
+  clientes: any[];
+
 
   constructor(private baseService: FirebaseService,
               public modalController: ModalController) {
     this.traerEmpleados();
+    this.traerClientes();
+
    }
 
   ngOnInit() {
@@ -26,12 +30,18 @@ export class EncuestaSupPage implements OnInit {
 
     });
   }
+  traerClientes(){
+    this.baseService.getItems('clientes').then(client => {
+      this.clientes = client
 
-  async muestraModal(){
+    });
+  }
+
+  async muestraModal(key: string){
  
     const modal = await this.modalController.create({
-      component: ModalPagePage
-      // componentProps: { value: 123 }
+      component: ModalPagePage,
+      componentProps: { key: key }
       });
     return await modal.present();
 
