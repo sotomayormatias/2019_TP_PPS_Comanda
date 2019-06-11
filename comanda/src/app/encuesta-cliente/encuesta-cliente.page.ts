@@ -44,7 +44,7 @@ export class EncuestaClientePage implements OnInit {
       "comentarios": this.comentarios,
       "usuario": usuario,
       "fecha": new Date().toLocaleDateString()
-    })
+    });
   }
 
 }
