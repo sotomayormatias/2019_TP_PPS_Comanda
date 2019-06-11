@@ -37,15 +37,40 @@ export class EncuestaSupPage implements OnInit {
     });
   }
 
-  async muestraModal(key: string){
+  async muestraModal(key: string, type: string){
  
+    // alert(tipo);
     const modal = await this.modalController.create({
       component: ModalPagePage,
-      componentProps: { key: key }
-      });
+      componentProps: { 
+       //error no pasa el value type
+          key: key,
+          value: type
+        
+}
+});
+
+      modal.onDidDismiss()
+      .then((data) => {
+       
+      //  const info = data['data'];
+      const posicion: number = this.empleados.length-1;
+       this.empleados[posicion] = data['data'];
+      // this.asignoInfo(info);
+         
+    });
     return await modal.present();
 
   
+
+  }
+
+  asignoInfo(info:any){
+    console.log(info);
+    this.empleados[0] = info[0];
+    this.empleados[1] = info[1];
+    this.empleados[2] = info[2];
+    this.empleados[3] = info[3];
 
   }
 
