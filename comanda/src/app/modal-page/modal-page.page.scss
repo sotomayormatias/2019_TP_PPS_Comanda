@@ -9,15 +9,28 @@ ion-card,ion-card-title{
     --color: white;
     background-color: #001f3f;
 }
+ion-card-content{
+    margin-bottom: 20%;
+}
 ion-content{
     font-family: 'Quicksand', sans-serif;
     --background: #043565;
 }
 
 .round { 
+    color: white;
     font-family: 'Quicksand', sans-serif;
     border-radius: 20px !important; 
-    padding-left: 5px; 
+    padding-left: 8px; 
     padding-right: 10px; 
     padding-bottom: 5px; 
     padding-top: 5px; }
+
+    .white-color{
+    --color: white;
+       color: white;
+    }
+    .itemSelect{
+        width: 95.5%;
+        margin-left: 2%;
+    }

@@ -16,9 +16,15 @@ import * as firebase from "firebase";
 export class ModalPagePage implements OnInit {
 
   //traigo la KEY 
-  // @Input("key") key:any;
+  
   @Input("key") key:any;
-  @Input() value:any;
+  @Input("data") data:any;
+
+  guardokey:any;
+  // ingreso:any;
+  // @Input("propsData") propsData:any;
+  // @Input("") propsData:any;
+
 
 
 
@@ -35,6 +41,9 @@ export class ModalPagePage implements OnInit {
   clientes: any[];
   empleadoElegido;
 
+  spinner:boolean ; 
+
+
 
   //DATOS EMPLEADO/CLIENTE
   nombre = "";
@@ -42,26 +51,28 @@ export class ModalPagePage implements OnInit {
   dataCambia;
   dni;
   labelD;
-  calidad: number = 10;
+  valoracion: number = 10;
   comentario: string = "";
+  recomendado: string = "si";
+  puntualidad: string = "puntual";
+
 
   constructor( public modalController: ModalController,
                public toastController: ToastController,
                private baseService: FirebaseService) {
 
-                alert(this.value);
-                if(this.value == "empleado")
-                {
-                  this.tomodatosEmpleado();
+               
+                  // let usuario = JSON.parse(sessionStorage.getItem("cliente")).perfil;
 
-                }
-                else if(this.value == "cliente")
-                {
-                  this.tomodatosCliente();
-                }
-
-              
+                  // this.tomodatosCliente();
                 
+                  // this.tomodatosEmpleado();
+
+                  // this.dividoTipo();
+              
+              
+                  this.spinner = true; 
+                  setTimeout(() => this.spinner = false , 2000);
                 
                
                 
@@ -70,8 +81,14 @@ export class ModalPagePage implements OnInit {
 
   ngOnInit() {
  
-
+  
+   this.tomodatosEmpleado();
+   this.tomodatosCliente();
+  
     
+                
+    
+
 
     
     
@@ -83,51 +100,80 @@ export class ModalPagePage implements OnInit {
         //   "nombre": this.nombre,
         //   "apellido": this.apellido
         // }
-        this.modalController.dismiss(this.empleadoElegido);
+        this.modalController.dismiss();
   }
 
-  guardar(){
+  guardar(label:any){
 
+      // alert(label);
       let errores: number = 0;
 
-      if(this.value == "empleado")
+
+        //  MODIFICO LOS DATOS EN LA BASE DE DATOS DE EMPLEADO
+        //  var db = firebase.database();
+        //  db.ref("empleados/"+this.key).update({ 
+        //    nombre: this.nombre, 
+        //    apellido: this.apellido,
+        //    cuil: this.dataCambia,
+        //    dni: this.dni }                                       
+        //  );
+
+      if(label == "CUIL")
       {
-         //MODIFICO LOS DATOS EN LA BASE DE DATOS DE EMPLEADO
-         var db = firebase.database();
-         db.ref("empleados/"+this.key).update({ 
-           nombre: this.nombre, 
-           apellido: this.apellido,
-           cuil: this.dataCambia,
-           dni: this.dni }                                       
-         );
- 
-         //GUARDO LOS OTROS DATOS EN LA OTRA TABLA
-         firebase.database().ref('encuestasEmpleados/'+this.key)
-           .set({
-             calidad: this.calidad, 
-             comentario: this.comentario
-         
-          });
+        firebase.database().ref('encuestasSupervisor/'+this.key)
+        .set({
+          valoracion: this.valoracion, 
+          comentarios: this.comentario,
+          tipo: "empleado",
+          recomendado: this.recomendado,
+          puntualidad: this.puntualidad
+
+      
+       });
+
       }
-      else if(this.value == "cliente"){
+      else{
+        firebase.database().ref('encuestasSupervisor/'+this.key)
+        .set({
+          valoracion: this.valoracion, 
+          comentarios: this.comentario,
+          tipo: "cliente"
+      
+       });
+      }
+     
+
+
+
+
+ 
+        //  //GUARDO LOS OTROS DATOS EN LA OTRA TABLA
+        //  firebase.database().ref('encuestasEmpleados/'+this.key)
+        //    .set({
+        //      calidad: this.calidad, 
+        //      comentario: this.comentario
+         
+        //   });
+      
+     
         //MODIFICO LOS DATOS EN LA BASE DE DATOS DE CLIENTE
-        var db = firebase.database();
-        db.ref("clientes/"+this.key).update({ 
-          nombre: this.nombre, 
-          apellido: this.apellido,
-          correo: this.dataCambia,
-          dni: this.dni }                                       
-        );
+        // var db = firebase.database();
+        // db.ref("clientes/"+this.key).update({ 
+        //   nombre: this.nombre, 
+        //   apellido: this.apellido,
+        //   correo: this.dataCambia,
+        //   dni: this.dni }                                       
+        // );
 
         //GUARDO LOS OTROS DATOS EN LA OTRA TABLA
-        firebase.database().ref('ecuestasCliente/'+this.key)
-          .set({
-            calidad: this.calidad, 
-            comentarios: this.comentario
+        // firebase.database().ref('ecuestasCliente/'+this.key)
+        //   .set({
+        //     calidad: this.calidad, 
+        //     comentarios: this.comentario
         
-         });
+        //  });
 
-      }
+      
 
      
 
@@ -168,12 +214,32 @@ export class ModalPagePage implements OnInit {
     toast.present();
   }
 
+
+  // dividoTipo(){
+
+  //   var tipo = "";
+    
+  //   this.baseService.getItems('empleados').then(employed => {
+    
+  //     this.empleados = employed;
+  //     this.empleadoElegido = this.empleados.find(emp => emp.key == this.key);
+  //     if(this.empleadoElegido.perfil == "clientes ")
+  //     {
+
+  //     } 
+     
+  //     });
+
+  // }
+
    tomodatosEmpleado(){
     //LEVANTO LOS DATOS DEL EMPLEADO MATCHEANDO POR KEY
-
+   
     this.baseService.getItems('empleados').then(employed => {
-      this.empleados = employed
+    
+      this.empleados = employed;
       this.empleadoElegido = this.empleados.find(emp => emp.key == this.key);
+      
       //creo un preNomb previo, porque sino me trae el string con ""
       var preNomb = JSON.stringify(this.empleadoElegido.nombre);
       this.nombre = preNomb.substr(1,preNomb.length-2);
@@ -184,18 +250,26 @@ export class ModalPagePage implements OnInit {
       this.dni = this.empleadoElegido.dni;
       });
 
-      this.baseService.getItems('encuestasEmpleados').then(employEn => {
-        this.encuestaEmp = employEn
+      this.baseService.getItems('encuestasSupervisor').then(employEn => {
+        this.encuestaEmp = employEn;
         var encuestaEmpleadoElegido = this.encuestaEmp.find(enc => enc.key == this.key);
-        this.calidad = encuestaEmpleadoElegido.calidad;
+          
+        this.valoracion = encuestaEmpleadoElegido.valoracion;
 
-      
         var preComent = JSON.stringify(encuestaEmpleadoElegido.comentario);
         this.comentario = preComent.substr(1,preComent.length-2);
 
-      });
+        this.recomendado = encuestaEmpleadoElegido.recomendado;
+        this.puntualidad = encuestaEmpleadoElegido.puntualidad;
+
+      }
+      
+      );
+
+      // alert(this.guardokey);
   }
- 
+
+
 
    tomodatosCliente(){
 //LEVANTO LOS DATOS DEL CLIENTE MATCHEANDO POR KEY
@@ -214,16 +288,16 @@ this.baseService.getItems('clientes').then(client => {
 
   });
 
-  this.baseService.getItems('ecuestasCliente').then(clientEn => {
-    this.encuestaCli = clientEn
-    var encuestaClienteElegido = this.encuestaCli.find(enc => enc.key == this.key);
-    this.calidad = encuestaClienteElegido.calidad;
+  // this.baseService.getItems('ecuestasCliente').then(clientEn => {
+  //   this.encuestaCli = clientEn
+  //   var encuestaClienteElegido = this.encuestaCli.find(enc => enc.key == this.key);
+  //   this.calidad = encuestaClienteElegido.calidad;
 
   
-    var preComent = JSON.stringify(encuestaClienteElegido.comentarios);
-    this.comentario = preComent.substr(1,preComent.length-2);
+  //   var preComent = JSON.stringify(encuestaClienteElegido.comentarios);
+  //   this.comentario = preComent.substr(1,preComent.length-2);
 
-  });
+  // });
 
   }
 
