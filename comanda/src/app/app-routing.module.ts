@@ -40,6 +40,7 @@ const routes: Routes = [
     path: '', 
     loadChildren: './abm-mesa/abm-mesa.module#AbmMesaPageModule'
   },
+  { path: '', loadChildren: './encuesta-empleado/encuesta-empleado.module#EncuestaEmpleadoPageModule' },
   {
     path: '', 
     loadChildren: './abm-producto/abm-producto.module#AbmProductoPageModule'
