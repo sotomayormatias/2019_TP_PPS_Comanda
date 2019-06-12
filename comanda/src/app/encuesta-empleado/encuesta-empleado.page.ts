@@ -20,7 +20,7 @@ export class EncuestaEmpleadoPage implements OnInit {
   datosEscaneados: any;
   datos: any;
 
-  ordenGeneral: number = 10;
+  ordengeneral: number = 10;
   destacado: {
     puestoTrabajo: boolean,
     comunicacion: boolean, 
@@ -121,7 +121,7 @@ export class EncuestaEmpleadoPage implements OnInit {
     // ESTOY ENTRANDO 
     if (this.ingreso == 0 ) {
       this.dbService.addItem("encuestasEmpleados", {
-        "ordenGeneral": this.ordenGeneral,
+        "ordengeneral": this.ordengeneral,
         "destacado": this.destacado,
         "recomienda": this.recomienda,
         "limpieza": this.limpieza,
@@ -138,7 +138,7 @@ export class EncuestaEmpleadoPage implements OnInit {
 
     } else {
       this.dbService.addItem("encuestasEmpleados", {
-        "ordenGeneral": this.ordenGeneral,
+        "ordengeneral": this.ordengeneral,
         "destacado": this.destacado,
         "recomienda": this.recomienda,
         "limpieza": this.limpieza,
@@ -154,7 +154,7 @@ export class EncuestaEmpleadoPage implements OnInit {
     
     
     this.limpieza = null;
-    this.ordenGeneral = null;
+    this.ordengeneral = null;
     this.destacado.puestoTrabajo = null;
     
     this.destacado.comunicacion = null;
