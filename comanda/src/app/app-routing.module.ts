@@ -49,6 +49,7 @@ const routes: Routes = [
     path: '', 
     loadChildren: './abm-empleados/abm-empleados.module#AbmEmpleadosPageModule'
   },
+  { path: '', loadChildren: './est-empleado/est-empleado.module#EstEmpleadoPageModule' },
   {
     path: '',
     loadChildren: './login/login.module#LoginPageModule'
@@ -69,7 +70,9 @@ const routes: Routes = [
   { path: 'encuesta-sup', loadChildren: './encuesta-sup/encuesta-sup.module#EncuestaSupPageModule' },
   { path: 'qr-mesa', loadChildren: './qr-mesa/qr-mesa.module#QrMesaPageModule' },
   { path: 'encuesta-empleado', loadChildren: './encuesta-empleado/encuesta-empleado.module#EncuestaEmpleadoPageModule' },
-  { path: 'modal-page', loadChildren: './modal-page/modal-page.module#ModalPagePageModule' }
+  { path: 'modal-page', loadChildren: './modal-page/modal-page.module#ModalPagePageModule' },
+  { path: 'est-empleado', loadChildren: './est-empleado/est-empleado.module#EstEmpleadoPageModule' }
+
 
 ];
 

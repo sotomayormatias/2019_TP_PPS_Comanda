@@ -83,7 +83,12 @@ export class AppComponent {
                     url: '/est-satisfaccion',
                     icon: 'pie'
                   },
-                
+                    // (J) ESTADISTICA EMPLEADO
+                    {
+                      title: 'OK - Estadística Empleado',
+                      url: '/est-empleado',
+                      icon: 'person-add'
+                    },
                   // (K) GRAFICOS DE ENCUESTAS
                   {
                     title: 'OK - Encuesta Supervisor',
@@ -102,12 +107,7 @@ export class AppComponent {
                     url: '/',
                     icon: 'calendar'
                   },
-                   // (J) ENCUESTA EMPLEADO
-                  //  {
-                  //   title: 'OK - Encuesta Empleado',
-                  //   url: '/encuesta-empleado',
-                  //   icon: 'clipboard'
-                  // },
+               
                   {
                     title: 'Cerrar Sesion',
                     url: '/',
@@ -160,6 +160,13 @@ export class AppComponent {
                     icon: 'help-buoy'
                   },
                   // (I - J - K) GRAFICOS DE ENCUESTAS
+                    // (J) ESTADISTICA EMPLEADO
+                    {
+                      title: 'OK - Estadística Empleado',
+                      url: '/est-empleado',
+                      icon: 'person-add'
+                    },
+                    // I
                   {
                     title: 'OK - Estadística Satisfacción',
                     url: '/est-satisfaccion',
@@ -172,6 +179,7 @@ export class AppComponent {
                     url: '/encuesta-sup',
                     icon: 'alert'
                   },
+                 
                   // (8) (9) - CONFIRMA CLIENTE Y ENVIA MAIL
                   {
                     title: 'Confirmar Clientes',
