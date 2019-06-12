@@ -83,7 +83,12 @@ export class AppComponent {
               url: '/est-satisfaccion',
               icon: 'pie'
             },
-
+            // (J) ESTADISTICA EMPLEADO
+            {
+              title: 'OK - Estadística Empleado',
+              url: '/est-empleado',
+              icon: 'person-add'
+            },
             // (K) GRAFICOS DE ENCUESTAS
             {
               title: 'OK - Encuesta Supervisor',
@@ -198,7 +203,6 @@ export class AppComponent {
 
           ];
           break;
-
         // CLIENTE
         case "cliente":
           console.log(' auto - estoy en : ', data);
@@ -304,7 +308,6 @@ export class AppComponent {
 
         // COCINERO 
         case "cocinero":
-
           this.appPages = [
             {
               title: 'Home',
@@ -312,12 +315,12 @@ export class AppComponent {
               icon: 'home'
             },
 
-            // (J) ENCUESTA EMPLEADO
-            {
-              title: 'NOK - Encuesta Empleado',
-              url: '/',
-              icon: 'clipboard'
-            },
+            // // (J) ENCUESTA EMPLEADO
+            // {
+            //   title: 'NOK - Encuesta Empleado',
+            //   url: '/',
+            //   icon: 'clipboard'
+            // },
             // (13) LISTADO DE PEDIDOS PENDIENTES POR SECTOR
             {
               title: 'NOK - Pedidos Pendientes',
@@ -327,11 +330,10 @@ export class AppComponent {
 
             {
               title: 'Cerrar Sesion',
-              url: '/',
+              url: '/encuesta-empleado',
               icon: 'log-out'
             }
           ];
-
 
           // (K) ENCUESTA EMPLEADO
           // (P) NPUSH - PBEB
@@ -341,7 +343,6 @@ export class AppComponent {
 
         // BARTENDER
         case "bartender":
-
           this.appPages = [
             {
               title: 'Home',
@@ -349,11 +350,11 @@ export class AppComponent {
               icon: 'home'
             },
             // (J) ENCUESTA EMPLEADO
-            {
-              title: 'NOK - Encuesta Empleado',
-              url: '/',
-              icon: 'clipboard'
-            },
+            //  {
+            //   title: 'NOK - Encuesta Empleado',
+            //   url: '/',
+            //   icon: 'clipboard'
+            // },
             // (13) LISTADO DE PEDIDOS PENDIENTES POR SECTOR
             {
               title: 'NOK - Pedidos Pendientes',
@@ -363,7 +364,7 @@ export class AppComponent {
 
             {
               title: 'Cerrar Sesion',
-              url: '/',
+              url: '/encuesta-empleado',
               icon: 'log-out'
             }
           ];
@@ -400,15 +401,15 @@ export class AppComponent {
             },
 
             // (K) ENCUESTA EMPLEADO
-            {
-              title: 'NOK - Encuesta Empleado',
-              url: '/',
-              icon: 'clipboard'
-            },
+            // {
+            //   title: 'NOK - Encuesta Empleado',
+            //   url: '/',
+            //   icon: 'clipboard'
+            // },
 
             {
               title: 'Cerrar Sesion',
-              url: '/',
+              url: '/encuesta-empleado',
               icon: 'log-out'
             }
           ];
@@ -431,7 +432,7 @@ export class AppComponent {
 
             {
               title: 'Cerrar Sesion',
-              url: '/',
+              url: '/encuesta-empleado',
               icon: 'log-out'
             }
           ];
@@ -442,7 +443,6 @@ export class AppComponent {
 
 
     });
-
   }
 
   initializeApp() {

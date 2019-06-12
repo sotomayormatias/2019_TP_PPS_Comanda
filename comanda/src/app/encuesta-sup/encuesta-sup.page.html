@@ -11,22 +11,49 @@
 </ion-header>
 
 <ion-content padding>
-<ion-label>Empleados</ion-label>
-    <ion-list>
-        <ion-item *ngFor="let empleado of empleados" (click)="muestraModal()">
+    <ion-item>
+    <ion-label color="light">Empleados</ion-label>
+    </ion-item>
+    <ion-grid shape="round" *ngFor="let empleado of empleados">
+        
+        
           <!-- <ion-icon [name]="item.icon" slot="start"></ion-icon> -->
-          {{empleado.nombre}} {{empleado.apellido}}
+          <ion-row>
+            <ion-col shape="round">
+              <ion-item class="round" (click)="muestraModal(empleado.key,'empleado')" >
+              {{empleado.nombre}} {{empleado.apellido}}
+              </ion-item>
+            </ion-col>
+          </ion-row>
+         
+          
           <!-- <div class="item-note" slot="end"> -->
             <!-- <ion-button size="small" (click)="confirmarCliente(cliente.correo)">Confirmar</ion-button> -->
           <!-- </div> -->
-        </ion-item>
-      </ion-list>
+       
+      </ion-grid>
 
-  <!-- <ion-item>
-    <ion-label>Empleado</ion-label>
-    <ion-select placeholder="Select One">
-      <ion-select-option value="f">Uno</ion-select-option>
-      <ion-select-option value="m">Dos</ion-select-option>
-    </ion-select>
-  </ion-item> -->
+      <ion-item>
+          <ion-label color="light">Clientes</ion-label>
+          </ion-item>
+          <ion-grid shape="round" *ngFor="let cliente of clientes">
+              
+              
+                <!-- <ion-icon [name]="item.icon" slot="start"></ion-icon> -->
+                <ion-row>
+                  <ion-col shape="round">
+                    <ion-item class="round" (click)="muestraModal(cliente.key,'cliente')" >
+                    {{cliente.nombre}} {{cliente.apellido}}
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+               
+                
+                <!-- <div class="item-note" slot="end"> -->
+                  <!-- <ion-button size="small" (click)="confirmarCliente(cliente.correo)">Confirmar</ion-button> -->
+                <!-- </div> -->
+             
+            </ion-grid>
+
+ 
 </ion-content>

@@ -1,9 +1,95 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>encuesta-empleado</ion-title>
+  <ion-toolbar color="dark">
+    <ion-title>
+      Encuesta
+    </ion-title>
+    <ion-buttons slot="end">
+        <ion-button color="light" size="small" (click)="enviar()">Enviar</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+ <!-- Combo para determinar la limpieza del lugar -->
+ <ion-item-group>
+  <ion-item-divider color="dark"><h6>Limpieza del lugar</h6></ion-item-divider>
+  <ion-item>
+    <ion-select [(ngModel)]="limpieza" interface="action-sheet" value="impoluto" style="padding-left: 15%;    padding-top: 6%;">
+      <ion-select-option value="impoluto">Impoluto</ion-select-option>
+      <ion-select-option value="limpio">Limpio</ion-select-option>
+      <ion-select-option value="sucio">Sucio</ion-select-option>
+      <ion-select-option value="consti">Imposible Trabajar</ion-select-option>
+    </ion-select>
+  </ion-item>
+</ion-item-group>
 
+<ion-content padding>
+  <ion-list>
+    <!-- range para elegir conformidad del 1 al 10 -->
+    <ion-item-group>
+      <ion-item-divider color="dark"><h6>Orden General</h6></ion-item-divider>
+      <ion-item>
+        <ion-range color="secondary" min="1" max="10" pin="true" snaps="true" [(ngModel)]="ordengeneral"
+          [ngModelOptions]="{standalone: true}">
+          <ion-label color="danger" slot="start" style="font-size: xx-large;">1</ion-label>
+          <ion-label color="success" slot="end" style="font-size: xx-large;">10</ion-label>
+        </ion-range>
+      </ion-item>
+    </ion-item-group>
+
+    <!-- checkbox para elegir lo mas destacado -->
+    <ion-item-group>
+      <ion-item-divider color="dark"><h6>¿Algo para destacar?</h6></ion-item-divider>
+      <ion-item>
+        <ion-label>Puesto de trabajo</ion-label>
+        <ion-checkbox [(ngModel)]="destacado.puestoTrabajo"></ion-checkbox>
+      </ion-item>
+      <ion-item>
+        <ion-label>Comunicación</ion-label>
+        <ion-checkbox [(ngModel)]="destacado.comunicacion"></ion-checkbox>
+      </ion-item>
+      <ion-item>
+        <ion-label>Compañerismo</ion-label>
+        <ion-checkbox [(ngModel)]="destacado.companerismo"></ion-checkbox>
+      </ion-item>
+      <ion-item>
+        <ion-label>Horarios Flexibles</ion-label>
+        <ion-checkbox [(ngModel)]="destacado.horarios"></ion-checkbox>
+      </ion-item>
+    </ion-item-group>
+
+    <!-- radio para elegir si recomendaria el lugar a alguien -->
+    <ion-item-group>
+      <ion-item-divider color="dark"><h6>¿Estás feliz?</h6></ion-item-divider>
+      <ion-radio-group [(ngModel)]="recomienda">
+        <ion-item>
+          <ion-label>Sí</ion-label>
+          <ion-radio slot="start" value="si" checked></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-label>No</ion-label>
+          <ion-radio slot="start" value="no"></ion-radio>
+        </ion-item>
+      </ion-radio-group>
+    </ion-item-group>
+
+   
+
+    <!-- textarea para comentarios adicionales -->
+    <ion-item-group>
+      <ion-item-divider color="dark"><h6>Deje su comentario</h6></ion-item-divider>
+      <ion-item>
+        <ion-textarea [(ngModel)]="comentarios"></ion-textarea>
+      </ion-item>
+    </ion-item-group>
+  </ion-list>
+
+
+  <ion-slides>
+    <ion-slide *ngFor="let foto of captureDataUrl">
+      <img [src]="foto" *ngIf="captureDataUrl" />
+    </ion-slide>
+  </ion-slides>
+  <ion-button type="button" shape="round" color="secondary" fill="solid" (click)="tomarFoto()">Agregar foto
+     </ion-button>
+  
 </ion-content>

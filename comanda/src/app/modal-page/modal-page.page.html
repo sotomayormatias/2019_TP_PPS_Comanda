@@ -1,8 +1,11 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title></ion-title>
-    <ion-buttons slot="end">
-        <ion-button color="dark" size="small" (click)="cerrar()">Cerrar</ion-button>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+        <ion-button color="light" size="small" (click)="guardar(labelD)">Enviar</ion-button>
+
+    </ion-buttons>
+    <ion-buttons  slot="end">
+        <ion-button color="light" size="small" (click)="cerrar()">Cerrar</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -12,30 +15,126 @@
 
       <ion-card>
           <ion-card-header>
-            <ion-card-subtitle>Detalles</ion-card-subtitle>
-            <!-- <ion-card-title>Card Title</ion-card-title> -->
+            <!-- <ion-card-subtitle>Detalles</ion-card-subtitle> -->
+            <ion-card-title>Detalles</ion-card-title>
           </ion-card-header>
         
           <ion-card-content>
-            <ion-list>
-              <ion-item>
-                  <ion-label >Calidad</ion-label>
-                    <ion-range min="1" max="5" snaps="true" ticks="false" pin="true" color="warning">
-                        <ion-icon size="small" slot="start" name="star-outline"></ion-icon>
-                        <ion-icon slot="end" name="star"></ion-icon>
-                    </ion-range>
-                  </ion-item>
-              <ion-item>
-                <ion-label position="floating">Comentarios</ion-label>
-              <ion-textarea placeholder="Ingrese comentario aqui..."></ion-textarea>
-              </ion-item>
+
+              <ion-grid style="height: 100%">
+                  <ion-row justify-content-center align-items-center style="height: 100%; flex-direction: column">
+                  <ion-spinner *ngIf="spinner" name="lines"></ion-spinner>
+                  <ion-spinner name="ios"></ion-spinner>
+                    </ion-row>
+                  </ion-grid>
+
+
+            <ion-list *ngIf="!spinner" class="round" color="dark">
              
-                  <ion-button expand="block" color="dark">Agregar
-                  </ion-button> 
+             
+
+              <ion-item color="dark" class="round">
+                <ion-label position="floating">Nombre</ion-label>
+                <ion-input [(ngModel)]="nombre" type="text" name="nombre" readonly ngDefaultControl ></ion-input>
+              </ion-item>
+
+              <ion-item color="dark" class="round">
+                <ion-label position="floating" name="apellido">Apellido</ion-label>
+                <ion-input [(ngModel)]="apellido" type="text" name="apellido" value="" readonly ngDefaultControl ></ion-input>
+              </ion-item>
+
+              <ion-item color="dark" class="round">
+                <ion-label [(ngModel)]="labelD" position="floating" name="labelD" ngDefaultControl >{{labelD}}</ion-label>
+                <ion-input [(ngModel)]="dataCambia" type="text" name="dataCambia" readonly ngDefaultControl ></ion-input>
+              </ion-item>
+
+              <ion-item color="dark" class="round">
+                <ion-label position="floating">DNI</ion-label>
+                <ion-input [(ngModel)]="dni" type="text" name="dni" readonly ngDefaultControl ></ion-input>
+              </ion-item> 
+
+
+              <ion-item *ngIf="labelD =='CUIL'" color="dark" class="itemSelect">
+                  <ion-label  color="dark" position="stacked" class="white-color">Puntualidad</ion-label>
+                  <ion-select  color="dark" [(ngModel)]="puntualidad" cancelText="Cancelar" okText="Aceptar">
+                    <ion-select-option value="puntual" selected>Puntual</ion-select-option>
+                    <ion-select-option value="leve">Leve retardo</ion-select-option>
+                    <ion-select-option value="impuntual">Siempre impuntual</ion-select-option>
+
+                  </ion-select>
+              </ion-item>
+
+              <ion-item *ngIf="labelD !='CUIL'" color="dark" class="itemSelect">
+                <ion-label  color="dark" position="stacked" class="white-color">Cant. Comensales</ion-label>
+                <ion-select  color="dark" [(ngModel)]="comensales" cancelText="Cancelar" okText="Aceptar">
+                  <ion-select-option value="1" selected>Solo</ion-select-option>
+                  <ion-select-option value="2">Dos personas o mas</ion-select-option>
+                  <ion-select-option value="3">Tres personas o mas</ion-select-option>
+                  <ion-select-option value="4">Grupo Familiar (Cuatro personas o mas)</ion-select-option>
+
+                </ion-select>
+            </ion-item>
+
+                  <ion-item  class="round" color="dark">             
+                  <ion-label position="stacked" >Valoracion</ion-label>             
+                  <ion-range [(ngModel)]="valoracion" min="1" max="10" snaps="true" ticks="false" pin="true" color="warning" class="white-color"  [ngModelOptions]="{standalone: true}" ngDefaultControl >
+                    <ion-icon size="small" slot="start" name="star-outline"></ion-icon>
+                    <ion-icon slot="end" name="star"></ion-icon>
+                  </ion-range>
+                  <ion-label position="floating">Comentarios</ion-label>
+                  <ion-textarea [(ngModel)]="comentario" placeholder="Ingrese comentario aqui..." [ngModelOptions]="{standalone: true}" ngDefaultControl ></ion-textarea>
+                
+                  <ion-item-group *ngIf="labelD =='CUIL'" >
+                    <ion-item-divider color="dark"><h4>Recomendado</h4></ion-item-divider>
+                    <ion-radio-group  [(ngModel)]="recomendado">
+                      <ion-item color="dark">
+                        <ion-label>Sí</ion-label>
+                        <ion-radio slot="start" value="si" checked></ion-radio>
+                      </ion-item>
+                      <ion-item color="dark">
+                        <ion-label>No</ion-label>
+                        <ion-radio slot="start" value="no"></ion-radio>
+                      </ion-item>
+                    </ion-radio-group>
+                  </ion-item-group>
+
+                  <ion-item-group *ngIf="labelD !='CUIL'" >
+                    <ion-item-divider color="dark"><h4>Habitué</h4></ion-item-divider>
+                    <ion-radio-group  [(ngModel)]="habitue">
+                      <ion-item color="dark">
+                        <ion-label>Sí</ion-label>
+                        <ion-radio slot="start" value="si" checked></ion-radio>
+                      </ion-item>
+                      <ion-item color="dark">
+                        <ion-label>No</ion-label>
+                        <ion-radio slot="start" value="no"></ion-radio>
+                      </ion-item>
+                    </ion-radio-group>
+                  </ion-item-group>
+
+
+                  <!-- <ion-item-group *ngIf="labelD =='CUIL'">
+                    <ion-item-divider color="dark"><h6>Puntualidad</h6></ion-item-divider>
+                    <ion-item color="dark">
+                     
+                    </ion-item>
+                  </ion-item-group> -->
+
+                  <!-- <ion-item *ngIf="!spinner" color="dark">
+                      <ion-button  expand="block" color="dark" (click)="guardar(labelD)">Guardar</ion-button>
+                   
+                      </ion-item>
+                    -->
+                </ion-item> 
+                
+                
+                 
                 </ion-list> 
              
           </ion-card-content>
         </ion-card>
+
+       
 
 
 </ion-content>

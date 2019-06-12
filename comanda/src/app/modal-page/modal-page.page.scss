@@ -1,3 +1,36 @@
-ion-card{
-    background-color: darkgrey;
+@import url('https://fonts.googleapis.com/css?family=Quicksand&display=swap');
+
+ion-input,ion-textarea{
+    font-family: 'Quicksand', sans-serif;
 }
+
+ion-card,ion-card-title{
+    font-family: 'Quicksand', sans-serif;
+    --color: white;
+    background-color: #001f3f;
+}
+ion-card-content{
+    margin-bottom: 20%;
+}
+ion-content{
+    font-family: 'Quicksand', sans-serif;
+    --background: #043565;
+}
+
+.round { 
+    color: white;
+    font-family: 'Quicksand', sans-serif;
+    border-radius: 20px !important; 
+    padding-left: 8px; 
+    padding-right: 10px; 
+    padding-bottom: 5px; 
+    padding-top: 5px; }
+
+    .white-color{
+    --color: white;
+       color: white;
+    }
+    .itemSelect{
+        width: 94.5%;
+        margin-left: 2.5%;
+    }
