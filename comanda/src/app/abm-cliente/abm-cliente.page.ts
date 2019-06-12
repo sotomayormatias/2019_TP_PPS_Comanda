@@ -14,7 +14,6 @@ import * as firebase from "firebase";
 export class AbmClientePage implements OnInit {
   formClienteAnonimo: FormGroup;
   formClienteRegistrado: FormGroup;
-
   captureDataUrl: Array<string>;
   hayFotos: boolean = false;
   cantidadFotos: number = 0;

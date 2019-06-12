@@ -28,6 +28,7 @@ export class LoginPage implements OnInit {
   password = '';
   routerLink = '';
   tipoUsuario: string = "";
+  counter: number = 10;
 
   spinner: boolean;
 
@@ -62,7 +63,18 @@ export class LoginPage implements OnInit {
         sessionStorage.setItem('usuario', JSON.stringify(usuarioLogueado));
         this.events.publish('usuarioLogueado', usuarioLogueado.perfil);
         this.creoToast(true);
-        this.router.navigateByUrl('/home');
+
+        if ( usuarioLogueado.perfil == 'dueno' || 
+             usuarioLogueado.perfil == 'supervisor' || 
+             usuarioLogueado.perfil == 'cliente') {
+          this.router.navigateByUrl('/home');
+        } else {
+          this.router.navigateByUrl('/encuesta-empleado');
+      
+
+        }
+    
+
       } else {
         setTimeout(() => this.spinner = false, 2000);
         this.creoToast(false);
@@ -235,7 +247,7 @@ export class LoginPage implements OnInit {
 
       // CLIENTE
       {
-        text: 'cliente',
+        text: 'Cliente',
         icon: 'cafe',
         handler: () => {
           this.cuenta.usuario = 'cliente2@gmail.com';
