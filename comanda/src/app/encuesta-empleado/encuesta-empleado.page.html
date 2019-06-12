@@ -59,7 +59,7 @@
 
     <!-- radio para elegir si recomendaria el lugar a alguien -->
     <ion-item-group>
-      <ion-item-divider color="dark"><h6>¿Recomendaría a un amigo para trabajar aquí?</h6></ion-item-divider>
+      <ion-item-divider color="dark"><h6>¿Estás feliz?</h6></ion-item-divider>
       <ion-radio-group [(ngModel)]="recomienda">
         <ion-item>
           <ion-label>Sí</ion-label>
@@ -83,4 +83,13 @@
     </ion-item-group>
   </ion-list>
 
+
+  <ion-slides>
+    <ion-slide *ngFor="let foto of captureDataUrl">
+      <img [src]="foto" *ngIf="captureDataUrl" />
+    </ion-slide>
+  </ion-slides>
+  <ion-button type="button" shape="round" color="secondary" fill="solid" (click)="tomarFoto()">Agregar foto
+     </ion-button>
+  
 </ion-content>
