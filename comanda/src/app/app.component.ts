@@ -89,6 +89,12 @@ export class AppComponent {
                       url: '/est-empleado',
                       icon: 'person-add'
                     },
+                     //  GRAFICOS DE AGREGADO
+                  {
+                    title: 'NOK - Estadística Supervisor',
+                    url: '/est-supervisor',
+                    icon: 'information-circle-outline'
+                  },
                   // (K) GRAFICOS DE ENCUESTAS
                   {
                     title: 'OK - Encuesta Supervisor',
@@ -171,6 +177,11 @@ export class AppComponent {
                     title: 'OK - Estadística Satisfacción',
                     url: '/est-satisfaccion',
                     icon: 'pie'
+                  },
+                  {
+                    title: 'NOK - Estadística Supervisor',
+                    url: '/est-supervisor',
+                    icon: 'information-circle-outline'
                   },
                 
                   // (K) GRAFICOS DE ENCUESTAS

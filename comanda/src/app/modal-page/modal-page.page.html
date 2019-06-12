@@ -52,6 +52,8 @@
                 <ion-label position="floating">DNI</ion-label>
                 <ion-input [(ngModel)]="dni" type="text" name="dni" readonly ngDefaultControl ></ion-input>
               </ion-item> 
+
+
               <ion-item *ngIf="labelD =='CUIL'" color="dark" class="itemSelect">
                   <ion-label  color="dark" position="stacked" class="white-color">Puntualidad</ion-label>
                   <ion-select  color="dark" [(ngModel)]="puntualidad" cancelText="Cancelar" okText="Aceptar">
@@ -62,9 +64,20 @@
                   </ion-select>
               </ion-item>
 
+              <ion-item *ngIf="labelD !='CUIL'" color="dark" class="itemSelect">
+                <ion-label  color="dark" position="stacked" class="white-color">Cant. Comensales</ion-label>
+                <ion-select  color="dark" [(ngModel)]="comensales" cancelText="Cancelar" okText="Aceptar">
+                  <ion-select-option value="1" selected>Solo</ion-select-option>
+                  <ion-select-option value="2">Dos personas o mas</ion-select-option>
+                  <ion-select-option value="3">Tres personas o mas</ion-select-option>
+                  <ion-select-option value="4">Grupo Familiar (Cuatro personas o mas)</ion-select-option>
+
+                </ion-select>
+            </ion-item>
+
                   <ion-item  class="round" color="dark">             
-                  <ion-label position="stacked">Valoracion</ion-label>             
-                  <ion-range [(ngModel)]="valoracion" min="1" max="10" snaps="true" ticks="false" pin="true" color="warning"  [ngModelOptions]="{standalone: true}" ngDefaultControl >
+                  <ion-label position="stacked" >Valoracion</ion-label>             
+                  <ion-range [(ngModel)]="valoracion" min="1" max="10" snaps="true" ticks="false" pin="true" color="warning" class="white-color"  [ngModelOptions]="{standalone: true}" ngDefaultControl >
                     <ion-icon size="small" slot="start" name="star-outline"></ion-icon>
                     <ion-icon slot="end" name="star"></ion-icon>
                   </ion-range>
@@ -74,6 +87,20 @@
                   <ion-item-group *ngIf="labelD =='CUIL'" >
                     <ion-item-divider color="dark"><h4>Recomendado</h4></ion-item-divider>
                     <ion-radio-group  [(ngModel)]="recomendado">
+                      <ion-item color="dark">
+                        <ion-label>Sí</ion-label>
+                        <ion-radio slot="start" value="si" checked></ion-radio>
+                      </ion-item>
+                      <ion-item color="dark">
+                        <ion-label>No</ion-label>
+                        <ion-radio slot="start" value="no"></ion-radio>
+                      </ion-item>
+                    </ion-radio-group>
+                  </ion-item-group>
+
+                  <ion-item-group *ngIf="labelD !='CUIL'" >
+                    <ion-item-divider color="dark"><h4>Habitué</h4></ion-item-divider>
+                    <ion-radio-group  [(ngModel)]="habitue">
                       <ion-item color="dark">
                         <ion-label>Sí</ion-label>
                         <ion-radio slot="start" value="si" checked></ion-radio>

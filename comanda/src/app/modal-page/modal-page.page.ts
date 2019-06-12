@@ -54,7 +54,10 @@ export class ModalPagePage implements OnInit {
   valoracion: number = 10;
   comentario: string = "";
   recomendado: string = "si";
+  habitue: string = "si";
   puntualidad: string = "puntual";
+
+  comensales: string = "1";
 
 
   constructor( public modalController: ModalController,
@@ -137,7 +140,10 @@ export class ModalPagePage implements OnInit {
         .set({
           valoracion: this.valoracion, 
           comentarios: this.comentario,
-          tipo: "cliente"
+          tipo: "cliente",
+          habitue: this.habitue,
+          comensales: this.comensales
+
       
        });
       }
@@ -256,11 +262,16 @@ export class ModalPagePage implements OnInit {
           
         this.valoracion = encuestaEmpleadoElegido.valoracion;
 
-        var preComent = JSON.stringify(encuestaEmpleadoElegido.comentario);
+        // var preComent = JSON.stringify(encuestaEmpleadoElegido.comentario);
+        
+        var preComent = JSON.stringify(encuestaEmpleadoElegido.comentarios);
         this.comentario = preComent.substr(1,preComent.length-2);
 
-        this.recomendado = encuestaEmpleadoElegido.recomendado;
-        this.puntualidad = encuestaEmpleadoElegido.puntualidad;
+        var preReco = JSON.stringify(encuestaEmpleadoElegido.recomendado);
+        this.recomendado = preReco.substr(1,preReco.length-2);
+      
+        var prePunt = JSON.stringify(encuestaEmpleadoElegido.puntualidad);
+        this.puntualidad = prePunt.substr(1,prePunt.length-2);
 
       }
       
@@ -288,19 +299,32 @@ this.baseService.getItems('clientes').then(client => {
 
   });
 
-  // this.baseService.getItems('ecuestasCliente').then(clientEn => {
-  //   this.encuestaCli = clientEn
-  //   var encuestaClienteElegido = this.encuestaCli.find(enc => enc.key == this.key);
-  //   this.calidad = encuestaClienteElegido.calidad;
+  this.baseService.getItems('encuestasSupervisor').then(clientEn => {
+    this.encuestaCli = clientEn;
+    var encuestaClienteElegido = this.encuestaCli.find(enc => enc.key == this.key);
+      
+    this.valoracion = encuestaClienteElegido.valoracion;
 
+    // var preComent = JSON.stringify(encuestaEmpleadoElegido.comentario);
+    
+    var preComent = JSON.stringify(encuestaClienteElegido.comentarios);
+    this.comentario = preComent.substr(1,preComent.length-2);
+
+    var preReco = JSON.stringify(encuestaClienteElegido.habitue);
+    this.habitue = preReco.substr(1,preReco.length-2);
   
-  //   var preComent = JSON.stringify(encuestaClienteElegido.comentarios);
-  //   this.comentario = preComent.substr(1,preComent.length-2);
+    var prePunt = JSON.stringify(encuestaClienteElegido.comensales);
+    this.comensales = prePunt.substr(1,prePunt.length-2);
 
-  // });
+  }
+  
+  );
 
   }
 
-  
+  // habitue: string = "si";
+  // puntualidad: string = "puntual";
+
+  // comensales: string = "1";
 
 }
