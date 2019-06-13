@@ -14,8 +14,8 @@ export class QrMesaPage implements OnInit {
   mesaEscaneada: any;
 
   constructor(private scanner: BarcodeScanner,
-    private baseService: FirebaseService,
-    private alertCtrl: AlertController) {
+              private baseService: FirebaseService,
+              private alertCtrl: AlertController) {
     }
 
   ngOnInit() {
@@ -39,9 +39,9 @@ export class QrMesaPage implements OnInit {
       let usuarioLogueado: any = JSON.parse(sessionStorage.getItem('usuario'));
       if (usuarioLogueado.perfil == "cliente") {
         if (this.mesaEscaneada.estado == 'libre') {
-          this.presentAlertCliente()
+          this.presentAlertCliente();
         } else {
-          //TODO: aca hay que ver si el que escanea es el que esta ocupando la mesa
+          // TODO: aca hay que ver si el que escanea es el que esta ocupando la mesa
           this.presentAlertEmpleado();
         }
       } else {

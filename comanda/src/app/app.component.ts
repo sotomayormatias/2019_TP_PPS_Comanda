@@ -107,6 +107,12 @@ export class AppComponent {
                     url: '/list-confirmar-cliente-alta',
                     icon: 'checkbox-outline'
                   },
+                  // (F) QR Ingreso
+                  {
+                    title: 'OK - QR Ingreso',
+                    url: '/qr-ingreso-local',
+                    icon: 'barcode'
+                  },
                    // (N) HACER RESERVAS AGENDADAS (opcional - supervisor)
                    {
                     title: 'NOK - Hacer Reservas Agendadas',
@@ -197,6 +203,12 @@ export class AppComponent {
                     url: '/list-confirmar-cliente-alta',
                     icon: 'checkbox-outline'
                   },
+                     // (F) QR Ingreso
+                     {
+                      title: 'OK - QR Ingreso',
+                      url: '/qr-ingreso-local',
+                      icon: 'barcode'
+                    },
                     // (N) HACER RESERVAS AGENDADAS (opcional - supervisor)
                     {
                     title: 'NOK - Hacer Reservas Agendadas',
@@ -251,10 +263,11 @@ export class AppComponent {
             },
             // (F) QR INGRESO
             {
-              title: 'NOK - QR Ingreso',
-              url: '/',
+              title: 'OK - QR Ingreso',
+              url: '/qr-ingreso-local',
               icon: 'list-box'
             },
+
              // (G) QR MESA
              {
               title: 'OK - QR Mesa',
@@ -409,7 +422,13 @@ export class AppComponent {
               url: '/',
               icon: 'paper'
             },
-
+            // (F) QR INGRESO
+            {
+              title: 'OK - Confirmar cliente mesa',
+              url: '/list-confirmar-cliente-mesa',
+              icon: 'log-in'
+            },
+            
             // (K) ENCUESTA EMPLEADO
             // {
             //   title: 'NOK - Encuesta Empleado',
