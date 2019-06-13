@@ -20,7 +20,7 @@
           <!-- <ion-icon [name]="item.icon" slot="start"></ion-icon> -->
           <ion-row>
             <ion-col shape="round">
-              <ion-item class="round" (click)="muestraModal(empleado.key,'empleado')" >
+              <ion-item class="round" color="dark" (click)="muestraModal(empleado.key,'empleado')" >
               {{empleado.nombre}} {{empleado.apellido}}
               </ion-item>
             </ion-col>
@@ -42,7 +42,7 @@
                 <!-- <ion-icon [name]="item.icon" slot="start"></ion-icon> -->
                 <ion-row>
                   <ion-col shape="round">
-                    <ion-item class="round" (click)="muestraModal(cliente.key,'cliente')" >
+                    <ion-item class="round" color="dark" (click)="muestraModal(cliente.key,'cliente')" >
                     {{cliente.nombre}} {{cliente.apellido}}
                     </ion-item>
                   </ion-col>

@@ -14,8 +14,8 @@ export class EstSupervisorPage implements OnInit {
   @ViewChild('canvasConformidadCliente') canvasConformidadCliente;
   graficoConformidadCliente: any;
 
-  @ViewChild('canvasDestacado') canvasDestacado;
-  graficoDestacado: any;
+  // @ViewChild('canvasDestacado') canvasDestacado;
+  // graficoDestacado: any;
 
   @ViewChild('canvasRecomienda') canvasRecomienda;
   graficoRecomienda: any;
@@ -34,18 +34,30 @@ export class EstSupervisorPage implements OnInit {
   
 
   estadisticas: any;
+  estadisticasCliente: any;
+
   conformidades: { leyenda: string, votos: number }[] = [];
+  conformidadesCliente: { leyenda: string, votos: number }[] = [];
+
   // OrdenGenerales: { leyenda: string, votos: number }[] = [];
   destacados: { leyenda: string, votos: number }[] = [];
+  destacadosCliente: { leyenda: string, votos: number }[] = [];
+
   recomendaciones: { leyenda: string, votos: number }[] = [];
+  recomendacionesCliente: { leyenda: string, votos: number }[] = [];
+
+
 
   puntualidad: { leyenda: string, votos: number }[] = [];
+  comensales: { leyenda: string, votos: number }[] = [];
+
 
   constructor(
     private dbService: FirebaseService
   ) { 
     this.dbService.getItems("encuestasSupervisor").then(est => {
       this.estadisticas = est;
+      this.estadisticasCliente = est;
 
       // alert(est.tipo);
       // console.log(est[0].tipo);
@@ -53,16 +65,27 @@ export class EstSupervisorPage implements OnInit {
       // var encEmpleados = this.estadisticas.find(enc => enc.tipo == "empleado");
       // console.log(encEmpleados);
 
-  //EMPLEADO
-  this.agruparRecomendacionesEmpleado();
-  this.crearGraficoRecomendacionesEmpleado();
+      //EMPLEADO
+      this.agruparRecomendacionesEmpleado();
+      this.crearGraficoRecomendacionesEmpleado();
 
-  this.agruparConformidades();
-  this.crearGraficoConformidades();
-  
-  
-  this.agruparPuntualidad();
-  this.crearGraficoPuntualidad();
+      this.agruparConformidades();
+      this.crearGraficoConformidades();
+      
+      
+      this.agruparPuntualidad();
+      this.crearGraficoPuntualidad();
+
+      // CLIENTE
+      this.agruparRecomendacionesCliente();
+      this.crearGraficoRecomendacionesCliente();
+
+      this.agruparConformidadesCliente();
+      this.crearGraficoConformidadesCliente();
+      
+      
+      this.agruparComensales();
+      this.crearGraficoComensales();
     
 
      
@@ -73,16 +96,7 @@ export class EstSupervisorPage implements OnInit {
 
     
 
-      //CLIENTE
-      // this.agruparRecomendacionesCliente();
-      // this.crearGraficoRecomendacionesCliente();
-
-      // this.agruparConformidadesCliente();
-      // this.crearGraficoConformidadesCliente();
-      
-      
-      // this.agruparComensales();
-      // this.crearGraficoComensales();
+    
   }
 
   //EMPLEADO
@@ -201,11 +215,11 @@ export class EstSupervisorPage implements OnInit {
         let result: any;
         switch (esta.puntualidad) {
           case "puntual":
-            result = this.puntualidad.find(conf => conf.leyenda == "Puntual");
+            result = this.puntualidad.find(conf => conf.leyenda == "puntual");
             if (result)
               result.votos += 1;
             else
-              this.puntualidad.push({ leyenda: "Puntual", votos: 1 });
+              this.puntualidad.push({ leyenda: "puntual", votos: 1 });
             break;
           default:
             result = this.puntualidad.find(conf => conf.leyenda == esta.puntualidad);
@@ -268,7 +282,7 @@ export class EstSupervisorPage implements OnInit {
     
     
 
-    this.estadisticas.forEach(esta => {
+    this.estadisticasCliente.forEach(esta => {
       // console.log(this.estadisticas);
       // console.log(this.recomendaciones);
       // var encEmpleados = this.estadisticas.find(enc => enc.tipo == "empleado");
@@ -276,12 +290,12 @@ export class EstSupervisorPage implements OnInit {
       if(esta.tipo == "cliente")
       {
        
-        let result = this.recomendaciones.find(conf => conf.leyenda == esta.recomendado);
+        let result = this.recomendacionesCliente.find(conf => conf.leyenda == esta.habitue);
         // console.log(result);
         if (result) {
           result.votos += 1;
         } else {
-          this.recomendaciones.push({ leyenda: esta.recomendado, votos: 1 });
+          this.recomendacionesCliente.push({ leyenda: esta.habitue, votos: 1 });
         }
       
 
@@ -293,11 +307,11 @@ export class EstSupervisorPage implements OnInit {
   crearGraficoRecomendacionesCliente() {
     let leyendas: string[] = [];
     let valores: number[] = [];
-    this.recomendaciones.forEach(reco => {
+    this.recomendacionesCliente.forEach(reco => {
       leyendas.push(reco.leyenda);
       valores.push(reco.votos);
     });
-    this.graficoRecomienda = new Chart(this.canvasRecomienda.nativeElement, {
+    this.graficoHabitue = new Chart(this.canvasHabitue.nativeElement, {
 
       type: 'doughnut',
       data: {
@@ -320,14 +334,14 @@ export class EstSupervisorPage implements OnInit {
   
 
   agruparConformidadesCliente() {
-    this.estadisticas.forEach(esta => {
+    this.estadisticasCliente.forEach(esta => {
       if(esta.tipo == "cliente")
       {
-        let result = this.conformidades.find(conf => conf.leyenda == esta.valoracion);
+        let result = this.conformidadesCliente.find(conf => conf.leyenda == esta.valoracion);
         if (result) {
           result.votos += 1;
         } else {
-          this.conformidades.push({ leyenda: esta.valoracion, votos: 1 });
+          this.conformidadesCliente.push({ leyenda: esta.valoracion, votos: 1 });
         }
 
       }
@@ -338,11 +352,11 @@ export class EstSupervisorPage implements OnInit {
   crearGraficoConformidadesCliente() {
     let leyendas: string[] = [];
     let valores: number[] = [];
-    this.conformidades.forEach(conf => {
+    this.conformidadesCliente.forEach(conf => {
       leyendas.push(conf.leyenda);
       valores.push(conf.votos);
     });
-    this.graficoConformidad = new Chart(this.canvasConformidad.nativeElement, {
+    this.graficoConformidadCliente = new Chart(this.canvasConformidadCliente.nativeElement, {
 
       type: 'doughnut',
       data: {
@@ -372,24 +386,24 @@ export class EstSupervisorPage implements OnInit {
   }
 
   agruparComensales() {
-    this.estadisticas.forEach(esta => {
+    this.estadisticasCliente.forEach(esta => {
 
       if(esta.tipo == "cliente"){
         let result: any;
-        switch (esta.puntualidad) {
-          case "consti":
-            result = this.puntualidad.find(conf => conf.leyenda == "1");
+        switch (esta.comensales) {
+          case "1":
+            result = this.puntualidad.find(conf => conf.leyenda == "Solo");
             if (result)
               result.votos += 1;
             else
-              this.puntualidad.push({ leyenda: "Solo", votos: 1 });
+              this.comensales.push({ leyenda: "Solo", votos: 1 });
             break;
           default:
-            result = this.puntualidad.find(conf => conf.leyenda == esta.comensales);
+            result = this.comensales.find(conf => conf.leyenda == esta.comensales);
             if (result) {
               result.votos += 1;
             } else {
-              this.puntualidad.push({ leyenda: esta.comensales, votos: 1 });
+              this.comensales.push({ leyenda: esta.comensales, votos: 1 });
             }
             break;
         }
@@ -401,11 +415,11 @@ export class EstSupervisorPage implements OnInit {
   crearGraficoComensales() {
     let leyendas: string[] = [];
     let valores: number[] = [];
-    this.puntualidad.forEach(limpi => {
+    this.comensales.forEach(limpi => {
       leyendas.push(limpi.leyenda);
       valores.push(limpi.votos);
     });
-    this.graficoPuntualidad = new Chart(this.canvasPuntualidad.nativeElement, {
+    this.graficoComensales = new Chart(this.canvasComensales.nativeElement, {
 
       type: 'bar',
       data: {

@@ -37,7 +37,7 @@ export class AppComponent {
         // SUPERVISOR - DUEÑO
         case 'supervisor' :
             console.log(' auto - estoy en : ', data);
-            console.log(' man - estoy en : ', "supervisor");
+            // console.log(' man - estoy en : ', "supervisor");
               // (A) ALTA DUEÑO
               // (B) ALTA EMPLEADO
               // (C) ALTA PRODUCTO
@@ -91,7 +91,7 @@ export class AppComponent {
                     },
                      //  GRAFICOS DE AGREGADO
                   {
-                    title: 'NOK - Estadística Supervisor',
+                    title: 'OK - Estadística Supervisor',
                     url: '/est-supervisor',
                     icon: 'information-circle-outline'
                   },
@@ -101,6 +101,7 @@ export class AppComponent {
                     url: '/encuesta-sup',
                     icon: 'alert'
                   },
+                 
                   // (8) (9) - CONFIRMA CLIENTE Y ENVIA MAIL
                   {
                     title: 'OK - Confirmar Clientes',
@@ -282,9 +283,10 @@ export class AppComponent {
             },
             // (H) QR PROPINA
             {
-              title: 'NOK - QR Propina',
-              url: '/',
-              icon: 'cash'
+              //ESTE NO VA ACA PERO LO DEJO POR AHORA
+              title: 'NOHERE - QR PROPINA',
+              url: '/qr-propina',
+              icon: 'trash'
             },
            
             // (I) ENCUESTA CLIENTE
