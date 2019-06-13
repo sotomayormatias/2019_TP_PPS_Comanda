@@ -101,6 +101,7 @@ export class AppComponent {
                     url: '/encuesta-sup',
                     icon: 'alert'
                   },
+                 
                   // (8) (9) - CONFIRMA CLIENTE Y ENVIA MAIL
                   {
                     title: 'OK - Confirmar Clientes',
@@ -282,9 +283,10 @@ export class AppComponent {
             },
             // (H) QR PROPINA
             {
-              title: 'NOK - QR Propina',
-              url: '/',
-              icon: 'cash'
+              //ESTE NO VA ACA PERO LO DEJO POR AHORA
+              title: 'NOHERE - QR PROPINA',
+              url: '/qr-propina',
+              icon: 'trash'
             },
            
             // (I) ENCUESTA CLIENTE
