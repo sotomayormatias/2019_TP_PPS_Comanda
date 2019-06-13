@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      QR Ingreso
+    </ion-title>
+    <ion-buttons slot="end">
+      <img id="iconToolBar" src="../../assets/imgs/icon.png">
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <img src="../../assets/imgs/codigoBarras.png">
+</ion-content>
+
+<ion-footer> 
+    <ion-button color="primary" expand="block" (click)="doScan()">Escanear</ion-button>
+</ion-footer>
