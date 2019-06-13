@@ -135,10 +135,5 @@ export class QrIngresoLocalPage implements OnInit {
   // await alert.present();
   // }
 
-  cambiarEstadoMesa() {
-  this.mesaEscaneada.estado = 'ocupada';
-  let key = this.mesaEscaneada.key;
-  delete this.mesaEscaneada.key;
-  this.baseService.updateItem('mesas', key, this.mesaEscaneada);
-  }
+
 }

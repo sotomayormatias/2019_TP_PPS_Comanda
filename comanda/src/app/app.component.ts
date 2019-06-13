@@ -274,6 +274,12 @@ export class AppComponent {
               url: '/qr-mesa',
               icon: 'git-pull-request'
             },
+
+            {
+              title: 'OK - Listado de espera',
+              url: '/list-confirmar-cliente-mesa',
+              icon: 'log-in'
+            },
             // (H) QR PROPINA
             {
               title: 'NOK - QR Propina',

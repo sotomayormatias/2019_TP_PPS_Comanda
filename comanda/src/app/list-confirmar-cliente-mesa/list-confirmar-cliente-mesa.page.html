@@ -17,9 +17,9 @@
     <ion-item *ngFor="let cliente of clientes">
       <!-- <ion-icon [name]="item.icon" slot="start"></ion-icon> -->
       {{cliente.correo}} {{cliente.estado}}
-      <!-- <div class="item-note" slot="end">
-        <ion-button size="small" (click)="confirmarCliente(cliente.correo)">Confirmar</ion-button>
-      </div> -->
+      <div class="item-note" slot="end">
+        <ion-button *ngIf="esMozo" size="small" (click)="confirmarCliente(cliente.correo)">Confirmar</ion-button>
+      </div>
     </ion-item>
   </ion-list>
 </ion-content>
