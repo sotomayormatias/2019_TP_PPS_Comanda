@@ -25,8 +25,8 @@
     <!-- <ion-label position="floating">Cambiar vista</ion-label>
     <ion-toggle color="dark" [(ngModel)]="esEmpleado" [ngModelOptions]="{standalone: true}"></ion-toggle> -->
 
-    <ion-label >EMPLEADO</ion-label>
-    <ion-card  >
+    <ion-label  floating>EMPLEADO</ion-label>
+    <ion-card color="dark" >
       <ion-card-header>
         Aptitudes puntuadas
       </ion-card-header>
@@ -34,7 +34,7 @@
         <canvas #canvasConformidad></canvas>
       </ion-card-content>
     </ion-card>
-    <ion-card >
+    <ion-card color="dark" >
         <ion-card-header>
           Puntualidad
         </ion-card-header>
@@ -42,7 +42,7 @@
           <canvas #canvasPuntualidad></canvas>
         </ion-card-content>
       </ion-card>
-    <ion-card  >
+    <ion-card color="dark" >
       <ion-card-header>
        Recomendados
       </ion-card-header>
@@ -52,10 +52,8 @@
     </ion-card>
 
 
-
-
-    <ion-label  >CLIENTE</ion-label>
-    <ion-card >
+    <ion-label floating >CLIENTE</ion-label>
+    <ion-card color="dark" >
       <ion-card-header>
         Aptitudes puntuadas
       </ion-card-header>
@@ -63,15 +61,15 @@
         <canvas #canvasConformidadCliente></canvas>
       </ion-card-content>
     </ion-card>
-    <ion-card >
+    <ion-card color="dark" >
         <ion-card-header>
-          Comensales que lo acompañan
+          Comensales que lo acompañan aprox.
         </ion-card-header>
         <ion-card-content>
           <canvas #canvasComensales></canvas>
         </ion-card-content>
       </ion-card>
-    <ion-card >
+    <ion-card color="dark" >
       <ion-card-header>
        Cliente Habitué
       </ion-card-header>
