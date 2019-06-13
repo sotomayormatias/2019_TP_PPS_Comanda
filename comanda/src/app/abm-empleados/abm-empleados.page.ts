@@ -85,6 +85,7 @@ export class AbmEmpleadosPage implements OnInit {
       const imageRef = storageRef.child(`empleados/${filename}.jpg`);
 
       let datos: any = { 'nombre': this.nombre, 'apellido': this.apellido, 'dni': this.dni, 'cuil': this.cuil, 'templeado': this.templeado };
+      // let datosUsuario: any = { 'clave': this.clave, 'correo': this.correo, 'perfil': this.templeado }
       this.guardardatosDeProducto(datos);
 
       imageRef.putString(foto, firebase.storage.StringFormat.DATA_URL).then((snapshot) => {
@@ -104,6 +105,10 @@ export class AbmEmpleadosPage implements OnInit {
     let storageRef = firebase.database().ref('empleados/');
     let imageData = storageRef.push();
     imageData.set(datos);
+
+    // let storageRef2 = firebase.database().ref('empleados/');
+    // imageData = storageRef.push();
+    // imageData.set(datosUsuario);
   }
 
   async subidaExitosa(mensaje) {
