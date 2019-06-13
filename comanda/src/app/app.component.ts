@@ -37,7 +37,7 @@ export class AppComponent {
         // SUPERVISOR - DUEÑO
         case 'supervisor' :
             console.log(' auto - estoy en : ', data);
-            console.log(' man - estoy en : ', "supervisor");
+            // console.log(' man - estoy en : ', "supervisor");
               // (A) ALTA DUEÑO
               // (B) ALTA EMPLEADO
               // (C) ALTA PRODUCTO
@@ -91,7 +91,7 @@ export class AppComponent {
                     },
                      //  GRAFICOS DE AGREGADO
                   {
-                    title: 'NOK - Estadística Supervisor',
+                    title: 'OK - Estadística Supervisor',
                     url: '/est-supervisor',
                     icon: 'information-circle-outline'
                   },
