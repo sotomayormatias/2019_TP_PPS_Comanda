@@ -30,7 +30,7 @@ export class AbmClientePage implements OnInit {
       nombreRegistrado: new FormControl('', Validators.required),
       apellidoRegistrado: new FormControl('', Validators.required),
       dniRegistrado: new FormControl('', Validators.required),
-      emailRegistrado: new FormControl('', Validators.required),
+      correoRegistrado: new FormControl('', Validators.required),
       claveRegistrado: new FormControl('', Validators.required)
     });
     this.formClienteAnonimo = new FormGroup({

@@ -13,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { ModalPagePageModule } from './modal-page/modal-page.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,7 +22,8 @@ import { AppRoutingModule } from './app-routing.module';
     BrowserModule,
     FormsModule,
     IonicModule.forRoot(),
-    AppRoutingModule
+    AppRoutingModule,
+    ModalPagePageModule
   ],
   providers: [
     StatusBar,

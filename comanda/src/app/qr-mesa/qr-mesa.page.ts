@@ -50,18 +50,6 @@ export class QrMesaPage implements OnInit {
     });
   }
 
-  // async presentAlert() {
-  //   console.log(JSON.parse(this.datosEscaneados));
-  //   console.log(JSON.parse(this.datosEscaneados).mesa);
-  //   const alert = await this.alertCtrl.create({
-  //     header: 'Estado de mesa',
-  //     subHeader: 'Mesa',
-  //     message: 'nro: ' + this.datosEscaneados.mesa,
-  //     buttons: ['OK']
-  //   });
-  //   await alert.present();
-  // }
-
   async presentAlertEmpleado() {
     const alert = await this.alertCtrl.create({
       header: 'Estado de mesa',
@@ -81,7 +69,7 @@ export class QrMesaPage implements OnInit {
         {
           text: 'Sí',
           handler: () => {
-            this.cambiarEstadoMesa();
+            this.ocuparMesa();
           }
         },
         {
@@ -95,10 +83,18 @@ export class QrMesaPage implements OnInit {
     await alert.present();
   }
 
-  cambiarEstadoMesa() {
+  ocuparMesa() {
+    let cliente = this.traerDatosCliente(JSON.parse(sessionStorage.getItem('usuario')).correo);
     this.mesaEscaneada.estado = 'ocupada';
+    this.mesaEscaneada.cliente = cliente.key;
     let key = this.mesaEscaneada.key;
     delete this.mesaEscaneada['key'];
     this.baseService.updateItem('mesas', key, this.mesaEscaneada);
+  }
+
+  traerDatosCliente(correo: string): any {
+    this.baseService.getItems('clientes').then(clientes => {
+      return clientes.find(cli => cli.correo == correo);
+    });
   }
 }
