@@ -1,9 +1,90 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>est-supervisor</ion-title>
-  </ion-toolbar>
-</ion-header>
+    <ion-toolbar color="dark">
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>
+        Estadísticas de Supervisor
+      </ion-title>
+      <ion-buttons slot="end">
+        <img id="iconToolBar" src="../../assets/imgs/icon.png">
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content padding>
+    <!-- <ion-card>
+      <ion-card-header>
+         Orden General
+      </ion-card-header>
+      <ion-card-content>
+        <canvas #canvasOrdenGeneral></canvas>
+      </ion-card-content>
+    </ion-card> -->
 
-<ion-content>
+    <!-- <ion-label position="floating">Cambiar vista</ion-label>
+    <ion-toggle color="dark" [(ngModel)]="esEmpleado" [ngModelOptions]="{standalone: true}"></ion-toggle> -->
 
-</ion-content>
+    <ion-item color="dark" class="round">
+    <ion-label class="fuente">EMPLEADOS</ion-label>
+    </ion-item>
+
+    <ion-card color="dark" class="fuente" >
+      <ion-card-header>
+        Aptitudes puntuadas
+      </ion-card-header>
+      <ion-card-content>
+        <canvas #canvasConformidad></canvas>
+      </ion-card-content>
+    </ion-card>
+    <ion-card color="dark"  class="fuente" >
+        <ion-card-header>
+          Puntualidad
+        </ion-card-header>
+        <ion-card-content>
+          <canvas #canvasPuntualidad></canvas>
+        </ion-card-content>
+      </ion-card>
+    <ion-card color="dark"  class="fuente" >
+      <ion-card-header>
+       Recomendados
+      </ion-card-header>
+      <ion-card-content>
+        <canvas #canvasRecomienda></canvas>
+      </ion-card-content>
+    </ion-card>
+
+
+    <ion-item color="dark" class="round">
+      <ion-label class="fuente">CLIENTES</ion-label>
+      </ion-item>
+
+      
+    <ion-card color="dark" class="fuente">
+      <ion-card-header>
+        Aptitudes puntuadas
+      </ion-card-header>
+      <ion-card-content>
+        <canvas #canvasConformidadCliente></canvas>
+      </ion-card-content>
+    </ion-card>
+    <ion-card color="dark" class="fuente">
+        <ion-card-header>
+          Comensales que lo acompañan aprox.
+        </ion-card-header>
+        <ion-card-content>
+          <canvas #canvasComensales></canvas>
+        </ion-card-content>
+      </ion-card>
+    <ion-card color="dark" class="fuente">
+      <ion-card-header>
+       Cliente Habitué
+      </ion-card-header>
+      <ion-card-content>
+        <canvas #canvasHabitue></canvas>
+      </ion-card-content>
+    </ion-card>
+
+
+    
+  </ion-content>

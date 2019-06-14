@@ -111,8 +111,7 @@ export class AbmClientePage implements OnInit {
       this.formClienteRegistrado.get('nombreRegistrado').setValue('');
       this.formClienteRegistrado.get('apellidoRegistrado').setValue('');
       this.formClienteRegistrado.get('dniRegistrado').setValue('');
-    }
-    else
+    } else
       this.subidaErronea("Error en al menos una foto");
   }
 
