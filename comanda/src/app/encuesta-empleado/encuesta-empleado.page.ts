@@ -26,13 +26,15 @@ export class EncuestaEmpleadoPage implements OnInit {
     comunicacion: boolean, 
     companerismo: boolean, 
     instalaciones: boolean, 
-    atencion: boolean
+    atencion: boolean,
+    horarios: boolean
   } = {
       puestoTrabajo: false, 
       comunicacion: false, 
       companerismo: false, 
       instalaciones: false, 
-      atencion: false
+      atencion: false,
+      horarios: false
     };
   recomienda: string = "si";
   limpieza: string = "impoluto";
@@ -159,6 +161,7 @@ export class EncuestaEmpleadoPage implements OnInit {
     
     this.destacado.comunicacion = null;
     this.destacado.companerismo = null;
+    this.destacado.horarios = null;
   
     this.recomienda = null;
     this.comentarios = null;

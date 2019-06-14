@@ -433,8 +433,8 @@ export class AppComponent {
 
             // (M) TOMAR PEDIDOS
             {
-              title: 'NOK - Tomar pedido',
-              url: '/',
+              title: 'OK - Tomar pedido',
+              url: '/list-confirmar-pedido',
               icon: 'paper'
             },
             // (F) QR INGRESO
