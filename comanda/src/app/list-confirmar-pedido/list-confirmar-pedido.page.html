@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Confirmar pedido
+    </ion-title>
+    <ion-buttons slot="end">
+      <img id="iconToolBar" src="../../assets/imgs/icon.png">
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let pedido of pedidos">
+      <!-- <ion-icon [name]="item.icon" slot="start"></ion-icon> -->
+      Mesa {{pedido.mesa}}
+      <div class="item-note" slot="end">
+        <ion-button size="small" (click)="aceptarPedido(pedido.mesa)">Aceptar</ion-button>
+      </div>
+    </ion-item>
+  </ion-list>
+</ion-content>

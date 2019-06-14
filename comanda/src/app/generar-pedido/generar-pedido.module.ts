@@ -2,13 +2,15 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
+
 import { IonicModule } from '@ionic/angular';
-import { EncuestaSupPage } from './encuesta-sup.page';
+
+import { GenerarPedidoPage } from './generar-pedido.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: EncuestaSupPage
+    component: GenerarPedidoPage
   }
 ];
 
@@ -19,6 +21,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [EncuestaSupPage]
+  declarations: [GenerarPedidoPage]
 })
-export class EncuestaSupPageModule {}
+export class GenerarPedidoPageModule {}

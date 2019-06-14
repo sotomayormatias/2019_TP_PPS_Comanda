@@ -72,11 +72,14 @@ const routes: Routes = [
   { path: 'encuesta-sup', loadChildren: './encuesta-sup/encuesta-sup.module#EncuestaSupPageModule' },
   { path: 'qr-mesa', loadChildren: './qr-mesa/qr-mesa.module#QrMesaPageModule' },
   { path: 'encuesta-empleado', loadChildren: './encuesta-empleado/encuesta-empleado.module#EncuestaEmpleadoPageModule' },
-  { path: 'modal-page', loadChildren: './modal-page/modal-page.module#ModalPagePageModule' },
+  // { path: 'modal-page', loadChildren: './modal-page/modal-page.module#ModalPagePageModule' },
   { path: 'est-empleado', loadChildren: './est-empleado/est-empleado.module#EstEmpleadoPageModule' },
   { path: 'est-supervisor', loadChildren: './est-supervisor/est-supervisor.module#EstSupervisorPageModule' },
   { path: 'qr-ingreso-local', loadChildren: './qr-ingreso-local/qr-ingreso-local.module#QrIngresoLocalPageModule' },
-  { path: 'list-confirmar-cliente-mesa', loadChildren: './list-confirmar-cliente-mesa/list-confirmar-cliente-mesa.module#ListConfirmarClienteMesaPageModule' },  { path: 'qr-propina', loadChildren: './qr-propina/qr-propina.module#QrPropinaPageModule' }
+  { path: 'list-confirmar-cliente-mesa', loadChildren: './list-confirmar-cliente-mesa/list-confirmar-cliente-mesa.module#ListConfirmarClienteMesaPageModule' },
+  { path: 'qr-propina', loadChildren: './qr-propina/qr-propina.module#QrPropinaPageModule' },
+  { path: 'generar-pedido', loadChildren: './generar-pedido/generar-pedido.module#GenerarPedidoPageModule' },
+  { path: 'list-confirmar-pedido', loadChildren: './list-confirmar-pedido/list-confirmar-pedido.module#ListConfirmarPedidoPageModule' }
 
 
 
