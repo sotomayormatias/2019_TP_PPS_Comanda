@@ -19,12 +19,16 @@ export class AbmDuesupPage implements OnInit {
   DNI: number;
   CUIL: string;
   perfil: string;
+  correo: string;
+  clave: string;
 
   nombreCtrl;
   apellidoCtrl;
   DNICtrl;
   CUILCtrl;
   perfilCtrl;
+  correoCtrl;
+  claveCtrl;
 
   captureDataUrl: Array<string>;
   hayFotos: boolean = false;
@@ -43,7 +47,11 @@ export class AbmDuesupPage implements OnInit {
       apellidoCtrl: new FormControl('', Validators.required),
       DNICtrl: new FormControl('', Validators.required),
       CUILCtrl: new FormControl('', Validators.required),
-      perfilCtrl: new FormControl('', Validators.required)
+      perfilCtrl: new FormControl('', Validators.required),
+      correoCtrl: new FormControl('', Validators.required),
+      claveCtrl: new FormControl('', Validators.required),
+
+
     });
     this.captureDataUrl = new Array<string>();
   }
@@ -87,10 +95,11 @@ export class AbmDuesupPage implements OnInit {
     let contador: number = 0;
 
     this.captureDataUrl.forEach(foto => {
-      let filename: string = this.nombre + "_" + contador;
+      let filename: string = this.correo + "_" + contador;
       const imageRef = storageRef.child(`dueSup/${filename}.jpg`);
 
-      let datos: any = { 'nombre': this.nombre, 'apellido': this.apellido, 'DNI': this.DNI, 'CUIL': this.CUIL , 'perfil': this.perfil };
+      let datos: any = { 'nombre': this.nombre, 'apellido': this.apellido, 'DNI': this.DNI, 'CUIL': this.CUIL , 'perfil': this.perfil, 'correo': this.correo, 'clave': this.clave };
+      console.log(datos);
       this.guardardatosDeDueSup(datos);
 
       imageRef.putString(foto, firebase.storage.StringFormat.DATA_URL).then((snapshot) => {
@@ -107,7 +116,7 @@ export class AbmDuesupPage implements OnInit {
   }
 
   guardardatosDeDueSup(datos) {
-    let storageRef = firebase.database().ref('duesup/');
+    let storageRef = firebase.database().ref('usuarios/');
     let imageData = storageRef.push();
     imageData.set(datos);
   }
@@ -169,7 +178,11 @@ export class AbmDuesupPage implements OnInit {
       this.formDueSup.get('apellidoCtrl').setValue("");
       this.formDueSup.get('DNICtrl').setValue("");
       this.formDueSup.get('CUILCtrl').setValue("");
+      
+      this.formDueSup.get('correoCtrl').setValue("");
+      this.formDueSup.get('claveCtrl').setValue("");
       this.formDueSup.get('PerfilCtrl').setValue("");
+
 
 
   }
