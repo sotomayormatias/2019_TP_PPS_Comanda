@@ -98,9 +98,21 @@ export class AbmDuesupPage implements OnInit {
       let filename: string = this.correo + "_" + contador;
       const imageRef = storageRef.child(`dueSup/${filename}.jpg`);
 
-      let datos: any = { 'nombre': this.nombre, 'apellido': this.apellido, 'DNI': this.DNI, 'CUIL': this.CUIL , 'perfil': this.perfil, 'correo': this.correo, 'clave': this.clave };
+      let datos: any = { 'nombre': this.nombre, 
+                         'apellido': this.apellido, 
+                         'DNI': this.DNI, 
+                         'CUIL': this.CUIL , 
+                         'perfil': this.perfil };
+      let datosUsuario: any = {
+                         'correo': this.correo,
+                         'clave': this.clave,
+                         'perfil': this.perfil
+
+      }
       console.log(datos);
+
       this.guardardatosDeDueSup(datos);
+      this.guardardatosUsuarios(datosUsuario);
 
       imageRef.putString(foto, firebase.storage.StringFormat.DATA_URL).then((snapshot) => {
       })
@@ -116,6 +128,11 @@ export class AbmDuesupPage implements OnInit {
   }
 
   guardardatosDeDueSup(datos) {
+    let storageRef = firebase.database().ref('duesup/');
+    let imageData = storageRef.push();
+    imageData.set(datos);
+  }
+  guardardatosUsuarios(datos) {
     let storageRef = firebase.database().ref('usuarios/');
     let imageData = storageRef.push();
     imageData.set(datos);
