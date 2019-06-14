@@ -15,6 +15,7 @@ export class GenerarPedidoPage implements OnInit {
     this.traerProductos();
     // Uso el usuario de sesion para traer los datos completos de la base
     this.traerDatosCliente(JSON.parse(sessionStorage.getItem('usuario')).correo);
+    this.traerMesa(JSON.parse(sessionStorage.getItem('usuario')).correo);
   }
 
   ngOnInit() {
@@ -43,21 +44,35 @@ export class GenerarPedidoPage implements OnInit {
   pedir() {
     // Se genera una copia de la lista de productos
     let productosPedidos = this.productos.filter(prod => prod.cantidad > 0);
-    let usuarioLogueado: any;
-    let pedido: any;
+
     //TODO: validar que el cliente ya este asignado a una mesa
+    if (productosPedidos.length > 0) {
+      this.baseService.getItems('mesas').then(mesas => {
+        this.mesaDelPedido = mesas.find(mes => mes.cliente == this.clienteLogueado.correo);
+        let id = Date.now();
+        
+        let pedido = {
+          'id': id,
+          'cliente': this.clienteLogueado.correo,
+          'fecha': (new Date()).toLocaleDateString() + ' ' + (new Date()).toLocaleTimeString(),
+          'preciototal': this.calcularPrecioTotal(productosPedidos),
+          'mesa': this.mesaDelPedido.nromesa,
+          'estado': 'creado'
+        };
+        this.baseService.addItem('pedidos', pedido);
 
-    this.baseService.getItems('mesas').then(mesas => {
-      this.mesaDelPedido = mesas.find(mes => mes.cliente == this.clienteLogueado.key);
-
-      pedido = {
-        'cliente': this.clienteLogueado.key,
-        'fecha': (new Date()).toLocaleDateString() + ' ' + (new Date()).toLocaleTimeString(),
-        'preciototal': this.calcularPrecioTotal(productosPedidos),
-        'mesa': this.traerMesa(this.clienteLogueado.key)
-      };
-      this.baseService.addItem('pedidos', pedido);
-    });
+        productosPedidos.forEach(producto => {
+          let pedido_detalle = {
+            'id_pedido': id,
+            'producto': producto.nombre,
+            'precio': producto.precio,
+            'estado': 'creado'
+          };
+          this.baseService.addItem('pedidoDetalle', pedido_detalle);
+        });
+        
+      });
+    }
   }
 
   traerDatosCliente(correo: string): any {
@@ -75,14 +90,9 @@ export class GenerarPedidoPage implements OnInit {
     return precioTotal;
   }
 
-  // traerMesa(keyUsuario: string): any {
-  //   this.baseService.getItems('mesas').then(mesas => {
-  //     return mesas.find(mes => mes.cliente == keyUsuario);
-  //   });
-  // }
-
-  async traerMesa(keyUsuario: string) {
-    let mesas = await this.baseService.getItems('mesas');
-    return (mesas.find(mes => mes.cliente == keyUsuario)).nromesa;
+  traerMesa(correo: string): any {
+    this.baseService.getItems('mesas').then(mesas => {
+      this.mesaDelPedido = mesas.find(mes => mes.cliente == correo);
+    });
   }
 }

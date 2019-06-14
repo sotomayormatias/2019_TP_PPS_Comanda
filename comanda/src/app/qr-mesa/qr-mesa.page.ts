@@ -12,11 +12,13 @@ export class QrMesaPage implements OnInit {
   datosEscaneados: any;
   parsedDatosEscaneados: any;
   mesaEscaneada: any;
+  clienteLogueado: any;
 
   constructor(private scanner: BarcodeScanner,
-              private baseService: FirebaseService,
-              private alertCtrl: AlertController) {
-    }
+    private baseService: FirebaseService,
+    private alertCtrl: AlertController) {
+    this.traerDatosCliente(JSON.parse(sessionStorage.getItem('usuario')).correo);
+  }
 
   ngOnInit() {
   }
@@ -84,9 +86,8 @@ export class QrMesaPage implements OnInit {
   }
 
   ocuparMesa() {
-    let cliente = this.traerDatosCliente(JSON.parse(sessionStorage.getItem('usuario')).correo);
     this.mesaEscaneada.estado = 'ocupada';
-    this.mesaEscaneada.cliente = cliente.key;
+    this.mesaEscaneada.cliente = this.clienteLogueado.correo;
     let key = this.mesaEscaneada.key;
     delete this.mesaEscaneada['key'];
     this.baseService.updateItem('mesas', key, this.mesaEscaneada);
@@ -94,7 +95,7 @@ export class QrMesaPage implements OnInit {
 
   traerDatosCliente(correo: string): any {
     this.baseService.getItems('clientes').then(clientes => {
-      return clientes.find(cli => cli.correo == correo);
+      this.clienteLogueado = clientes.find(cli => cli.correo == correo);
     });
   }
 }
