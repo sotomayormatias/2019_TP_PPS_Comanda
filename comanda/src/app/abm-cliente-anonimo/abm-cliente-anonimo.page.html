@@ -1,10 +1,7 @@
 <ion-header>
   <ion-toolbar color="dark">
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
     <ion-title>
-      Alta Clientes
+      Clientes
     </ion-title>
     <ion-buttons slot="end">
       <img id="iconToolBar" src="../../assets/imgs/icon.png">
@@ -20,7 +17,7 @@
       <div class="body"></div>
       <ion-list>
         <span>
-          <input class="gate" formControlName="nombreAnonimo" type="text" name="nombre"><label>Nombre</label>
+          <input class="gate" [(ngModel)]="nombreAnon" formControlName="nombreAnonimo" type="text" name="nombre"><label>Nombre</label>
         </span>
         <ion-slides>
           <ion-slide *ngFor="let foto of captureDataUrl">

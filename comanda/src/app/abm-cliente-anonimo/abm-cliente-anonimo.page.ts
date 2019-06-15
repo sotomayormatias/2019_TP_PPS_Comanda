@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup , Validators , FormControl } from '@angular/forms';
-import { Camera, CameraOptions, PictureSourceType } from "@ionic-native/camera/ngx";
+// import { Camera, CameraOptions, PictureSourceType } from "@ionic-native/camera/ngx";
 // import { QRScanner, QRScannerStatus } from "@ionic-native/qr-scanner/ngx";
-import { BarcodeScanner, BarcodeScannerOptions } from "@ionic-native/barcode-scanner/ngx";
+// import { BarcodeScanner, BarcodeScannerOptions } from "@ionic-native/barcode-scanner/ngx";
 import { AlertController } from '@ionic/angular';
 import * as firebase from "firebase";
 import { FirebaseService } from '../services/firebase.service';
 import { Router } from "@angular/router";
+import { Events } from '@ionic/angular';
 
 @Component({
   selector: 'app-abm-cliente-anonimo',
@@ -21,12 +22,16 @@ export class AbmClienteAnonimoPage implements OnInit {
   esAnonimo: boolean = true;
   datosEscaneados: any;
   datosCliente: any;
+  datosUsuario: any;
+  nombreAnonimo: any;
+  nombreAnon: any;
 
   constructor(
-    private camera: Camera,
-    private scanner: BarcodeScanner,
+    // private camera: Camera,
+    // private scanner: BarcodeScanner,
     private alertCtrl: AlertController,
     private baseService: FirebaseService,
+    public events: Events,
     private router: Router
   ) {
   
@@ -39,24 +44,24 @@ export class AbmClienteAnonimoPage implements OnInit {
   ngOnInit() {
   }
 
-  tomarFoto() {
-    const options: CameraOptions = {
-      quality: 100,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE,
-      correctOrientation: true,
-      sourceType: PictureSourceType.PHOTOLIBRARY
-    };
+  // tomarFoto() {
+  //   const options: CameraOptions = {
+  //     quality: 100,
+  //     destinationType: this.camera.DestinationType.DATA_URL,
+  //     encodingType: this.camera.EncodingType.JPEG,
+  //     mediaType: this.camera.MediaType.PICTURE,
+  //     correctOrientation: true,
+  //     sourceType: PictureSourceType.PHOTOLIBRARY
+  //   };
 
-    this.camera.getPicture(options).then((imageData) => {
-      this.captureDataUrl.push('data:image/jpeg;base64,' + imageData);
-      this.hayFotos = true;
-      this.cantidadFotos += 1;
-    }, (err) => {
-      this.presentAlert(err);
-    });
-  }
+  //   this.camera.getPicture(options).then((imageData) => {
+  //     this.captureDataUrl.push('data:image/jpeg;base64,' + imageData);
+  //     this.hayFotos = true;
+  //     this.cantidadFotos += 1;
+  //   }, (err) => {
+  //     this.presentAlert(err);
+  //   });
+  // }
 
   async presentAlert(err) {
     const alert = await this.alertCtrl.create({
@@ -78,12 +83,14 @@ export class AbmClienteAnonimoPage implements OnInit {
         'esAnonimo': true
     };
 
+    // this.nombreAnonimo = this.formClienteAnonimo.get('nombreAnonimo');
+
     this.guardardatosDeCliente(this.datosCliente);
 
    
 
     if (errores == 0) {
-      this.subidaExitosa("Las imagenes se han subido correctamente");
+      this.subidaExitosa("Logueo ANONIMO ok");
       
       this.router.navigateByUrl('/home');
     } else
@@ -95,8 +102,19 @@ export class AbmClienteAnonimoPage implements OnInit {
     let imageData = storageRef.push();
     imageData.set(datos);
    
-    this.baseService.addItem('usuarios', { 'clave': 'anonimo' , 'correo': this.formClienteAnonimo.get('nombreAnonimo') , 'perfil': 'clienteAnonimo' });
- 
+    let clave = '1234';
+    let perfil = 'clienteAnonimo';
+
+    this.datosUsuario = {
+      'clave': clave,
+      'correo': this.nombreAnon ,
+      'perfil': perfil
+    };
+
+    
+    this.baseService.addItem('usuarios', this.datosUsuario );
+    this.events.publish('usuarioLogueado', 'cliente');
+
   }
 
   async subidaExitosa(mensaje) {
@@ -123,22 +141,22 @@ export class AbmClienteAnonimoPage implements OnInit {
     await alert.present();
   }
 
-  doScan() {
-    this.scanner.scan({ "formats": "PDF_417" }).then((data) => {
-      this.datosEscaneados = data;
-      this.cargarDatosDesdeDni(this.datosEscaneados);
-    }, (err) => {
-      console.log("Error: " + err);
-    });
-  }
+  // doScan() {
+  //   this.scanner.scan({ "formats": "PDF_417" }).then((data) => {
+  //     this.datosEscaneados = data;
+  //     this.cargarDatosDesdeDni(this.datosEscaneados);
+  //   }, (err) => {
+  //     console.log("Error: " + err);
+  //   });
+  // }
 
-  cargarDatosDesdeDni(datos: any) {
-    let parsedData = datos.text.split('@');
-    let nombre = parsedData[2].toString();
-    let apellido = parsedData[1].toString();
-    let dni: number = +parsedData[4];
+  // cargarDatosDesdeDni(datos: any) {
+  //   let parsedData = datos.text.split('@');
+  //   let nombre = parsedData[2].toString();
+  //   let apellido = parsedData[1].toString();
+  //   let dni: number = +parsedData[4];
     
-    this.formClienteAnonimo.get('nombreAnonimo').setValue(nombre);
+  //   this.formClienteAnonimo.get('nombreAnonimo').setValue(nombre);
   
-  }
+  // }
 }
