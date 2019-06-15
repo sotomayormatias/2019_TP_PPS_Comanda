@@ -37,4 +37,8 @@ export class FirebaseService {
   updateItem(nombreReferencia: string, key: string, objeto: any) {
     firebase.database().ref(nombreReferencia + '/' + key).update(objeto);
   }
+
+  removeItem(nombreReferencia: string, key: string) {
+    firebase.database().ref(nombreReferencia + '/' + key).remove();
+  }
 }
