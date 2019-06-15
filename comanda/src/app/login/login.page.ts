@@ -64,7 +64,7 @@ export class LoginPage implements OnInit {
         this.events.publish('usuarioLogueado', usuarioLogueado.perfil);
         this.creoToast(true);
 
-        if ( usuarioLogueado.perfil == 'dueno' || 
+        if ( usuarioLogueado.perfil == 'dueño' || 
              usuarioLogueado.perfil == 'supervisor' || 
              usuarioLogueado.perfil == 'cliente') {
           this.router.navigateByUrl('/home');

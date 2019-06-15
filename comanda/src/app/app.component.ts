@@ -127,7 +127,7 @@ export class AppComponent {
           ];
           break;
           
-          case 'dueno' :
+          case 'dueño' :
           console.log(' auto - estoy en : ', data);
           console.log(' man - estoy en : ', "dueño");
           // (A) ALTA DUEÑO
