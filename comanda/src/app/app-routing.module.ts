@@ -79,7 +79,9 @@ const routes: Routes = [
   { path: 'list-confirmar-cliente-mesa', loadChildren: './list-confirmar-cliente-mesa/list-confirmar-cliente-mesa.module#ListConfirmarClienteMesaPageModule' },
   { path: 'qr-propina', loadChildren: './qr-propina/qr-propina.module#QrPropinaPageModule' },
   { path: 'generar-pedido', loadChildren: './generar-pedido/generar-pedido.module#GenerarPedidoPageModule' },
-  { path: 'list-confirmar-pedido', loadChildren: './list-confirmar-pedido/list-confirmar-pedido.module#ListConfirmarPedidoPageModule' }
+  { path: 'list-confirmar-pedido', loadChildren: './list-confirmar-pedido/list-confirmar-pedido.module#ListConfirmarPedidoPageModule' },
+  // { path: 'modal-pedido', loadChildren: './modal-pedido/modal-pedido.module#ModalPedidoPageModule' }
+
 
 
 

@@ -3,6 +3,8 @@ import { BarcodeScanner } from "@ionic-native/barcode-scanner/ngx";
 import { FirebaseService } from "../services/firebase.service";
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { ModalController } from '@ionic/angular';
+import { ModalPedidoPage } from "../modal-pedido/modal-pedido.page";
 
 @Component({
   selector: 'app-qr-mesa',
@@ -14,13 +16,16 @@ export class QrMesaPage implements OnInit {
   parsedDatosEscaneados: any;
   mesaEscaneada: any;
   clienteLogueado: any;
-  pedidos: any[] = [];
+  pedidos: any;
+  idPedido: number;
 
   constructor(private scanner: BarcodeScanner,
     private baseService: FirebaseService,
     private alertCtrl: AlertController,
-    private router: Router) {
+    private router: Router,
+    public modalController: ModalController) {
     this.traerDatosCliente(JSON.parse(sessionStorage.getItem('usuario')).correo);
+    this.traerPedidos();
   }
 
   ngOnInit() {
@@ -31,7 +36,6 @@ export class QrMesaPage implements OnInit {
       this.datosEscaneados = data;
       this.parsedDatosEscaneados = JSON.parse(this.datosEscaneados.text);
       this.mostrarInformacion();
-      this.traerPedidos();
     }, (err) => {
       console.log("Error: " + err);
     });
@@ -47,7 +51,7 @@ export class QrMesaPage implements OnInit {
           this.presentAlertCliente();
         } else { // Si la mesa esta ocupada
           if (this.mesaEscaneada.cliente == usuarioLogueado.correo) { // Si el que escanea es el que ocupa la mesa
-            if (this.verificarPedidoEnPreparacion) { //Si ya hizo un pedido
+            if (this.verificarPedidoEnPreparacion()) { //Si ya hizo un pedido
               this.presentAlertConPedido();
             } else { // Si aun no hizo un pedido
               this.presentAlertSinPedido();
@@ -144,19 +148,35 @@ export class QrMesaPage implements OnInit {
 
   traerPedidos() {
     this.baseService.getItems('pedidos').then(ped => {
-      this.pedidos = ped
+      this.pedidos = ped;
     });
   }
 
   verificarPedidoEnPreparacion(): boolean {
-    return this.pedidos.filter(pedido => pedido.mesa == this.mesaEscaneada.nroMesa && pedido.estado != 'cerrado').length > 0;
+    if (this.pedidos.filter(pedido => pedido.mesa == this.mesaEscaneada.nromesa && pedido.estado != 'cerrado').length > 0) {
+      this.idPedido = this.pedidos.filter(pedido => pedido.mesa == this.mesaEscaneada.nromesa).id;
+      return true;
+    } else {
+      return false;
+    };
   }
 
   verPedido() {
-
+    this.muestraModal();
   }
 
   verEncuesta() {
     this.router.navigateByUrl('/encuesta-cliente');
   }
+
+  async muestraModal() {
+    const modal = await this.modalController.create({
+      component: ModalPedidoPage,
+      componentProps: {
+        pedido: this.idPedido,
+      }
+    });
+    return await modal.present();
+  }
+
 }
