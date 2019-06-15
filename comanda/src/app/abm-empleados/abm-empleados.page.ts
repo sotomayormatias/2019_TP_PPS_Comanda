@@ -5,6 +5,7 @@ import { AlertController } from '@ionic/angular';
 import * as firebase from "firebase";
 import { ToastController } from '@ionic/angular';
 import { BarcodeScanner, BarcodeScannerOptions } from "@ionic-native/barcode-scanner/ngx";
+import { FirebaseService } from '../services/firebase.service';
 
 
 @Component({
@@ -24,19 +25,24 @@ export class AbmEmpleadosPage implements OnInit {
   cantidadFotos: number = 0;
   datosEscaneados: any;
   datos: any;
+  correo: any;
+  clave: any;
 
   constructor(
     private camera: Camera,
     private scanner: BarcodeScanner,
     public toastController: ToastController,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private baseService: FirebaseService
     ) {
     this.formEmpleado = new FormGroup({
       nombreCtrl: new FormControl('', Validators.required),
       apellidoCtrl: new FormControl('', Validators.required),
       dniCtrl: new FormControl('', Validators.required),
       cuilCtrl: new FormControl('', Validators.required),
-      templeadoCtrl: new FormControl('', Validators.required)
+      templeadoCtrl: new FormControl('', Validators.required),
+      correoCtrl: new FormControl('', Validators.required),
+      claveCtrl: new FormControl('', Validators.required)
     });
     this.captureDataUrl = new Array<string>();
   }
@@ -88,12 +94,16 @@ export class AbmEmpleadosPage implements OnInit {
       // let datosUsuario: any = { 'clave': this.clave, 'correo': this.correo, 'perfil': this.templeado }
       this.guardardatosDeProducto(datos);
 
+      // let datosUsuario = { 'clave': this.clave, 'correo': this.correo, 'perfil': this.templeado};
+      // this.guardarDatosUsuario(datosUsuario);
+
       imageRef.putString(foto, firebase.storage.StringFormat.DATA_URL).then((snapshot) => {
       })
         .catch(() => {
           errores++;
         });
     });
+   
 
     if (errores == 0)
       this.subidaExitosa("Las imagenes se han subido correctamente");
@@ -102,14 +112,13 @@ export class AbmEmpleadosPage implements OnInit {
   }
 
   guardardatosDeProducto(datos) {
+    // console.log("estoy en guardar datos empleados");
     let storageRef = firebase.database().ref('empleados/');
     let imageData = storageRef.push();
     imageData.set(datos);
-
-    // let storageRef2 = firebase.database().ref('empleados/');
-    // imageData = storageRef.push();
-    // imageData.set(datosUsuario);
+    this.baseService.addItem('usuarios', { 'clave': this.clave, 'correo': this.correo, 'perfil': this.templeado });
   }
+
 
   async subidaExitosa(mensaje) {
     const alert = await this.alertCtrl.create({

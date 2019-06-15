@@ -18,6 +18,7 @@ export class AbmProductoPage implements OnInit {
   captureDataUrl: Array<string>;
   hayFotos: boolean = false;
   cantidadFotos: number = 0;
+  quienPuedever: string;
 
   constructor(
     private camera: Camera,
@@ -27,7 +28,8 @@ export class AbmProductoPage implements OnInit {
       nombreCtrl: new FormControl('', Validators.required),
       descCtrl: new FormControl('', Validators.required),
       tiempoCtrl: new FormControl('', Validators.required),
-      precioCtrl: new FormControl('', Validators.required)
+      precioCtrl: new FormControl('', Validators.required),
+      quienPuedeverCtrl: new FormControl('', Validators.required),
     });
     this.captureDataUrl = new Array<string>();
   }
@@ -75,7 +77,7 @@ export class AbmProductoPage implements OnInit {
       let filename: string = this.nombre + "_" + contador;
       const imageRef = storageRef.child(`productos/${filename}.jpg`);
 
-      let datos: any = { 'nombre': this.nombre, 'descripcion': this.descripcion, 'tiempo': this.tiempo, 'precio': this.precio };
+      let datos: any = { 'nombre': this.nombre, 'descripcion': this.descripcion, 'tiempo': this.tiempo, 'precio': this.precio, 'quienPuedever': this.quienPuedever };
       this.guardardatosDeProducto(datos);
 
       imageRef.putString(foto, firebase.storage.StringFormat.DATA_URL).then((snapshot) => {

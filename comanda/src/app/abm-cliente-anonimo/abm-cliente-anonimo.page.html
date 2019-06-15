@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-title>
+      Clientes
+    </ion-title>
+    <ion-buttons slot="end">
+      <img id="iconToolBar" src="../../assets/imgs/icon.png">
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+
+  <div *ngIf="esAnonimo">
+    <form [formGroup]="formClienteAnonimo" (submit)="agregarCliente()">
+      <div class="body"></div>
+      <ion-list>
+        <span>
+          <input class="gate" [(ngModel)]="nombreAnon" formControlName="nombreAnonimo" type="text" name="nombre"><label>Nombre</label>
+        </span>
+        <ion-slides>
+          <ion-slide *ngFor="let foto of captureDataUrl">
+            <img [src]="foto" *ngIf="captureDataUrl" />
+          </ion-slide>
+        </ion-slides>
+        <div class="botones">
+  
+          <ion-button type="submit" expand="block" fill="outline" color="primary"
+            [disabled]="!formClienteAnonimo.valid">
+            Agregar
+          </ion-button>
+        </div>
+      </ion-list>
+    </form>
+  </div>
+
+ 
