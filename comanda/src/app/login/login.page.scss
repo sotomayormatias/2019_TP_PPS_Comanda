@@ -20,7 +20,15 @@
     font-weight: bold;
     z-index: 100001;
   }
+  .action-sheet-options, .action-sheet-group {
+    background: black;
+    color: white;
+}
 
+.actSheet{
+    background: black;
+    color: white;
+}
   .logoPresentacion {
 		height:80%;
     width:100%;

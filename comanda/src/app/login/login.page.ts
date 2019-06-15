@@ -87,9 +87,9 @@ export class LoginPage implements OnInit {
     let usuarioLogueado = { nombre: "anonimo", perfil: "cliente" };
     setTimeout(() => this.spinner = false, 2000);
     sessionStorage.setItem('usuario', JSON.stringify(usuarioLogueado));
-    this.events.publish('usuarioLogueado: ', 'cliente');
+    this.events.publish('usuarioLogueado: ', 'clienteAnonimo');
     this.creoToast(true);
-    this.router.navigateByUrl('/home');
+    this.router.navigateByUrl('/abm-cliente-anonimo');
   }
 
   async creoToast(rta: boolean) {

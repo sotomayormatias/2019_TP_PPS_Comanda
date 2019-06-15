@@ -1,3 +1,5 @@
+<!-- AGREGAR EL PERFIL QUE TIENE QUE VERLO -->
+
 <ion-header>
   <ion-toolbar color="dark">
     <ion-buttons slot="start">
@@ -36,7 +38,12 @@
           <input [(ngModel)]="precio" class="clean-slide" formControlName="precioCtrl" type="number" name="precio"><label>Precio</label>
         </span>
       
-
+      
+        <ion-select [(ngModel)]="quienPuedever" formControlName="quienPuedeverCtrl"  class="round" placeholder="Perfil visualización">
+          <ion-select-option value="cocinero">Cocinero</ion-select-option>
+          <ion-select-option value="bartender">Bartender</ion-select-option>
+        </ion-select>
+      
 
 
       <ion-slides>
