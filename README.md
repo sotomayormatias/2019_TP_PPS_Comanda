@@ -86,27 +86,27 @@ Link: https://docs.google.com/document/d/1oEnzlbxtO-LMAgVBkn0KqyZpL6Fi04EdTZu34W
 
 ## Sprint 5 08/06 - 15/06
 
-1.- Listado Empleados
-2.- Listado Pedidos
-3.- Listado Cliente esperando mesa
-4.- Aprobación circuito cliente en mesa
-5.- Aprobación circuito mozo con pedido
-6.- Estadísticas cliente por perfil
-7.- Estadísticas empleado por perfil
-8.- Estadísticas supervisor por perfil
-9.- QR Ingreso al local con perfiles
-10.- QR Mesa -> Distintos estados / Diagrama de flujo / asignacion de pedidos
-11.- QR Propina
-12.- Gestión -> Pedir Plato
-13.- Gestión -> Tomar pedido
+1.- Listado Empleados  
+2.- Listado Pedidos  
+3.- Listado Cliente esperando mesa  
+4.- Aprobación circuito cliente en mesa  
+5.- Aprobación circuito mozo con pedido  
+6.- Estadísticas cliente por perfil  
+7.- Estadísticas empleado por perfil  
+8.- Estadísticas supervisor por perfil  
+9.- QR Ingreso al local con perfiles  
+10.- QR Mesa -> Distintos estados / Diagrama de flujo / asignacion de pedidos  
+11.- QR Propina  
+12.- Gestión -> Pedir Plato  
+13.- Gestión -> Tomar pedido  
 
 ###Status Sprint 5
-##Tareas
-![alt text](Screenshots/Sprint5-15-06-AvanceTareas.JPG)
-##Funcionalidades
-![alt text](Screenshots/Sprint5-15-06-Circuito_Minimo.JPG)
-##Diagrama flujo QR
-![alt text](Screenshots/Sprint5-15-06-Diagrama_QR_MESA.JPG)
+##Tareas  
+![alt text](Screenshots/Sprint5-15-06-AvanceTareas.JPG)  
+##Funcionalidades  
+![alt text](Screenshots/Sprint5-15-06-Circuito_Minimo.JPG)  
+##Diagrama flujo QR  
+![alt text](Screenshots/Sprint5-15-06-Diagrama_QR_MESA.JPG)  
 
 ## Responsabilidades para entrega 18/05 Sprint1
 Nombre: Julián Graziano  
@@ -234,8 +234,8 @@ Fecha fin: 15/06
 branch: msotomayor  
 
 En común:
-**REVEER ENTIDADES**
-**DEFINICIÓN DE NAVEGACIÓN POR MENU**
-**CAMBIO EN LA ESTRUCTURA DE BD PARA DAR INTEGRIDAD**
-**ANALISIS DE FUNCIONALIDADES MINIMAS Y CIRCUITO**
-**DEFINICIÓN DE ESTADOS DE PEDIDO Y MESAS**
+**REVEER ENTIDADES**  
+**DEFINICIÓN DE NAVEGACIÓN POR MENU**  
+**CAMBIO EN LA ESTRUCTURA DE BD PARA DAR INTEGRIDAD**  
+**ANALISIS DE FUNCIONALIDADES MINIMAS Y CIRCUITO**  
+**DEFINICIÓN DE ESTADOS DE PEDIDO Y MESAS**  
