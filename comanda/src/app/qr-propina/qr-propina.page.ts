@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { BarcodeScanner } from "@ionic-native/barcode-scanner/ngx";
 import { FirebaseService } from "../services/firebase.service";
+import { ToastController } from '@ionic/angular';
+
 
 import * as firebase from "firebase";
 
@@ -18,7 +20,8 @@ export class QrPropinaPage implements OnInit {
   preciototal: any;
 
   constructor(private scanner: BarcodeScanner,
-              private baseService: FirebaseService
+              private baseService: FirebaseService,
+              private toastcontroler: ToastController
               // private alertCtrl: AlertController
 
   ) { }
@@ -43,65 +46,90 @@ export class QrPropinaPage implements OnInit {
 
   mostrarInfo(){
 
+    
+
     this.baseService.getItems('pedidos').then(pedidos => {
       // let cliente = pedido.cliente;
-      alert(JSON.stringify(pedidos));
+      // alert(JSON.stringify(pedidos));
+      
       let usuarioLogueado: any = JSON.parse(sessionStorage.getItem('usuario'));
-      alert(JSON.stringify(usuarioLogueado));
-      if(usuarioLogueado.perfil == "cliente")
-      {
-        this.pedidoCliente = pedidos.find(client => client.cliente == usuarioLogueado.key);
-        alert(JSON.stringify(this.pedidoCliente));
-        // switch (this.datosEscaneados.text) {
-        //   case "20":
-        //     this.propina = "20";
-        //     this.preciototal += (this.preciototal* this.propina)/100;
-        //     break;
-        //   case "15":
-        //       this.propina = "15";
-        //       this.preciototal += (this.preciototal*  this.propina)/100;
-        //     break;
-        //   case "10":
-        //       this.propina = "10";
-        //       this.preciototal += (this.preciototal*  this.propina)/100;
-        //     break;
-        //   case "5":
-        //       this.propina = "5";
-        //       this.preciototal += (this.preciototal*  this.propina)/100;
+
+   
+        this.pedidoCliente = pedidos.find(client => client.cliente == usuarioLogueado.correo);
+      
+      // alert(JSON.stringify(usuarioLogueado));
+      
+       
+        // alert(JSON.stringify(this.pedidoCliente));
+        // alert("Datosescaneados.text: "+this.datosEscaneados.text)
+
         
-        //   default:
-        //     break;
-        // }
+        switch (this.datosEscaneados.text) {
+          case "20":
+            this.propina = "20";
+            this.pedidoCliente.preciototal += (this.pedidoCliente.preciototal * this.propina)/100;
+            break;
+          case "15":
+              this.propina = "15";
+              this.pedidoCliente.preciototal += (this.pedidoCliente.preciototal *  this.propina)/100;
+            break;
+          case "10":
+              this.propina = "10";
+              this.pedidoCliente.preciototal += (this.pedidoCliente.preciototal *  this.propina)/100;
+            break;
+          case "5":
+              this.propina = "5";
+              this.pedidoCliente.preciototal += (this.pedidoCliente.preciototal *  this.propina)/100;
+        
+          default:
+            this.subidaErronea("Error con el precio del producto.");
+            break;
+          
 
-      }
+
+        }
+
+        // alert("Propina: "+this.propina + "PreciototalPedido: " + this.pedidoCliente.preciototal);
+            firebase.database().ref('pedidos/'+this.pedidoCliente.key)
+            .set({
+              preciototal: this.pedidoCliente.preciototal
+              //GUARDO PROPINA TAMBIEN?
+              
+          
+           });
+
+           this.subidaExitosa("Muchas gracias por elegirnos! =)");
+      
      
-
-    //   firebase.database().ref('pedidos/'+cliente)
-    //   .set({
-    //    propina: this.propina
-    
-    //  });
-
-    //   let usuarioLogueado: any = JSON.parse(sessionStorage.getItem('usuario'));
-    //   if (usuarioLogueado.perfil == "cliente") {
-    //     if (this.mesaEscaneada.estado == 'libre') {
-    //       this.presentAlertCliente();
-    //     } else {
-    //       // TODO: aca hay que ver si el que escanea es el que esta ocupando la mesa
-    //       this.presentAlertEmpleado();
-    //     }
-    //   } else {
-    //     this.presentAlertEmpleado();
-    //   }
     });
 
   }
 
-  tomardatosPedido(){
+  async subidaExitosa(mensaje) {
+    const toast = await this.toastcontroler.create({
+      message: mensaje,
+      color: 'success',
+      showCloseButton: false,
+      position: 'top',
+      closeButtonText: 'Done',
+      duration: 2000
+    });
 
+    toast.present();
+  
+  }
 
-    // this.pedidoCliente = pedido.find(client => client.cliente == cliente);
+  async subidaErronea(mensaje: string) {
+    const toast = await this.toastcontroler.create({
+      message: mensaje,
+      color: 'danger',
+      showCloseButton: false,
+      position: 'bottom',
+      closeButtonText: 'Done',
+      duration: 2000
+    });
 
+    toast.present();
   }
 }
 
