@@ -18,6 +18,9 @@ export class QrMesaPage implements OnInit {
   clienteLogueado: any;
   pedidos: any;
   idPedido: number;
+  listaEspera: any;
+  estaEnLista: boolean;
+  keyPuestoListaEspera: string;
 
   constructor(private scanner: BarcodeScanner,
     private baseService: FirebaseService,
@@ -26,6 +29,7 @@ export class QrMesaPage implements OnInit {
     public modalController: ModalController) {
     this.traerDatosCliente(JSON.parse(sessionStorage.getItem('usuario')).correo);
     this.traerPedidos();
+    this.traerListaEspera();
   }
 
   ngOnInit() {
@@ -48,7 +52,11 @@ export class QrMesaPage implements OnInit {
       let usuarioLogueado: any = JSON.parse(sessionStorage.getItem('usuario'));
       if (usuarioLogueado.perfil == "cliente") { // Logica para cuando escanea el cliente
         if (this.mesaEscaneada.estado == 'libre') { // si la mesa esta libre
-          this.presentAlertCliente();
+          if (this.estaEnLista) {
+            this.presentAlertCliente();
+          } else {
+            this.presentAlertNoEstaEnLista();
+          }
         } else { // Si la mesa esta ocupada
           if (this.mesaEscaneada.cliente == usuarioLogueado.correo) { // Si el que escanea es el que ocupa la mesa
             if (this.verificarPedidoEnPreparacion()) { //Si ya hizo un pedido
@@ -81,6 +89,16 @@ export class QrMesaPage implements OnInit {
       header: 'Mesa: ' + this.mesaEscaneada.nromesa,
       subHeader: 'Mesa sin pedido',
       message: 'Todavía no ha realizado ningún pedido',
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
+
+  async presentAlertNoEstaEnLista() {
+    const alert = await this.alertCtrl.create({
+      // header: 'Mesa: ' + this.mesaEscaneada.nromesa,
+      subHeader: 'No se encuentra en lista de espera',
+      message: 'Debe escanear el QR de ingreso al local',
       buttons: ['OK']
     });
     await alert.present();
@@ -133,6 +151,10 @@ export class QrMesaPage implements OnInit {
   }
 
   ocuparMesa() {
+    // Saco al cliente de lista de espera
+    this.baseService.removeItem('listaEsperaClientes', this.keyPuestoListaEspera);
+
+    // Cambio el estado de la mesa y la asocio al cliente
     this.mesaEscaneada.estado = 'ocupada';
     this.mesaEscaneada.cliente = this.clienteLogueado.correo;
     let key = this.mesaEscaneada.key;
@@ -149,6 +171,19 @@ export class QrMesaPage implements OnInit {
   traerPedidos() {
     this.baseService.getItems('pedidos').then(ped => {
       this.pedidos = ped;
+    });
+  }
+
+  traerListaEspera() {
+    this.baseService.getItems('listaEsperaClientes').then(lista => {
+      this.listaEspera = lista;
+      let usuarioLogueado: any = JSON.parse(sessionStorage.getItem('usuario'));
+      if(this.listaEspera.find(espera => espera.correo == usuarioLogueado.correo)){
+        this.estaEnLista = true;
+        this.keyPuestoListaEspera = this.listaEspera.find(espera => espera.correo == usuarioLogueado.correo).key;
+      } else {
+        this.estaEnLista = false;
+      }
     });
   }
 
