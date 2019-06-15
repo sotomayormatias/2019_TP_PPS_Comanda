@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons  slot="end">
+        <ion-button color="light" size="small" (click)="cerrar()">Cerrar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let producto of pedidoDetalle">
+      {{ producto.producto }}
+      <div class="item-note" slot="end">
+        {{ producto.estado }}
+      </div>
+    </ion-item>
+  </ion-list>
+</ion-content>

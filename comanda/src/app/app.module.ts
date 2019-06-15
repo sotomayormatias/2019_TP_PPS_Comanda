@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ModalPagePageModule } from './modal-page/modal-page.module';
+import { ModalPedidoPageModule } from "./modal-pedido/modal-pedido.module";
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,7 +24,8 @@ import { ModalPagePageModule } from './modal-page/modal-page.module';
     FormsModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    ModalPagePageModule
+    ModalPagePageModule,
+    ModalPedidoPageModule
   ],
   providers: [
     StatusBar,
