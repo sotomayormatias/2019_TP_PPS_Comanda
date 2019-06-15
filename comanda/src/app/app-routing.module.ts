@@ -51,6 +51,7 @@ const routes: Routes = [
     path: '', 
     loadChildren: './abm-empleados/abm-empleados.module#AbmEmpleadosPageModule'
   },
+  { path: '', loadChildren: './abm-cliente-anonimo/abm-cliente-anonimo.module#AbmClienteAnonimoPageModule' },
   { path: '', loadChildren: './est-empleado/est-empleado.module#EstEmpleadoPageModule' },
   {
     path: '',
@@ -79,7 +80,9 @@ const routes: Routes = [
   { path: 'list-confirmar-cliente-mesa', loadChildren: './list-confirmar-cliente-mesa/list-confirmar-cliente-mesa.module#ListConfirmarClienteMesaPageModule' },
   { path: 'qr-propina', loadChildren: './qr-propina/qr-propina.module#QrPropinaPageModule' },
   { path: 'generar-pedido', loadChildren: './generar-pedido/generar-pedido.module#GenerarPedidoPageModule' },
-  { path: 'list-confirmar-pedido', loadChildren: './list-confirmar-pedido/list-confirmar-pedido.module#ListConfirmarPedidoPageModule' }
+  { path: 'list-confirmar-pedido', loadChildren: './list-confirmar-pedido/list-confirmar-pedido.module#ListConfirmarPedidoPageModule' },
+  { path: 'abm-cliente-anonimo', loadChildren: './abm-cliente-anonimo/abm-cliente-anonimo.module#AbmClienteAnonimoPageModule' }
+
 
 
 

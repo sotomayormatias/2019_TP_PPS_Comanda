@@ -13,8 +13,8 @@
 </ion-header>
 
 <ion-content>
-  <ion-label>Anónimo</ion-label>
-  <ion-toggle color="dark" [(ngModel)]="esAnonimo" [ngModelOptions]="{standalone: true}"></ion-toggle>
+  <!-- <ion-label>Anónimo</ion-label>
+  <ion-toggle color="dark" [(ngModel)]="esAnonimo" [ngModelOptions]="{standalone: true}"></ion-toggle> -->
 
   <div *ngIf="esAnonimo">
     <form [formGroup]="formClienteAnonimo" (submit)="agregarCliente()">

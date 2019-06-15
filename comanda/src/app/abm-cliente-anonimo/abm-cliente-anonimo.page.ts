@@ -1,35 +1,37 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup , Validators , FormControl } from '@angular/forms';
 import { Camera, CameraOptions, PictureSourceType } from "@ionic-native/camera/ngx";
+// import { QRScanner, QRScannerStatus } from "@ionic-native/qr-scanner/ngx";
+import { BarcodeScanner, BarcodeScannerOptions } from "@ionic-native/barcode-scanner/ngx";
 import { AlertController } from '@ionic/angular';
 import * as firebase from "firebase";
+import { FirebaseService } from '../services/firebase.service';
+import { Router } from "@angular/router";
 
 @Component({
-  selector: 'app-abm-producto',
-  templateUrl: './abm-producto.page.html',
-  styleUrls: ['./abm-producto.page.scss'],
+  selector: 'app-abm-cliente-anonimo',
+  templateUrl: './abm-cliente-anonimo.page.html',
+  styleUrls: ['./abm-cliente-anonimo.page.scss'],
 })
-export class AbmProductoPage implements OnInit {
-  formProducto: FormGroup;
-  nombre: string;
-  descripcion: string;
-  tiempo: number;
-  precio: number;
+export class AbmClienteAnonimoPage implements OnInit {
+  formClienteAnonimo: FormGroup;
   captureDataUrl: Array<string>;
   hayFotos: boolean = false;
   cantidadFotos: number = 0;
-  quienPuedever: string;
+  esAnonimo: boolean = true;
+  datosEscaneados: any;
+  datosCliente: any;
 
   constructor(
     private camera: Camera,
-    private alertCtrl: AlertController
-    ) {
-    this.formProducto = new FormGroup({
-      nombreCtrl: new FormControl('', Validators.required),
-      descCtrl: new FormControl('', Validators.required),
-      tiempoCtrl: new FormControl('', Validators.required),
-      precioCtrl: new FormControl('', Validators.required),
-      quienPuedeverCtrl: new FormControl('', Validators.required),
+    private scanner: BarcodeScanner,
+    private alertCtrl: AlertController,
+    private baseService: FirebaseService,
+    private router: Router
+  ) {
+  
+    this.formClienteAnonimo = new FormGroup({
+      nombreAnonimo: new FormControl('', Validators.required)
     });
     this.captureDataUrl = new Array<string>();
   }
@@ -67,36 +69,34 @@ export class AbmProductoPage implements OnInit {
     await alert.present();
   }
 
-  agregarProducto() {
-    // let usuario = JSON.parse(sessionStorage.getItem('usuario'));
+  agregarCliente() {
     let storageRef = firebase.storage().ref();
     let errores: number = 0;
-    let contador: number = 0;
 
-    this.captureDataUrl.forEach(foto => {
-      let filename: string = this.nombre + "_" + contador;
-      const imageRef = storageRef.child(`productos/${filename}.jpg`);
+    this.datosCliente = {
+        'nombre': this.formClienteAnonimo.get('nombreAnonimo').value,
+        'esAnonimo': true
+    };
 
-      let datos: any = { 'nombre': this.nombre, 'descripcion': this.descripcion, 'tiempo': this.tiempo, 'precio': this.precio, 'quienPuedever': this.quienPuedever };
-      this.guardardatosDeProducto(datos);
+    this.guardardatosDeCliente(this.datosCliente);
 
-      imageRef.putString(foto, firebase.storage.StringFormat.DATA_URL).then((snapshot) => {
-      })
-        .catch(() => {
-          errores++;
-        });
-    });
+   
 
-    if (errores == 0)
+    if (errores == 0) {
       this.subidaExitosa("Las imagenes se han subido correctamente");
-    else
+      
+      this.router.navigateByUrl('/home');
+    } else
       this.subidaErronea("Error en al menos una foto");
   }
 
-  guardardatosDeProducto(datos) {
-    let storageRef = firebase.database().ref('productos/');
+  guardardatosDeCliente(datos) {
+    let storageRef = firebase.database().ref('clientes/');
     let imageData = storageRef.push();
     imageData.set(datos);
+   
+    this.baseService.addItem('usuarios', { 'clave': 'anonimo' , 'correo': this.formClienteAnonimo.get('nombreAnonimo') , 'perfil': 'clienteAnonimo' });
+ 
   }
 
   async subidaExitosa(mensaje) {
@@ -121,5 +121,24 @@ export class AbmProductoPage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  doScan() {
+    this.scanner.scan({ "formats": "PDF_417" }).then((data) => {
+      this.datosEscaneados = data;
+      this.cargarDatosDesdeDni(this.datosEscaneados);
+    }, (err) => {
+      console.log("Error: " + err);
+    });
+  }
+
+  cargarDatosDesdeDni(datos: any) {
+    let parsedData = datos.text.split('@');
+    let nombre = parsedData[2].toString();
+    let apellido = parsedData[1].toString();
+    let dni: number = +parsedData[4];
+    
+    this.formClienteAnonimo.get('nombreAnonimo').setValue(nombre);
+  
   }
 }

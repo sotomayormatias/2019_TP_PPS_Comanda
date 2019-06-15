@@ -5,6 +5,8 @@ import { Camera, CameraOptions, PictureSourceType } from "@ionic-native/camera/n
 import { BarcodeScanner, BarcodeScannerOptions } from "@ionic-native/barcode-scanner/ngx";
 import { AlertController } from '@ionic/angular';
 import * as firebase from "firebase";
+import { FirebaseService } from '../services/firebase.service';
+
 
 @Component({
   selector: 'app-abm-cliente',
@@ -24,7 +26,8 @@ export class AbmClientePage implements OnInit {
   constructor(
     private camera: Camera,
     private scanner: BarcodeScanner,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private baseService: FirebaseService
   ) {
     this.formClienteRegistrado = new FormGroup({
       nombreRegistrado: new FormControl('', Validators.required),
@@ -119,6 +122,13 @@ export class AbmClientePage implements OnInit {
     let storageRef = firebase.database().ref('clientes/');
     let imageData = storageRef.push();
     imageData.set(datos);
+    if (this.esAnonimo) {
+      this.baseService.addItem('usuarios', { 'clave':  'anonimo' , 'correo': this.formClienteAnonimo.get('nombreAnonimo') , 'perfil': 'clienteAnonimo' });
+    } else {
+      this.baseService.addItem('usuarios', { 'clave':  this.formClienteRegistrado.get('claveRegistrado').value, 'correo': this.formClienteRegistrado.get('correoRegistrado').value , 'perfil': 'cliente' });
+
+    }
+    
   }
 
   async subidaExitosa(mensaje) {
