@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FirebaseService } from "../services/firebase.service";
-import { ToastController, AlertController } from '@ionic/angular';
+import { ToastController, AlertController, ModalController } from '@ionic/angular';
+import { ModalPedidoPage } from "../modal-pedido/modal-pedido.page";
 
 @Component({
   selector: 'app-generar-pedido',
@@ -15,7 +16,8 @@ export class GenerarPedidoPage implements OnInit {
 
   constructor(private baseService: FirebaseService,
     public toastController: ToastController,
-    public alertCtrl: AlertController) {
+    public alertCtrl: AlertController,
+    public modalCtrl: ModalController) {
     this.traerProductos();
     this.traerDatosCliente();
     this.traerMesa(JSON.parse(sessionStorage.getItem('usuario')).correo);
@@ -164,6 +166,21 @@ export class GenerarPedidoPage implements OnInit {
           this.presentToast("Pedido actualizado.");
       }
     });
+  }
+  
+  async muestraModal() {
+    let pedido = '0';
+    if (sessionStorage.getItem('pedido')) {
+      pedido = sessionStorage.getItem('pedido');
+    }
+    
+    const modal = await this.modalCtrl.create({
+      component: ModalPedidoPage,
+      componentProps: {
+        pedido: pedido,
+      }
+    });
+    return await modal.present();
   }
 
 }

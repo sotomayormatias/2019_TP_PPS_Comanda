@@ -1,19 +1,24 @@
 <ion-header>
   <ion-toolbar color="dark">
-    <ion-buttons  slot="end">
-        <ion-button color="light" size="small" (click)="cerrar()">Cerrar</ion-button>
+    <ion-buttons slot="end">
+      <ion-button color="light" size="small" (click)="cerrar()">Cerrar</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 
 <ion-content>
-  <ion-list>
+  <ion-list *ngIf="pedido != 0">
     <ion-item *ngFor="let producto of pedidoDetalle">
-      {{ producto.producto }}
+      ({{ producto.cantidad }}) {{ producto.producto }} - ${{ producto.cantidad * producto.precio }}
       <div class="item-note" slot="end">
         {{ producto.estado }}
       </div>
     </ion-item>
   </ion-list>
+  <ion-card *ngIf="pedido == 0">
+    <ion-card-content>
+      Usted aún no ha realizado ningún pedido.
+    </ion-card-content>
+  </ion-card>
 </ion-content>
