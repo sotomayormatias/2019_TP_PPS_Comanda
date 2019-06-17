@@ -23,7 +23,7 @@ export class ModalPedidoPage implements OnInit {
   traerPedido() {
     this.baseService.getItems('pedidoDetalle').then(ped => {
       this.pedidoDetalle = ped;
-      this.pedidoDetalle = this.pedidoDetalle.filter(pedido => pedido.mesa == this.pedido);
+      this.pedidoDetalle = this.pedidoDetalle.filter(pedido => pedido.id_pedido == this.pedido);
     });
   }
 

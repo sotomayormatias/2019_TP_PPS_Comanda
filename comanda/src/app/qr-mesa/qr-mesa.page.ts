@@ -38,8 +38,12 @@ export class QrMesaPage implements OnInit {
   doScan() {
     this.scanner.scan().then((data) => {
       this.datosEscaneados = data;
-      this.parsedDatosEscaneados = JSON.parse(this.datosEscaneados.text);
-      this.mostrarInformacion();
+      if((this.datosEscaneados.text).includes("mesa")){
+        this.parsedDatosEscaneados = JSON.parse(this.datosEscaneados.text);
+        this.mostrarInformacion();
+      } else {
+        this.mostrarQRErroneo();
+      }
     }, (err) => {
       console.log("Error: " + err);
     });
@@ -52,9 +56,9 @@ export class QrMesaPage implements OnInit {
       let usuarioLogueado: any = JSON.parse(sessionStorage.getItem('usuario'));
       if (usuarioLogueado.perfil == "cliente") { // Logica para cuando escanea el cliente
         if (this.mesaEscaneada.estado == 'libre') { // si la mesa esta libre
-          if (this.estaEnLista) {
+          if (this.estaEnLista) { // si el cliente esta en lista de espera
             this.presentAlertCliente();
-          } else {
+          } else { // si el cliente no esta en lista de espera
             this.presentAlertNoEstaEnLista();
           }
         } else { // Si la mesa esta ocupada
@@ -99,6 +103,15 @@ export class QrMesaPage implements OnInit {
       // header: 'Mesa: ' + this.mesaEscaneada.nromesa,
       subHeader: 'No se encuentra en lista de espera',
       message: 'Debe escanear el QR de ingreso al local',
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
+
+  async mostrarQRErroneo() {
+    const alert = await this.alertCtrl.create({
+      header: 'El código leído no es un QR de mesa',
+      message: 'Debe escanear un QR valido',
       buttons: ['OK']
     });
     await alert.present();

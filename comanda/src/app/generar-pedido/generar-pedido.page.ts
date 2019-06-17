@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FirebaseService } from "../services/firebase.service";
+import { ToastController, AlertController, ModalController } from '@ionic/angular';
+import { ModalPedidoPage } from "../modal-pedido/modal-pedido.page";
 
 @Component({
   selector: 'app-generar-pedido',
@@ -10,11 +12,14 @@ export class GenerarPedidoPage implements OnInit {
   productos: any;
   clienteLogueado: any;
   mesaDelPedido: any;
+  existePedidoAbierto: boolean;
 
-  constructor(private baseService: FirebaseService) {
+  constructor(private baseService: FirebaseService,
+    public toastController: ToastController,
+    public alertCtrl: AlertController,
+    public modalCtrl: ModalController) {
     this.traerProductos();
-    // Uso el usuario de sesion para traer los datos completos de la base
-    this.traerDatosCliente(JSON.parse(sessionStorage.getItem('usuario')).correo);
+    this.traerDatosCliente();
     this.traerMesa(JSON.parse(sessionStorage.getItem('usuario')).correo);
   }
 
@@ -42,15 +47,71 @@ export class GenerarPedidoPage implements OnInit {
   }
 
   pedir() {
+    if (sessionStorage.getItem('pedido')) {
+      this.baseService.getItems('pedidos').then(pedidos => {
+        let idPedido = sessionStorage.getItem('pedido');
+        this.existePedidoAbierto = !(typeof pedidos.find(pedido => pedido.id == idPedido && pedido.estado != 'cerrado') === 'undefined');
+        if (this.existePedidoAbierto) {
+          this.actualizarPedido();
+        } else {
+          this.generarPedido();
+        }
+      });
+    } else {
+      this.generarPedido();
+    }
+  }
+
+  traerDatosCliente(): any {
+    this.clienteLogueado = JSON.parse(sessionStorage.getItem('usuario'));
+  }
+
+  calcularPrecioTotal(pedido: any[]) {
+    let precioTotal: number = 0;
+    pedido.forEach(producto => {
+      precioTotal += (producto.precio * producto.cantidad);
+    });
+
+    return precioTotal;
+  }
+
+  traerMesa(correo: string): any {
+    this.baseService.getItems('mesas').then(mesas => {
+      this.mesaDelPedido = mesas.find(mes => mes.cliente == correo);
+    });
+  }
+
+  async presentToast(mensaje: string) {
+    const toast = await this.toastController.create({
+      message: mensaje,
+      color: 'success',
+      showCloseButton: false,
+      position: 'bottom',
+      closeButtonText: 'Done',
+      duration: 2000
+    });
+    toast.present();
+  }
+
+  async presentAlertSinMesa() {
+    const alert = await this.alertCtrl.create({
+      subHeader: 'Cliente sin mesa',
+      message: 'Usted no está asignado a ninguna mesa.',
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
+
+  generarPedido() {
     // Se genera una copia de la lista de productos
     let productosPedidos = this.productos.filter(prod => prod.cantidad > 0);
 
-    //TODO: validar que el cliente ya este asignado a una mesa
     if (productosPedidos.length > 0) {
-      this.baseService.getItems('mesas').then(mesas => {
-        this.mesaDelPedido = mesas.find(mes => mes.cliente == this.clienteLogueado.correo);
+      if (typeof this.mesaDelPedido === 'undefined') {
+        this.presentAlertSinMesa();
+      } else {
         let id = Date.now();
-        
+
         let pedido = {
           'id': id,
           'cliente': this.clienteLogueado.correo,
@@ -66,33 +127,60 @@ export class GenerarPedidoPage implements OnInit {
             'id_pedido': id,
             'producto': producto.nombre,
             'precio': producto.precio,
+            'cantidad': producto.cantidad,
             'estado': 'creado'
           };
           this.baseService.addItem('pedidoDetalle', pedido_detalle);
         });
-        
-      });
+        this.presentToast("Pedido generado.");
+        sessionStorage.setItem('pedido', id.toString());
+      }
     }
   }
 
-  traerDatosCliente(correo: string): any {
-    this.baseService.getItems('clientes').then(clientes => {
-      this.clienteLogueado = clientes.find(cli => cli.correo == correo);
+  actualizarPedido() {
+    let idPedido = sessionStorage.getItem('pedido');
+    this.baseService.getItems('pedidoDetalle').then(productos => {
+      // Se borran los productos existentes
+      let detalle: any[] = [];
+      detalle = productos.filter(producto => producto.id_pedido == idPedido);
+      detalle.forEach(prod => {
+        let key = prod.key;
+        this.baseService.removeItem('pedidoDetalle', key);
+      });
+
+      // Se agregan los nuevos productos
+      let productosPedidos = this.productos.filter(prod => prod.cantidad > 0);
+
+      if (productosPedidos.length > 0) {
+          productosPedidos.forEach(producto => {
+            let pedido_detalle = {
+              'id_pedido': idPedido,
+              'producto': producto.nombre,
+              'precio': producto.precio,
+              'cantidad': producto.cantidad,
+              'estado': 'creado'
+            };
+            this.baseService.addItem('pedidoDetalle', pedido_detalle);
+          });
+          this.presentToast("Pedido actualizado.");
+      }
     });
   }
-
-  calcularPrecioTotal(pedido: any[]) {
-    let precioTotal: number = 0;
-    pedido.forEach(producto => {
-      precioTotal += producto.precio;
+  
+  async muestraModal() {
+    let pedido = '0';
+    if (sessionStorage.getItem('pedido')) {
+      pedido = sessionStorage.getItem('pedido');
+    }
+    
+    const modal = await this.modalCtrl.create({
+      component: ModalPedidoPage,
+      componentProps: {
+        pedido: pedido,
+      }
     });
-
-    return precioTotal;
+    return await modal.present();
   }
 
-  traerMesa(correo: string): any {
-    this.baseService.getItems('mesas').then(mesas => {
-      this.mesaDelPedido = mesas.find(mes => mes.cliente == correo);
-    });
-  }
 }
