@@ -82,13 +82,17 @@ export class LoginPage implements OnInit {
     });
   }
 
+  altaCliente() {
+    this.router.navigateByUrl('/abm-cliente');
+  }
+
+
   loginAnonimo() {
     this.spinner = true;
     let usuarioLogueado = { nombre: "anonimo", perfil: "cliente" };
     setTimeout(() => this.spinner = false, 2000);
     sessionStorage.setItem('usuario', JSON.stringify(usuarioLogueado));
     this.events.publish('usuarioLogueado: ', 'clienteAnonimo');
-    this.creoToast(true);
     this.router.navigateByUrl('/abm-cliente-anonimo');
   }
 
@@ -318,6 +322,7 @@ export class LoginPage implements OnInit {
     this.tipoUsuario = tipo;
   }
 
+  
   vuelvoSeleccion() {
     this.tipoUsuario = '' ;
   }
