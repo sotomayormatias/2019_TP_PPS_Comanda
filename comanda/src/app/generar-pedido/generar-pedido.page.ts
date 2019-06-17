@@ -67,7 +67,7 @@ export class GenerarPedidoPage implements OnInit {
   calcularPrecioTotal(pedido: any[]) {
     let precioTotal: number = 0;
     pedido.forEach(producto => {
-      precioTotal += producto.precio;
+      precioTotal += (producto.precio * producto.cantidad);
     });
 
     return precioTotal;
@@ -125,6 +125,7 @@ export class GenerarPedidoPage implements OnInit {
             'id_pedido': id,
             'producto': producto.nombre,
             'precio': producto.precio,
+            'cantidad': producto.cantidad,
             'estado': 'creado'
           };
           this.baseService.addItem('pedidoDetalle', pedido_detalle);
@@ -155,6 +156,7 @@ export class GenerarPedidoPage implements OnInit {
               'id_pedido': idPedido,
               'producto': producto.nombre,
               'precio': producto.precio,
+              'cantidad': producto.cantidad,
               'estado': 'creado'
             };
             this.baseService.addItem('pedidoDetalle', pedido_detalle);
