@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FirebaseService } from "../services/firebase.service";
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-generar-pedido',
@@ -11,7 +12,8 @@ export class GenerarPedidoPage implements OnInit {
   clienteLogueado: any;
   mesaDelPedido: any;
 
-  constructor(private baseService: FirebaseService) {
+  constructor(private baseService: FirebaseService,
+    public toastController: ToastController) {
     this.traerProductos();
     // Uso el usuario de sesion para traer los datos completos de la base
     this.traerDatosCliente(JSON.parse(sessionStorage.getItem('usuario')).correo);
@@ -50,7 +52,7 @@ export class GenerarPedidoPage implements OnInit {
       this.baseService.getItems('mesas').then(mesas => {
         this.mesaDelPedido = mesas.find(mes => mes.cliente == this.clienteLogueado.correo);
         let id = Date.now();
-        
+
         let pedido = {
           'id': id,
           'cliente': this.clienteLogueado.correo,
@@ -70,15 +72,13 @@ export class GenerarPedidoPage implements OnInit {
           };
           this.baseService.addItem('pedidoDetalle', pedido_detalle);
         });
-        
+
       });
     }
   }
 
   traerDatosCliente(correo: string): any {
-    this.baseService.getItems('clientes').then(clientes => {
-      this.clienteLogueado = clientes.find(cli => cli.correo == correo);
-    });
+    this.clienteLogueado = JSON.parse(sessionStorage.getItem('usuario'));
   }
 
   calcularPrecioTotal(pedido: any[]) {
@@ -94,5 +94,21 @@ export class GenerarPedidoPage implements OnInit {
     this.baseService.getItems('mesas').then(mesas => {
       this.mesaDelPedido = mesas.find(mes => mes.cliente == correo);
     });
+  }
+
+  async presentToast(mensaje: string) {
+      const toast = await this.toastController.create({
+        message: 'Pedido generado.',
+        color: 'success',
+        showCloseButton: false,
+        position: 'bottom',
+        closeButtonText: 'Done',
+        duration: 2000
+      });
+      toast.present();
+  }
+
+  clienteEstaEnMesa(){
+    
   }
 }
