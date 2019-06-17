@@ -285,8 +285,8 @@ export class AppComponent {
             },
             // (H) QR PROPINA
             {
-              //ESTE NO VA ACA PERO LO DEJO POR AHORA
-              title: 'NOHERE - QR PROPINA',
+              // ESTE NO VA ACA PERO LO DEJO POR AHORA
+              title: 'OK - QR PROPINA',
               url: '/qr-propina',
               icon: 'trash'
             },
@@ -343,6 +343,81 @@ export class AppComponent {
           ];
 
           break;
+
+          case "clienteAnonimo":
+            console.log(' auto - estoy en : ', data);
+            console.log(' man - estoy en : ', "cliente");
+            // (D) ALTA CLIENTE
+            // (F) QR INGRESO
+            // (H) QR PROPINA
+            // (G) QR MESA
+            // (I) ENCUESTA CLIENTE
+            // (N) HACER RESERVAS AGENDADAS 
+            // (L) PEDIDO PLATO / BEBIDAS
+            // (Q) NPUSH - HACER RESERVA / DELIVERY
+            // (R) DELIV - PEDIDO GPS / DIRECCIÓN (LOGUEADO, no anonimo)
+            // JUEGOS
+            // (T) 10% DTO
+            // (U) BEBIDA GRATIS
+            // (V) POSTRE GRATIS
+            // (9) LE LLEGA MAIL PARA CONFIRMAR QUE ES CLIENTE
+  
+            this.appPages = [
+              {
+                title: 'Home',
+                url: '/home',
+                icon: 'home'
+              },
+            
+              // (F) QR INGRESO
+              {
+                title: 'OK - QR Ingreso',
+                url: '/qr-ingreso-local',
+                icon: 'list-box'
+              },
+              // (G) QR MESA
+              {
+  
+                title: 'OK - QR Mesa',
+                url: '/qr-mesa',
+                icon: 'git-pull-request'
+              },
+  
+              {
+                title: 'OK - Listado de espera',
+                url: '/list-confirmar-cliente-mesa',
+                icon: 'log-in'
+              },
+              // (H) QR PROPINA
+              {
+                title: 'OK - QR PROPINA',
+                url: '/qr-propina',
+                icon: 'trash'
+              },
+  
+              // (I) ENCUESTA CLIENTE
+              {
+                title: 'OK - Encuesta Satisfacción',
+                url: '/encuesta-cliente',
+                icon: 'book'
+              },
+  
+            
+              // (L) PEDIDO PLATO / BEBIDAS
+              {
+                title: 'OK - Menu platos / bebidas',
+                url: '/generar-pedido',
+                icon: 'restaurant'
+              },
+           
+              {
+                title: 'Cerrar Sesion',
+                url: '/',
+                icon: 'log-out'
+              }
+            ];
+  
+            break;
 
         // COCINERO 
         case "cocinero":

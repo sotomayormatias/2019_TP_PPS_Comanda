@@ -6,7 +6,7 @@ import { BarcodeScanner, BarcodeScannerOptions } from "@ionic-native/barcode-sca
 import { AlertController } from '@ionic/angular';
 import * as firebase from "firebase";
 import { FirebaseService } from '../services/firebase.service';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-abm-cliente',
@@ -27,6 +27,7 @@ export class AbmClientePage implements OnInit {
     private camera: Camera,
     private scanner: BarcodeScanner,
     private alertCtrl: AlertController,
+    private router: Router,
     private baseService: FirebaseService
   ) {
     this.formClienteRegistrado = new FormGroup({
@@ -79,22 +80,17 @@ export class AbmClientePage implements OnInit {
     let storageRef = firebase.storage().ref();
     let errores: number = 0;
 
-    if (this.esAnonimo) {
-      this.datosCliente = {
-        'nombre': this.formClienteAnonimo.get('nombreAnonimo').value,
-        'esAnonimo': this.esAnonimo
-      };
-    } else {
-      this.datosCliente = {
+   
+    this.datosCliente = {
         'nombre': this.formClienteRegistrado.get('nombreRegistrado').value,
         'apellido': this.formClienteRegistrado.get('apellidoRegistrado').value,
         'dni': this.formClienteRegistrado.get('dniRegistrado').value,
         'correo': this.formClienteRegistrado.get('correoRegistrado').value,
         'clave': this.formClienteRegistrado.get('claveRegistrado').value,
         'estado': 'pendiente',
-        'esAnonimo': this.esAnonimo
-      };
-    }
+        'esAnonimo': false
+   
+    };
 
     this.guardardatosDeCliente(this.datosCliente);
 
@@ -110,10 +106,11 @@ export class AbmClientePage implements OnInit {
     });
 
     if (errores == 0) {
-      this.subidaExitosa("Las imagenes se han subido correctamente");
+      this.subidaExitosa("En pedido de aprobación");
       this.formClienteRegistrado.get('nombreRegistrado').setValue('');
       this.formClienteRegistrado.get('apellidoRegistrado').setValue('');
       this.formClienteRegistrado.get('dniRegistrado').setValue('');
+      this.router.navigateByUrl('/login');
     } else
       this.subidaErronea("Error en al menos una foto");
   }
@@ -122,19 +119,14 @@ export class AbmClientePage implements OnInit {
     let storageRef = firebase.database().ref('clientes/');
     let imageData = storageRef.push();
     imageData.set(datos);
-    if (this.esAnonimo) {
-      this.baseService.addItem('usuarios', { 'clave':  'anonimo' , 'correo': this.formClienteAnonimo.get('nombreAnonimo') , 'perfil': 'clienteAnonimo' });
-    } else {
-      this.baseService.addItem('usuarios', { 'clave':  this.formClienteRegistrado.get('claveRegistrado').value, 'correo': this.formClienteRegistrado.get('correoRegistrado').value , 'perfil': 'cliente' });
-
-    }
-    
+ 
+    this.baseService.addItem('usuarios', { 'clave':  this.formClienteRegistrado.get('claveRegistrado').value, 'correo': this.formClienteRegistrado.get('correoRegistrado').value , 'perfil': 'cliente' });
   }
 
   async subidaExitosa(mensaje) {
     const alert = await this.alertCtrl.create({
-      header: 'Alert',
-      subHeader: 'Éxito',
+      header: 'Cliente cargado',
+      subHeader: 'Esperando aprobación',
       message: mensaje,
       buttons: ['OK']
     });

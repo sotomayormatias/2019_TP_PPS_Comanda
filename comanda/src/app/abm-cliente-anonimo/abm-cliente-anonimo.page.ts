@@ -27,8 +27,6 @@ export class AbmClienteAnonimoPage implements OnInit {
   nombreAnon: any;
 
   constructor(
-    // private camera: Camera,
-    // private scanner: BarcodeScanner,
     private alertCtrl: AlertController,
     private baseService: FirebaseService,
     public events: Events,
@@ -43,25 +41,6 @@ export class AbmClienteAnonimoPage implements OnInit {
 
   ngOnInit() {
   }
-
-  // tomarFoto() {
-  //   const options: CameraOptions = {
-  //     quality: 100,
-  //     destinationType: this.camera.DestinationType.DATA_URL,
-  //     encodingType: this.camera.EncodingType.JPEG,
-  //     mediaType: this.camera.MediaType.PICTURE,
-  //     correctOrientation: true,
-  //     sourceType: PictureSourceType.PHOTOLIBRARY
-  //   };
-
-  //   this.camera.getPicture(options).then((imageData) => {
-  //     this.captureDataUrl.push('data:image/jpeg;base64,' + imageData);
-  //     this.hayFotos = true;
-  //     this.cantidadFotos += 1;
-  //   }, (err) => {
-  //     this.presentAlert(err);
-  //   });
-  // }
 
   async presentAlert(err) {
     const alert = await this.alertCtrl.create({
@@ -83,8 +62,6 @@ export class AbmClienteAnonimoPage implements OnInit {
         'esAnonimo': true
     };
 
-    // this.nombreAnonimo = this.formClienteAnonimo.get('nombreAnonimo');
-
     this.guardardatosDeCliente(this.datosCliente);
 
    
@@ -98,10 +75,7 @@ export class AbmClienteAnonimoPage implements OnInit {
   }
 
   guardardatosDeCliente(datos) {
-    let storageRef = firebase.database().ref('clientes/');
-    let imageData = storageRef.push();
-    imageData.set(datos);
-   
+    
     let clave = '1234';
     let perfil = 'clienteAnonimo';
 
@@ -113,7 +87,7 @@ export class AbmClienteAnonimoPage implements OnInit {
 
     
     this.baseService.addItem('usuarios', this.datosUsuario );
-    this.events.publish('usuarioLogueado', 'cliente');
+    this.events.publish('usuarioLogueado', 'clienteAnonimo');
 
   }
 
