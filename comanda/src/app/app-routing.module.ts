@@ -57,6 +57,8 @@ const routes: Routes = [
     path: '',
     loadChildren: './login/login.module#LoginPageModule'
   },
+  { path: '', loadChildren: './list-pedidos-cocina/list-pedidos-cocina.module#ListPedidosCocinaPageModule' }
+,
   { path: 'menu', loadChildren: './menu/menu.module#MenuPageModule' },
   { path: 'tab1', loadChildren: './tab1/tab1.module#Tab1PageModule' },
   { path: 'tab2', loadChildren: './tab2/tab2.module#Tab2PageModule' },
@@ -81,7 +83,9 @@ const routes: Routes = [
   { path: 'qr-propina', loadChildren: './qr-propina/qr-propina.module#QrPropinaPageModule' },
   { path: 'generar-pedido', loadChildren: './generar-pedido/generar-pedido.module#GenerarPedidoPageModule' },
   { path: 'list-confirmar-pedido', loadChildren: './list-confirmar-pedido/list-confirmar-pedido.module#ListConfirmarPedidoPageModule' },
-  { path: 'abm-cliente-anonimo', loadChildren: './abm-cliente-anonimo/abm-cliente-anonimo.module#AbmClienteAnonimoPageModule' }
+  { path: 'abm-cliente-anonimo', loadChildren: './abm-cliente-anonimo/abm-cliente-anonimo.module#AbmClienteAnonimoPageModule' },
+  { path: 'list-pedidos-cocina', loadChildren: './list-pedidos-cocina/list-pedidos-cocina.module#ListPedidosCocinaPageModule' }
+
 
 
 
