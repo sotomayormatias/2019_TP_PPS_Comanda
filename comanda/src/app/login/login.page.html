@@ -28,9 +28,11 @@
 				<input type="email" class="input" [(ngModel)]="cuenta.usuario" placeholder="Usuario" />
 				<input type="password" class="input" [(ngModel)]="cuenta.password" placeholder="Contraseña" />
 			</div>
+		
 			<button class="submit-btn" (click)="login()">ENTRAR</button>
+			<button *ngIf="tipoUsuario == 'cliente'" expand="block" class="submit-btn-acceso" fill="outline" (click)="altaCliente()">REGISTRARSE</button>
 			<button *ngIf="tipoUsuario == 'cliente'" class="submit-btn" (click)="loginAnonimo()">ANÓNIMO</button>
-			<button expand="block" class="submit-btn-acceso" fill="outline" (click)="creoSheet()">Acc.Rápido</button>
+			<button *ngIf="tipoUsuario != 'cliente'" expand="block" class="submit-btn-acceso" fill="outline" (click)="creoSheet()">Acc.Rápido</button>
 			<button *ngIf="tipoUsuario != ''" expand="block" class="submit-btn-acceso" fill="outline" (click)="vuelvoSeleccion()">Volver</button>
 		</div>
 	</div>
