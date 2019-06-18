@@ -1,0 +1,33 @@
+<ion-header>
+    <ion-toolbar color="dark">
+      <ion-title>Crear una reserva</ion-title>
+      <ion-buttons slot="end">
+          <ion-button color="light" size="small" (click)="guardar()">Enviar</ion-button>
+  
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+<ion-content>
+
+  <!-- <ion-card [(ngModel)]="calendar" name="calendario" ngDefaultControl> -->
+          <div class="dark">
+          <calendar [eventSource]="eventSource" [markDisabled]="markDisabled" 
+              [calendarMode]="calendar.mode" [currentDate]="calendar.currentDate"
+              (onCurrentDateChanged)="onCurrentDateChanged($event)" 
+              (onTimeSelected)="onTimeSelected($event)" step="30">
+            
+            </calendar>
+           
+          </div>
+          <ion-item color="dark">
+          <ion-datetime [(ngModel)]="hora" display-format="HH:mm" placeholder="Seleccione hora"></ion-datetime>
+          </ion-item>
+            <!-- <ion-select  class="round" placeholder="Seleccione hora" >
+                <ion-select-option value="dueño" checked>Dueño</ion-select-option>
+                <ion-select-option value="supervisor">Supervisor</ion-select-option>
+              </ion-select> -->
+            <!-- (onEventSelected)="onEventSelected($event)"  -->
+            <!-- (onTitleChanged)="onViewTitleChanged($event)" -->
+    
+ 
+</ion-content>
