@@ -15,8 +15,7 @@
   <ion-list>
     <ion-item *ngFor="let pedidoMostrar of pedidosMostrar">
       <!-- <ion-icon [name]="item.icon" slot="start"></ion-icon> -->
-      ID {{pedidoMostrar}}
-  
+      Pedido {{pedidoMostrar.id_pedido}}
       <div class="item-note" slot="end">
         <ion-button size="small" (click)="aceptarPedido(pedido.mesa)">Aceptar</ion-button>
       </div>

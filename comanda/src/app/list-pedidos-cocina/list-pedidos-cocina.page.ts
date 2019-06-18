@@ -13,6 +13,8 @@ export class ListPedidosCocinaPage implements OnInit {
 
   listIdPedidosAceptados: any;
   pedidosMostrar: string[] = [] ; 
+  // pedidosMostrar: any ; 
+  pedidosMostrarFil: any;
 
   constructor(private baseService: FirebaseService) { 
     this.traerPedidosAConfirmar();
@@ -55,31 +57,31 @@ export class ListPedidosCocinaPage implements OnInit {
 
             // tslint:disable-next-line:variable-name
             let pedido_detalle = {
-              id_pedido: producto.id_pedido ,
-              producto: producto.producto,
-              precio: producto.precio,
-              cantidad: producto.cantidad,
-              estado: producto.estado
+              'id_pedido': producto.id_pedido ,
+              'producto': producto.producto,
+              'precio': producto.precio,
+              'cantidad': producto.cantidad,
+              'estado': producto.estado
             };
 
-            this.pedidosMostrar.push( JSON.stringify(pedido_detalle)  );
-              
+            // CONVIERTO PARA RECORRER
+            this.pedidosMostrar.push( JSON.parse(JSON.stringify(pedido_detalle))   ); 
           }
-          
-          
-
         });
+        
 
 
         
       });
-     
-      console.log("Pedidos a mostrar: ", this.pedidosMostrar);
-
+      // this.pedidosMostrar = JSON.pars
+      // localStorage.setItem('pedidosMostrar', JSON.stringify(this.pedidosMostrar) ) ;
+      console.log("Pedidos a mostrar: ",  this.pedidosMostrar ) ;      
       });
+
+    // this.pedidosMostrarFil = JSON.parse( this.pedidosMostrar ) ;
      // PRODUCTOS PARA QUIENPUEDEVER
 
-
+    // console.log("Pedidos a mostrar FIL: ",  this.pedidosMostrarFil ) ;
     }
   
 
