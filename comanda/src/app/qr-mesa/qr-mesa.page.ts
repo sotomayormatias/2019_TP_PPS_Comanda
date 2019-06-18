@@ -17,7 +17,7 @@ export class QrMesaPage implements OnInit {
   mesaEscaneada: any;
   clienteLogueado: any;
   pedidos: any;
-  idPedido: number;
+  idPedido: number = 0;
   listaEspera: any;
   estaEnLista: boolean;
   keyPuestoListaEspera: string;
@@ -202,7 +202,7 @@ export class QrMesaPage implements OnInit {
 
   verificarPedidoEnPreparacion(): boolean {
     if (this.pedidos.filter(pedido => pedido.mesa == this.mesaEscaneada.nromesa && pedido.estado != 'cerrado').length > 0) {
-      this.idPedido = this.pedidos.filter(pedido => pedido.mesa == this.mesaEscaneada.nromesa).id;
+      this.idPedido = this.pedidos.filter(pedido => pedido.mesa == this.mesaEscaneada.nromesa)[0].id;
       return true;
     } else {
       return false;
