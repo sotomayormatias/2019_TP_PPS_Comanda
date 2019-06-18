@@ -112,11 +112,11 @@ export class AppComponent {
           icon: 'barcode'
           },
           // (N) HACER RESERVAS AGENDADAS (opcional - supervisor)
-          {
-          title: 'NOK - Hacer Reservas Agendadas',
-          url: '/',
-          icon: 'calendar'
-          },
+          // {
+          // title: 'NOK - Hacer Reservas Agendadas',
+          // url: '/reservas',
+          // icon: 'calendar'
+          // },
           
           {
           title: 'Cerrar Sesion',
@@ -210,11 +210,11 @@ export class AppComponent {
           icon: 'barcode'
           },
           // (N) HACER RESERVAS AGENDADAS (opcional - supervisor)
-          {
-          title: 'NOK - Hacer Reservas Agendadas',
-          url: '/',
-          icon: 'calendar'
-          },
+          // {
+          // title: 'NOK - Hacer Reservas Agendadas',
+          // url: '/',
+          // icon: 'calendar'
+          // },
           // (J) ENCUESTA EMPLEADO
           //   {
           //   title: 'OK - Encuesta Empleado',
@@ -301,7 +301,7 @@ export class AppComponent {
             // (N) HACER RESERVAS AGENDADAS 
             {
               title: 'NOK - Hacer reservas',
-              url: '/',
+              url: '/reservas',
               icon: 'calendar'
             },
             // (L) PEDIDO PLATO / BEBIDAS
