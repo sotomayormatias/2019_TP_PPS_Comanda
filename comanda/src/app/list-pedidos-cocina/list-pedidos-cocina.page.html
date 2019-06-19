@@ -11,13 +11,17 @@
 </ion-header>
 
 <ion-content>
-  <ion-title>Seleccione pedido: </ion-title>
   <ion-list>
-    <ion-item *ngFor="let pedidoMostrar of pedidosMostrar">
+    <ion-item *ngFor="let pedidoMostrar of pedidosMostrarFil">
       <!-- <ion-icon [name]="item.icon" slot="start"></ion-icon> -->
-      Pedido {{pedidoMostrar.id_pedido}}
+      Pedido {{pedidoMostrar.producto}}
       <div class="item-note" slot="end">
-        <ion-button size="small" (click)="aceptarPedido(pedido.mesa)">Aceptar</ion-button>
+        <!-- CREADO -->
+        <ion-button *ngIf="pedidoMostrar.estado == 'creado' " color="danger" size="small" (click)="aceptarPedido(pedido.mesa)">Preparar</ion-button>
+        <!-- EN PREPARACION -->
+        <ion-button *ngIf="pedidoMostrar.estado == 'preparacion' " color="warning" size="small" (click)="aceptarPedido(pedido.mesa)">En Preparación</ion-button>
+        <!-- FINALIZADO ESPERANDO PEDIDOS -->
+        <ion-button *ngIf="pedidoMostrar.estado == 'finalizado' " color="success" size="small" (click)="aceptarPedido(pedido.mesa)">Finalizado</ion-button>
       </div>
     </ion-item>
   </ion-list>

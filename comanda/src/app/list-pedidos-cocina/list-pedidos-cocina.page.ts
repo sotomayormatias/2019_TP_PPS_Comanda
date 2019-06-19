@@ -12,87 +12,152 @@ export class ListPedidosCocinaPage implements OnInit {
   detalle: any;
 
   listIdPedidosAceptados: any;
+  listProductos: string[] = [] ; 
+
   pedidosMostrar: string[] = [] ; 
-  // pedidosMostrar: any ; 
-  pedidosMostrarFil: any;
+  pedidosMostrarFil: string[] = [];
+  productosPerfil: any;
 
   constructor(private baseService: FirebaseService) { 
-    this.traerPedidosAConfirmar();
+    this.traerPedidosPerfil();
+    this.traerProductosPerfil();
+    this.traerPedidosActivosPorPerfil();
   }
 
   ngOnInit() {
+    // this.traerPedidosActivosPorPerfil();
+
   }
 
-  traerPedidosAConfirmar() {
+  traerProductosPerfil() {
+    // TRAIGO PEDIDOS Y ME QUEDO CON LOS ACEPTADOS
+    this.baseService.getItems('productos').then(prod => {
+      this.productosPerfil = prod;
+      // console.log("Todos Pedidos: ", this.pedidos);
+      this.productosPerfil = this.productosPerfil.filter(producto => producto.quienPuedever == "cocinero");
+      
+      this.productosPerfil.forEach
+      ( 
+        productoActivo => { 
+        // ARMO EL DETALLE DE LOS PEDIDOS ACEPTADOS
+            let nombreProducto = productoActivo.nombre; 
+            this.listProductos.push( nombreProducto ); 
+            
+          }
+        );
+      console.log("Productos perfil: ", this.productosPerfil);
+      
+      localStorage.setItem("listProductos", JSON.stringify(this.listProductos) ); 
+      
+      console.log("List Productos: ", this.listProductos);
+    });
 
-    // TRAIGO PEDIDOS
+  }
+
+  traerPedidosPerfil() {
+
+
+
+    // TRAIGO PEDIDOS Y ME QUEDO CON LOS ACEPTADOS
     this.baseService.getItems('pedidos').then(ped => {
 
       this.pedidos = ped;
-      console.log("Todos Pedidos: ", this.pedidos);
+      // console.log("Todos Pedidos: ", this.pedidos);
       this.pedidos = this.pedidos.filter(pedido => pedido.estado == "aceptado" || pedido.estado == "preparacion" );
       this.listIdPedidosAceptados =  this.pedidos;
-      console.log("Pedidos Aceptados: ", this.listIdPedidosAceptados);
+      // console.log("Pedidos Aceptados: ", this.listIdPedidosAceptados);
     });
 
-    // DETALLE POR ID
+    // RECORRO DETALLE DE PEDIDOS POR ID
     this.baseService.getItems('pedidoDetalle').then(detalle => {
       
       this.detalle = detalle;
-      console.log("Pedidos Detalles: ", this.detalle);
-      // this.detalle = this.detalle.filter(detalle => detalle.estado == "aceptado" || detalle.estado == "preparacion" );
+      // console.log("Pedidos Detalles: ", this.detalle);
     
-      // let productosPedidos = this.productos.filter(prod => prod.cantidad > 0);
-
+      // HAGO MATCH DE LOS PEDIDOS ACEPTADOS Y SU DETALLE
       this.detalle.forEach(producto => {
 
-        console.log("Pedido detalle Analizado: ", producto);
+        // console.log("Pedido detalle Analizado: ", producto);
 
-        this.listIdPedidosAceptados.forEach(idDetalle => { 
+        this.listIdPedidosAceptados.forEach
+        ( 
+          idDetalle => { 
+          // ARMO EL DETALLE DE LOS PEDIDOS ACEPTADOS
+            if ( idDetalle.id == producto.id_pedido ) {
+                let pedido_detalle = {
+                  'id_pedido': producto.id_pedido ,
+                  'producto': producto.producto,
+                  'precio': producto.precio,
+                  'cantidad': producto.cantidad,
+                  'estado': producto.estado
+                };
+                // INSERTO EN EL ARRAY LOS PEDIDOS PENDIENTES
+                this.pedidosMostrar.push( JSON.parse(JSON.stringify(pedido_detalle))   ); 
+              }
+            }
+          );
 
-          console.log("ID LISTA PED Analizado: ", idDetalle);
-
-
-          if ( idDetalle.id == producto.id_pedido ) {
-
-            // tslint:disable-next-line:variable-name
-            let pedido_detalle = {
-              'id_pedido': producto.id_pedido ,
-              'producto': producto.producto,
-              'precio': producto.precio,
-              'cantidad': producto.cantidad,
-              'estado': producto.estado
-            };
-
-            // CONVIERTO PARA RECORRER
-            this.pedidosMostrar.push( JSON.parse(JSON.stringify(pedido_detalle))   ); 
-          }
         });
-        
 
-
-        
+      console.log("Pedidos a mostrar: ",  this.pedidosMostrar ) ;    
+      localStorage.setItem("listaPedidosAceptados", JSON.stringify(this.pedidosMostrar) );  
       });
-      // this.pedidosMostrar = JSON.pars
-      // localStorage.setItem('pedidosMostrar', JSON.stringify(this.pedidosMostrar) ) ;
-      console.log("Pedidos a mostrar: ",  this.pedidosMostrar ) ;      
-      });
+      
+ 
 
-    // this.pedidosMostrarFil = JSON.parse( this.pedidosMostrar ) ;
-     // PRODUCTOS PARA QUIENPUEDEVER
-
-    // console.log("Pedidos a mostrar FIL: ",  this.pedidosMostrarFil ) ;
     }
-  
+
+    traerPedidosActivosPorPerfil() {
+
+      let listaRecorre = localStorage.getItem("listaPedidosAceptados");
+      let listaRecorreParsed = JSON.parse(listaRecorre);
+      console.log("Lista recorre", listaRecorreParsed);
+
+      let listaProductos = localStorage.getItem("listProductos");
+      let listaProductosParsed = JSON.parse(listaProductos);
+      
+      console.log("Lista de Productos ", listaProductosParsed);
+
+      JSON.parse(listaRecorre).forEach(idDetalle => {
+
+        console.log("Pedido detalle Analizado: ", idDetalle);
+            
+
+        for (const iterator of listaProductosParsed) {
+          console.log("Iterator:", iterator);
+          
+          if ( idDetalle.producto == iterator ) 
+                {
+                  let pedido_detalle = {
+                    'id_pedido': idDetalle.id_pedido ,
+                    'producto': idDetalle.producto,
+                    'precio': idDetalle.precio,
+                    'cantidad': idDetalle.cantidad,
+                    'estado': idDetalle.estado
+                  };
+                  this.pedidosMostrarFil.push( JSON.parse(JSON.stringify(pedido_detalle))   ); 
+                }
+              }
 
 
-  aceptarPedido(mesa: string) {
+
+        
+        });
+
+      console.log("Lista Filtrada: ", this.pedidosMostrarFil);
+    
+      }
+    
+
+
+  // GESTION
+aceptarPedido(mesa: string) {
     let pedidoAceptado: any = this.pedidos.find(pedido => pedido.mesa == mesa);
     let key: string = pedidoAceptado.key;
     delete pedidoAceptado.key;
     pedidoAceptado.estado = 'aceptado';
     this.baseService.updateItem('pedidos', key, pedidoAceptado);
-    this.traerPedidosAConfirmar();
+    this.traerPedidosPerfil();
   }
 
 }
