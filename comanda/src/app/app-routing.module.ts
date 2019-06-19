@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
- {
+  {
     path: '',
     redirectTo: 'login',
     pathMatch: 'full'
@@ -57,7 +57,6 @@ const routes: Routes = [
     path: '',
     loadChildren: './login/login.module#LoginPageModule'
   },
-  { path: '', loadChildren: './list-pedidos-cocina/list-pedidos-cocina.module#ListPedidosCocinaPageModule' },
   { path: 'menu', loadChildren: './menu/menu.module#MenuPageModule' },
   { path: 'tab1', loadChildren: './tab1/tab1.module#Tab1PageModule' },
   { path: 'tab2', loadChildren: './tab2/tab2.module#Tab2PageModule' },
@@ -82,6 +81,19 @@ const routes: Routes = [
   { path: 'qr-propina', loadChildren: './qr-propina/qr-propina.module#QrPropinaPageModule' },
   { path: 'generar-pedido', loadChildren: './generar-pedido/generar-pedido.module#GenerarPedidoPageModule' },
   { path: 'list-confirmar-pedido', loadChildren: './list-confirmar-pedido/list-confirmar-pedido.module#ListConfirmarPedidoPageModule' },
-  { path: 'abm-cliente-anonimo', loadChildren: './abm-cliente-anonimo/abm-cliente-anonimo.module#AbmClienteAnonimoPageModule' },
-  { path: 'reservas', loadChildren: './reservas/reservas.module#ReservasPageModule' },
-    { path: 'list-pedidos-cocina', loadChildren: './list-pedidos-cocina/list-pedidos-cocina.module#ListPedidosCocinaPageModule' }
+  { path: 'abm-cliente-anonimo', loadChildren: './abm-cliente-anonimo/abm-cliente-anonimo.module#AbmClienteAnonimoPageModule' },  { path: 'reservas', loadChildren: './reservas/reservas.module#ReservasPageModule' }
+
+
+
+
+
+
+];
+
+@NgModule({
+  imports: [
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+  ],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }

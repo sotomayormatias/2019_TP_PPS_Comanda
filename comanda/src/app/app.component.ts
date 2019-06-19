@@ -258,7 +258,12 @@ export class AppComponent {
               url: '/home',
               icon: 'home'
             },
-        
+            // (D) ALTA CLIENTE
+            {
+              title: 'OK - Alta de Clientes',
+              url: '/abm-cliente',
+              icon: 'basket'
+            },
             // (F) QR INGRESO
             {
               title: 'OK - QR Ingreso',
@@ -431,8 +436,8 @@ export class AppComponent {
             // },
             // (13) LISTADO DE PEDIDOS PENDIENTES POR SECTOR
             {
-              title: 'OK - Pedidos Pendientes',
-              url: '/list-pedidos-cocina',
+              title: 'NOK - Pedidos Pendientes',
+              url: '/',
               icon: 'nutrition'
             },
 
