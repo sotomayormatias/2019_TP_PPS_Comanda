@@ -436,8 +436,8 @@ export class AppComponent {
             // },
             // (13) LISTADO DE PEDIDOS PENDIENTES POR SECTOR
             {
-              title: 'NOK - Pedidos Pendientes',
-              url: '/',
+              title: 'OK - Pedidos Pendientes',
+              url: '/list-pedidos-cocina',
               icon: 'nutrition'
             },
 
