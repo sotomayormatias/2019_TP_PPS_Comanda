@@ -78,6 +78,7 @@ export class GenerarPedidoPage implements OnInit {
   traerMesa(correo: string): any {
     this.baseService.getItems('mesas').then(mesas => {
       this.mesaDelPedido = mesas.find(mes => mes.cliente == correo);
+      this.cargarPedidoExistente();
     });
   }
 
@@ -181,6 +182,15 @@ export class GenerarPedidoPage implements OnInit {
       }
     });
     return await modal.present();
+  }
+
+  cargarPedidoExistente(){
+    this.baseService.getItems('pedidos').then(pedidos => {
+      this.existePedidoAbierto = !(typeof pedidos.find(pedido => pedido.mesa == this.mesaDelPedido.nromesa && pedido.estado != 'cerrado') === 'undefined');
+      if(this.existePedidoAbierto && !sessionStorage.getItem('pedido')){
+        sessionStorage.setItem('pedido', pedidos.find(pedido => pedido.mesa == this.mesaDelPedido.nromesa && pedido.estado != 'cerrado').id);
+      }
+    });
   }
 
 }

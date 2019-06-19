@@ -10,6 +10,7 @@ import { BarcodeScanner } from "@ionic-native/barcode-scanner/ngx";
 import { EmailComposer } from "@ionic-native/email-composer/ngx";
 import { FirebaseService } from "../app/services/firebase.service";
 import { FormsModule } from '@angular/forms';
+import { Calendar } from "@ionic-native/calendar/ngx";
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -32,6 +33,7 @@ import { ModalPedidoPageModule } from "./modal-pedido/modal-pedido.module";
     SplashScreen,
     FirebaseService,
     Camera,
+    Calendar,
     BarcodeScanner,
     EmailComposer,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
