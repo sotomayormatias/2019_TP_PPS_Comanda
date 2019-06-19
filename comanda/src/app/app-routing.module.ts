@@ -53,6 +53,8 @@ const routes: Routes = [
   },
   { path: '', loadChildren: './abm-cliente-anonimo/abm-cliente-anonimo.module#AbmClienteAnonimoPageModule' },
   { path: '', loadChildren: './est-empleado/est-empleado.module#EstEmpleadoPageModule' },
+  { path: '', loadChildren: './list-pedidos-bartender/list-pedidos-bartender.module#ListPedidosBartenderPageModule' }
+,
   {
     path: '',
     loadChildren: './login/login.module#LoginPageModule'
@@ -81,8 +83,10 @@ const routes: Routes = [
   { path: 'qr-propina', loadChildren: './qr-propina/qr-propina.module#QrPropinaPageModule' },
   { path: 'generar-pedido', loadChildren: './generar-pedido/generar-pedido.module#GenerarPedidoPageModule' },
   { path: 'list-confirmar-pedido', loadChildren: './list-confirmar-pedido/list-confirmar-pedido.module#ListConfirmarPedidoPageModule' },
-  { path: 'abm-cliente-anonimo', loadChildren: './abm-cliente-anonimo/abm-cliente-anonimo.module#AbmClienteAnonimoPageModule' },  { path: 'reservas', loadChildren: './reservas/reservas.module#ReservasPageModule' },
-  { path: 'list-pedidos-cocina', loadChildren: './list-pedidos-cocina/list-pedidos-cocina.module#ListPedidosCocinaPageModule' }
+  { path: 'abm-cliente-anonimo', loadChildren: './abm-cliente-anonimo/abm-cliente-anonimo.module#AbmClienteAnonimoPageModule' },
+  { path: 'reservas', loadChildren: './reservas/reservas.module#ReservasPageModule' },
+  { path: 'list-pedidos-cocina', loadChildren: './list-pedidos-cocina/list-pedidos-cocina.module#ListPedidosCocinaPageModule' },
+  { path: 'list-pedidos-bartender', loadChildren: './list-pedidos-bartender/list-pedidos-bartender.module#ListPedidosBartenderPageModule' }
 
 
 

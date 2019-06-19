@@ -30,6 +30,27 @@ export class LoginPage implements OnInit {
   tipoUsuario: string = "";
   counter: number = 10;
 
+  // PEDIDOS
+  
+  pedidos: any;
+  detalle: any;
+
+  listIdPedidosAceptadosBar: any;
+  listProductosBar: string[] = [] ; 
+
+  pedidosMostrarBar: string[] = [] ; 
+  pedidosMostrarBarFil: string[] = [];
+  productosPerfilBar: any;
+  cantidadPedidos = 1;
+
+  listIdPedidosAceptados: any;
+  listProductos: string[] = [] ; 
+
+  pedidosMostrar: string[] = [] ; 
+  pedidosMostrarFil: string[] = [];
+  productosPerfil: any;
+
+
   spinner: boolean;
 
   splash = true;
@@ -45,6 +66,12 @@ export class LoginPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    
+    this.traerPedidosPerfilBar();
+    this.traerProductosPerfilBar();
+
+    this.traerPedidosPerfil();
+    this.traerProductosPerfil();
   }
 
   ionViewDidEnter() {
@@ -69,6 +96,7 @@ export class LoginPage implements OnInit {
              usuarioLogueado.perfil == 'cliente') {
           this.router.navigateByUrl('/home');
         } else {
+
           this.router.navigateByUrl('/encuesta-empleado');
       
 
@@ -119,6 +147,181 @@ export class LoginPage implements OnInit {
       toast.present();
     }
   }
+
+  traerProductosPerfilBar() {
+    // TRAIGO PEDIDOS Y ME QUEDO CON LOS ACEPTADOS
+    this.baseService.getItems('productos').then(prod => {
+      this.productosPerfilBar = prod;
+      // console.log("Todos Pedidos: ", this.pedidos);
+      this.productosPerfilBar = this.productosPerfilBar.filter(producto => producto.quienPuedever == "bartender");
+      
+      this.productosPerfilBar.forEach
+      ( 
+        productoActivo => { 
+        // ARMO EL DETALLE DE LOS PEDIDOS ACEPTADOS
+            let nombreProducto = productoActivo.nombre; 
+            this.listProductosBar.push( nombreProducto ); 
+            
+          }
+        );
+      // console.log("Productos perfil: ", this.productosPerfilBar);
+      localStorage.removeItem("listProductosBar"); 
+      localStorage.setItem("listProductosBar", JSON.stringify(this.listProductosBar) ); 
+      
+      // console.log("List Productos: ", this.listProductosBar);
+    });
+
+  }
+
+  traerPedidosPerfilBar() {
+
+
+
+    // TRAIGO PEDIDOS Y ME QUEDO CON LOS ACEPTADOS
+    this.baseService.getItems('pedidos').then(ped => {
+
+      this.pedidos = ped;
+      // console.log("Todos Pedidos: ", this.pedidos);
+      this.pedidos = this.pedidos.filter(pedido => pedido.estado == "aceptado" || pedido.estado == "preparacion" );
+      this.listIdPedidosAceptadosBar =  this.pedidos;
+      // console.log("Pedidos Aceptados: ", this.listIdPedidosAceptadosBar);
+    });
+
+    // RECORRO DETALLE DE PEDIDOS POR ID
+    this.baseService.getItems('pedidoDetalle').then(detalle => {
+      
+      this.detalle = detalle;
+      // console.log("Pedidos Detalles: ", this.detalle);
+    
+      // HAGO MATCH DE LOS PEDIDOS ACEPTADOS Y SU DETALLE
+      this.detalle.forEach(producto => {
+
+        // console.log("Pedido detalle Analizado: ", producto);
+
+        this.listIdPedidosAceptadosBar.forEach
+        ( 
+          idDetalle => { 
+           
+          // ARMO EL DETALLE DE LOS PEDIDOS ACEPTADOS
+            if ( idDetalle.id == producto.id_pedido ) {
+                // tslint:disable-next-line:variable-name
+
+                let pedido_detalle = {
+                  'id_pedido': producto.id_pedido ,
+                  'producto': producto.producto,
+                  'precio': producto.precio,
+                  'cantidad': producto.cantidad,
+                  'estado': producto.estado
+                };
+                // INSERTO EN EL ARRAY LOS PEDIDOS PENDIENTES
+                this.pedidosMostrarBar.push( JSON.parse(JSON.stringify(pedido_detalle))   ); 
+              }
+           
+            }
+            
+            
+          );
+
+        });
+
+      // console.log("Pedidos a mostrar: ",  this.pedidosMostrarBar ) ; 
+      // localStorage.setItem("listaPedidosAceptadosBar", "" ); 
+      localStorage.removeItem("listaPedidosAceptadosBar");
+      localStorage.setItem("listaPedidosAceptadosBar", JSON.stringify(this.pedidosMostrarBar) );  
+      });
+      
+ 
+
+    }
+
+
+    traerProductosPerfil() {
+      // TRAIGO PEDIDOS Y ME QUEDO CON LOS ACEPTADOS
+      this.baseService.getItems('productos').then(prod => {
+        this.productosPerfil = prod;
+        // console.log("Todos Pedidos: ", this.pedidos);
+        this.productosPerfil = this.productosPerfil.filter(producto => producto.quienPuedever == "cocinero");
+        
+        this.productosPerfil.forEach
+        ( 
+          productoActivo => { 
+          // ARMO EL DETALLE DE LOS PEDIDOS ACEPTADOS
+              let nombreProducto = productoActivo.nombre; 
+              this.listProductos.push( nombreProducto ); 
+              
+            }
+          );
+        // console.log("Productos perfil: ", this.productosPerfil);
+        // localStorage.setItem("listProductos", "" ); 
+        localStorage.removeItem("listProductos");
+        localStorage.setItem("listProductos", JSON.stringify(this.listProductos) ); 
+        
+        // console.log("List Productos: ", this.listProductos);
+      });
+  
+    }
+  
+    traerPedidosPerfil() {
+  
+  
+  
+      // TRAIGO PEDIDOS Y ME QUEDO CON LOS ACEPTADOS
+      this.baseService.getItems('pedidos').then(ped => {
+  
+        this.pedidos = ped;
+        // console.log("Todos Pedidos: ", this.pedidos);
+        this.pedidos = this.pedidos.filter(pedido => pedido.estado == "aceptado" || pedido.estado == "preparacion" );
+        this.listIdPedidosAceptados =  this.pedidos;
+        // console.log("Pedidos Aceptados: ", this.listIdPedidosAceptados);
+      });
+  
+      // RECORRO DETALLE DE PEDIDOS POR ID
+      this.baseService.getItems('pedidoDetalle').then(detalle => {
+        
+        this.detalle = detalle;
+        // console.log("Pedidos Detalles: ", this.detalle);
+      
+        // HAGO MATCH DE LOS PEDIDOS ACEPTADOS Y SU DETALLE
+        this.detalle.forEach(producto => {
+  
+          // console.log("Pedido detalle Analizado: ", producto);
+  
+          this.listIdPedidosAceptados.forEach
+          ( 
+            idDetalle => { 
+             
+            // ARMO EL DETALLE DE LOS PEDIDOS ACEPTADOS
+              if ( idDetalle.id == producto.id_pedido ) {
+                  // tslint:disable-next-line:variable-name
+  
+                  let pedido_detalle = {
+                    'id_pedido': producto.id_pedido ,
+                    'producto': producto.producto,
+                    'precio': producto.precio,
+                    'cantidad': producto.cantidad,
+                    'estado': producto.estado
+                  };
+                  // INSERTO EN EL ARRAY LOS PEDIDOS PENDIENTES
+                  this.pedidosMostrar.push( JSON.parse(JSON.stringify(pedido_detalle))   ); 
+                }
+             
+              }
+              
+              
+            );
+  
+          });
+  
+        // console.log("Pedidos a mostrar: ",  this.pedidosMostrar ) ;    
+        // localStorage.setItem("listaPedidosAceptados", "" ); 
+        localStorage.removeItem("listaPedidosAceptados");
+        localStorage.setItem("listaPedidosAceptados", JSON.stringify(this.pedidosMostrar) );  
+        });
+        
+   
+  
+      }
+  
 
   async creoSheetEmpleados() {
     const actionSheet = await this.actionSheetController.create({

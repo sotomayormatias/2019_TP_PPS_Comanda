@@ -1,61 +1,63 @@
 import { Component, OnInit } from '@angular/core';
 import { FirebaseService } from "../services/firebase.service";
 
-@Component({
-  selector: 'app-list-pedidos-cocina',
-  templateUrl: './list-pedidos-cocina.page.html',
-  styleUrls: ['./list-pedidos-cocina.page.scss'],
-})
-export class ListPedidosCocinaPage implements OnInit {
 
+@Component({
+  selector: 'app-list-pedidos-bartender',
+  templateUrl: './list-pedidos-bartender.page.html',
+  styleUrls: ['./list-pedidos-bartender.page.scss'],
+})
+export class ListPedidosBartenderPage implements OnInit {
+
+  
   pedidos: any;
   detalle: any;
 
-  listIdPedidosAceptados: any;
-  listProductos: string[] = [] ; 
+  listIdPedidosAceptadosBar: any;
+  listProductosBar: string[] = [] ; 
 
-  pedidosMostrar: string[] = [] ; 
-  pedidosMostrarFil: string[] = [];
-  productosPerfil: any;
+  pedidosMostrarBar: string[] = [] ; 
+  pedidosMostrarBarFil: string[] = [];
+  productosPerfilBar: any;
   cantidadPedidos = 1;
 
   constructor(private baseService: FirebaseService) { 
-    this.traerPedidosPerfil();
-    this.traerProductosPerfil();
-    this.traerPedidosActivosPorPerfil();
+    this.traerPedidosPerfilBar();
+    this.traerProductosPerfilBar();
+    this.traerPedidosActivosPorPerfilBar();
   }
 
   ngOnInit() {
 
   }
 
-  traerProductosPerfil() {
+  traerProductosPerfilBar() {
     // TRAIGO PEDIDOS Y ME QUEDO CON LOS ACEPTADOS
     this.baseService.getItems('productos').then(prod => {
-      this.productosPerfil = prod;
+      this.productosPerfilBar = prod;
       // console.log("Todos Pedidos: ", this.pedidos);
-      this.productosPerfil = this.productosPerfil.filter(producto => producto.quienPuedever == "cocinero");
+      this.productosPerfilBar = this.productosPerfilBar.filter(producto => producto.quienPuedever == "bartender");
       
-      this.productosPerfil.forEach
+      this.productosPerfilBar.forEach
       ( 
         productoActivo => { 
         // ARMO EL DETALLE DE LOS PEDIDOS ACEPTADOS
             let nombreProducto = productoActivo.nombre; 
-            this.listProductos.push( nombreProducto ); 
+            this.listProductosBar.push( nombreProducto ); 
             
           }
         );
-      // console.log("Productos perfil: ", this.productosPerfil);
-      localStorage.setItem("listProductos", "" ); 
-     
-      localStorage.setItem("listProductos", JSON.stringify(this.listProductos) ); 
+      // console.log("Productos perfil: ", this.productosPerfilBar);
       
-      // console.log("List Productos: ", this.listProductos);
+      localStorage.setItem("listProductosBar", "" ); 
+      localStorage.setItem("listProductosBar", JSON.stringify(this.listProductosBar) ); 
+      
+      // console.log("List Productos: ", this.listProductosBar);
     });
 
   }
 
-  traerPedidosPerfil() {
+  traerPedidosPerfilBar() {
 
 
 
@@ -65,8 +67,8 @@ export class ListPedidosCocinaPage implements OnInit {
       this.pedidos = ped;
       // console.log("Todos Pedidos: ", this.pedidos);
       this.pedidos = this.pedidos.filter(pedido => pedido.estado == "aceptado" || pedido.estado == "preparacion" );
-      this.listIdPedidosAceptados =  this.pedidos;
-      // console.log("Pedidos Aceptados: ", this.listIdPedidosAceptados);
+      this.listIdPedidosAceptadosBar =  this.pedidos;
+      // console.log("Pedidos Aceptados: ", this.listIdPedidosAceptadosBar);
     });
 
     // RECORRO DETALLE DE PEDIDOS POR ID
@@ -80,7 +82,7 @@ export class ListPedidosCocinaPage implements OnInit {
 
         // console.log("Pedido detalle Analizado: ", producto);
 
-        this.listIdPedidosAceptados.forEach
+        this.listIdPedidosAceptadosBar.forEach
         ( 
           idDetalle => { 
            
@@ -96,7 +98,7 @@ export class ListPedidosCocinaPage implements OnInit {
                   'estado': producto.estado
                 };
                 // INSERTO EN EL ARRAY LOS PEDIDOS PENDIENTES
-                this.pedidosMostrar.push( JSON.parse(JSON.stringify(pedido_detalle))   ); 
+                this.pedidosMostrarBar.push( JSON.parse(JSON.stringify(pedido_detalle))   ); 
               }
            
             }
@@ -106,22 +108,23 @@ export class ListPedidosCocinaPage implements OnInit {
 
         });
 
-      // console.log("Pedidos a mostrar: ",  this.pedidosMostrar ) ;   
-      localStorage.setItem("listaPedidosAceptados", "" );  
-      localStorage.setItem("listaPedidosAceptados", JSON.stringify(this.pedidosMostrar) );  
+      // console.log("Pedidos a mostrar: ",  this.pedidosMostrarBar ) ;   
+      
+      localStorage.setItem("listaPedidosAceptadosBar", "" );  
+      localStorage.setItem("listaPedidosAceptadosBar", JSON.stringify(this.pedidosMostrarBar) );  
       });
       
  
 
     }
 
-    traerPedidosActivosPorPerfil() {
+    traerPedidosActivosPorPerfilBar() {
 
-      let listaRecorre = localStorage.getItem("listaPedidosAceptados");
+      let listaRecorre = localStorage.getItem("listaPedidosAceptadosBar");
       let listaRecorreParsed = JSON.parse(listaRecorre);
       // console.log("Lista recorre", listaRecorreParsed);
 
-      let listaProductos = localStorage.getItem("listProductos");
+      let listaProductos = localStorage.getItem("listProductosBar");
       let listaProductosParsed = JSON.parse(listaProductos);
 
       // console.log("Lista de Productos ", listaProductosParsed);
@@ -143,13 +146,13 @@ export class ListPedidosCocinaPage implements OnInit {
                     'cantidad': idDetalle.cantidad,
                     'estado': idDetalle.estado
                   };
-                  this.pedidosMostrarFil.push( JSON.parse(JSON.stringify(pedido_detalle))   ); 
+                  this.pedidosMostrarBarFil.push( JSON.parse(JSON.stringify(pedido_detalle))   ); 
                 }
 
               }
         });
 
-      console.log("Lista Filtrada: ", this.pedidosMostrarFil);
+      console.log("Lista Filtrada: ", this.pedidosMostrarBarFil);
     
       }
     
@@ -162,7 +165,7 @@ aceptarPedido(mesa: string) {
     delete pedidoAceptado.key;
     pedidoAceptado.estado = 'aceptado';
     this.baseService.updateItem('pedidos', key, pedidoAceptado);
-    this.traerPedidosPerfil();
+    this.traerPedidosPerfilBar();
   }
 
 }
