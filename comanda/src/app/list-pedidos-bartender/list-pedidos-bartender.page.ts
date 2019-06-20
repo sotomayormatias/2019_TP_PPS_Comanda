@@ -131,30 +131,17 @@ export class ListPedidosBartenderPage implements OnInit {
     }
 
     traerPedidosActivosPorPerfilBar() {
-      // this.spinner = true;
-      // setTimeout(() => this.spinner = true, 4000);
-      // this.pedidosMostrarBarFil = [];
-      // while (this.pedidosMostrarBarFil.length) { this.pedidosMostrarBarFil.pop(); }
       this.pedidosMostrarBarFil = [];
 
-      // this.pedidosMostrarBarFil = [] ;
       let listaRecorre = localStorage.getItem("listaPedidosAceptadosBar").toString();
-      // let listaRecorreParsed = JSON.parse(listaRecorre);
-      // console.log("Lista recorre", listaRecorre);
 
       let listaProductos = localStorage.getItem("listProductosBar");
       let listaProductosParsed = JSON.parse(listaProductos);
 
-      // console.log("Lista de Productos ", listaProductosParsed);
-
       JSON.parse(listaRecorre).forEach(idDetalle => {
 
-        // console.log("Pedido detalle Analizado: ", idDetalle);
-            
 
         for (const iterator of listaProductosParsed) {
-          // console.log("Iterator:", iterator);
-          
           if ( idDetalle.producto == iterator ) {
             
                   // tslint:disable-next-line:variable-name
@@ -177,27 +164,21 @@ export class ListPedidosBartenderPage implements OnInit {
       console.log("Lista Filtrada: ", this.pedidosMostrarBarFil);
       }
     
-      traerPedidosActivosPorPerfilBarPrepara(pedidoDet) {
+
+
+    traerPedidosActivosPorPerfilBarPrepara(pedidoDet) {
 
         this.pedidosMostrarBarFil = [];
         let listaRecorre = localStorage.getItem("listaPedidosAceptadosBar").toString();
-        // let listaRecorreParsed = JSON.parse(listaRecorre);
-        // console.log("Lista recorre", listaRecorre);
   
         let listaProductos = localStorage.getItem("listProductosBar");
         let listaProductosParsed = JSON.parse(listaProductos);
   
-        // console.log("Lista de Productos ", listaProductosParsed);
-  
         JSON.parse(listaRecorre).forEach(idDetalle => {
   
-          // console.log("Pedido detalle Analizado: ", idDetalle);
-              
-  
           for (const iterator of listaProductosParsed) {
-            // console.log("Iterator:", iterator);
             
-            if ( idDetalle.producto == iterator && idDetalle.id_pedido == pedidoDet.id_pedido) {
+            if ( idDetalle.producto == iterator && idDetalle.id_pedido == pedidoDet.id_pedido  &&  idDetalle.producto == pedidoDet.producto) {
               
                     // tslint:disable-next-line:variable-name
                     let pedido_detalle = {

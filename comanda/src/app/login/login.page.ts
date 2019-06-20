@@ -235,7 +235,6 @@ export class LoginPage implements OnInit {
 
     }
 
-
     traerProductosPerfil() {
       // TRAIGO PEDIDOS Y ME QUEDO CON LOS ACEPTADOS
       this.baseService.getItems('productos').then(prod => {
@@ -253,8 +252,7 @@ export class LoginPage implements OnInit {
             }
           );
         // console.log("Productos perfil: ", this.productosPerfil);
-        // localStorage.setItem("listProductos", "" ); 
-        localStorage.removeItem("listProductos");
+        localStorage.removeItem("listProductos"); 
         localStorage.setItem("listProductos", JSON.stringify(this.listProductos) ); 
         
         // console.log("List Productos: ", this.listProductos);
@@ -301,7 +299,7 @@ export class LoginPage implements OnInit {
                     'precio': producto.precio,
                     'cantidad': producto.cantidad,
                     'estado': producto.estado,
-                    'key': idDetalle.key
+                    'key': producto.key
                   };
                   // INSERTO EN EL ARRAY LOS PEDIDOS PENDIENTES
                   this.pedidosMostrar.push( JSON.parse(JSON.stringify(pedido_detalle))   ); 
@@ -314,7 +312,7 @@ export class LoginPage implements OnInit {
   
           });
   
-        // console.log("Pedidos a mostrar: ",  this.pedidosMostrar ) ;    
+        // console.log("Pedidos a mostrar: ",  this.pedidosMostrar ) ; 
         // localStorage.setItem("listaPedidosAceptados", "" ); 
         localStorage.removeItem("listaPedidosAceptados");
         localStorage.setItem("listaPedidosAceptados", JSON.stringify(this.pedidosMostrar) );  
@@ -323,6 +321,8 @@ export class LoginPage implements OnInit {
    
   
       }
+
+
   
 
   async creoSheetEmpleados() {
