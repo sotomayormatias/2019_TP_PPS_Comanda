@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "940730841798",
+    "firebase_url": "https://comanda-b0449.firebaseio.com",
+    "project_id": "comanda-b0449",
+    "storage_bucket": "comanda-b0449.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:940730841798:android:d30cb31915c78e1b",
+        "android_client_info": {
+          "package_name": "io.ionic.comanda_radix"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "940730841798-lmanikr3060o7tjhkv6cfoumegdvqrta.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDH1g4CBFjYBZAhrCbuFgQLZ1GdADCTAFE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "940730841798-lmanikr3060o7tjhkv6cfoumegdvqrta.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
