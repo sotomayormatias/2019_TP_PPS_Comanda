@@ -12,6 +12,10 @@ export class ListPedidosBartenderPage implements OnInit {
   
   pedidos: any;
   detalle: any;
+  
+  spinner: boolean;
+  listaRecorreAux: any;
+
 
   listIdPedidosAceptadosBar: any;
   listProductosBar: string[] = [] ; 
@@ -63,7 +67,7 @@ export class ListPedidosBartenderPage implements OnInit {
 
     // TRAIGO PEDIDOS Y ME QUEDO CON LOS ACEPTADOS
     this.baseService.getItems('pedidos').then(ped => {
-
+    
       this.pedidos = ped;
       // console.log("Todos Pedidos: ", this.pedidos);
       this.pedidos = this.pedidos.filter(pedido => pedido.estado == "aceptado" || pedido.estado == "preparacion" );
@@ -73,7 +77,7 @@ export class ListPedidosBartenderPage implements OnInit {
 
     // RECORRO DETALLE DE PEDIDOS POR ID
     this.baseService.getItems('pedidoDetalle').then(detalle => {
-      
+      this.pedidosMostrarBar = [] ; 
       this.detalle = detalle;
       // console.log("Pedidos Detalles: ", this.detalle);
     
@@ -95,7 +99,8 @@ export class ListPedidosBartenderPage implements OnInit {
                   'producto': producto.producto,
                   'precio': producto.precio,
                   'cantidad': producto.cantidad,
-                  'estado': producto.estado
+                  'estado': producto.estado,
+                  'key': producto.key
                 };
                 // INSERTO EN EL ARRAY LOS PEDIDOS PENDIENTES
                 this.pedidosMostrarBar.push( JSON.parse(JSON.stringify(pedido_detalle))   ); 
@@ -110,7 +115,8 @@ export class ListPedidosBartenderPage implements OnInit {
 
       // console.log("Pedidos a mostrar: ",  this.pedidosMostrarBar ) ;   
       
-      localStorage.setItem("listaPedidosAceptadosBar", "" );  
+      // localStorage.setItem("listaPedidosAceptadosBar", "" );  
+     
       localStorage.setItem("listaPedidosAceptadosBar", JSON.stringify(this.pedidosMostrarBar) );  
       });
       
@@ -119,10 +125,13 @@ export class ListPedidosBartenderPage implements OnInit {
     }
 
     traerPedidosActivosPorPerfilBar() {
+      // this.spinner = true;
+      setTimeout(() => this.spinner = true, 4000);
 
+      // this.pedidosMostrarBarFil = [] ;
       let listaRecorre = localStorage.getItem("listaPedidosAceptadosBar");
-      let listaRecorreParsed = JSON.parse(listaRecorre);
-      // console.log("Lista recorre", listaRecorreParsed);
+      // let listaRecorreParsed = JSON.parse(listaRecorre);
+      // console.log("Lista recorre", listaRecorre);
 
       let listaProductos = localStorage.getItem("listProductosBar");
       let listaProductosParsed = JSON.parse(listaProductos);
@@ -144,14 +153,15 @@ export class ListPedidosBartenderPage implements OnInit {
                     'producto': idDetalle.producto,
                     'precio': idDetalle.precio,
                     'cantidad': idDetalle.cantidad,
-                    'estado': idDetalle.estado
+                    'estado': idDetalle.estado,
+                    'key': idDetalle.key
                   };
                   this.pedidosMostrarBarFil.push( JSON.parse(JSON.stringify(pedido_detalle))   ); 
                 }
 
               }
         });
-
+      setTimeout(() => this.spinner = false, 4000);
       console.log("Lista Filtrada: ", this.pedidosMostrarBarFil);
     
       }
@@ -166,6 +176,29 @@ aceptarPedido(mesa: string) {
     pedidoAceptado.estado = 'aceptado';
     this.baseService.updateItem('pedidos', key, pedidoAceptado);
     this.traerPedidosPerfilBar();
+  }
+
+  prepararPedido(pedidoDet) {
+    this.spinner = true;
+    console.log("Pedido det: ", pedidoDet) ;
+    // let pedidoKey: any = this.pedidosMostrarBarFil.find(pedido => pedido.id_pedido == pedidoDet.id_pedido && pedido.producto = pedidoDet.producto);
+    let pedidoAceptado = pedidoDet ;
+    let pedidoKey = pedidoDet.key ;
+
+    console.log("Pedido key: ", pedidoDet.key) ;
+    // let key: string = pedidoAceptado.key;
+
+    delete pedidoAceptado.key;
+    pedidoAceptado.estado = 'preparacion';
+    this.baseService.updateItem('pedidoDetalle', pedidoKey, pedidoAceptado);
+    
+    // localStorage.clear();
+    // setTimeout(() => this.traerPedidosPerfilBar() , 1300); 
+   
+    setTimeout(() => this.traerProductosPerfilBar() , 1300);  
+    setTimeout(() => this.traerPedidosActivosPorPerfilBar() , 1000);  
+
+    
   }
 
 }

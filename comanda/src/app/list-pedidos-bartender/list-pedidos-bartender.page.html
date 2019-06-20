@@ -11,7 +11,8 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
+    <ion-spinner *ngIf="spinner" name="bubbles" color="dark"></ion-spinner>
+  <ion-list *ngIf="!spinner">
       <ion-item class="item-text-wrap card" *ngFor="let pedidoMostrar of pedidosMostrarBarFil; index as i">
       <ion-col col-12 col-md-6 col-lg-4 col-xl-3>
           <ion-card class="lindas" expand="full">
@@ -23,11 +24,11 @@
 
               <div class="item-note" slot="end">
                   <!-- CREADO -->
-                  <ion-button *ngIf="pedidoMostrar.estado == 'creado' " color="danger" size="small" (click)="aceptarPedido(pedido.mesa)">Preparar</ion-button>
+                  <ion-button *ngIf="pedidoMostrar.estado == 'creado' " color="danger" size="small" (click)="prepararPedido( pedidoMostrar )">Preparar</ion-button>
                   <!-- EN PREPARACION -->
-                  <ion-button *ngIf="pedidoMostrar.estado == 'preparacion' " color="warning" size="small" (click)="aceptarPedido(pedido.mesa)">En Preparación</ion-button>
+                  <ion-button *ngIf="pedidoMostrar.estado == 'preparacion' " color="warning" size="small" (click)="FinalizarPedido( pedidoMostrar.id_pedido )">En Preparación</ion-button>
                   <!-- FINALIZADO ESPERANDO PEDIDOS -->
-                  <ion-button *ngIf="pedidoMostrar.estado == 'finalizado' " color="success" size="small" (click)="aceptarPedido(pedido.mesa)">Finalizado</ion-button>
+                  <ion-button *ngIf="pedidoMostrar.estado == 'finalizado' " color="success" size="small">Finalizado</ion-button>
                 </div>
             </ion-card-content>
           </ion-card>
@@ -40,4 +41,3 @@
     </ion-item>
   </ion-list>
 </ion-content>
-
