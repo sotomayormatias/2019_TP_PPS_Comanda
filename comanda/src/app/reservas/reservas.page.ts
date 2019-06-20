@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
-// import { Calendar } from "@ionic-native/calendar/ngx";
+import { Calendar } from "@ionic-native/calendar/ngx";
 import { FirebaseService } from "../services/firebase.service";
 import { ToastController } from '@ionic/angular';
 
@@ -39,6 +39,8 @@ export class ReservasPage implements OnInit {
   
   hora: any;
   clienteEnEspera: any;
+  reservaRealizada: any;
+
   listaEsperaClientes: any[];
   key: any;
   mesas: any[];
@@ -50,7 +52,7 @@ export class ReservasPage implements OnInit {
 
 
   constructor(
-    // public calendario: Calendar,
+    public calendario: Calendar,
     public navCtrl: NavController,
     public toastcontroler: ToastController,
     private baseService: FirebaseService
@@ -76,6 +78,11 @@ export class ReservasPage implements OnInit {
       //   (err) => { console.log(err); }
       // );
 
+       
+
+      this.eventSource = this.createEvents();
+ 
+
     this.baseService.getItems('mesas').then(mesa => {
       this.mesas = mesa
 
@@ -84,6 +91,8 @@ export class ReservasPage implements OnInit {
    }
 
   ngOnInit() {
+
+   
   }
 
   changeMode(mode) {
@@ -106,14 +115,14 @@ export class ReservasPage implements OnInit {
   onTimeSelected(event) {
     // console.log(event);
     var date = new Date().getTime();
-    // console.log(date);y
+
     let fechaElegida = JSON.stringify(event.selectedTime);
     fechaElegida = fechaElegida.substr(1,fechaElegida.length-1);
     let splitFecha = fechaElegida.split('-');
     this.fechaElegida.dia = splitFecha[2].split('T')[0];
     this.fechaElegida.mes = splitFecha[1];
 
-    // alert("Dia: "+this.diaElegido +" Mes: " + this.mesElegido);
+    
 
    
   
@@ -121,36 +130,27 @@ export class ReservasPage implements OnInit {
 
   }
  
-  // onEventSelected(event) {
-  //   console.log(event);
-  // }
+ 
 
   guardar(){
 
-  // alert(this.hora); 
+
   let horaminutoseg = this.hora.substr(11,this.hora.length-21);
   let splitHoraMinSeg= horaminutoseg.split(':');
 
   this.fechaElegida.hora = splitHoraMinSeg[0];
   this.fechaElegida.minuto = splitHoraMinSeg[1];
   
-  // console.log("Hora: "+ this.fechaElegida.hora + " Minuto: " + this.fechaElegida.minuto);
-
  
 
     this.baseService.getItems('listaEsperaClientes').then(lista => {
 
     let usuarioLogueado: any = JSON.parse(sessionStorage.getItem('usuario'));
 
-    // this.listaEsperaClientes = lista;
     this.clienteEnEspera = lista.find(cliente => cliente.correo == usuarioLogueado.correo);
-    // console.log(this.clienteEnEspera);
-    // console.log(this.clienteEnEspera.estado);
+ 
 
-    // let mesaEnvio = this.mesaSeleccionada[0];
-    // let 
-    // console.log(this.mesaSeleccionada);
-// console.
+  
 
     firebase.database().ref('listaEsperaClientes/'+ this.clienteEnEspera.key)
     .update({
@@ -163,27 +163,21 @@ export class ReservasPage implements OnInit {
   
    });
 
-   this.muestroToast("Su reserva fue guardada con exito.");
+   firebase.database().ref('reservademesas/'+ this.clienteEnEspera.key)
+   .update({
+    
+       "correo": usuarioLogueado.correo,
+       "fechaElegida": this.fechaElegida,
+       "mesaSeleccionada": this.mesaSeleccionada,
+       "cantidadPersonas": this.cantPersonas
+ 
+  });
 
-    // this.baseService.updateItem('listaEsperaClientes', 'reserva', this.clientes);
+   this.muestroToast("Su reserva fue guardada con exito.");
 
 
   });
-    // let key: string = clienteConfirmado.key;
-
- 
-  // this.baseService.addItem('usuarios', { 'clave': clienteConfirmado.clave, 'correo': correo, 'perfil': 'cliente' });
-
-//   firebase.database().ref('encuestasSupervisor/'+this.key)
-//   .set({
-//     valoracion: this.valoracion, 
-//     comentarios: this.comentario,
-//     tipo: "cliente",
-//     habitue: this.habitue,
-//     comensales: this.comensales
-
-
-//  });
+  
   
   }
 
@@ -200,5 +194,101 @@ export class ReservasPage implements OnInit {
 
     toast.present();
   }
+
+
+//   openCalendar(){
+//     this.calendario.openCalendar(new Date()).then(
+//         (msg) => { console.log(msg); },
+//         (err) => { console.log(err); }
+//     );
+// }
+
+createEventsTrue() {
+  var events = [];
+  let usuarioLogueado: any = JSON.parse(sessionStorage.getItem('usuario'));
+  this.baseService.getItems('reservademesas').then(lista => {
+  this.reservaRealizada = lista.find(cliente => cliente.correo == usuarioLogueado.correo);
+  
+  var date = new Date();
+  date.setHours(parseInt(this.reservaRealizada.fechaElegida.hora));
+  date.setMinutes(parseInt(this.reservaRealizada.fechaElegida.minuto));
+  date.setMonth(parseInt(this.reservaRealizada.fechaElegida.mes));
+  date.setDate(parseInt(this.reservaRealizada.fechaElegida.dia));
+  date.setFullYear(2019);
+      var startDay = parseInt(this.reservaRealizada.fechaElegida.dia);
+      var endDay = startDay;
+      var startMinute = parseInt(this.reservaRealizada.fechaElegida.minuto);
+      var endMinute = Math.floor(2 * 180) + startMinute;
+
+      var startTime;
+      var endTime;
+
+      startTime = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, date.getMinutes());
+
+      
+      endTime = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+      console.log(startTime);
+      events.push({
+        title: 'Reserva: ' + startTime,
+        startTime: startTime,
+        allDay: false
+    });
+ 
+  });
+  console.log(events);
+  return events;
+  
+  
+}
+
+
+createEvents(){
+
+  var events = [];
+    for (var i = 0; i < 1; i += 1) {
+        var date = new Date();
+        var eventType = Math.floor(Math.random() * 2);
+        var startDay = 21;
+        var endDay = 21 ;
+        var startTime;
+        var endTime;
+        // if (eventType === 0) {
+            // startTime = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate() + startDay));
+            // if (endDay === startDay) {
+            //     endDay += 1;
+            // }
+            // endTime = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate() + endDay));
+            // events.push({
+            //     title: 'All Day - ',
+            //     startTime: startTime,
+            //     endTime: endTime,
+            //     allDay: true
+            // });
+        // } else {
+            var startMinute = Math.floor(Math.random() * 24 * 60);
+            var endMinute = Math.floor(Math.random() * 180) + startMinute;
+            console.log(date);
+          
+            startTime = new Date(date.getFullYear(), date.getMonth(), startDay, 0, date.getMinutes() + startMinute);
+            endTime = new Date(date.getFullYear(), date.getMonth(), endDay, 0, date.getMinutes() + endMinute);
+
+            console.log(startTime);
+            console.log(endTime);
+
+            events.push({
+                title: 'Event - ' + i,
+                startTime: startTime,
+                endTime: endTime,
+                allDay: false
+            });
+        // }
+    }
+    return events;
+
+}
+
+
+
+
 
 }
