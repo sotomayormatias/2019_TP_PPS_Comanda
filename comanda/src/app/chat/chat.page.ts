@@ -8,8 +8,8 @@ import { FirebaseService } from "../services/firebase.service";
 })
 export class ChatPage implements OnInit {
 
-  private usuario: any;
-  private inputText: string;
+  public usuario: any;
+  public inputText: string;
   chats: {texto: string, usuario: string, hora: string, key: string }[] = [];
 
   constructor(private baseService: FirebaseService) {

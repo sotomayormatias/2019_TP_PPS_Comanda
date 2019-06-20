@@ -86,7 +86,9 @@ const routes: Routes = [
   { path: 'abm-cliente-anonimo', loadChildren: './abm-cliente-anonimo/abm-cliente-anonimo.module#AbmClienteAnonimoPageModule' },
   { path: 'reservas', loadChildren: './reservas/reservas.module#ReservasPageModule' },
   { path: 'list-pedidos-cocina', loadChildren: './list-pedidos-cocina/list-pedidos-cocina.module#ListPedidosCocinaPageModule' },
-  { path: 'list-pedidos-bartender', loadChildren: './list-pedidos-bartender/list-pedidos-bartender.module#ListPedidosBartenderPageModule' },  { path: 'chat', loadChildren: './chat/chat.module#ChatPageModule' }
+  { path: 'list-pedidos-bartender', loadChildren: './list-pedidos-bartender/list-pedidos-bartender.module#ListPedidosBartenderPageModule' },  { path: 'chat', loadChildren: './chat/chat.module#ChatPageModule' },
+  { path: 'pedir-delivery', loadChildren: './pedir-delivery/pedir-delivery.module#PedirDeliveryPageModule' },
+  { path: 'list-confirmar-delivery', loadChildren: './list-confirmar-delivery/list-confirmar-delivery.module#ListConfirmarDeliveryPageModule' }
 
 
 
