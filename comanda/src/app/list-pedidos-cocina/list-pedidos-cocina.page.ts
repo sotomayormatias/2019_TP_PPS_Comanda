@@ -46,8 +46,8 @@ export class ListPedidosCocinaPage implements OnInit {
           }
         );
       // console.log("Productos perfil: ", this.productosPerfil);
-      localStorage.setItem("listProductos", "" ); 
-     
+      // localStorage.setItem("listProductos", "" ); 
+      localStorage.removeItem("listProductos"); 
       localStorage.setItem("listProductos", JSON.stringify(this.listProductos) ); 
       
       // console.log("List Productos: ", this.listProductos);
@@ -107,7 +107,8 @@ export class ListPedidosCocinaPage implements OnInit {
         });
 
       // console.log("Pedidos a mostrar: ",  this.pedidosMostrar ) ;   
-      localStorage.setItem("listaPedidosAceptados", "" );  
+      // localStorage.setItem("listaPedidosAceptados", "" );  
+      localStorage.removeItem("listaPedidosAceptados"); 
       localStorage.setItem("listaPedidosAceptados", JSON.stringify(this.pedidosMostrar) );  
       });
       
@@ -116,7 +117,8 @@ export class ListPedidosCocinaPage implements OnInit {
     }
 
     traerPedidosActivosPorPerfil() {
-
+      this.pedidosMostrarFil = [];
+      while (this.pedidosMostrarFil.length) { this.pedidosMostrarFil.pop(); }
       let listaRecorre = localStorage.getItem("listaPedidosAceptados");
       let listaRecorreParsed = JSON.parse(listaRecorre);
       // console.log("Lista recorre", listaRecorreParsed);
@@ -143,6 +145,7 @@ export class ListPedidosCocinaPage implements OnInit {
                     'cantidad': idDetalle.cantidad,
                     'estado': idDetalle.estado
                   };
+                  console.log("Pedido detalle: ", pedido_detalle);
                   this.pedidosMostrarFil.push( JSON.parse(JSON.stringify(pedido_detalle))   ); 
                 }
 
