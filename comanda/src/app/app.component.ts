@@ -316,6 +316,12 @@ export class AppComponent {
               url: '/',
               icon: 'pin'
             },
+            // (S) CHAT
+            {
+              title: 'OK - Chat',
+              url: '/chat',
+              icon: 'chatboxes'
+            },
             // JUEGOS
             // (T) 10% DTO
             {
@@ -547,6 +553,12 @@ export class AppComponent {
               title: 'NOK - Ruta H.Domicilio',
               url: '/',
               icon: 'logo-model-s'
+            },
+            // (S) CHAT
+            {
+              title: 'OK - Chat',
+              url: '/chat',
+              icon: 'chatboxes'
             },
 
             {
