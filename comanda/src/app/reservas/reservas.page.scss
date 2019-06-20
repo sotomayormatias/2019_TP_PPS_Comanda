@@ -1,0 +1,36 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,600,300,800);
+
+.dark{
+    background-color: #222428;
+    // color:white;
+    // .monthview-current .monthview-disabled{
+    //     color:black;
+
+    // }
+    
+}
+
+ion-content{
+    --background: #222428;
+}
+
+
+.round{ 
+    font-family: "Open Sans", sans-serif;
+   
+    border-radius: 20px !important; 
+    text-align: center;
+    width: 90%;
+    margin-left: 5%;
+    // background-color: #efefef;
+    border: 2px solid #a2b9bc;
+    border-radius: 3px;
+    color:white;
+   
+  
+    } 
+
+    ion-datetime, ion-select {
+        --color: #999 !important;
+      }
+   

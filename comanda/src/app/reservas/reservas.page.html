@@ -1,0 +1,66 @@
+<ion-header>
+    <ion-toolbar color="dark">
+     
+     
+          <ion-menu-button></ion-menu-button>
+          <ion-title>Crear una reserva</ion-title>
+          <ion-buttons slot="end">
+          <ion-button color="light" size="small" (click)="guardar()">Enviar</ion-button>
+  
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+<ion-content>
+
+  <!-- <ion-card [(ngModel)]="calendar" name="calendario" ngDefaultControl> -->
+          <!-- <div class="dark"> -->
+          <div class="dark">
+              <!-- [eventSource]="eventSource" -->
+          <calendar style="color: white"  [markDisabled]="markDisabled" 
+              [calendarMode]="calendar.mode" [currentDate]="calendar.currentDate"
+              (onCurrentDateChanged)="onCurrentDateChanged($event)" 
+              (onTimeSelected)="onTimeSelected($event)" step="30">
+            
+            </calendar>
+          </div>
+          <!-- </div> -->
+          <!-- <ion-item > -->
+          <ion-datetime  class="round" [(ngModel)]="hora" display-format="H:mm" placeholder="Seleccione Hora"></ion-datetime>
+          <!-- </ion-item> -->
+          <!-- <ion-item color="dark" class="round"> -->
+           <!-- <ion-label position="floating">Mesa</ion-label>  -->
+            <ion-select class="round"  [(ngModel)]="mesaSeleccionada"  cancelText="Cancelar" okText="Confirmar"  placeholder="Seleccione Mesa">
+                <!-- <ion-row>
+                    <ion-col shape="round"> -->
+                <ion-select-option *ngFor="let mesa of mesas" [value]='mesa.nromesa'>Mesa: {{mesa.nromesa}}</ion-select-option>
+                <!-- <ion-select-option value="2">Cerca Ventana</ion-select-option> -->
+              <!-- </ion-col>
+            </ion-row> -->
+              </ion-select>
+            
+              
+                <ion-select  class="round"  [(ngModel)]="cantPersonas"  cancelText="Cancelar" okText="Confirmar"  placeholder="Seleccione Cantidad Personas">
+                    <!-- <ion-row>
+                        <ion-col shape="round"> -->
+                    <ion-select-option  value="1">1 Persona</ion-select-option>
+                    <ion-select-option  value="2">2 Personas</ion-select-option>
+                    <ion-select-option  value="3">3 Personas</ion-select-option>
+                    <ion-select-option  value="4">4 Personas</ion-select-option>
+
+                    <!-- <ion-select-option value="2">Cerca Ventana</ion-select-option> -->
+                  <!-- </ion-col>
+                </ion-row> -->
+                  </ion-select>
+
+              <!-- <ion-card>
+                  <ion-card-content  [(ngModel)]="calendario">
+                     
+                    </ion-card-content>
+              </ion-card> -->
+
+            
+            <!-- (onEventSelected)="onEventSelected($event)"  -->
+            <!-- (onTitleChanged)="onViewTitleChanged($event)" -->
+    
+ 
+</ion-content>
