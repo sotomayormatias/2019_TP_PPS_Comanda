@@ -211,7 +211,8 @@ export class LoginPage implements OnInit {
                   'producto': producto.producto,
                   'precio': producto.precio,
                   'cantidad': producto.cantidad,
-                  'estado': producto.estado
+                  'estado': producto.estado,
+                  'key': producto.key
                 };
                 // INSERTO EN EL ARRAY LOS PEDIDOS PENDIENTES
                 this.pedidosMostrarBar.push( JSON.parse(JSON.stringify(pedido_detalle))   ); 
@@ -299,7 +300,8 @@ export class LoginPage implements OnInit {
                     'producto': producto.producto,
                     'precio': producto.precio,
                     'cantidad': producto.cantidad,
-                    'estado': producto.estado
+                    'estado': producto.estado,
+                    'key': idDetalle.key
                   };
                   // INSERTO EN EL ARRAY LOS PEDIDOS PENDIENTES
                   this.pedidosMostrar.push( JSON.parse(JSON.stringify(pedido_detalle))   ); 

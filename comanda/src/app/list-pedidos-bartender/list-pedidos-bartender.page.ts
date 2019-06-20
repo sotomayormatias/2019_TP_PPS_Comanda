@@ -12,6 +12,10 @@ export class ListPedidosBartenderPage implements OnInit {
   
   pedidos: any;
   detalle: any;
+  
+  spinner: boolean;
+  listaRecorreAux: any;
+
 
   listIdPedidosAceptadosBar: any;
   listProductosBar: string[] = [] ; 
@@ -22,13 +26,15 @@ export class ListPedidosBartenderPage implements OnInit {
   cantidadPedidos = 1;
 
   constructor(private baseService: FirebaseService) { 
-    this.traerPedidosPerfilBar();
-    this.traerProductosPerfilBar();
-    this.traerPedidosActivosPorPerfilBar();
+    // this.traerPedidosPerfilBar();
+    // this.traerProductosPerfilBar();
+    // this.traerPedidosActivosPorPerfilBar();
   }
 
   ngOnInit() {
-
+    this.traerPedidosPerfilBar();
+    this.traerProductosPerfilBar();
+    this.traerPedidosActivosPorPerfilBar();
   }
 
   traerProductosPerfilBar() {
@@ -49,7 +55,9 @@ export class ListPedidosBartenderPage implements OnInit {
         );
       // console.log("Productos perfil: ", this.productosPerfilBar);
       
-      localStorage.setItem("listProductosBar", "" ); 
+      // localStorage.setItem("listProductosBar", "" ); 
+      
+      localStorage.removeItem("listProductosBar"); 
       localStorage.setItem("listProductosBar", JSON.stringify(this.listProductosBar) ); 
       
       // console.log("List Productos: ", this.listProductosBar);
@@ -59,11 +67,13 @@ export class ListPedidosBartenderPage implements OnInit {
 
   traerPedidosPerfilBar() {
 
-
+    // this.pedidosMostrarBar = [];
+    // while (this.pedidosMostrarBar.length) { this.pedidosMostrarBarFil.pop(); }
+    this.pedidosMostrarBar = [] ; 
 
     // TRAIGO PEDIDOS Y ME QUEDO CON LOS ACEPTADOS
     this.baseService.getItems('pedidos').then(ped => {
-
+    
       this.pedidos = ped;
       // console.log("Todos Pedidos: ", this.pedidos);
       this.pedidos = this.pedidos.filter(pedido => pedido.estado == "aceptado" || pedido.estado == "preparacion" );
@@ -95,7 +105,8 @@ export class ListPedidosBartenderPage implements OnInit {
                   'producto': producto.producto,
                   'precio': producto.precio,
                   'cantidad': producto.cantidad,
-                  'estado': producto.estado
+                  'estado': producto.estado,
+                  'key': producto.key
                 };
                 // INSERTO EN EL ARRAY LOS PEDIDOS PENDIENTES
                 this.pedidosMostrarBar.push( JSON.parse(JSON.stringify(pedido_detalle))   ); 
@@ -110,7 +121,8 @@ export class ListPedidosBartenderPage implements OnInit {
 
       // console.log("Pedidos a mostrar: ",  this.pedidosMostrarBar ) ;   
       
-      localStorage.setItem("listaPedidosAceptadosBar", "" );  
+      // localStorage.setItem("listaPedidosAceptadosBar", "" );  
+      localStorage.removeItem("listaPedidosAceptadosBar"); 
       localStorage.setItem("listaPedidosAceptadosBar", JSON.stringify(this.pedidosMostrarBar) );  
       });
       
@@ -119,10 +131,16 @@ export class ListPedidosBartenderPage implements OnInit {
     }
 
     traerPedidosActivosPorPerfilBar() {
+      // this.spinner = true;
+      // setTimeout(() => this.spinner = true, 4000);
+      // this.pedidosMostrarBarFil = [];
+      // while (this.pedidosMostrarBarFil.length) { this.pedidosMostrarBarFil.pop(); }
+      this.pedidosMostrarBarFil = [];
 
-      let listaRecorre = localStorage.getItem("listaPedidosAceptadosBar");
-      let listaRecorreParsed = JSON.parse(listaRecorre);
-      // console.log("Lista recorre", listaRecorreParsed);
+      // this.pedidosMostrarBarFil = [] ;
+      let listaRecorre = localStorage.getItem("listaPedidosAceptadosBar").toString();
+      // let listaRecorreParsed = JSON.parse(listaRecorre);
+      // console.log("Lista recorre", listaRecorre);
 
       let listaProductos = localStorage.getItem("listProductosBar");
       let listaProductosParsed = JSON.parse(listaProductos);
@@ -138,25 +156,80 @@ export class ListPedidosBartenderPage implements OnInit {
           // console.log("Iterator:", iterator);
           
           if ( idDetalle.producto == iterator ) {
+            
                   // tslint:disable-next-line:variable-name
                   let pedido_detalle = {
                     'id_pedido': idDetalle.id_pedido ,
                     'producto': idDetalle.producto,
                     'precio': idDetalle.precio,
                     'cantidad': idDetalle.cantidad,
-                    'estado': idDetalle.estado
+                    'estado': idDetalle.estado,
+                    'key': idDetalle.key
                   };
+                  console.log("Pedido detalle: ", pedido_detalle);
                   this.pedidosMostrarBarFil.push( JSON.parse(JSON.stringify(pedido_detalle))   ); 
                 }
+              
 
               }
         });
-
+      this.spinner = false;
       console.log("Lista Filtrada: ", this.pedidosMostrarBarFil);
-    
       }
     
+      traerPedidosActivosPorPerfilBarPrepara(pedidoDet) {
 
+        this.pedidosMostrarBarFil = [];
+        let listaRecorre = localStorage.getItem("listaPedidosAceptadosBar").toString();
+        // let listaRecorreParsed = JSON.parse(listaRecorre);
+        // console.log("Lista recorre", listaRecorre);
+  
+        let listaProductos = localStorage.getItem("listProductosBar");
+        let listaProductosParsed = JSON.parse(listaProductos);
+  
+        // console.log("Lista de Productos ", listaProductosParsed);
+  
+        JSON.parse(listaRecorre).forEach(idDetalle => {
+  
+          // console.log("Pedido detalle Analizado: ", idDetalle);
+              
+  
+          for (const iterator of listaProductosParsed) {
+            // console.log("Iterator:", iterator);
+            
+            if ( idDetalle.producto == iterator && idDetalle.id_pedido == pedidoDet.id_pedido) {
+              
+                    // tslint:disable-next-line:variable-name
+                    let pedido_detalle = {
+                      'id_pedido': idDetalle.id_pedido ,
+                      'producto': idDetalle.producto,
+                      'precio': idDetalle.precio,
+                      'cantidad': idDetalle.cantidad,
+                      'estado': "preparacion",
+                      'key': idDetalle.key
+                    };
+                    console.log("Pedido detalle modificado: ", pedido_detalle);
+                    this.pedidosMostrarBarFil.push( JSON.parse(JSON.stringify(pedido_detalle))   ); 
+                  } else if ( idDetalle.producto == iterator) {
+              
+                    // tslint:disable-next-line:variable-name
+                    let pedido_detalle = {
+                      'id_pedido': idDetalle.id_pedido ,
+                      'producto': idDetalle.producto,
+                      'precio': idDetalle.precio,
+                      'cantidad': idDetalle.cantidad,
+                      'estado': idDetalle.estado,
+                      'key': idDetalle.key
+                    };
+                    console.log("Pedido detalle: ", pedido_detalle);
+                    this.pedidosMostrarBarFil.push( JSON.parse(JSON.stringify(pedido_detalle))   ); 
+                  }
+  
+                }
+          });
+        this.spinner = false;
+        console.log("Lista Prepara: ", this.pedidosMostrarBarFil);
+        }
 
   // GESTION
 aceptarPedido(mesa: string) {
@@ -166,6 +239,33 @@ aceptarPedido(mesa: string) {
     pedidoAceptado.estado = 'aceptado';
     this.baseService.updateItem('pedidos', key, pedidoAceptado);
     this.traerPedidosPerfilBar();
+  }
+
+  prepararPedido(pedidoDet) {
+    this.spinner = true;
+    console.log("Pedido det: ", pedidoDet) ;
+    // let pedidoKey: any = this.pedidosMostrarBarFil.find(pedido => pedido.id_pedido == pedidoDet.id_pedido && pedido.producto = pedidoDet.producto);
+    let pedidoAceptado = pedidoDet ;
+    let pedidoKey = pedidoAceptado.key ;
+
+    // if ( pedidoKey == undefined ) {
+    //   console.log("Undefined: ", pedidoDet.key) ;
+    //   this.prepararPedido(pedidoDet);
+    // } else {
+    console.log("Pedido key: ", pedidoDet.key) ;
+      // let key: string = pedidoAceptado.key;
+  
+    delete pedidoAceptado.key;
+    pedidoAceptado.estado = 'preparacion';
+    this.baseService.updateItem('pedidoDetalle', pedidoKey, pedidoAceptado);
+      
+      // localStorage.clear();
+      // setTimeout(() => this.traerPedidosPerfilBar() , 1300); 
+     
+    setTimeout(() => this.traerPedidosPerfilBar() , 1300);  
+    setTimeout(() => this.traerPedidosActivosPorPerfilBarPrepara(pedidoDet) , 1000);  
+    // }
+
   }
 
 }
