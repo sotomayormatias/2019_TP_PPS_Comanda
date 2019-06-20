@@ -1,0 +1,53 @@
+ion-content {
+    --background: #306dd8 !important;
+}
+
+.input{
+    padding: 15px 20px;
+    border-radius: 25px;
+    background: #FFFFFF;
+    font-size: 16px;
+    color: #000000;
+}
+
+.text-input-md{
+    margin: 0 !important;
+}
+
+.toolbarText .toolbar-background-md{
+    background-color: transparent !important;
+}
+
+.grid {
+    padding: 0;
+}
+
+.caja {
+    border-radius: 5px;
+    margin: 0;
+}
+
+.sender .caja{
+    background-color: #fff;
+    padding: 12px 10px;
+}
+
+.me .caja {
+    background-color: #8cb3f7;
+    color: #000000;
+    padding: 12px 10px;
+}
+
+.mensaje {
+    font-size: 16px;
+}
+
+.remitente {
+    font-weight: bold;
+    color: blue;
+}
+
+.fecha {
+    text-align: right;
+    color: grey;
+}
