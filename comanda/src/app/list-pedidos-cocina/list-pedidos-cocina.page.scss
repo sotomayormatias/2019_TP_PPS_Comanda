@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Anton&display=swap');
+
 .welcome-card ion-img {
     max-height: 20%;
     overflow: hidden;
@@ -9,8 +11,41 @@
       background-repeat:no-repeat;
       background-size:cover;
       overflow:hidden;
+      text-align: center;
+     
       // opacity: 0.6;
   }
+
+  .cardContent
+  {
+    font-family: 'Anton', sans-serif;
+  }
+  
+ion-spinner {
+	transform: scale(3);
+}
+
+
+.spinnerCenter {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center;
+  height: 100%;
+}
+
+.round{ 
+  font-family: "Open Sans", sans-serif;
+  border-radius: 20px !important; 
+  text-align: center;
+  padding: 5%;
+  width: 90%;
+  font-size: medium;
+  margin-left: 27%;
+  background-color: #efefef;
+  border-radius: 3px;
+
+  } 
   
   // .feas 
   // {
