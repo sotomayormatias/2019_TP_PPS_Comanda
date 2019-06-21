@@ -1,30 +1,48 @@
 <ion-header>
     <ion-toolbar color="dark">
      
-     
-          <ion-menu-button></ion-menu-button>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
           <ion-title>Crear una reserva</ion-title>
+
           <ion-buttons slot="end">
           <ion-button color="light" size="small" (click)="guardar()">Enviar</ion-button>
-  
-      </ion-buttons>
+          </ion-buttons>
     </ion-toolbar>
   </ion-header>
 <ion-content>
 
   <!-- <ion-card [(ngModel)]="calendar" name="calendario" ngDefaultControl> -->
           <!-- <div class="dark"> -->
-          <div class="dark">
-              <!-- [eventSource]="eventSource" -->
-          <calendar style="color: white"  [markDisabled]="markDisabled" 
-              [calendarMode]="calendar.mode" [currentDate]="calendar.currentDate"
-              (onCurrentDateChanged)="onCurrentDateChanged($event)" 
-              (onTimeSelected)="onTimeSelected($event)" step="30">
-            
-            </calendar>
-          </div>
+         
+
+              <ion-card color="dark">
+                <ion-card-header>
+                  <!-- <ion-card-subtitle>Detalles</ion-card-subtitle> -->
+                  <ion-card-title >Calendario</ion-card-title>
+                </ion-card-header>
+              
+                <ion-card-content>
+                    <ion-grid style="height: 100%">
+                        <ion-row justify-content-center align-items-center style="height: 100%; flex-direction: column">
+                        <ion-spinner *ngIf="spinner" name="lines"></ion-spinner>
+                        <ion-spinner name="ios"></ion-spinner>
+                          </ion-row>
+                        </ion-grid>
+
+                  <div class="dark">
+                  <calendar *ngIf="!spinner" style="color: white"  [eventSource]="eventSource" [markDisabled]="markDisabled" 
+                    [calendarMode]="calendar.mode" [currentDate]="calendar.currentDate"
+                    (onCurrentDateChanged)="onCurrentDateChanged($event)" 
+                    (onTimeSelected)="onTimeSelected($event)" step="30">
+                  
+                  </calendar>
+                </div>
+        </ion-card-content>
+        </ion-card>
           <!-- </div> -->
-          <!-- <ion-item > -->
+          <div *ngIf="!spinner" class="botones" >
           <ion-datetime  class="round" [(ngModel)]="hora" display-format="H:mm" placeholder="Seleccione Hora"></ion-datetime>
           <!-- </ion-item> -->
           <!-- <ion-item color="dark" class="round"> -->
@@ -32,25 +50,25 @@
             <ion-select class="round"  [(ngModel)]="mesaSeleccionada"  cancelText="Cancelar" okText="Confirmar"  placeholder="Seleccione Mesa">
                 <!-- <ion-row>
                     <ion-col shape="round"> -->
-                <ion-select-option *ngFor="let mesa of mesas" [value]='mesa.nromesa'>Mesa: {{mesa.nromesa}}</ion-select-option>
+                <ion-select-option *ngFor="let mesa of mesas" [value]='mesa.nromesa'>Mesa: {{mesa.nromesa}} Cant.: {{mesa.cantcomen}}</ion-select-option>
                 <!-- <ion-select-option value="2">Cerca Ventana</ion-select-option> -->
               <!-- </ion-col>
             </ion-row> -->
               </ion-select>
             
-              
-                <ion-select  class="round"  [(ngModel)]="cantPersonas"  cancelText="Cancelar" okText="Confirmar"  placeholder="Seleccione Cantidad Personas">
-                    <!-- <ion-row>
-                        <ion-col shape="round"> -->
+            </div>
+                <!-- <ion-select  class="round"  [(ngModel)]="cantPersonas"  cancelText="Cancelar" okText="Confirmar"  placeholder="Seleccione Cantidad Personas">
+                  
                     <ion-select-option  value="1">1 Persona</ion-select-option>
                     <ion-select-option  value="2">2 Personas</ion-select-option>
                     <ion-select-option  value="3">3 Personas</ion-select-option>
                     <ion-select-option  value="4">4 Personas</ion-select-option>
 
-                    <!-- <ion-select-option value="2">Cerca Ventana</ion-select-option> -->
-                  <!-- </ion-col>
-                </ion-row> -->
+                  
                   </ion-select>
+                -->
+
+          <!-- <ion-button color="dark" size="block" (click)="openCalendar()">openCalendar</ion-button> -->
 
               <!-- <ion-card>
                   <ion-card-content  [(ngModel)]="calendario">

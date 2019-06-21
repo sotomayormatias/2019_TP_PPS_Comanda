@@ -22,10 +22,10 @@
     </ion-item>
   </ion-list>
   <ion-list *ngIf="perfil == 'delivery'">
-    <ion-item *ngFor="let pedido of pedidosConfirmados">
+    <ion-item *ngFor="let pedido of pedidosAEntregar">
       Cliente: {{pedido.cliente}} - Dirección: {{pedido.direccion}}
       <div class="item-note" slot="end">
-        <ion-button size="small" (click)="verRuta(pedido.cliente)">Ver ruta</ion-button>
+        <ion-button size="small" (click)="verRuta(pedido.id)">Ver ruta</ion-button>
       </div>
     </ion-item>
   </ion-list>
