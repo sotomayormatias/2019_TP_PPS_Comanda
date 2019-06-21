@@ -50,26 +50,23 @@
             <ion-select class="round"  [(ngModel)]="mesaSeleccionada"  cancelText="Cancelar" okText="Confirmar"  placeholder="Seleccione Mesa">
                 <!-- <ion-row>
                     <ion-col shape="round"> -->
-                <ion-select-option *ngFor="let mesa of mesas" [value]='mesa.nromesa'>Mesa: {{mesa.nromesa}}</ion-select-option>
+                <ion-select-option *ngFor="let mesa of mesas" [value]='mesa.nromesa'>Mesa: {{mesa.nromesa}} Cant.: {{mesa.cantcomen}}</ion-select-option>
                 <!-- <ion-select-option value="2">Cerca Ventana</ion-select-option> -->
               <!-- </ion-col>
             </ion-row> -->
               </ion-select>
             
-              
-                <ion-select  class="round"  [(ngModel)]="cantPersonas"  cancelText="Cancelar" okText="Confirmar"  placeholder="Seleccione Cantidad Personas">
-                    <!-- <ion-row>
-                        <ion-col shape="round"> -->
+            </div>
+                <!-- <ion-select  class="round"  [(ngModel)]="cantPersonas"  cancelText="Cancelar" okText="Confirmar"  placeholder="Seleccione Cantidad Personas">
+                  
                     <ion-select-option  value="1">1 Persona</ion-select-option>
                     <ion-select-option  value="2">2 Personas</ion-select-option>
                     <ion-select-option  value="3">3 Personas</ion-select-option>
                     <ion-select-option  value="4">4 Personas</ion-select-option>
 
-                    <!-- <ion-select-option value="2">Cerca Ventana</ion-select-option> -->
-                  <!-- </ion-col>
-                </ion-row> -->
+                  
                   </ion-select>
-                </div>
+                -->
 
           <!-- <ion-button color="dark" size="block" (click)="openCalendar()">openCalendar</ion-button> -->
 

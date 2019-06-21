@@ -46,7 +46,7 @@ export class ReservasPage implements OnInit {
   mesas: any[];
   PickerOptions: any;
   mesaSeleccionada: any;
-  cantPersonas: any;
+  // cantPersonas: any;
   spinner:boolean ; 
   tienereserva: boolean = false;
 
@@ -163,10 +163,10 @@ export class ReservasPage implements OnInit {
 
   // {
     let horaminutoseg = this.hora.substr(11,this.hora.length-21);
-  let splitHoraMinSeg= horaminutoseg.split(':');
+    let splitHoraMinSeg= horaminutoseg.split(':');
 
-  this.fechaElegida.hora = splitHoraMinSeg[0];
-  this.fechaElegida.minuto = splitHoraMinSeg[1];
+    this.fechaElegida.hora = splitHoraMinSeg[0];
+    this.fechaElegida.minuto = splitHoraMinSeg[1];
   
  
 
@@ -183,8 +183,8 @@ export class ReservasPage implements OnInit {
     .update({
       reserva: {
         "fechaElegida": this.fechaElegida,
-        "mesaSeleccionada": this.mesaSeleccionada,
-        "cantidadPersonas": this.cantPersonas
+        "mesaSeleccionada": this.mesaSeleccionada
+        // "cantidadPersonas": this.cantPersonas
     
       }
   
@@ -195,8 +195,8 @@ export class ReservasPage implements OnInit {
     
        "correo": usuarioLogueado.correo,
        "fechaElegida": this.fechaElegida,
-       "mesaSeleccionada": this.mesaSeleccionada,
-       "cantidadPersonas": this.cantPersonas
+       "mesaSeleccionada": this.mesaSeleccionada
+      //  "cantidadPersonas": this.cantPersonas
  
   });
 
