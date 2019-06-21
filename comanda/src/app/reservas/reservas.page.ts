@@ -47,9 +47,16 @@ export class ReservasPage implements OnInit {
   PickerOptions: any;
   mesaSeleccionada: any;
   cantPersonas: any;
+  spinner:boolean ; 
+  tienereserva: boolean = false;
+
   // calendario: any;
 
-
+  // startDay: number = 1;
+  // endDay : number = 1;
+  // startMinute : number = 1;
+  // startTime : any;
+  // endTime :any;
 
   constructor(
     public calendario: Calendar,
@@ -77,12 +84,12 @@ export class ReservasPage implements OnInit {
       //   (msg) => { console.log(msg); },
       //   (err) => { console.log(err); }
       // );
-
-       
+      
 
       this.eventSource = this.createEvents();
  
-
+      
+       
     this.baseService.getItems('mesas').then(mesa => {
       this.mesas = mesa
 
@@ -134,8 +141,28 @@ export class ReservasPage implements OnInit {
 
   guardar(){
 
+    localStorage.setItem("tienereserva","false");
+    let usuarioLogueado: any = JSON.parse(sessionStorage.getItem('usuario'));
+    this.baseService.getItems('reservademesas').then(lista => {
+    this.reservaRealizada = lista.find(cliente => cliente.correo == usuarioLogueado.correo);
+    // if(this.reservaRealizada != undefined)
+    // {   
+    
+    //   localStorage.setItem("tienereserva","true");
+    //   console.log(localStorage.getItem("tienereserva"));
+    //   this.muestroToast("Usted ya tiene una reserva asignada.");
+   
 
-  let horaminutoseg = this.hora.substr(11,this.hora.length-21);
+    // }
+
+
+  });
+
+  console.log(localStorage.getItem("tienereserva"));
+  // if( localStorage.getItem("tienereserva") == "false")
+
+  // {
+    let horaminutoseg = this.hora.substr(11,this.hora.length-21);
   let splitHoraMinSeg= horaminutoseg.split(':');
 
   this.fechaElegida.hora = splitHoraMinSeg[0];
@@ -145,7 +172,7 @@ export class ReservasPage implements OnInit {
 
     this.baseService.getItems('listaEsperaClientes').then(lista => {
 
-    let usuarioLogueado: any = JSON.parse(sessionStorage.getItem('usuario'));
+
 
     this.clienteEnEspera = lista.find(cliente => cliente.correo == usuarioLogueado.correo);
  
@@ -173,11 +200,29 @@ export class ReservasPage implements OnInit {
  
   });
 
+  localStorage.setItem("dia",this.fechaElegida.dia);
+  localStorage.setItem("mes",this.fechaElegida.mes);
+  localStorage.setItem("hora",this.fechaElegida.hora);
+  localStorage.setItem("minuto",this.fechaElegida.minuto);
+
+  localStorage.setItem("reservaStatus","si");
+
+
+  this.spinner = true;
+  this.eventSource = this.createEvents(); 
+  
+  setTimeout(() => this.spinner = false , 3000);
+
    this.muestroToast("Su reserva fue guardada con exito.");
 
 
   });
-  
+
+
+    
+  // } FIN IF tienereserva
+
+    
   
   }
 
@@ -224,10 +269,8 @@ createEventsTrue() {
       var endTime;
 
       startTime = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, date.getMinutes());
-
-      
       endTime = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-      console.log(startTime);
+      // console.log(startTime);
       events.push({
         title: 'Reserva: ' + startTime,
         startTime: startTime,
@@ -235,52 +278,81 @@ createEventsTrue() {
     });
  
   });
-  console.log(events);
+  // console.log(events);
   return events;
   
   
 }
 
-
 createEvents(){
 
   var events = [];
+
+ 
+  let usuarioLogueado: any = JSON.parse(sessionStorage.getItem('usuario'));
+  this.baseService.getItems('reservademesas').then(lista => {
+    this.reservaRealizada = lista.find(cliente => cliente.correo == usuarioLogueado.correo);
+    
+
+    if(this.reservaRealizada == undefined)
+    {
+      
+      localStorage.setItem("reservaStatus","no");
+
+
+    }
+    else{
+      localStorage.setItem("dia",this.reservaRealizada.fechaElegida.dia);
+      localStorage.setItem("mes",this.reservaRealizada.fechaElegida.mes);
+      localStorage.setItem("hora",this.reservaRealizada.fechaElegida.hora);
+      localStorage.setItem("minuto",this.reservaRealizada.fechaElegida.minuto);
+      localStorage.setItem("reservaStatus","si");
+
+    }
+   
+    // this.startDay = parseInt(this.reservaRealizada.fechaElegida.dia);
+    // this.endDay = parseInt(this.reservaRealizada.fechaElegida.dia);
+    // this.startMinute = parseInt();
+  });
+  
+  var date = new Date();
+  var eventType = Math.floor(Math.random() * 2);
+  var startDay = parseInt(localStorage.getItem("dia"));
+  var endDay = parseInt(localStorage.getItem("dia")) ;
+  var startMinute = parseInt(localStorage.getItem("minuto"));
+  var startHora = parseInt(localStorage.getItem("hora"));
+  var startMes = parseInt(localStorage.getItem("mes"));
+  var startStatus = localStorage.getItem("reservaStatus");
+  var startTime;
+  var endTime;
+ 
+  var endMinute = Math.floor(60) + startMinute;
+
     for (var i = 0; i < 1; i += 1) {
-        var date = new Date();
-        var eventType = Math.floor(Math.random() * 2);
-        var startDay = 21;
-        var endDay = 21 ;
-        var startTime;
-        var endTime;
+      
         // if (eventType === 0) {
-            // startTime = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate() + startDay));
-            // if (endDay === startDay) {
-            //     endDay += 1;
-            // }
-            // endTime = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate() + endDay));
-            // events.push({
-            //     title: 'All Day - ',
-            //     startTime: startTime,
-            //     endTime: endTime,
-            //     allDay: true
-            // });
-        // } else {
-            var startMinute = Math.floor(Math.random() * 24 * 60);
-            var endMinute = Math.floor(Math.random() * 180) + startMinute;
-            console.log(date);
           
-            startTime = new Date(date.getFullYear(), date.getMonth(), startDay, 0, date.getMinutes() + startMinute);
-            endTime = new Date(date.getFullYear(), date.getMonth(), endDay, 0, date.getMinutes() + endMinute);
+        // } else {
 
-            console.log(startTime);
-            console.log(endTime);
+        if(startStatus == "si")
+        {
+          // console.log(startStatus);
+          startTime = new Date(2019, startMes-1, startDay, startHora, startMinute);
+          endTime = new Date(2019, startMes-1, endDay,startHora, endMinute);
 
-            events.push({
-                title: 'Event - ' + i,
-                startTime: startTime,
-                endTime: endTime,
-                allDay: false
-            });
+          // console.log(startTime);
+          // console.log(endTime);
+
+          events.push({
+              title: "Reserva Programada",
+              startTime: startTime,
+              endTime: endTime,
+              allDay: false
+          });
+
+
+        }
+            
         // }
     }
     return events;

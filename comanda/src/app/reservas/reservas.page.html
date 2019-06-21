@@ -15,17 +15,34 @@
 
   <!-- <ion-card [(ngModel)]="calendar" name="calendario" ngDefaultControl> -->
           <!-- <div class="dark"> -->
-          <div class="dark">
-          
-          <calendar style="color: white"  [eventSource]="eventSource" [markDisabled]="markDisabled" 
-              [calendarMode]="calendar.mode" [currentDate]="calendar.currentDate"
-              (onCurrentDateChanged)="onCurrentDateChanged($event)" 
-              (onTimeSelected)="onTimeSelected($event)" step="30">
-            
-            </calendar>
-          </div>
+         
+
+              <ion-card color="dark">
+                <ion-card-header>
+                  <!-- <ion-card-subtitle>Detalles</ion-card-subtitle> -->
+                  <ion-card-title >Calendario</ion-card-title>
+                </ion-card-header>
+              
+                <ion-card-content>
+                    <ion-grid style="height: 100%">
+                        <ion-row justify-content-center align-items-center style="height: 100%; flex-direction: column">
+                        <ion-spinner *ngIf="spinner" name="lines"></ion-spinner>
+                        <ion-spinner name="ios"></ion-spinner>
+                          </ion-row>
+                        </ion-grid>
+
+                  <div class="dark">
+                  <calendar *ngIf="!spinner" style="color: white"  [eventSource]="eventSource" [markDisabled]="markDisabled" 
+                    [calendarMode]="calendar.mode" [currentDate]="calendar.currentDate"
+                    (onCurrentDateChanged)="onCurrentDateChanged($event)" 
+                    (onTimeSelected)="onTimeSelected($event)" step="30">
+                  
+                  </calendar>
+                </div>
+        </ion-card-content>
+        </ion-card>
           <!-- </div> -->
-          <div class="botones" >
+          <div *ngIf="!spinner" class="botones" >
           <ion-datetime  class="round" [(ngModel)]="hora" display-format="H:mm" placeholder="Seleccione Hora"></ion-datetime>
           <!-- </ion-item> -->
           <!-- <ion-item color="dark" class="round"> -->
