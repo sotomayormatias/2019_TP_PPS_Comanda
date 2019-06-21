@@ -212,6 +212,7 @@ export class LoginPage implements OnInit {
                   'precio': producto.precio,
                   'cantidad': producto.cantidad,
                   'estado': producto.estado,
+                  'tiempo': producto.tiempo,
                   'key': producto.key
                 };
                 // INSERTO EN EL ARRAY LOS PEDIDOS PENDIENTES
@@ -299,6 +300,7 @@ export class LoginPage implements OnInit {
                     'precio': producto.precio,
                     'cantidad': producto.cantidad,
                     'estado': producto.estado,
+                    'tiempo': producto.tiempo,
                     'key': producto.key
                   };
                   // INSERTO EN EL ARRAY LOS PEDIDOS PENDIENTES

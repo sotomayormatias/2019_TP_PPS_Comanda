@@ -25,13 +25,25 @@
             ">
               {{pedido.cantidad}}
               {{pedido.producto}}
+              <div *ngIf="pedido.estado == 'preparacion' "  >{{pedido.tiempo}} MIN</div>
+              <ion-select *ngIf="pedido.estado == 'creado'"  class="round"  [(ngModel)]="TEstimado"  cancelText="Cancelar" okText="Confirmar"  placeholder="Tiempo" >
+           
+                <ion-select-option  value="10">10 Minutos</ion-select-option>
+                <ion-select-option  value="30">30 Minutos</ion-select-option>
+                <ion-select-option  value="45">45 Minutos</ion-select-option>
+                <ion-select-option  value="60">60 Minutos</ion-select-option>
+
+              </ion-select>
 
               <div  slot="start">
-         
+                
                   <!-- CREADO -->
                   <ion-button shape="round" *ngIf="pedido.estado == 'creado' " color="danger" size="small" (click)="prepararPedido( pedido )" style="font-size:large;">INI</ion-button>
                   <ion-button shape="round" *ngIf="pedido.estado !== 'creado' " [disabled]="pedido.estado!='creado'" color="danger" size="small" (click)="prepararPedido( pedido )">INI</ion-button>
             
+
+       
+
                 <!-- </div>
                 <div  slot="secondary"> -->
                   <!-- EN PREPARACION -->

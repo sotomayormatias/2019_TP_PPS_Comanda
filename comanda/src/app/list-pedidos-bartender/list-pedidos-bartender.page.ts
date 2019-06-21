@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FirebaseService } from "../services/firebase.service";
-
+import { PickerController } from '@ionic/angular';
+import { PickerOptions, PickerButton } from '@ionic/core';
 
 @Component({
   selector: 'app-list-pedidos-bartender',
@@ -24,8 +25,12 @@ export class ListPedidosBartenderPage implements OnInit {
   pedidosMostrarBarFil: string[] = [];
   productosPerfilBar: any;
   cantidadPedidos = 1;
+  TEstimado = '';
+  selected = ['', '', ''];
 
-  constructor(private baseService: FirebaseService) { 
+  
+  constructor(private baseService: FirebaseService,
+              private pickerCtrl: PickerController) { 
     // this.traerPedidosPerfilBar();
     // this.traerProductosPerfilBar();
     // this.traerPedidosActivosPorPerfilBar();
@@ -106,6 +111,7 @@ export class ListPedidosBartenderPage implements OnInit {
                   'precio': producto.precio,
                   'cantidad': producto.cantidad,
                   'estado': producto.estado,
+                  'tiempo': producto.tiempo,
                   'key': producto.key
                 };
                 // INSERTO EN EL ARRAY LOS PEDIDOS PENDIENTES
@@ -151,6 +157,7 @@ export class ListPedidosBartenderPage implements OnInit {
                     'precio': idDetalle.precio,
                     'cantidad': idDetalle.cantidad,
                     'estado': idDetalle.estado,
+                    'tiempo': idDetalle.tiempo,
                     'key': idDetalle.key
                   };
                   console.log("Pedido detalle: ", pedido_detalle);
@@ -187,6 +194,7 @@ export class ListPedidosBartenderPage implements OnInit {
                       'precio': idDetalle.precio,
                       'cantidad': idDetalle.cantidad,
                       'estado': "preparacion",
+                      'tiempo': this.TEstimado ,
                       'key': idDetalle.key
                     };
                     console.log("Pedido detalle modificado: ", pedido_detalle);
@@ -200,6 +208,7 @@ export class ListPedidosBartenderPage implements OnInit {
                       'precio': idDetalle.precio,
                       'cantidad': idDetalle.cantidad,
                       'estado': idDetalle.estado,
+                      'tiempo': idDetalle.tiempo,
                       'key': idDetalle.key
                     };
                     console.log("Pedido detalle: ", pedido_detalle);
@@ -277,12 +286,12 @@ aceptarPedido(mesa: string) {
     console.log("Pedido key: ", pedidoDet.key) ;
     
     delete pedidoAceptado.key;
+    pedidoAceptado.tiempo = this.TEstimado;
     pedidoAceptado.estado = 'preparacion';
     this.baseService.updateItem('pedidoDetalle', pedidoKey, pedidoAceptado);
-     
+
     setTimeout(() => this.traerPedidosPerfilBar() , 1300);  
-    setTimeout(() => this.traerPedidosActivosPorPerfilBarPrepara(pedidoDet) , 1000);  
-  
+    setTimeout(() => this.traerPedidosActivosPorPerfilBarPrepara(pedidoDet) , 1000); 
   }
 
   

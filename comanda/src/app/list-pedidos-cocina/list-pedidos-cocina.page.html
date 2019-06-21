@@ -6,7 +6,6 @@
     <ion-title>
       Pedidos Pendientes
     </ion-title>
-   |
   </ion-toolbar>
 </ion-header>
 
@@ -28,6 +27,15 @@
             ">
               {{pedido.cantidad}}
               {{pedido.producto}}
+              <div *ngIf="pedido.estado'preparacion"  >{{pedido.tiempo}} MIN</div>
+              <ion-select *ngIf="pedido.estado == 'creado'"  class="round"  [(ngModel)]="TEstimado"  cancelText="Cancelar" okText="Confirmar"  placeholder="Tiempo" >
+           
+                <ion-select-option  value="10">10 Minutos</ion-select-option>
+                <ion-select-option  value="30">30 Minutos</ion-select-option>
+                <ion-select-option  value="45">45 Minutos</ion-select-option>
+                <ion-select-option  value="60">60 Minutos</ion-select-option>
+
+              </ion-select>
 
               <div  slot="start">
                   <!-- CREADO -->

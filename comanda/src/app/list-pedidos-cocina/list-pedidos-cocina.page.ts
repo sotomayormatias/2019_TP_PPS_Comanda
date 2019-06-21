@@ -22,6 +22,8 @@ export class ListPedidosCocinaPage implements OnInit {
   pedidosMostrarFil: string[] = [];
   productosPerfil: any;
   cantidadPedidos = 1;
+  TEstimado = '';
+  selected = ['', '', ''];
 
   constructor(private baseService: FirebaseService) { 
     // this.traerPedidosPerfil();
@@ -104,6 +106,7 @@ export class ListPedidosCocinaPage implements OnInit {
                   'precio': producto.precio,
                   'cantidad': producto.cantidad,
                   'estado': producto.estado,
+                  'tiempo': producto.tiempo,
                   'key': producto.key
                 };
                 // INSERTO EN EL ARRAY LOS PEDIDOS PENDIENTES
@@ -149,6 +152,7 @@ export class ListPedidosCocinaPage implements OnInit {
                     'precio': idDetalle.precio,
                     'cantidad': idDetalle.cantidad,
                     'estado': idDetalle.estado,
+                    'tiempo': idDetalle.tiempo,
                     'key': idDetalle.key
                   };
                   console.log("Pedido detalle: ", pedido_detalle);
@@ -185,6 +189,7 @@ export class ListPedidosCocinaPage implements OnInit {
                       'precio': idDetalle.precio,
                       'cantidad': idDetalle.cantidad,
                       'estado': "preparacion",
+                      'tiempo': this.TEstimado ,
                       'key': idDetalle.key
                     };
                     console.log("Pedido detalle modificado: ", pedido_detalle);
@@ -198,6 +203,7 @@ export class ListPedidosCocinaPage implements OnInit {
                       'precio': idDetalle.precio,
                       'cantidad': idDetalle.cantidad,
                       'estado': idDetalle.estado,
+                      'tiempo': idDetalle.tiempo,
                       'key': idDetalle.key
                     };
                     console.log("Pedido detalle: ", pedido_detalle);
