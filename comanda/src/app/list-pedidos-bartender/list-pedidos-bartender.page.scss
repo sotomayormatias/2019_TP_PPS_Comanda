@@ -21,8 +21,16 @@
     font-family: 'Anton', sans-serif;
   }
   
-ion-spinner {
-	transform: scale(3);
+// ion-spinner {
+// 	transform: scale(3);
+// }
+
+.spinnerCenter {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center;
+    height: 100%;
 }
   
   // .feas 

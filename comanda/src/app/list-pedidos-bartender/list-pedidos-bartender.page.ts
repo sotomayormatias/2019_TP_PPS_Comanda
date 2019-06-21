@@ -160,7 +160,7 @@ export class ListPedidosBartenderPage implements OnInit {
 
               }
         });
-      this.spinner = false;
+      // this.spinner = false;
       console.log("Lista Filtrada: ", this.pedidosMostrarBarFil);
       }
     
@@ -208,7 +208,7 @@ export class ListPedidosBartenderPage implements OnInit {
   
                 }
           });
-        this.spinner = false;
+        // this.spinner = false;
         console.log("Lista Prepara: ", this.pedidosMostrarBarFil);
         }
 
