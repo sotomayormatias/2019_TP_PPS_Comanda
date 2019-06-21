@@ -81,7 +81,7 @@ export class QrMesaPage implements OnInit {
       //FIJARSE SI LA MESA ESTA RESERVADA, si lo esta => fijarse hora minutos y usuario (40 min antes)
       //SI NO ESTA RESERVADA QUE AGARRE LA MESA
 
-      // if(this.mesaEscaneada.)
+      // if(this.mesaEscaneada.reservada
       if (usuarioLogueado.perfil == "cliente") { // Logica para cuando escanea el cliente
         if (this.mesaEscaneada.estado == 'libre') { // si la mesa esta libre
           if (this.estaEnLista) { // si el cliente esta en lista de espera

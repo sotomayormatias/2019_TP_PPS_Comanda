@@ -49,14 +49,7 @@ export class ReservasPage implements OnInit {
   // cantPersonas: any;
   spinner:boolean ; 
   tienereserva: boolean = false;
-
-  // calendario: any;
-
-  // startDay: number = 1;
-  // endDay : number = 1;
-  // startMinute : number = 1;
-  // startTime : any;
-  // endTime :any;
+  mesaReservada: any;
 
   constructor(
     public calendario: Calendar,
@@ -105,23 +98,17 @@ export class ReservasPage implements OnInit {
   changeMode(mode) {
     this.calendar.mode = mode;
   }
-  // loadEvents() {
-  //   this.eventSource = this.createRandomEvents();
-  // }
   onCurrentDateChanged(ev) {
-    // console.log(ev);
     var today = new Date();
     today.setHours(0, 0, 0, 0);
     ev.setHours(0, 0, 0, 0);
     this.isToday = today.getTime() === ev.getTime();
   
   }
-  // onViewTitleChanged(Title) {
-  //   this.viewTitle = Title;
-  // }
+
   onTimeSelected(event) {
-    // console.log(event);
-    var date = new Date().getTime();
+   
+    // var date = new Date().getTime();
 
     let fechaElegida = JSON.stringify(event.selectedTime);
     fechaElegida = fechaElegida.substr(1,fechaElegida.length-1);
@@ -141,24 +128,9 @@ export class ReservasPage implements OnInit {
 
   guardar(){
 
-    localStorage.setItem("tienereserva","false");
+    // localStorage.setItem("reservada","no");
     let usuarioLogueado: any = JSON.parse(sessionStorage.getItem('usuario'));
-    this.baseService.getItems('reservademesas').then(lista => {
-    this.reservaRealizada = lista.find(cliente => cliente.correo == usuarioLogueado.correo);
-    // if(this.reservaRealizada != undefined)
-    // {   
-    
-    //   localStorage.setItem("tienereserva","true");
-    //   console.log(localStorage.getItem("tienereserva"));
-    //   this.muestroToast("Usted ya tiene una reserva asignada.");
    
-
-    // }
-
-
-  });
-
-  console.log(localStorage.getItem("tienereserva"));
   // if( localStorage.getItem("tienereserva") == "false")
 
   // {
@@ -168,27 +140,10 @@ export class ReservasPage implements OnInit {
     this.fechaElegida.hora = splitHoraMinSeg[0];
     this.fechaElegida.minuto = splitHoraMinSeg[1];
   
- 
-
     this.baseService.getItems('listaEsperaClientes').then(lista => {
-
-
-
     this.clienteEnEspera = lista.find(cliente => cliente.correo == usuarioLogueado.correo);
  
 
-  
-
-  //   firebase.database().ref('listaEsperaClientes/'+ this.clienteEnEspera.key)
-  //   .update({
-  //     reserva: {
-  //       "fechaElegida": this.fechaElegida,
-  //       "mesaSeleccionada": this.mesaSeleccionada
-       
-    
-  //     }
-  
-  //  });
 
    firebase.database().ref('reservademesas/'+ this.clienteEnEspera.key)
    .update({
@@ -196,45 +151,38 @@ export class ReservasPage implements OnInit {
        "correo": usuarioLogueado.correo,
        "fechaElegida": this.fechaElegida,
        "mesaSeleccionada": this.mesaSeleccionada
-      //  "cantidadPersonas": this.cantPersonas
  
   });
 
-  firebase.database().ref('mesas/'+ this.clienteEnEspera.key)
-  .update({
-   
-      "reservada": "si",
-      "correo": usuarioLogueado.correo,
-      "fechaElegida": this.fechaElegida,
-      "mesaSeleccionada": this.mesaSeleccionada
-     //  "cantidadPersonas": this.cantPersonas
+    
+  this.baseService.getItems('mesas').then(lista => {
+    this.mesaReservada = lista.find(mesa => mesa.nromesa == this.mesaSeleccionada);
 
- });
+    firebase.database().ref('mesas/'+ this.mesaReservada.key)
+    .update({
+    
+        reservada: "si"
+
+    });
+      
+    });
+  // } FIN IF tienereserva
+});
 
   localStorage.setItem("dia",this.fechaElegida.dia);
   localStorage.setItem("mes",this.fechaElegida.mes);
   localStorage.setItem("hora",this.fechaElegida.hora);
   localStorage.setItem("minuto",this.fechaElegida.minuto);
-
-  localStorage.setItem("reservaStatus","si");
-
+  localStorage.setItem("reservada","si");
 
   this.spinner = true;
   this.eventSource = this.createEvents(); 
-  
-  setTimeout(() => this.spinner = false , 3000);
+  setTimeout(() => this.spinner = false , 4500);  
+
 
    this.muestroToast("Su reserva fue guardada con exito.");
-
-
-  });
-
-
     
-  // } FIN IF tienereserva
 
-    
-  
   }
 
   async muestroToast(mensaje: string) {
