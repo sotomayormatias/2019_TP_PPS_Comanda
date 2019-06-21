@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FirebaseService } from "../services/firebase.service";
+import { ModalController } from "@ionic/angular";
+import { ModalRutaPage } from "../modal-ruta/modal-ruta.page";
 
 @Component({
   selector: 'app-list-confirmar-delivery',
@@ -11,7 +13,8 @@ export class ListConfirmarDeliveryPage implements OnInit {
   pedidosAEntregar: any;
   perfil: string = "";
 
-  constructor(private baseService: FirebaseService) {
+  constructor(private baseService: FirebaseService,
+    private modalCtrl: ModalController) {
     this.perfil = JSON.parse(sessionStorage.getItem('usuario')).perfil;
     if (this.perfil == 'delivery')
       this.traerPedidosAEntregar();
@@ -45,7 +48,13 @@ export class ListConfirmarDeliveryPage implements OnInit {
     this.traerPedidosAConfirmar();
   }
 
-  verRuta() {
-    alert("Funcionalidad en construccion");
+  async verRuta(idPedido: number) {
+    const modal = await this.modalCtrl.create({
+      component: ModalRutaPage,
+      componentProps: {
+        pedido: idPedido,
+      }
+    });
+    return await modal.present();
   }
 }
