@@ -53,6 +53,10 @@ export class QrMesaPage implements OnInit {
     this.baseService.getItems('mesas').then(mesas => {
       let nroMesa = this.parsedDatosEscaneados.mesa;
       this.mesaEscaneada = mesas.find(mesa => mesa.nromesa == nroMesa);
+
+      
+
+
       let usuarioLogueado: any = JSON.parse(sessionStorage.getItem('usuario'));
       if (usuarioLogueado.perfil == "cliente") { // Logica para cuando escanea el cliente
         if (this.mesaEscaneada.estado == 'libre') { // si la mesa esta libre

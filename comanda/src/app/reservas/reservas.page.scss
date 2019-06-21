@@ -12,6 +12,9 @@
 
 ion-content{
     --background: #222428;
+    ion-list{
+        background: transparent !important;
+    }
 }
 
 
@@ -33,4 +36,18 @@ ion-content{
     ion-datetime, ion-select {
         --color: #999 !important;
       }
+
+
+      .item-inner {
+        background-color: white;
+        color: white !important;
+       
+    }
+
+    .botones{
+        padding-top: 35%;
+    }
+
+   
+
    
