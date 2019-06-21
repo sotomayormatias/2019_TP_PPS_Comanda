@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Anton&display=swap');
+
 .welcome-card ion-img {
     max-height: 20%;
     overflow: hidden;
@@ -9,8 +11,19 @@
       background-repeat:no-repeat;
       background-size:cover;
       overflow:hidden;
+      text-align: center;
+     
       // opacity: 0.6;
   }
+
+  .cardContent
+  {
+    font-family: 'Anton', sans-serif;
+  }
+  
+ion-spinner {
+	transform: scale(3);
+}
   
   // .feas 
   // {

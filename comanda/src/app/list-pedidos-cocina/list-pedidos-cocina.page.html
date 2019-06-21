@@ -6,7 +6,7 @@
     <ion-title>
       Pedidos Pendientes
     </ion-title>
-   
+   |
   </ion-toolbar>
 </ion-header>
 
@@ -16,19 +16,27 @@
       <ion-item class="item-text-wrap card" *ngFor="let pedido of pedidosMostrarFil; index as i">
       <ion-col col-12 col-md-6 col-lg-4 col-xl-3>
           <ion-card class="lindas" expand="full">
-            <ion-card-header color="primary" > <b>ID PEDIDO: {{pedido.id_pedido}} <br> <b>NRO FILA: {{i+1}}</b><br></b></ion-card-header>
-            <ion-card-content style="color: black; font-weight: bolder; font-size: xx-large;    
+            <ion-card-header  color="primary" > <b>NRO FILA: {{i+1}}</b><br> <b>ID PEDIDO: {{pedido.id_pedido}} <br> </b></ion-card-header>
+            <ion-card-content class="cardContent" style="color: black; font-weight: bolder; font-size: xx-large;    
             ">
               {{pedido.cantidad}}
               {{pedido.producto}}
 
-              <div class="item-note" slot="end">
+              <div  slot="start">
                   <!-- CREADO -->
-                  <ion-button *ngIf="pedido.estado == 'creado' " color="danger" size="small" (click)="prepararPedido( pedido )">Preparar</ion-button>
+                  <ion-button *ngIf="pedido.estado == 'creado' " color="danger" size="small" (click)="prepararPedido( pedido )">Comenzar</ion-button>
+                  <ion-button *ngIf="pedido.estado !== 'creado' " [disabled]="pedido.estado!='creado'" color="danger" size="small" (click)="prepararPedido( pedido )">Comenzar</ion-button>
+            
+                <!-- </div>
+                <div  slot="secondary"> -->
                   <!-- EN PREPARACION -->
-                  <ion-button *ngIf="pedido.estado == 'preparacion' " color="warning" size="small" (click)="FinalizarPedido( pedido.id_pedido )">En Preparación</ion-button>
+                  <ion-button *ngIf="pedido.estado == 'preparacion' " color="warning" size="small" (click)="FinalizarPedido( pedido.id_pedido )">Preparar</ion-button>
+                  <ion-button *ngIf="pedido.estado !== 'preparacion' " [disabled]="pedido.estado!='preparacion'" color="warning" size="small" (click)="FinalizarPedido( pedido )">Preparar</ion-button>
+                <!-- </div> <div slot="end"> -->
                   <!-- FINALIZADO ESPERANDO PEDIDOS -->
-                  <ion-button *ngIf="pedido.estado == 'finalizado' " color="success" size="small">Finalizado</ion-button>
+                  <ion-button *ngIf="pedido.estado == 'finalizado' " color="success" size="small">Finalizar</ion-button>
+                  <ion-button *ngIf="pedido.estado !== 'finalizado' " [disabled]="pedido.estado!='finalizado'" color="success" size="small">Finalizar</ion-button>
+               
                 </div>
             </ion-card-content>
           </ion-card>

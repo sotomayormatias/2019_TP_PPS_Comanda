@@ -225,28 +225,18 @@ aceptarPedido(mesa: string) {
   prepararPedido(pedidoDet) {
     this.spinner = true;
     console.log("Pedido det: ", pedidoDet) ;
-    // let pedidoKey: any = this.pedidosMostrarBarFil.find(pedido => pedido.id_pedido == pedidoDet.id_pedido && pedido.producto = pedidoDet.producto);
     let pedidoAceptado = pedidoDet ;
     let pedidoKey = pedidoAceptado.key ;
 
-    // if ( pedidoKey == undefined ) {
-    //   console.log("Undefined: ", pedidoDet.key) ;
-    //   this.prepararPedido(pedidoDet);
-    // } else {
     console.log("Pedido key: ", pedidoDet.key) ;
-      // let key: string = pedidoAceptado.key;
-  
+    
     delete pedidoAceptado.key;
     pedidoAceptado.estado = 'preparacion';
     this.baseService.updateItem('pedidoDetalle', pedidoKey, pedidoAceptado);
-      
-      // localStorage.clear();
-      // setTimeout(() => this.traerPedidosPerfilBar() , 1300); 
      
     setTimeout(() => this.traerPedidosPerfilBar() , 1300);  
     setTimeout(() => this.traerPedidosActivosPorPerfilBarPrepara(pedidoDet) , 1000);  
-    // }
-
+  
   }
 
 }
