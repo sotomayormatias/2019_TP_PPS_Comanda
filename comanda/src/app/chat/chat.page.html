@@ -12,7 +12,15 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding *ngIf="!esClienteConPedido && !esDeliveryBoy">
+  <ion-card>
+    <ion-card-content>
+      Usted no puede acceder al chat si no tiene un pedido listo para entrega.
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+<ion-content padding *ngIf="esClienteConPedido || esDeliveryBoy">
   <div class="message-wrap">
     <div *ngFor="let chat of chats">
       <div class="sender" *ngIf="chat.usuario != usuario.correo">
@@ -56,7 +64,7 @@
   </div>
 </ion-content>
 
-<ion-footer no-border>
+<ion-footer no-border *ngIf="esClienteConPedido || esDeliveryBoy">
   <ion-toolbar color="primary" class="toolbarText">
     <ion-textarea [(ngModel)]="inputText" placeholder="Ingrese su mensaje" name="message" class="input"></ion-textarea>
     <ion-buttons slot="end">

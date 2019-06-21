@@ -8,13 +8,13 @@ import { FirebaseService } from "../services/firebase.service";
 })
 export class ListConfirmarDeliveryPage implements OnInit {
   pedidosAConfirmar: any;
-  pedidosConfirmados: any;
+  pedidosAEntregar: any;
   perfil: string = "";
 
   constructor(private baseService: FirebaseService) {
     this.perfil = JSON.parse(sessionStorage.getItem('usuario')).perfil;
     if (this.perfil == 'delivery')
-      this.traerPedidosConfirmados();
+      this.traerPedidosAEntregar();
     else
       this.traerPedidosAConfirmar();
   }
@@ -29,10 +29,10 @@ export class ListConfirmarDeliveryPage implements OnInit {
     });
   }
 
-  traerPedidosConfirmados() {
+  traerPedidosAEntregar() {
     this.baseService.getItems('pedidosDelivery').then(ped => {
-      this.pedidosConfirmados = ped
-      this.pedidosConfirmados = this.pedidosConfirmados.filter(pedido => pedido.estado == "confirmado");
+      this.pedidosAEntregar = ped
+      this.pedidosAEntregar = this.pedidosAEntregar.filter(pedido => pedido.estado == "entrega");
     });
   }
 
