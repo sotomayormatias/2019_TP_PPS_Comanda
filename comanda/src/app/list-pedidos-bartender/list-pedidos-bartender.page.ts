@@ -212,6 +212,52 @@ export class ListPedidosBartenderPage implements OnInit {
         console.log("Lista Prepara: ", this.pedidosMostrarBarFil);
         }
 
+        traerPedidosActivosPorPerfilBarTermina(pedidoDet) {
+
+          this.pedidosMostrarBarFil = [];
+          let listaRecorre = localStorage.getItem("listaPedidosAceptadosBar").toString();
+    
+          let listaProductos = localStorage.getItem("listProductosBar");
+          let listaProductosParsed = JSON.parse(listaProductos);
+    
+          JSON.parse(listaRecorre).forEach(idDetalle => {
+    
+            for (const iterator of listaProductosParsed) {
+              
+              if ( idDetalle.producto == iterator && idDetalle.id_pedido == pedidoDet.id_pedido  &&  idDetalle.producto == pedidoDet.producto) {
+                
+                      // tslint:disable-next-line:variable-name
+                      let pedido_detalle = {
+                        'id_pedido': idDetalle.id_pedido ,
+                        'producto': idDetalle.producto,
+                        'precio': idDetalle.precio,
+                        'cantidad': idDetalle.cantidad,
+                        'estado': "finalizado",
+                        'key': idDetalle.key
+                      };
+                      console.log("Pedido detalle modificado: ", pedido_detalle);
+                      this.pedidosMostrarBarFil.push( JSON.parse(JSON.stringify(pedido_detalle))   ); 
+                    } else if ( idDetalle.producto == iterator) {
+                
+                      // tslint:disable-next-line:variable-name
+                      let pedido_detalle = {
+                        'id_pedido': idDetalle.id_pedido ,
+                        'producto': idDetalle.producto,
+                        'precio': idDetalle.precio,
+                        'cantidad': idDetalle.cantidad,
+                        'estado': idDetalle.estado,
+                        'key': idDetalle.key
+                      };
+                      console.log("Pedido detalle: ", pedido_detalle);
+                      this.pedidosMostrarBarFil.push( JSON.parse(JSON.stringify(pedido_detalle))   ); 
+                    }
+    
+                  }
+            });
+          this.spinner = false;
+          console.log("Lista Prepara: ", this.pedidosMostrarBarFil);
+          }
+
   // GESTION
 aceptarPedido(mesa: string) {
     let pedidoAceptado: any = this.pedidos.find(pedido => pedido.mesa == mesa);
@@ -236,6 +282,24 @@ aceptarPedido(mesa: string) {
      
     setTimeout(() => this.traerPedidosPerfilBar() , 1300);  
     setTimeout(() => this.traerPedidosActivosPorPerfilBarPrepara(pedidoDet) , 1000);  
+  
+  }
+
+  
+  terminarPedido(pedidoDet) {
+    this.spinner = true;
+    console.log("Pedido det: ", pedidoDet) ;
+    let pedidoAceptado = pedidoDet ;
+    let pedidoKey = pedidoAceptado.key ;
+
+    console.log("Pedido key: ", pedidoDet.key) ;
+    
+    delete pedidoAceptado.key;
+    pedidoAceptado.estado = 'finalizado';
+    this.baseService.updateItem('pedidoDetalle', pedidoKey, pedidoAceptado);
+     
+    setTimeout(() => this.traerPedidosPerfilBar() , 1300);  
+    setTimeout(() => this.traerPedidosActivosPorPerfilBarTermina(pedidoDet) , 1000);  
   
   }
 

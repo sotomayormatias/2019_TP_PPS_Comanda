@@ -31,17 +31,17 @@
 
               <div  slot="start">
                   <!-- CREADO -->
-                  <ion-button shape="round" *ngIf="pedido.estado == 'creado' " color="danger" size="small" (click)="prepararPedido( pedido )">INI</ion-button>
+                  <ion-button shape="round" *ngIf="pedido.estado == 'creado' " color="danger" size="small" (click)="prepararPedido( pedido )" style="font-size:large;">INI</ion-button>
                   <ion-button shape="round" *ngIf="pedido.estado !== 'creado' " [disabled]="pedido.estado!='creado'" color="danger" size="small" (click)="prepararPedido( pedido )">INI</ion-button>
             
                 <!-- </div>
                 <div  slot="secondary"> -->
                   <!-- EN PREPARACION -->
-                  <ion-button shape="round" *ngIf="pedido.estado == 'preparacion' " color="warning" size="small" (click)="FinalizarPedido( pedido.id_pedido )">PREP</ion-button>
-                  <ion-button shape="round" *ngIf="pedido.estado !== 'preparacion' " [disabled]="pedido.estado!='preparacion'" color="warning" size="small" (click)="FinalizarPedido( pedido )">PREP</ion-button>
+                  <ion-button shape="round" *ngIf="pedido.estado == 'preparacion' " color="warning" size="small" (click)="terminarPedido( pedido )" style="font-size:large;">PREP</ion-button>
+                  <ion-button shape="round" *ngIf="pedido.estado !== 'preparacion' " [disabled]="pedido.estado!='preparacion'" color="warning" size="small" (click)="terminarPedido( pedido )">PREP</ion-button>
                 <!-- </div> <div slot="end"> -->
                   <!-- FINALIZADO ESPERANDO PEDIDOS -->
-                  <ion-button shape="round" *ngIf="pedido.estado == 'finalizado' " color="success" size="small">FIN</ion-button>
+                  <ion-button shape="round" *ngIf="pedido.estado == 'finalizado' " color="success" size="small" style="font-size:large;">FIN</ion-button>
                   <ion-button shape="round" *ngIf="pedido.estado !== 'finalizado' " [disabled]="pedido.estado!='finalizado'" color="success" size="small">FIN</ion-button>
                
                 </div>

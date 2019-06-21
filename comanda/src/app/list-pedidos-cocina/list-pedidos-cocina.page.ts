@@ -210,6 +210,52 @@ export class ListPedidosCocinaPage implements OnInit {
         console.log("Lista Prepara: ", this.pedidosMostrarFil);
         }
 
+        traerPedidosActivosPorPerfilTermina(pedidoDet) {
+
+          this.pedidosMostrarFil = [];
+          let listaRecorre = localStorage.getItem("listaPedidosAceptados").toString();
+    
+          let listaProductos = localStorage.getItem("listProductos");
+          let listaProductosParsed = JSON.parse(listaProductos);
+    
+          JSON.parse(listaRecorre).forEach(idDetalle => {
+    
+            for (const iterator of listaProductosParsed) {
+              
+              if ( idDetalle.producto == iterator && idDetalle.id_pedido == pedidoDet.id_pedido  &&  idDetalle.producto == pedidoDet.producto) {
+                
+                      // tslint:disable-next-line:variable-name
+                      let pedido_detalle = {
+                        'id_pedido': idDetalle.id_pedido ,
+                        'producto': idDetalle.producto,
+                        'precio': idDetalle.precio,
+                        'cantidad': idDetalle.cantidad,
+                        'estado': "finalizado",
+                        'key': idDetalle.key
+                      };
+                      console.log("Pedido detalle modificado: ", pedido_detalle);
+                      this.pedidosMostrarFil.push( JSON.parse(JSON.stringify(pedido_detalle))   ); 
+                    } else if ( idDetalle.producto == iterator) {
+                
+                      // tslint:disable-next-line:variable-name
+                      let pedido_detalle = {
+                        'id_pedido': idDetalle.id_pedido ,
+                        'producto': idDetalle.producto,
+                        'precio': idDetalle.precio,
+                        'cantidad': idDetalle.cantidad,
+                        'estado': idDetalle.estado,
+                        'key': idDetalle.key
+                      };
+                      console.log("Pedido detalle: ", pedido_detalle);
+                      this.pedidosMostrarFil.push( JSON.parse(JSON.stringify(pedido_detalle))   ); 
+                    }
+    
+                  }
+            });
+          this.spinner = false;
+          console.log("Lista Prepara: ", this.pedidosMostrarFil);
+          }
+
   // GESTION
 aceptarPedido(mesa: string) {
     let pedidoAceptado: any = this.pedidos.find(pedido => pedido.mesa == mesa);
@@ -223,27 +269,36 @@ aceptarPedido(mesa: string) {
   prepararPedido(pedidoDet) {
     this.spinner = true;
     console.log("Pedido det: ", pedidoDet) ;
-    // let pedidoKey: any = this.pedidosMostrarBarFil.find(pedido => pedido.id_pedido == pedidoDet.id_pedido && pedido.producto = pedidoDet.producto);
     let pedidoAceptado = pedidoDet ;
     let pedidoKey = pedidoAceptado.key ;
 
-    // if ( pedidoKey == undefined ) {
-    //   console.log("Undefined: ", pedidoDet.key) ;
-    //   this.prepararPedido(pedidoDet);
-    // } else {
     console.log("Pedido key: ", pedidoDet.key) ;
       // let key: string = pedidoAceptado.key;
   
     delete pedidoAceptado.key;
     pedidoAceptado.estado = 'preparacion';
     this.baseService.updateItem('pedidoDetalle', pedidoKey, pedidoAceptado);
-      
-      // localStorage.clear();
-      // setTimeout(() => this.traerPedidosPerfilBar() , 1300); 
-     
+   
     setTimeout(() => this.traerPedidosPerfil() , 1300);  
     setTimeout(() => this.traerPedidosActivosPorPerfilPrepara(pedidoDet) , 1000);  
-    // }
 
+  }
+
+  
+  terminarPedido(pedidoDet) {
+    this.spinner = true;
+    console.log("Pedido det: ", pedidoDet) ;
+    let pedidoAceptado = pedidoDet ;
+    let pedidoKey = pedidoAceptado.key ;
+
+    console.log("Pedido key: ", pedidoDet.key) ;
+    
+    delete pedidoAceptado.key;
+    pedidoAceptado.estado = 'finalizado';
+    this.baseService.updateItem('pedidoDetalle', pedidoKey, pedidoAceptado);
+     
+    setTimeout(() => this.traerPedidosPerfil() , 1300);  
+    setTimeout(() => this.traerPedidosActivosPorPerfilTermina(pedidoDet) , 1000);  
+  
   }
 }
