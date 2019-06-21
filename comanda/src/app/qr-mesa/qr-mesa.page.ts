@@ -6,6 +6,9 @@ import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { ModalPedidoPage } from "../modal-pedido/modal-pedido.page";
 
+import * as firebase from "firebase";
+
+
 @Component({
   selector: 'app-qr-mesa',
   templateUrl: './qr-mesa.page.html',
@@ -21,7 +24,7 @@ export class QrMesaPage implements OnInit {
   listaEspera: any;
   estaEnLista: boolean;
   keyPuestoListaEspera: string;
-  listareservas: any;
+  reservaRealizada: any;
 
   constructor(private scanner: BarcodeScanner,
     private baseService: FirebaseService,
@@ -52,26 +55,11 @@ export class QrMesaPage implements OnInit {
 
   mostrarInformacion() {
     let usuarioLogueado: any = JSON.parse(sessionStorage.getItem('usuario'));
+    let today = new Date();
+    let dH = String(today.getDate()).padStart(2, '0');
+    let mH = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yH = today.getFullYear();
 
-    // this.baseService.getItems('reservademesas').then(lista => {
-    //   this.listareservas = lista.find(cliente => cliente.correo == usuarioLogueado.correo);
-      
-    //   if(this.reserva != undefined)
-    //   {
-    //     localStorage.setItem("correoReserva",usuarioLogueado.correo);
-    //     localStorage.setItem("diaReserva",this.reserva.fechaElegida.dia);
-    //     localStorage.setItem("mesReserva",this.reserva.fechaElegida.mes);
-    //     localStorage.setItem("horaReserva",this.reserva.fechaElegida.hora);
-    //     localStorage.setItem("minutoReserva",this.reserva.fechaElegida.minuto);
-    //     localStorage.setItem("mesaReserva",this.reserva.mesaSeleccionada);
-        
-    //   localStorage.setItem("reservada","si");
-
-    //   }
-    
-    // });
-
-   
     
     this.baseService.getItems('mesas').then(mesas => {
       let nroMesa = this.parsedDatosEscaneados.mesa;
@@ -81,28 +69,83 @@ export class QrMesaPage implements OnInit {
       //FIJARSE SI LA MESA ESTA RESERVADA, si lo esta => fijarse hora minutos y usuario (40 min antes)
       //SI NO ESTA RESERVADA QUE AGARRE LA MESA
 
-      // if(this.mesaEscaneada.reservada
-      if (usuarioLogueado.perfil == "cliente") { // Logica para cuando escanea el cliente
-        if (this.mesaEscaneada.estado == 'libre') { // si la mesa esta libre
-          if (this.estaEnLista) { // si el cliente esta en lista de espera
-            this.presentAlertCliente();
-          } else { // si el cliente no esta en lista de espera
-            this.presentAlertNoEstaEnLista();
-          }
-        } else { // Si la mesa esta ocupada
-          if (this.mesaEscaneada.cliente == usuarioLogueado.correo) { // Si el que escanea es el que ocupa la mesa
-            if (this.verificarPedidoEnPreparacion()) { //Si ya hizo un pedido
-              this.presentAlertConPedido();
-            } else { // Si aun no hizo un pedido
-              this.presentAlertSinPedido();
+      if(this.mesaEscaneada.reservada == "si")
+      {
+        this.baseService.getItems('reservademesas').then(lista => {
+          this.reservaRealizada = lista.find(cliente => cliente.correo == usuarioLogueado.correo);
+          
+            localStorage.setItem("correoReserva",this.reservaRealizada.correo)
+            localStorage.setItem("diaReserva",this.reservaRealizada.fechaElegida.dia);
+            localStorage.setItem("mesReserva",this.reservaRealizada.fechaElegida.mes);
+            localStorage.setItem("horaReserva",this.reservaRealizada.fechaElegida.hora);
+            localStorage.setItem("minutoReserva",this.reservaRealizada.fechaElegida.minuto);
+            localStorage.setItem("mesaReserva",this.reservaRealizada.mesaSeleccionada);
+            // localStorage.setItem("mismoUsuarioReserva","si");
+            localStorage.setItem("mismoUsuarioReserva","true");
+            alert(JSON.stringify(this.reservaRealizada));
+    
+          
+        
+        });
+        let mismoUsuarioReserva = localStorage.getItem("mismoUsuarioReserva");
+        if(mismoUsuarioReserva != "true"){
+          alert(localStorage.getItem("mismoUsuarioReserva"));
+          alert("La mesa se encuentra reservada. Elija otra");
+
+        }
+        else{
+          if (usuarioLogueado.perfil == "cliente") { // Logica para cuando escanea el cliente
+            if (this.mesaEscaneada.estado == 'libre') { // si la mesa esta libre
+              if (this.estaEnLista) { // si el cliente esta en lista de espera
+                this.presentAlertCliente();
+              } else { // si el cliente no esta en lista de espera
+                this.presentAlertNoEstaEnLista();
+              }
+            } else { // Si la mesa esta ocupada
+              if (this.mesaEscaneada.cliente == usuarioLogueado.correo) { // Si el que escanea es el que ocupa la mesa
+                if (this.verificarPedidoEnPreparacion()) { //Si ya hizo un pedido
+                  this.presentAlertConPedido();
+                } else { // Si aun no hizo un pedido
+                  this.presentAlertSinPedido();
+                }
+              } else { // Si el que escanea no es quien ocupa la mesa
+                this.presentAlertEmpleado();
+              }
             }
-          } else { // Si el que escanea no es quien ocupa la mesa
+          } else { // Logica para cuando escanea un empleado
             this.presentAlertEmpleado();
           }
+
         }
-      } else { // Logica para cuando escanea un empleado
-        this.presentAlertEmpleado();
+
+      } else{
+        //Fijarse para pasarlo a funcion
+        if (usuarioLogueado.perfil == "cliente") { // Logica para cuando escanea el cliente
+          if (this.mesaEscaneada.estado == 'libre') { // si la mesa esta libre
+            if (this.estaEnLista) { // si el cliente esta en lista de espera
+              this.presentAlertCliente();
+            } else { // si el cliente no esta en lista de espera
+              this.presentAlertNoEstaEnLista();
+            }
+          } else { // Si la mesa esta ocupada
+            if (this.mesaEscaneada.cliente == usuarioLogueado.correo) { // Si el que escanea es el que ocupa la mesa
+              if (this.verificarPedidoEnPreparacion()) { //Si ya hizo un pedido
+                this.presentAlertConPedido();
+              } else { // Si aun no hizo un pedido
+                this.presentAlertSinPedido();
+              }
+            } else { // Si el que escanea no es quien ocupa la mesa
+              this.presentAlertEmpleado();
+            }
+          }
+        } else { // Logica para cuando escanea un empleado
+          this.presentAlertEmpleado();
+        }
+      this.cambioEstadoReserva();
+
       }
+
+     
     });
   
   }
@@ -254,6 +297,35 @@ export class QrMesaPage implements OnInit {
       }
     });
     return await modal.present();
+  }
+
+  cambioEstadoReserva()
+  {
+    let usuarioLogueado: any = JSON.parse(sessionStorage.getItem('usuario'));
+    this.baseService.getItems('mesas').then(mesas => {
+      this.mesaEscaneada = mesas.find(mesa => mesa.cliente == usuarioLogueado.correo);
+    
+        firebase.database().ref('mesas/'+ this.mesaEscaneada.key)
+        .update({
+        
+            reservada: "no"
+    
+        });
+          
+      
+
+    });
+
+    this.baseService.getItems('listaEsperaClientes').then(lista => {
+      this.clienteLogueado = lista.find(cliente => cliente.correo == usuarioLogueado.correo);
+
+     firebase.database().ref('reservademesas/'+ this.clienteLogueado.key)
+     .remove();
+   
+    });
+
+
+
   }
 
 }
