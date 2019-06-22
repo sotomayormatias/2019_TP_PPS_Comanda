@@ -23,11 +23,6 @@ export class ModalRutaPage implements OnInit {
     this.traerPedidoDetalle();
   }
 
-  // ionViewWillEnter(){
-  //   this.traerPedido();
-  //   this.traerPedidoDetalle();
-  // }
-
   ngOnInit() {
     this.cargarMapa();
   }
@@ -38,10 +33,6 @@ export class ModalRutaPage implements OnInit {
       this.pedidoDelivery = this.pedidoDelivery.find(pedido => pedido.id == this.pedido);
       this.baseService.getItems('clientes').then(clients => {
         this.cliente = clients.find(cli => cli.correo == this.pedidoDelivery.cliente);
-        // this.traerFoto(this.cliente.nombre).then(foto => {
-        //   debugger;
-        //   this.cliente.foto = foto;
-        // });
         let promise = this.traerFoto(this.cliente.nombre);
         Promise.resolve(promise)
           .then(url => {

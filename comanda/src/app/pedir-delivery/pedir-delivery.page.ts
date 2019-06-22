@@ -133,10 +133,15 @@ export class PedirDeliveryPage implements OnInit {
     this.geocoder = new google.maps.Geocoder();
     this.geocoder.geocode({ 'address': this.direccion }, function (results, status) {
       if (status == 'OK') {
-        this.mapa.setCenter(results[0].geometry.location);
+        const elementoMapa: HTMLElement = document.getElementById('mapa');
+        this.mapa = new google.maps.Map(elementoMapa, {
+          center: { lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng() },
+          zoom: 16
+        });
         var marker = new google.maps.Marker({
+          position: { lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng() },
           map: this.mapa,
-          position: results[0].geometry.location
+          title: 'Tu ubicación'
         });
       } else {
         alert('Geocode was not successful for the following reason: ' + status);
