@@ -23,13 +23,8 @@ export class ModalRutaPage implements OnInit {
     this.traerPedidoDetalle();
   }
 
-  // ionViewWillEnter(){
-  //   this.traerPedido();
-  //   this.traerPedidoDetalle();
-  // }
-
   ngOnInit() {
-    this.cargarMapa();
+    this.calcularRuta();
   }
 
   traerPedido() {
@@ -38,10 +33,6 @@ export class ModalRutaPage implements OnInit {
       this.pedidoDelivery = this.pedidoDelivery.find(pedido => pedido.id == this.pedido);
       this.baseService.getItems('clientes').then(clients => {
         this.cliente = clients.find(cli => cli.correo == this.pedidoDelivery.cliente);
-        // this.traerFoto(this.cliente.nombre).then(foto => {
-        //   debugger;
-        //   this.cliente.foto = foto;
-        // });
         let promise = this.traerFoto(this.cliente.nombre);
         Promise.resolve(promise)
           .then(url => {
@@ -62,12 +53,32 @@ export class ModalRutaPage implements OnInit {
     this.modalCtrl.dismiss();
   }
 
-  cargarMapa() {
+  calcularRuta() {
+    var directionsDisplay = new google.maps.DirectionsRenderer();
+    var directionsService = new google.maps.DirectionsService();
+
+    var lat = parseFloat(this.pedidoDelivery.latitud);
+    var lng = parseFloat(this.pedidoDelivery.longitud);
+    
+    var request = {
+      origin: { lat: -34.706458, lng: -58.384059 },
+      destination: new google.maps.LatLng(lat, lng),
+      travelMode: 'DRIVING'
+    };
+
+    directionsService.route(request, function (result, status) {
+      if (status == 'OK') {
+        directionsDisplay.setDirections(result);
+      }
+    });
+
     const elementoMapa: HTMLElement = document.getElementById('mapa');
     this.mapa = new google.maps.Map(elementoMapa, {
       center: { lat: -34.706458, lng: -58.384059 },
       zoom: 12
     });
+
+    directionsDisplay.setMap(this.mapa);
   }
 
   traerFoto(nombre: string): any {

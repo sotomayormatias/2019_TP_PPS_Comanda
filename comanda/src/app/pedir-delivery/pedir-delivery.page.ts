@@ -54,12 +54,17 @@ export class PedirDeliveryPage implements OnInit {
     if (productosPedidos.length > 0 && this.direccion != "") {
       let id = Date.now();
 
+      var latitud = (<HTMLInputElement>document.getElementById('latitud'));
+      var longitud = (<HTMLInputElement>document.getElementById('longitud'));
+
       let pedido = {
         'id': id,
         'cliente': JSON.parse(sessionStorage.getItem('usuario')).correo,
         'fecha': (new Date()).toLocaleDateString() + ' ' + (new Date()).toLocaleTimeString(),
         'preciototal': this.calcularPrecioTotal(productosPedidos),
         'direccion': this.direccion,
+        'latitud': latitud.value,
+        'longitud': longitud.value,
         'estado': 'creado'
       };
       this.baseService.addItem('pedidosDelivery', pedido);
@@ -117,10 +122,6 @@ export class PedirDeliveryPage implements OnInit {
     return await modal.present();
   }
 
-
-
-
-
   cargarMapa() {
     const elementoMapa: HTMLElement = document.getElementById('mapa');
     this.mapa = new google.maps.Map(elementoMapa, {
@@ -133,10 +134,19 @@ export class PedirDeliveryPage implements OnInit {
     this.geocoder = new google.maps.Geocoder();
     this.geocoder.geocode({ 'address': this.direccion }, function (results, status) {
       if (status == 'OK') {
-        this.mapa.setCenter(results[0].geometry.location);
+        var latitud = (<HTMLInputElement>document.getElementById('latitud'));
+        var longitud = (<HTMLInputElement>document.getElementById('longitud'));
+        latitud.value = results[0].geometry.location.lat();
+        longitud.value = results[0].geometry.location.lng();
+        const elementoMapa: HTMLElement = document.getElementById('mapa');
+        this.mapa = new google.maps.Map(elementoMapa, {
+          center: { lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng() },
+          zoom: 16
+        });
         var marker = new google.maps.Marker({
+          position: { lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng() },
           map: this.mapa,
-          position: results[0].geometry.location
+          title: 'Tu ubicación'
         });
       } else {
         alert('Geocode was not successful for the following reason: ' + status);
