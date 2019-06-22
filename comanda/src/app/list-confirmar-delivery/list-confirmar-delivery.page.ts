@@ -35,7 +35,7 @@ export class ListConfirmarDeliveryPage implements OnInit {
   traerPedidosAEntregar() {
     this.baseService.getItems('pedidosDelivery').then(ped => {
       this.pedidosAEntregar = ped
-      this.pedidosAEntregar = this.pedidosAEntregar.filter(pedido => pedido.estado == "entrega");
+      this.pedidosAEntregar = this.pedidosAEntregar.filter(pedido => pedido.estado == "listoEntrega");
     });
   }
 
