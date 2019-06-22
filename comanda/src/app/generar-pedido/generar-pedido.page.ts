@@ -119,7 +119,8 @@ export class GenerarPedidoPage implements OnInit {
           'fecha': (new Date()).toLocaleDateString() + ' ' + (new Date()).toLocaleTimeString(),
           'preciototal': this.calcularPrecioTotal(productosPedidos),
           'mesa': this.mesaDelPedido.nromesa,
-          'estado': 'creado'
+          'estado': 'creado',
+          'cantDet': productosPedidos.length
         };
         this.baseService.addItem('pedidos', pedido);
 

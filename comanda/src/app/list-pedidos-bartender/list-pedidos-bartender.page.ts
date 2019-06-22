@@ -28,12 +28,16 @@ export class ListPedidosBartenderPage implements OnInit {
   TEstimado = '';
   selected = ['', '', ''];
 
+  tpedido: any ;
+  pedidoEnLocal: any = null;
+  pedidoDelivery: any = null;
+  pedidoDetalle: any[] = [];
+  hayPedidoDelivery: boolean = false;
+  hayPedidoEnLocal: boolean = false;
+
   
   constructor(private baseService: FirebaseService,
               private pickerCtrl: PickerController) { 
-    // this.traerPedidosPerfilBar();
-    // this.traerProductosPerfilBar();
-    // this.traerPedidosActivosPorPerfilBar();
   }
 
   ngOnInit() {
@@ -58,10 +62,6 @@ export class ListPedidosBartenderPage implements OnInit {
             
           }
         );
-      // console.log("Productos perfil: ", this.productosPerfilBar);
-      
-      // localStorage.setItem("listProductosBar", "" ); 
-      
       localStorage.removeItem("listProductosBar"); 
       localStorage.setItem("listProductosBar", JSON.stringify(this.listProductosBar) ); 
       
@@ -72,18 +72,27 @@ export class ListPedidosBartenderPage implements OnInit {
 
   traerPedidosPerfilBar() {
 
-    // this.pedidosMostrarBar = [];
-    // while (this.pedidosMostrarBar.length) { this.pedidosMostrarBarFil.pop(); }
     this.pedidosMostrarBar = [] ; 
 
-    // TRAIGO PEDIDOS Y ME QUEDO CON LOS ACEPTADOS
+   
     this.baseService.getItems('pedidos').then(ped => {
     
       this.pedidos = ped;
-      // console.log("Todos Pedidos: ", this.pedidos);
       this.pedidos = this.pedidos.filter(pedido => pedido.estado == "aceptado" || pedido.estado == "preparacion" );
       this.listIdPedidosAceptadosBar =  this.pedidos;
-      // console.log("Pedidos Aceptados: ", this.listIdPedidosAceptadosBar);
+    });
+
+    this.baseService.getItems('pedidosDelivery').then(ped => {
+
+      this.pedidos = ped;
+      
+      this.pedidos = this.pedidos.filter(pedido => pedido.estado == "aceptado" || pedido.estado == "preparacion"  );
+      
+      this.pedidos.forEach(pedido =>  {
+        pedido.delivery = true ;
+        this.listIdPedidosAceptadosBar.push(pedido) ;
+      } );
+      console.log("Pedidos Aceptados2: ", this.listIdPedidosAceptadosBar);
     });
 
     // RECORRO DETALLE DE PEDIDOS POR ID
@@ -112,28 +121,18 @@ export class ListPedidosBartenderPage implements OnInit {
                   'cantidad': producto.cantidad,
                   'estado': producto.estado,
                   'tiempo': producto.tiempo,
+                  'delivery': idDetalle.delivery,
                   'key': producto.key
                 };
                 // INSERTO EN EL ARRAY LOS PEDIDOS PENDIENTES
                 this.pedidosMostrarBar.push( JSON.parse(JSON.stringify(pedido_detalle))   ); 
               }
-           
             }
-            
-            
           );
-
         });
-
-      // console.log("Pedidos a mostrar: ",  this.pedidosMostrarBar ) ;   
-      
-      // localStorage.setItem("listaPedidosAceptadosBar", "" );  
       localStorage.removeItem("listaPedidosAceptadosBar"); 
       localStorage.setItem("listaPedidosAceptadosBar", JSON.stringify(this.pedidosMostrarBar) );  
       });
-      
- 
-
     }
 
     traerPedidosActivosPorPerfilBar() {
@@ -144,8 +143,11 @@ export class ListPedidosBartenderPage implements OnInit {
       let listaProductos = localStorage.getItem("listProductosBar");
       let listaProductosParsed = JSON.parse(listaProductos);
 
+      
+
       JSON.parse(listaRecorre).forEach(idDetalle => {
 
+       
 
         for (const iterator of listaProductosParsed) {
           if ( idDetalle.producto == iterator ) {
@@ -158,6 +160,7 @@ export class ListPedidosBartenderPage implements OnInit {
                     'cantidad': idDetalle.cantidad,
                     'estado': idDetalle.estado,
                     'tiempo': idDetalle.tiempo,
+                    'delivery': idDetalle.delivery,
                     'key': idDetalle.key
                   };
                   console.log("Pedido detalle: ", pedido_detalle);
@@ -194,6 +197,7 @@ export class ListPedidosBartenderPage implements OnInit {
                       'precio': idDetalle.precio,
                       'cantidad': idDetalle.cantidad,
                       'estado': "preparacion",
+                      'delivery': idDetalle.delivery,
                       'tiempo': this.TEstimado ,
                       'key': idDetalle.key
                     };
@@ -207,6 +211,7 @@ export class ListPedidosBartenderPage implements OnInit {
                       'producto': idDetalle.producto,
                       'precio': idDetalle.precio,
                       'cantidad': idDetalle.cantidad,
+                      'delivery': idDetalle.delivery,
                       'estado': idDetalle.estado,
                       'tiempo': idDetalle.tiempo,
                       'key': idDetalle.key
@@ -241,6 +246,7 @@ export class ListPedidosBartenderPage implements OnInit {
                         'producto': idDetalle.producto,
                         'precio': idDetalle.precio,
                         'cantidad': idDetalle.cantidad,
+                        'delivery': idDetalle.delivery,
                         'estado': "finalizado",
                         'key': idDetalle.key
                       };
@@ -255,6 +261,7 @@ export class ListPedidosBartenderPage implements OnInit {
                         'precio': idDetalle.precio,
                         'cantidad': idDetalle.cantidad,
                         'estado': idDetalle.estado,
+                        'delivery': idDetalle.delivery,
                         'key': idDetalle.key
                       };
                       console.log("Pedido detalle: ", pedido_detalle);
@@ -268,15 +275,6 @@ export class ListPedidosBartenderPage implements OnInit {
           }
 
   // GESTION
-aceptarPedido(mesa: string) {
-    let pedidoAceptado: any = this.pedidos.find(pedido => pedido.mesa == mesa);
-    let key: string = pedidoAceptado.key;
-    delete pedidoAceptado.key;
-    pedidoAceptado.estado = 'aceptado';
-    this.baseService.updateItem('pedidos', key, pedidoAceptado);
-    this.traerPedidosPerfilBar();
-  }
-
   prepararPedido(pedidoDet) {
     this.spinner = true;
     console.log("Pedido det: ", pedidoDet) ;
@@ -290,11 +288,82 @@ aceptarPedido(mesa: string) {
     pedidoAceptado.estado = 'preparacion';
     this.baseService.updateItem('pedidoDetalle', pedidoKey, pedidoAceptado);
 
+    this.actualizoPedido (pedidoDet);
     setTimeout(() => this.traerPedidosPerfilBar() , 1300);  
     setTimeout(() => this.traerPedidosActivosPorPerfilBarPrepara(pedidoDet) , 1000); 
   }
 
+  actualizoPedido(pedidoDet) {
+    console.log("PedidoDet: ", pedidoDet);
+    console.log("Lista Aceptados: ", this.listIdPedidosAceptadosBar);
+    let pedidoAceptado: any = this.listIdPedidosAceptadosBar.find(pedido => pedido.id == pedidoDet.id_pedido);
+    console.log("Pedido encontrado: ", pedidoAceptado);
+    let key: string = pedidoAceptado.key;
+    delete pedidoAceptado.key;
+    pedidoAceptado.estado = 'preparacion';
+
+    
+    this.baseService.getItems('pedidos').then(ped => {
+
+      this.pedidoEnLocal = ped.find(pedido => pedido.id == pedidoDet.id_pedido);
+      console.log("Pedido en local: ", this.pedidoEnLocal);
+      this.hayPedidoEnLocal = this.pedidoEnLocal != undefined;
+      console.log("Hay Pedido en local: ", this.hayPedidoEnLocal);
+      
+      if (this.hayPedidoEnLocal)
+      this.baseService.updateItem('pedidos', key, pedidoAceptado);
+    });
+
+    this.baseService.getItems('pedidosDelivery').then(ped => {
+      this.pedidoDelivery = ped.find(pedido =>  pedido.id == pedidoDet.id_pedido);
+      console.log("Pedido Delivery: ", this.pedidoDelivery);
+      this.hayPedidoDelivery = this.pedidoDelivery != undefined;
+      console.log("Hay Pedido Delivery: ", this.hayPedidoDelivery);
+
+      if (this.hayPedidoDelivery)
+
+      this.baseService.updateItem('pedidosDelivery', key, pedidoAceptado);
+    });
+    // this.baseService.updateItem('pedidos', key, pedidoAceptado);
+    this.traerPedidosPerfilBar();
+  }
   
+  actualizoPedidoFin(pedidoDet) {
+    // console.log("PedidoDet: ", pedidoDet);
+    // console.log("Lista Aceptados: ", this.listIdPedidosAceptadosBar);
+    // SUMARLE 1 AL CONTADOR DE PEDIDO
+    // VERIFICAR SI SON = CON EL cantDet para actualizar con el listoEntrega
+    let pedidoAceptado: any = this.listIdPedidosAceptadosBar.find(pedido => pedido.id == pedidoDet.id_pedido);
+    console.log("Pedido encontrado: ", pedidoAceptado);
+    let key: string = pedidoAceptado.key;
+    delete pedidoAceptado.key;
+    pedidoAceptado.estado = 'listoEntrega';
+
+    this.baseService.getItems('pedidos').then(ped => {
+
+      this.pedidoEnLocal = ped.find(pedido => pedido.id == pedidoDet.id_pedido);
+      console.log("Pedido en local: ", this.pedidoEnLocal);
+      this.hayPedidoEnLocal = this.pedidoEnLocal != undefined;
+      console.log("Hay Pedido en local: ", this.hayPedidoEnLocal);
+      
+      if (this.hayPedidoEnLocal)
+      this.baseService.updateItem('pedidos', key, pedidoAceptado);
+    });
+
+    this.baseService.getItems('pedidosDelivery').then(ped => {
+      this.pedidoDelivery = ped.find(pedido =>  pedido.id == pedidoDet.id_pedido);
+      console.log("Pedido Delivery: ", this.pedidoDelivery);
+      this.hayPedidoDelivery = this.pedidoDelivery != undefined;
+      console.log("Hay Pedido Delivery: ", this.hayPedidoDelivery);
+
+      if (this.hayPedidoDelivery)
+
+      this.baseService.updateItem('pedidosDelivery', key, pedidoAceptado);
+    });
+    // this.baseService.updateItem('pedidos', key, pedidoAceptado);
+    this.traerPedidosPerfilBar();
+  }
+
   terminarPedido(pedidoDet) {
     this.spinner = true;
     console.log("Pedido det: ", pedidoDet) ;
@@ -306,10 +375,11 @@ aceptarPedido(mesa: string) {
     delete pedidoAceptado.key;
     pedidoAceptado.estado = 'finalizado';
     this.baseService.updateItem('pedidoDetalle', pedidoKey, pedidoAceptado);
-     
+
+    this.actualizoPedidoFin(pedidoAceptado);
     setTimeout(() => this.traerPedidosPerfilBar() , 1300);  
     setTimeout(() => this.traerPedidosActivosPorPerfilBarTermina(pedidoDet) , 1000);  
-  
+    
   }
 
 }

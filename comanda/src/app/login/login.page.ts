@@ -173,18 +173,30 @@ export class LoginPage implements OnInit {
 
   }
 
+ 
   traerPedidosPerfilBar() {
 
+    this.pedidosMostrarBar = [] ; 
 
-
-    // TRAIGO PEDIDOS Y ME QUEDO CON LOS ACEPTADOS
+   
     this.baseService.getItems('pedidos').then(ped => {
-
+    
       this.pedidos = ped;
-      // console.log("Todos Pedidos: ", this.pedidos);
       this.pedidos = this.pedidos.filter(pedido => pedido.estado == "aceptado" || pedido.estado == "preparacion" );
       this.listIdPedidosAceptadosBar =  this.pedidos;
-      // console.log("Pedidos Aceptados: ", this.listIdPedidosAceptadosBar);
+    });
+
+    this.baseService.getItems('pedidosDelivery').then(ped => {
+
+      this.pedidos = ped;
+      
+      this.pedidos = this.pedidos.filter(pedido => pedido.estado == "aceptado" || pedido.estado == "preparacion"  );
+      
+      this.pedidos.forEach(pedido =>  {
+        pedido.delivery = true ;
+        this.listIdPedidosAceptadosBar.push(pedido) ;
+      } );
+      console.log("Pedidos Aceptados2: ", this.listIdPedidosAceptadosBar);
     });
 
     // RECORRO DETALLE DE PEDIDOS POR ID
@@ -213,27 +225,18 @@ export class LoginPage implements OnInit {
                   'cantidad': producto.cantidad,
                   'estado': producto.estado,
                   'tiempo': producto.tiempo,
+                  'delivery': idDetalle.delivery,
                   'key': producto.key
                 };
                 // INSERTO EN EL ARRAY LOS PEDIDOS PENDIENTES
                 this.pedidosMostrarBar.push( JSON.parse(JSON.stringify(pedido_detalle))   ); 
               }
-           
             }
-            
-            
           );
-
         });
-
-      // console.log("Pedidos a mostrar: ",  this.pedidosMostrarBar ) ; 
-      // localStorage.setItem("listaPedidosAceptadosBar", "" ); 
-      localStorage.removeItem("listaPedidosAceptadosBar");
+      localStorage.removeItem("listaPedidosAceptadosBar"); 
       localStorage.setItem("listaPedidosAceptadosBar", JSON.stringify(this.pedidosMostrarBar) );  
       });
-      
- 
-
     }
 
     traerProductosPerfil() {
@@ -263,16 +266,27 @@ export class LoginPage implements OnInit {
   
     traerPedidosPerfil() {
   
-  
-  
-      // TRAIGO PEDIDOS Y ME QUEDO CON LOS ACEPTADOS
+      this.pedidosMostrar = [] ; 
+
+   
       this.baseService.getItems('pedidos').then(ped => {
-  
+      
         this.pedidos = ped;
-        // console.log("Todos Pedidos: ", this.pedidos);
         this.pedidos = this.pedidos.filter(pedido => pedido.estado == "aceptado" || pedido.estado == "preparacion" );
         this.listIdPedidosAceptados =  this.pedidos;
-        // console.log("Pedidos Aceptados: ", this.listIdPedidosAceptados);
+      });
+  
+      this.baseService.getItems('pedidosDelivery').then(ped => {
+  
+        this.pedidos = ped;
+        
+        this.pedidos = this.pedidos.filter(pedido => pedido.estado == "aceptado" || pedido.estado == "preparacion"  );
+        
+        this.pedidos.forEach(pedido =>  {
+          pedido.delivery = true ;
+          this.listIdPedidosAceptados.push(pedido) ;
+        } );
+        console.log("Pedidos Aceptados2: ", this.listIdPedidosAceptados);
       });
   
       // RECORRO DETALLE DE PEDIDOS POR ID
@@ -301,25 +315,18 @@ export class LoginPage implements OnInit {
                     'cantidad': producto.cantidad,
                     'estado': producto.estado,
                     'tiempo': producto.tiempo,
+                    'delivery': idDetalle.delivery,
                     'key': producto.key
                   };
                   // INSERTO EN EL ARRAY LOS PEDIDOS PENDIENTES
                   this.pedidosMostrar.push( JSON.parse(JSON.stringify(pedido_detalle))   ); 
                 }
-             
               }
-              
-              
             );
-  
           });
-  
-        // console.log("Pedidos a mostrar: ",  this.pedidosMostrar ) ; 
-        // localStorage.setItem("listaPedidosAceptados", "" ); 
-        localStorage.removeItem("listaPedidosAceptados");
+        localStorage.removeItem("listaPedidosAceptados"); 
         localStorage.setItem("listaPedidosAceptados", JSON.stringify(this.pedidosMostrar) );  
         });
-        
    
   
       }
