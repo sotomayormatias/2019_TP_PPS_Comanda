@@ -23,6 +23,9 @@
             <ion-card-header  color="primary" > <b>NRO FILA: {{i+1}}</b><br> <b>ID PEDIDO: {{pedido.id_pedido}} <br> </b></ion-card-header>
             <ion-card-content class="cardContent" style="color: black; font-weight: bolder; font-size: xx-large;    
             ">
+            <ion-icon *ngIf="!pedido.delivery" name="home"></ion-icon>
+            <ion-icon *ngIf="pedido.delivery" name="car"></ion-icon>
+    
               {{pedido.cantidad}}
               {{pedido.producto}}
               <div *ngIf="pedido.estado == 'preparacion' "  >{{pedido.tiempo}} MIN</div>
