@@ -329,6 +329,12 @@ export class AppComponent {
               url: '/chat',
               icon: 'chatboxes'
             },
+            // (11) CONFIRMAR ENTREGA
+            {
+              title: 'OK - Confirmar entrega',
+              url: '/confirmar-entrega',
+              icon: 'checkmark'
+            },
             // JUEGOS
             // (T) 10% DTO
             {
@@ -423,6 +429,12 @@ export class AppComponent {
               icon: 'restaurant'
             },
 
+            // (11) CONFIRMAR ENTREGA
+            {
+              title: 'OK - Confirmar entrega',
+              url: '/confirmar-entrega',
+              icon: 'checkmark'
+            },
             {
               title: 'Cerrar Sesion',
               url: '/',
