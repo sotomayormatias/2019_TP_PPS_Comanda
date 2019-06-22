@@ -89,7 +89,8 @@ const routes: Routes = [
   { path: 'list-pedidos-bartender', loadChildren: './list-pedidos-bartender/list-pedidos-bartender.module#ListPedidosBartenderPageModule' },
   { path: 'chat', loadChildren: './chat/chat.module#ChatPageModule' },
   { path: 'pedir-delivery', loadChildren: './pedir-delivery/pedir-delivery.module#PedirDeliveryPageModule' },
-  { path: 'list-confirmar-delivery', loadChildren: './list-confirmar-delivery/list-confirmar-delivery.module#ListConfirmarDeliveryPageModule' }
+  { path: 'list-confirmar-delivery', loadChildren: './list-confirmar-delivery/list-confirmar-delivery.module#ListConfirmarDeliveryPageModule' },  { path: 'confirmar-entrega', loadChildren: './confirmar-entrega/confirmar-entrega.module#ConfirmarEntregaPageModule' }
+
 
 
 
