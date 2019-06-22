@@ -10,6 +10,10 @@ export class ListPedidosCocinaPage implements OnInit {
 
   pedidos: any;
   detalle: any;
+  
+  spinner: boolean;
+  listaRecorreAux: any;
+
 
   listIdPedidosAceptados: any;
   listProductos: string[] = [] ; 
@@ -18,15 +22,19 @@ export class ListPedidosCocinaPage implements OnInit {
   pedidosMostrarFil: string[] = [];
   productosPerfil: any;
   cantidadPedidos = 1;
+  TEstimado = '';
+  selected = ['', '', ''];
 
   constructor(private baseService: FirebaseService) { 
-    this.traerPedidosPerfil();
-    this.traerProductosPerfil();
-    this.traerPedidosActivosPorPerfil();
+    // this.traerPedidosPerfil();
+    // this.traerProductosPerfil();
+    // this.traerPedidosActivosPorPerfil();
   }
 
   ngOnInit() {
-
+    this.traerPedidosPerfil();
+    this.traerProductosPerfil();
+    this.traerPedidosActivosPorPerfil();
   }
 
   traerProductosPerfil() {
@@ -46,7 +54,9 @@ export class ListPedidosCocinaPage implements OnInit {
           }
         );
       // console.log("Productos perfil: ", this.productosPerfil);
+      
       // localStorage.setItem("listProductos", "" ); 
+      
       localStorage.removeItem("listProductos"); 
       localStorage.setItem("listProductos", JSON.stringify(this.listProductos) ); 
       
@@ -57,11 +67,13 @@ export class ListPedidosCocinaPage implements OnInit {
 
   traerPedidosPerfil() {
 
-
+    // this.pedidosMostrar = [];
+    // while (this.pedidosMostrar.length) { this.pedidosMostrarFil.pop(); }
+    this.pedidosMostrar = [] ; 
 
     // TRAIGO PEDIDOS Y ME QUEDO CON LOS ACEPTADOS
     this.baseService.getItems('pedidos').then(ped => {
-
+    
       this.pedidos = ped;
       // console.log("Todos Pedidos: ", this.pedidos);
       this.pedidos = this.pedidos.filter(pedido => pedido.estado == "aceptado" || pedido.estado == "preparacion" );
@@ -93,7 +105,9 @@ export class ListPedidosCocinaPage implements OnInit {
                   'producto': producto.producto,
                   'precio': producto.precio,
                   'cantidad': producto.cantidad,
-                  'estado': producto.estado
+                  'estado': producto.estado,
+                  'tiempo': producto.tiempo,
+                  'key': producto.key
                 };
                 // INSERTO EN EL ARRAY LOS PEDIDOS PENDIENTES
                 this.pedidosMostrar.push( JSON.parse(JSON.stringify(pedido_detalle))   ); 
@@ -107,6 +121,7 @@ export class ListPedidosCocinaPage implements OnInit {
         });
 
       // console.log("Pedidos a mostrar: ",  this.pedidosMostrar ) ;   
+      
       // localStorage.setItem("listaPedidosAceptados", "" );  
       localStorage.removeItem("listaPedidosAceptados"); 
       localStorage.setItem("listaPedidosAceptados", JSON.stringify(this.pedidosMostrar) );  
@@ -118,45 +133,134 @@ export class ListPedidosCocinaPage implements OnInit {
 
     traerPedidosActivosPorPerfil() {
       this.pedidosMostrarFil = [];
-      while (this.pedidosMostrarFil.length) { this.pedidosMostrarFil.pop(); }
-      let listaRecorre = localStorage.getItem("listaPedidosAceptados");
-      let listaRecorreParsed = JSON.parse(listaRecorre);
-      // console.log("Lista recorre", listaRecorreParsed);
+
+      let listaRecorre = localStorage.getItem("listaPedidosAceptados").toString();
 
       let listaProductos = localStorage.getItem("listProductos");
       let listaProductosParsed = JSON.parse(listaProductos);
 
-      // console.log("Lista de Productos ", listaProductosParsed);
-
       JSON.parse(listaRecorre).forEach(idDetalle => {
 
-        // console.log("Pedido detalle Analizado: ", idDetalle);
-            
 
         for (const iterator of listaProductosParsed) {
-          // console.log("Iterator:", iterator);
-          
           if ( idDetalle.producto == iterator ) {
+            
                   // tslint:disable-next-line:variable-name
                   let pedido_detalle = {
                     'id_pedido': idDetalle.id_pedido ,
                     'producto': idDetalle.producto,
                     'precio': idDetalle.precio,
                     'cantidad': idDetalle.cantidad,
-                    'estado': idDetalle.estado
+                    'estado': idDetalle.estado,
+                    'tiempo': idDetalle.tiempo,
+                    'key': idDetalle.key
                   };
                   console.log("Pedido detalle: ", pedido_detalle);
                   this.pedidosMostrarFil.push( JSON.parse(JSON.stringify(pedido_detalle))   ); 
                 }
+              
 
               }
         });
-
+      this.spinner = false;
       console.log("Lista Filtrada: ", this.pedidosMostrarFil);
-    
       }
     
 
+
+    traerPedidosActivosPorPerfilPrepara(pedidoDet) {
+
+        this.pedidosMostrarFil = [];
+        let listaRecorre = localStorage.getItem("listaPedidosAceptados").toString();
+  
+        let listaProductos = localStorage.getItem("listProductos");
+        let listaProductosParsed = JSON.parse(listaProductos);
+  
+        JSON.parse(listaRecorre).forEach(idDetalle => {
+  
+          for (const iterator of listaProductosParsed) {
+            
+            if ( idDetalle.producto == iterator && idDetalle.id_pedido == pedidoDet.id_pedido &&  idDetalle.producto == pedidoDet.producto ) {
+              
+                    // tslint:disable-next-line:variable-name
+                    let pedido_detalle = {
+                      'id_pedido': idDetalle.id_pedido ,
+                      'producto': idDetalle.producto,
+                      'precio': idDetalle.precio,
+                      'cantidad': idDetalle.cantidad,
+                      'estado': "preparacion",
+                      'tiempo': this.TEstimado ,
+                      'key': idDetalle.key
+                    };
+                    console.log("Pedido detalle modificado: ", pedido_detalle);
+                    this.pedidosMostrarFil.push( JSON.parse(JSON.stringify(pedido_detalle))   ); 
+                  } else if ( idDetalle.producto == iterator) {
+              
+                    // tslint:disable-next-line:variable-name
+                    let pedido_detalle = {
+                      'id_pedido': idDetalle.id_pedido ,
+                      'producto': idDetalle.producto,
+                      'precio': idDetalle.precio,
+                      'cantidad': idDetalle.cantidad,
+                      'estado': idDetalle.estado,
+                      'tiempo': idDetalle.tiempo,
+                      'key': idDetalle.key
+                    };
+                    console.log("Pedido detalle: ", pedido_detalle);
+                    this.pedidosMostrarFil.push( JSON.parse(JSON.stringify(pedido_detalle))   ); 
+                  }
+  
+                }
+          });
+        this.spinner = false;
+        console.log("Lista Prepara: ", this.pedidosMostrarFil);
+        }
+
+        traerPedidosActivosPorPerfilTermina(pedidoDet) {
+
+          this.pedidosMostrarFil = [];
+          let listaRecorre = localStorage.getItem("listaPedidosAceptados").toString();
+    
+          let listaProductos = localStorage.getItem("listProductos");
+          let listaProductosParsed = JSON.parse(listaProductos);
+    
+          JSON.parse(listaRecorre).forEach(idDetalle => {
+    
+            for (const iterator of listaProductosParsed) {
+              
+              if ( idDetalle.producto == iterator && idDetalle.id_pedido == pedidoDet.id_pedido  &&  idDetalle.producto == pedidoDet.producto) {
+                
+                      // tslint:disable-next-line:variable-name
+                      let pedido_detalle = {
+                        'id_pedido': idDetalle.id_pedido ,
+                        'producto': idDetalle.producto,
+                        'precio': idDetalle.precio,
+                        'cantidad': idDetalle.cantidad,
+                        'estado': "finalizado",
+                        'key': idDetalle.key
+                      };
+                      console.log("Pedido detalle modificado: ", pedido_detalle);
+                      this.pedidosMostrarFil.push( JSON.parse(JSON.stringify(pedido_detalle))   ); 
+                    } else if ( idDetalle.producto == iterator) {
+                
+                      // tslint:disable-next-line:variable-name
+                      let pedido_detalle = {
+                        'id_pedido': idDetalle.id_pedido ,
+                        'producto': idDetalle.producto,
+                        'precio': idDetalle.precio,
+                        'cantidad': idDetalle.cantidad,
+                        'estado': idDetalle.estado,
+                        'key': idDetalle.key
+                      };
+                      console.log("Pedido detalle: ", pedido_detalle);
+                      this.pedidosMostrarFil.push( JSON.parse(JSON.stringify(pedido_detalle))   ); 
+                    }
+    
+                  }
+            });
+          this.spinner = false;
+          console.log("Lista Prepara: ", this.pedidosMostrarFil);
+          }
 
   // GESTION
 aceptarPedido(mesa: string) {
@@ -168,4 +272,39 @@ aceptarPedido(mesa: string) {
     this.traerPedidosPerfil();
   }
 
+  prepararPedido(pedidoDet) {
+    this.spinner = true;
+    console.log("Pedido det: ", pedidoDet) ;
+    let pedidoAceptado = pedidoDet ;
+    let pedidoKey = pedidoAceptado.key ;
+
+    console.log("Pedido key: ", pedidoDet.key) ;
+      // let key: string = pedidoAceptado.key;
+  
+    delete pedidoAceptado.key;
+    pedidoAceptado.estado = 'preparacion';
+    this.baseService.updateItem('pedidoDetalle', pedidoKey, pedidoAceptado);
+   
+    setTimeout(() => this.traerPedidosPerfil() , 1300);  
+    setTimeout(() => this.traerPedidosActivosPorPerfilPrepara(pedidoDet) , 1000);  
+
+  }
+
+  
+  terminarPedido(pedidoDet) {
+    this.spinner = true;
+    console.log("Pedido det: ", pedidoDet) ;
+    let pedidoAceptado = pedidoDet ;
+    let pedidoKey = pedidoAceptado.key ;
+
+    console.log("Pedido key: ", pedidoDet.key) ;
+    
+    delete pedidoAceptado.key;
+    pedidoAceptado.estado = 'finalizado';
+    this.baseService.updateItem('pedidoDetalle', pedidoKey, pedidoAceptado);
+     
+    setTimeout(() => this.traerPedidosPerfil() , 1300);  
+    setTimeout(() => this.traerPedidosActivosPorPerfilTermina(pedidoDet) , 1000);  
+  
+  }
 }

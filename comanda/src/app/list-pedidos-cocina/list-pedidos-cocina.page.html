@@ -6,28 +6,52 @@
     <ion-title>
       Pedidos Pendientes
     </ion-title>
-   
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-list>
-      <ion-item class="item-text-wrap card" *ngFor="let pedidoMostrar of pedidosMostrarFil; index as i">
+
+<ion-content  *ngIf="spinner"  padding class="spinnerCenter">
+    <!-- <ion-spinner name="crescent"></ion-spinner> -->
+    <ion-spinner *ngIf="spinner" name="bubbles" color="dark"></ion-spinner>
+</ion-content>
+
+
+<ion-content *ngIf="!spinner">
+    <!-- <ion-spinner *ngIf="spinner" name="bubbles" color="dark"></ion-spinner> -->
+  <ion-list *ngIf="!spinner">
+      <ion-item class="item-text-wrap card" *ngFor="let pedido of pedidosMostrarFil; index as i">
       <ion-col col-12 col-md-6 col-lg-4 col-xl-3>
           <ion-card class="lindas" expand="full">
-            <ion-card-header color="dark" > <b>ID PEDIDO: {{pedidoMostrar.id_pedido}} <br> <b>NRO FILA: {{i+1}}</b><br></b></ion-card-header>
-            <ion-card-content style="color: black; font-weight: bolder; font-size: xx-large;    
+            <ion-card-header  color="medium" > <b>NRO FILA: {{i+1}}</b><br> <b>ID PEDIDO: {{pedido.id_pedido}} <br> </b></ion-card-header>
+            <ion-card-content class="cardContent" style="color: black; font-weight: bolder; font-size: xx-large;    
             ">
-              {{pedidoMostrar.cantidad}}
-              {{pedidoMostrar.producto}}
+              {{pedido.cantidad}}
+              {{pedido.producto}}
+              <div *ngIf="pedido.estado == 'preparacion' "  >{{pedido.tiempo}} MIN</div>
+              <ion-select *ngIf="pedido.estado == 'creado'"  class="round"  [(ngModel)]="TEstimado"  cancelText="Cancelar" okText="Confirmar"  placeholder="Tiempo" >
+           
+                <ion-select-option  value="10">10 Minutos</ion-select-option>
+                <ion-select-option  value="30">30 Minutos</ion-select-option>
+                <ion-select-option  value="45">45 Minutos</ion-select-option>
+                <ion-select-option  value="60">60 Minutos</ion-select-option>
 
-              <div class="item-note" slot="end">
+              </ion-select>
+
+              <div  slot="start">
                   <!-- CREADO -->
-                  <ion-button *ngIf="pedidoMostrar.estado == 'creado' " color="danger" size="small" (click)="aceptarPedido(pedido.mesa)">Preparar</ion-button>
+                  <ion-button shape="round" *ngIf="pedido.estado == 'creado' " color="danger" size="small" (click)="prepararPedido( pedido )" style="font-size:large;">INI</ion-button>
+                  <ion-button shape="round" *ngIf="pedido.estado !== 'creado' " [disabled]="pedido.estado!='creado'" color="danger" size="small" (click)="prepararPedido( pedido )">INI</ion-button>
+            
+                <!-- </div>
+                <div  slot="secondary"> -->
                   <!-- EN PREPARACION -->
-                  <ion-button *ngIf="pedidoMostrar.estado == 'preparacion' " color="warning" size="small" (click)="aceptarPedido(pedido.mesa)">En Preparación</ion-button>
+                  <ion-button shape="round" *ngIf="pedido.estado == 'preparacion' " color="warning" size="small" (click)="terminarPedido( pedido )" style="font-size:large;">PREP</ion-button>
+                  <ion-button shape="round" *ngIf="pedido.estado !== 'preparacion' " [disabled]="pedido.estado!='preparacion'" color="warning" size="small" (click)="terminarPedido( pedido )">PREP</ion-button>
+                <!-- </div> <div slot="end"> -->
                   <!-- FINALIZADO ESPERANDO PEDIDOS -->
-                  <ion-button *ngIf="pedidoMostrar.estado == 'finalizado' " color="success" size="small" (click)="aceptarPedido(pedido.mesa)">Finalizado</ion-button>
+                  <ion-button shape="round" *ngIf="pedido.estado == 'finalizado' " color="success" size="small" style="font-size:large;">FIN</ion-button>
+                  <ion-button shape="round" *ngIf="pedido.estado !== 'finalizado' " [disabled]="pedido.estado!='finalizado'" color="success" size="small">FIN</ion-button>
+               
                 </div>
             </ion-card-content>
           </ion-card>
@@ -40,4 +64,3 @@
     </ion-item>
   </ion-list>
 </ion-content>
-

@@ -21,6 +21,7 @@ export class QrMesaPage implements OnInit {
   listaEspera: any;
   estaEnLista: boolean;
   keyPuestoListaEspera: string;
+  listareservas: any;
 
   constructor(private scanner: BarcodeScanner,
     private baseService: FirebaseService,
@@ -50,14 +51,37 @@ export class QrMesaPage implements OnInit {
   }
 
   mostrarInformacion() {
+    let usuarioLogueado: any = JSON.parse(sessionStorage.getItem('usuario'));
+
+    // this.baseService.getItems('reservademesas').then(lista => {
+    //   this.listareservas = lista.find(cliente => cliente.correo == usuarioLogueado.correo);
+      
+    //   if(this.reserva != undefined)
+    //   {
+    //     localStorage.setItem("correoReserva",usuarioLogueado.correo);
+    //     localStorage.setItem("diaReserva",this.reserva.fechaElegida.dia);
+    //     localStorage.setItem("mesReserva",this.reserva.fechaElegida.mes);
+    //     localStorage.setItem("horaReserva",this.reserva.fechaElegida.hora);
+    //     localStorage.setItem("minutoReserva",this.reserva.fechaElegida.minuto);
+    //     localStorage.setItem("mesaReserva",this.reserva.mesaSeleccionada);
+        
+    //   localStorage.setItem("reservada","si");
+
+    //   }
+    
+    // });
+
+   
+    
     this.baseService.getItems('mesas').then(mesas => {
       let nroMesa = this.parsedDatosEscaneados.mesa;
       this.mesaEscaneada = mesas.find(mesa => mesa.nromesa == nroMesa);
-
-      
-
-
       let usuarioLogueado: any = JSON.parse(sessionStorage.getItem('usuario'));
+
+      //FIJARSE SI LA MESA ESTA RESERVADA, si lo esta => fijarse hora minutos y usuario (40 min antes)
+      //SI NO ESTA RESERVADA QUE AGARRE LA MESA
+
+      // if(this.mesaEscaneada.)
       if (usuarioLogueado.perfil == "cliente") { // Logica para cuando escanea el cliente
         if (this.mesaEscaneada.estado == 'libre') { // si la mesa esta libre
           if (this.estaEnLista) { // si el cliente esta en lista de espera
@@ -80,6 +104,7 @@ export class QrMesaPage implements OnInit {
         this.presentAlertEmpleado();
       }
     });
+  
   }
 
   async presentAlertEmpleado() {

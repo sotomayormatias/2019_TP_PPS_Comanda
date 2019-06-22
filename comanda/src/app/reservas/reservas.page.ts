@@ -179,16 +179,16 @@ export class ReservasPage implements OnInit {
 
   
 
-    firebase.database().ref('listaEsperaClientes/'+ this.clienteEnEspera.key)
-    .update({
-      reserva: {
-        "fechaElegida": this.fechaElegida,
-        "mesaSeleccionada": this.mesaSeleccionada
-        // "cantidadPersonas": this.cantPersonas
+  //   firebase.database().ref('listaEsperaClientes/'+ this.clienteEnEspera.key)
+  //   .update({
+  //     reserva: {
+  //       "fechaElegida": this.fechaElegida,
+  //       "mesaSeleccionada": this.mesaSeleccionada
+       
     
-      }
+  //     }
   
-   });
+  //  });
 
    firebase.database().ref('reservademesas/'+ this.clienteEnEspera.key)
    .update({
@@ -199,6 +199,17 @@ export class ReservasPage implements OnInit {
       //  "cantidadPersonas": this.cantPersonas
  
   });
+
+  firebase.database().ref('mesas/'+ this.clienteEnEspera.key)
+  .update({
+   
+      "reservada": "si",
+      "correo": usuarioLogueado.correo,
+      "fechaElegida": this.fechaElegida,
+      "mesaSeleccionada": this.mesaSeleccionada
+     //  "cantidadPersonas": this.cantPersonas
+
+ });
 
   localStorage.setItem("dia",this.fechaElegida.dia);
   localStorage.setItem("mes",this.fechaElegida.mes);
