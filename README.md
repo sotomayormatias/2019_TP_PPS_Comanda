@@ -108,6 +108,36 @@ Link: https://docs.google.com/document/d/1oEnzlbxtO-LMAgVBkn0KqyZpL6Fi04EdTZu34W
 ##Diagrama flujo QR  
 ![alt text](Screenshots/Sprint5-15-06-Diagrama_QR_MESA.JPG)  
 
+
+## Sprint 6 15/06 - 22/06 - PRE ENTREGA
+
+1.-CERRAR CIRCUITO DE PEDIDO
+2-LISTADO PEDIDOS
+3.-MOZO ACEPTA CLIENTE ESP.
+4.-MOZO ACEPTA PEDIDO
+5.-CLIENTE CONFIRMA ENTREGA
+6.-ENTREGAR PLATOS Y BEBIDAS
+7.-MOZO CIERRA MESA
+8.-CHAT CON DELIVERY
+9.-LISTADO PEDIDOS COCINA
+10.-LISTADO PEDIDOS BARTENDER
+11.-GESTION-TOMAR PEDIDO
+12.-GESTION-HACER RESERVAS
+13.-PUSH NOTIFICATION
+14.-DELIVERY PEDIDO
+15.-DELIVERY RUTA
+
+
+###Status Sprint 6
+##Tareas  
+![alt text](Screenshots/Sprint6-22-06-AvanceTareas.JPG)  
+##Circuito  
+![alt text](Screenshots/Sprint6-22-06-Circuito_Minimo.JPG)  
+##Funcionalidades  
+![alt text](Screenshots/Sprint6-22-06-Funcionalidades.JPG) 
+##Diagrama flujo QR  
+![alt text](Screenshots/Sprint6-22-06-Diagrama_QR_MESA.JPG)  
+
 ## Responsabilidades para entrega 18/05 Sprint1
 Nombre: Julián Graziano  
 Módulo: Alta dueño/supervisor  
@@ -239,3 +269,30 @@ En común:
 **CAMBIO EN LA ESTRUCTURA DE BD PARA DAR INTEGRIDAD**  
 **ANALISIS DE FUNCIONALIDADES MINIMAS Y CIRCUITO**  
 **DEFINICIÓN DE ESTADOS DE PEDIDO Y MESAS**  
+
+
+
+## Responsabilidades para entrega 22/06 Sprint6 -PRE ENTREGA
+Nombre: Julián Graziano  
+Módulo: 
+Fecha inicio: 15/06  
+Fecha fin: 22/06
+branch: jngraziano  
+
+Nombre: Leandro Pollola  
+Módulo: 
+Fecha inicio: 15/06
+Fecha fin: 22/06   
+branch: lnpollola  
+  
+Nombre: Matías Sotomayor  
+Módulo: 
+Fecha inicio: 15/06  
+Fecha fin: 22/06   
+branch: msotomayor  
+
+En común:
+**REVEER ENTIDADES PEDIDOS, MESAS, PRODUCTOS, USUARIOS**  
+**DEFINICION DE CIRCUITOS Y PROCESOS**  
+**AVANCE EN FUNCIONALIDAD MINIMA,CONEXION ENTRE COMPONENTES**  
+**ESTILING Y PUSH NOTIFICATION**  
