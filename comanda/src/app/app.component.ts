@@ -270,12 +270,7 @@ export class AppComponent {
               url: '/home',
               icon: 'home'
             },
-            // (D) ALTA CLIENTE
-            {
-              title: 'OK - Alta de Clientes',
-              url: '/abm-cliente',
-              icon: 'basket'
-            },
+           
             // (F) QR INGRESO
             {
               title: 'OK - QR Ingreso',

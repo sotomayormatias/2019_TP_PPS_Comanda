@@ -86,7 +86,7 @@ export class ListPedidosBartenderPage implements OnInit {
 
       this.pedidos = ped;
       
-      this.pedidos = this.pedidos.filter(pedido => pedido.estado == "aceptado" || pedido.estado == "preparacion" || pedido.estado == "creado" );
+      this.pedidos = this.pedidos.filter(pedido => pedido.estado == "aceptado" || pedido.estado == "preparacion"  );
       
       this.pedidos.forEach(pedido =>  {
         pedido.delivery = true ;
@@ -197,6 +197,7 @@ export class ListPedidosBartenderPage implements OnInit {
                       'precio': idDetalle.precio,
                       'cantidad': idDetalle.cantidad,
                       'estado': "preparacion",
+                      'delivery': idDetalle.delivery,
                       'tiempo': this.TEstimado ,
                       'key': idDetalle.key
                     };
@@ -210,6 +211,7 @@ export class ListPedidosBartenderPage implements OnInit {
                       'producto': idDetalle.producto,
                       'precio': idDetalle.precio,
                       'cantidad': idDetalle.cantidad,
+                      'delivery': idDetalle.delivery,
                       'estado': idDetalle.estado,
                       'tiempo': idDetalle.tiempo,
                       'key': idDetalle.key
@@ -244,6 +246,7 @@ export class ListPedidosBartenderPage implements OnInit {
                         'producto': idDetalle.producto,
                         'precio': idDetalle.precio,
                         'cantidad': idDetalle.cantidad,
+                        'delivery': idDetalle.delivery,
                         'estado': "finalizado",
                         'key': idDetalle.key
                       };
@@ -258,6 +261,7 @@ export class ListPedidosBartenderPage implements OnInit {
                         'precio': idDetalle.precio,
                         'cantidad': idDetalle.cantidad,
                         'estado': idDetalle.estado,
+                        'delivery': idDetalle.delivery,
                         'key': idDetalle.key
                       };
                       console.log("Pedido detalle: ", pedido_detalle);
@@ -334,7 +338,29 @@ export class ListPedidosBartenderPage implements OnInit {
     let key: string = pedidoAceptado.key;
     delete pedidoAceptado.key;
     pedidoAceptado.estado = 'listoEntrega';
-    this.baseService.updateItem('pedidos', key, pedidoAceptado);
+
+    this.baseService.getItems('pedidos').then(ped => {
+
+      this.pedidoEnLocal = ped.find(pedido => pedido.id == pedidoDet.id_pedido);
+      console.log("Pedido en local: ", this.pedidoEnLocal);
+      this.hayPedidoEnLocal = this.pedidoEnLocal != undefined;
+      console.log("Hay Pedido en local: ", this.hayPedidoEnLocal);
+      
+      if (this.hayPedidoEnLocal)
+      this.baseService.updateItem('pedidos', key, pedidoAceptado);
+    });
+
+    this.baseService.getItems('pedidosDelivery').then(ped => {
+      this.pedidoDelivery = ped.find(pedido =>  pedido.id == pedidoDet.id_pedido);
+      console.log("Pedido Delivery: ", this.pedidoDelivery);
+      this.hayPedidoDelivery = this.pedidoDelivery != undefined;
+      console.log("Hay Pedido Delivery: ", this.hayPedidoDelivery);
+
+      if (this.hayPedidoDelivery)
+
+      this.baseService.updateItem('pedidosDelivery', key, pedidoAceptado);
+    });
+    // this.baseService.updateItem('pedidos', key, pedidoAceptado);
     this.traerPedidosPerfilBar();
   }
 
