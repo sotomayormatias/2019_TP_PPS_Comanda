@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Confirmar Entrega
+    </ion-title>
+    <ion-buttons slot="end">
+      <img id="iconToolBar" src="../../assets/imgs/icon.png">
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<!-- content si existe pedido en local -->
+<ion-content *ngIf="hayPedidoEnLocal">
+  <ion-list>
+    <ion-item *ngFor="let producto of pedidoDetalle">
+      {{ producto.producto }}
+      <div class="item-note" slot="end">
+        {{ producto.cantidad }}
+      </div>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+
+<!-- content si existe pedido de delivery -->
+<ion-content *ngIf="hayPedidoDelivery">
+  <ion-list>
+    <ion-item *ngFor="let producto of pedidoDetalle">
+      ({{ producto.cantidad }}) {{ producto.producto }}
+      <div class="item-note" slot="end">
+        ${{ producto.cantidad * producto.precio }}
+      </div>
+    </ion-item>
+  </ion-list>
+  <ion-card>
+    <ion-card-content>
+      <ion-card-title>
+        PRECIO FINAL: ${{pedidoDelivery.preciototal}}
+      </ion-card-title>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+<!-- content si no existe pedido -->
+<ion-content *ngIf="!hayPedidoEnLocal && !hayPedidoDelivery">
+  <ion-card>
+    <ion-card-content>
+      Aún no existen pedidos a entregar.
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+<ion-footer>
+  <ion-button [disabled]="!hayPedidoEnLocal && !hayPedidoDelivery" color="primary" expand="block" (click)="confirmarEntrega()">Confirmar entrega
+  </ion-button>
+</ion-footer>
