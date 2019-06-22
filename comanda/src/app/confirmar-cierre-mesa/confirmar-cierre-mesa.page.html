@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Cierre de Mesa
+    </ion-title>
+    <ion-buttons slot="end">
+      <img id="iconToolBar" src="../../assets/imgs/icon.png">
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content  *ngIf="spinner"  padding class="spinnerCenter">
+  <!-- <ion-spinner name="crescent"></ion-spinner> -->
+  <ion-spinner *ngIf="spinner" name="bubbles" color="dark"></ion-spinner>
+</ion-content>
+
+
+<!-- content si existe pedido en local -->
+<ion-content  *ngIf="!spinner" >
+  <ion-list *ngIf="!spinner">
+    <ion-item *ngFor="let pedido of listIdPedidosAceptadosBar">
+       <b>Cierre Mesa:</b> {{pedido.mesa}}
+      <ion-button slot="end" color="primary" expand="block" (click)="cerrarMesa(pedido)">Cerrar Mesa
+      </ion-button>
+    </ion-item>
+  </ion-list>
+</ion-content>
+

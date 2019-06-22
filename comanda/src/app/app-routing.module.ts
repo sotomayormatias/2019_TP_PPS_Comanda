@@ -47,6 +47,8 @@ const routes: Routes = [
     path: '', 
     loadChildren: './abm-producto/abm-producto.module#AbmProductoPageModule'
   },
+  { path: '', loadChildren: './confirmar-cierre-mesa/confirmar-cierre-mesa.module#ConfirmarCierreMesaPageModule' }
+,
   {
     path: '', 
     loadChildren: './abm-empleados/abm-empleados.module#AbmEmpleadosPageModule'
@@ -89,7 +91,9 @@ const routes: Routes = [
   { path: 'list-pedidos-bartender', loadChildren: './list-pedidos-bartender/list-pedidos-bartender.module#ListPedidosBartenderPageModule' },
   { path: 'chat', loadChildren: './chat/chat.module#ChatPageModule' },
   { path: 'pedir-delivery', loadChildren: './pedir-delivery/pedir-delivery.module#PedirDeliveryPageModule' },
-  { path: 'list-confirmar-delivery', loadChildren: './list-confirmar-delivery/list-confirmar-delivery.module#ListConfirmarDeliveryPageModule' },  { path: 'confirmar-entrega', loadChildren: './confirmar-entrega/confirmar-entrega.module#ConfirmarEntregaPageModule' }
+  { path: 'list-confirmar-delivery', loadChildren: './list-confirmar-delivery/list-confirmar-delivery.module#ListConfirmarDeliveryPageModule' },
+  { path: 'confirmar-entrega', loadChildren: './confirmar-entrega/confirmar-entrega.module#ConfirmarEntregaPageModule' },
+  { path: 'confirmar-cierre-mesa', loadChildren: './confirmar-cierre-mesa/confirmar-cierre-mesa.module#ConfirmarCierreMesaPageModule' }
 
 
 
