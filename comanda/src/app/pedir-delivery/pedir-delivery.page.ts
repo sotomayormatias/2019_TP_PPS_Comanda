@@ -63,7 +63,7 @@ export class PedirDeliveryPage implements OnInit {
         'fecha': (new Date()).toLocaleDateString() + ' ' + (new Date()).toLocaleTimeString(),
         'preciototal': this.calcularPrecioTotal(productosPedidos),
         'direccion': this.direccion,
-        'cantDet': productosPedidos.length
+        'cantDet': productosPedidos.length,
         'latitud': latitud.value,
         'longitud': longitud.value,
         'estado': 'creado'
