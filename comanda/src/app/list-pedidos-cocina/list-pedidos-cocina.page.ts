@@ -81,6 +81,20 @@ export class ListPedidosCocinaPage implements OnInit {
       // console.log("Pedidos Aceptados: ", this.listIdPedidosAceptados);
     });
 
+    this.baseService.getItems('pedidosDelivery').then(ped => {
+
+      this.pedidos = ped;
+      // console.log("Todos Pedidos: ", this.pedidos);
+      this.pedidos = this.pedidos.filter(pedido => pedido.estado == "aceptado" || pedido.estado == "preparacion" || pedido.estado == "creado" );
+      
+      this.pedidos.forEach(pedido =>  {
+
+        this.listIdPedidosAceptados.push(pedido) ;
+      } );
+      // this.listIdPedidosAceptadosBar.add(JSON.stringify(this.pedidos)) ;
+      console.log("Pedidos Aceptados2: ", this.listIdPedidosAceptados);
+    });
+
     // RECORRO DETALLE DE PEDIDOS POR ID
     this.baseService.getItems('pedidoDetalle').then(detalle => {
       

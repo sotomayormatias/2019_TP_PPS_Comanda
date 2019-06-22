@@ -38,7 +38,7 @@
               <div  slot="start">
                 
                   <!-- CREADO -->
-                  <ion-button shape="round" *ngIf="pedido.estado == 'creado' " color="danger" size="small" (click)="prepararPedido( pedido )" style="font-size:large;">INI</ion-button>
+                  <ion-button shape="round" *ngIf="pedido.estado == 'creado' " [disabled]="TEstimado =='' " color="danger" size="small" (click)="prepararPedido( pedido )" style="font-size:large;">INI</ion-button>
                   <ion-button shape="round" *ngIf="pedido.estado !== 'creado' " [disabled]="pedido.estado!='creado'" color="danger" size="small" (click)="prepararPedido( pedido )">INI</ion-button>
             
 

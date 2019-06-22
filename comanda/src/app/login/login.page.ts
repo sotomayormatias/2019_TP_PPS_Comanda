@@ -184,8 +184,23 @@ export class LoginPage implements OnInit {
       // console.log("Todos Pedidos: ", this.pedidos);
       this.pedidos = this.pedidos.filter(pedido => pedido.estado == "aceptado" || pedido.estado == "preparacion" );
       this.listIdPedidosAceptadosBar =  this.pedidos;
-      // console.log("Pedidos Aceptados: ", this.listIdPedidosAceptadosBar);
+      console.log("Pedidos Aceptados1: ", this.listIdPedidosAceptadosBar);
     });
+
+    this.baseService.getItems('pedidosDelivery').then(ped => {
+
+      this.pedidos = ped;
+      // console.log("Todos Pedidos: ", this.pedidos);
+      this.pedidos = this.pedidos.filter(pedido => pedido.estado == "aceptado" || pedido.estado == "preparacion" || pedido.estado == "creado" );
+      
+      this.pedidos.forEach(pedido =>  {
+
+        this.listIdPedidosAceptadosBar.push(pedido) ;
+      } );
+      // this.listIdPedidosAceptadosBar.add(JSON.stringify(this.pedidos)) ;
+      console.log("Pedidos Aceptados2: ", this.listIdPedidosAceptadosBar);
+    });
+    
 
     // RECORRO DETALLE DE PEDIDOS POR ID
     this.baseService.getItems('pedidoDetalle').then(detalle => {
@@ -314,8 +329,6 @@ export class LoginPage implements OnInit {
   
           });
   
-        // console.log("Pedidos a mostrar: ",  this.pedidosMostrar ) ; 
-        // localStorage.setItem("listaPedidosAceptados", "" ); 
         localStorage.removeItem("listaPedidosAceptados");
         localStorage.setItem("listaPedidosAceptados", JSON.stringify(this.pedidosMostrar) );  
         });

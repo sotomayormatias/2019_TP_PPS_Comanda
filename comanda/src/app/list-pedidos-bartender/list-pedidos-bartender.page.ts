@@ -28,6 +28,12 @@ export class ListPedidosBartenderPage implements OnInit {
   TEstimado = '';
   selected = ['', '', ''];
 
+  pedidoEnLocal: any = null;
+  pedidoDelivery: any = null;
+  pedidoDetalle: any[] = [];
+  hayPedidoDelivery: boolean = false;
+  hayPedidoEnLocal: boolean = false;
+
   
   constructor(private baseService: FirebaseService,
               private pickerCtrl: PickerController) { 
@@ -75,6 +81,20 @@ export class ListPedidosBartenderPage implements OnInit {
       this.pedidos = this.pedidos.filter(pedido => pedido.estado == "aceptado" || pedido.estado == "preparacion" );
       this.listIdPedidosAceptadosBar =  this.pedidos;
       // console.log("Pedidos Aceptados: ", this.listIdPedidosAceptadosBar);
+    });
+
+    this.baseService.getItems('pedidosDelivery').then(ped => {
+
+      this.pedidos = ped;
+      // console.log("Todos Pedidos: ", this.pedidos);
+      this.pedidos = this.pedidos.filter(pedido => pedido.estado == "aceptado" || pedido.estado == "preparacion" || pedido.estado == "creado" );
+      
+      this.pedidos.forEach(pedido =>  {
+
+        this.listIdPedidosAceptadosBar.push(pedido) ;
+      } );
+      // this.listIdPedidosAceptadosBar.add(JSON.stringify(this.pedidos)) ;
+      console.log("Pedidos Aceptados2: ", this.listIdPedidosAceptadosBar);
     });
 
     // RECORRO DETALLE DE PEDIDOS POR ID
@@ -259,15 +279,6 @@ export class ListPedidosBartenderPage implements OnInit {
           }
 
   // GESTION
-aceptarPedido(mesa: string) {
-    let pedidoAceptado: any = this.pedidos.find(pedido => pedido.mesa == mesa);
-    let key: string = pedidoAceptado.key;
-    delete pedidoAceptado.key;
-    pedidoAceptado.estado = 'aceptado';
-    this.baseService.updateItem('pedidos', key, pedidoAceptado);
-    this.traerPedidosPerfilBar();
-  }
-
   prepararPedido(pedidoDet) {
     this.spinner = true;
     console.log("Pedido det: ", pedidoDet) ;
@@ -294,18 +305,43 @@ aceptarPedido(mesa: string) {
     let key: string = pedidoAceptado.key;
     delete pedidoAceptado.key;
     pedidoAceptado.estado = 'preparacion';
-    this.baseService.updateItem('pedidos', key, pedidoAceptado);
+
+    
+    this.baseService.getItems('pedidos').then(ped => {
+
+      this.pedidoEnLocal = ped.find(pedido => pedido.id == pedidoDet.id_pedido);
+      console.log("Pedido en local: ", this.pedidoEnLocal);
+      this.hayPedidoEnLocal = this.pedidoEnLocal != undefined;
+      console.log("Hay Pedido en local: ", this.hayPedidoEnLocal);
+      
+      if (this.hayPedidoEnLocal)
+      this.baseService.updateItem('pedidos', key, pedidoAceptado);
+    });
+
+    this.baseService.getItems('pedidosDelivery').then(ped => {
+      this.pedidoDelivery = ped.find(pedido =>  pedido.id == pedidoDet.id_pedido);
+      console.log("Pedido Delivery: ", this.pedidoDelivery);
+      this.hayPedidoDelivery = this.pedidoDelivery != undefined;
+      console.log("Hay Pedido Delivery: ", this.hayPedidoDelivery);
+
+      if (this.hayPedidoDelivery)
+
+      this.baseService.updateItem('pedidosDelivery', key, pedidoAceptado);
+    });
+    // this.baseService.updateItem('pedidos', key, pedidoAceptado);
     this.traerPedidosPerfilBar();
   }
   
   actualizoPedidoFin(pedidoDet) {
-    console.log("PedidoDet: ", pedidoDet);
-    console.log("Lista Aceptados: ", this.listIdPedidosAceptadosBar);
+    // console.log("PedidoDet: ", pedidoDet);
+    // console.log("Lista Aceptados: ", this.listIdPedidosAceptadosBar);
+    // SUMARLE 1 AL CONTADOR DE PEDIDO
+    // VERIFICAR SI SON = CON EL cantDet para actualizar con el listoEntrega
     let pedidoAceptado: any = this.listIdPedidosAceptadosBar.find(pedido => pedido.id == pedidoDet.id_pedido);
     console.log("Pedido encontrado: ", pedidoAceptado);
     let key: string = pedidoAceptado.key;
     delete pedidoAceptado.key;
-    pedidoAceptado.estado = 'finalizado';
+    pedidoAceptado.estado = 'listoEntrega';
     this.baseService.updateItem('pedidos', key, pedidoAceptado);
     this.traerPedidosPerfilBar();
   }

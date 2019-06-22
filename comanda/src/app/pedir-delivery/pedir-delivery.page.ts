@@ -60,7 +60,8 @@ export class PedirDeliveryPage implements OnInit {
         'fecha': (new Date()).toLocaleDateString() + ' ' + (new Date()).toLocaleTimeString(),
         'preciototal': this.calcularPrecioTotal(productosPedidos),
         'direccion': this.direccion,
-        'estado': 'creado'
+        'estado': 'creado',
+        'cantDet': productosPedidos.length
       };
       this.baseService.addItem('pedidosDelivery', pedido);
 
