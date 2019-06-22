@@ -15,6 +15,8 @@ export class ConfirmarCierreMesaPage implements OnInit {
   pedidoAceptado: any ;
   pedidos: any; 
   spinner: boolean;
+  mesas: any; 
+  mesaAceptado: any;
 
   
   listIdPedidosAceptadosBar: any;
@@ -47,8 +49,23 @@ export class ConfirmarCierreMesaPage implements OnInit {
   cerrarMesa(pedido) {
     // ARMO STRINGS Y TRAIGO MESAS Y PEDIDOS
     this.baseService.getItems('mesas').then(mesas => {
-      // let nroMesa = this.parsedDatosEscaneados.mesa;
-      // this.mesaEscaneada = mesas.find(mesa => mesa.nromesa == nroMesa);
+      
+      this.mesas = mesas;
+      console.log("mesas get: ", mesas);
+      this.mesas = this.mesas.filter( listMesa => listMesa.nromesa == pedido.mesa );
+      this.mesaAceptado =  this.mesas[0];
+      console.log("mesas Aceptado: ", this.mesaAceptado);
+      let mesasKey = this.mesaAceptado.key ;
+  
+      console.log("mesas key: ", mesasKey) ;
+      
+      delete this.mesaAceptado['key'];
+      this.mesaAceptado.cliente = '';
+      this.mesaAceptado.estado = 'libre';
+      this.baseService.updateItem('mesas', mesasKey , this.mesaAceptado);
+      this.traerPedidos();
+
+      this.spinner = false;
     });
 
     this.baseService.getItems('pedidos').then(ped => {
@@ -62,9 +79,6 @@ export class ConfirmarCierreMesaPage implements OnInit {
   
       console.log("Pedido key: ", pedidoKey) ;
       
-      // delete this.pedidoAceptado.key;
-      // this.pedidoAceptado.estado = 'finalizado';
-      // this.baseService.updateItem('pedidos/', pedido.key, this.pedidoAceptado);
       delete this.pedidoAceptado['key'];
       this.pedidoAceptado.estado = 'finalizado';
       this.baseService.updateItem('pedidos', pedidoKey , this.pedidoAceptado);
