@@ -524,12 +524,12 @@ export class AppComponent {
               icon: 'home'
             },
 
-            // (L) PEDIDO PLATO / BEBIDAS
-            {
-              title: 'OK - Menu platos / bebidas',
-              url: '/generar-pedido',
-              icon: 'restaurant'
-            },
+            // // (L) PEDIDO PLATO / BEBIDAS
+            // {
+            //   title: 'OK - Menu platos / bebidas',
+            //   url: '/generar-pedido',
+            //   icon: 'restaurant'
+            // },
 
             // (M) TOMAR PEDIDOS
             {
@@ -543,7 +543,11 @@ export class AppComponent {
               url: '/list-confirmar-cliente-mesa',
               icon: 'log-in'
             },
-
+            {
+              title: 'OK - Cerrar Mesa',
+              url: '/confirmar-cierre-mesa',
+              icon: 'walk'
+            },
             // (K) ENCUESTA EMPLEADO
             // {
             //   title: 'NOK - Encuesta Empleado',
