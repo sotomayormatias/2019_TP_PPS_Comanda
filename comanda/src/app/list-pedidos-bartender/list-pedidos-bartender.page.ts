@@ -31,9 +31,6 @@ export class ListPedidosBartenderPage implements OnInit {
   
   constructor(private baseService: FirebaseService,
               private pickerCtrl: PickerController) { 
-    // this.traerPedidosPerfilBar();
-    // this.traerProductosPerfilBar();
-    // this.traerPedidosActivosPorPerfilBar();
   }
 
   ngOnInit() {
@@ -58,10 +55,6 @@ export class ListPedidosBartenderPage implements OnInit {
             
           }
         );
-      // console.log("Productos perfil: ", this.productosPerfilBar);
-      
-      // localStorage.setItem("listProductosBar", "" ); 
-      
       localStorage.removeItem("listProductosBar"); 
       localStorage.setItem("listProductosBar", JSON.stringify(this.listProductosBar) ); 
       
@@ -72,11 +65,9 @@ export class ListPedidosBartenderPage implements OnInit {
 
   traerPedidosPerfilBar() {
 
-    // this.pedidosMostrarBar = [];
-    // while (this.pedidosMostrarBar.length) { this.pedidosMostrarBarFil.pop(); }
     this.pedidosMostrarBar = [] ; 
 
-    // TRAIGO PEDIDOS Y ME QUEDO CON LOS ACEPTADOS
+   
     this.baseService.getItems('pedidos').then(ped => {
     
       this.pedidos = ped;
@@ -290,11 +281,35 @@ aceptarPedido(mesa: string) {
     pedidoAceptado.estado = 'preparacion';
     this.baseService.updateItem('pedidoDetalle', pedidoKey, pedidoAceptado);
 
+    this.actualizoPedido (pedidoDet);
     setTimeout(() => this.traerPedidosPerfilBar() , 1300);  
     setTimeout(() => this.traerPedidosActivosPorPerfilBarPrepara(pedidoDet) , 1000); 
   }
 
+  actualizoPedido(pedidoDet) {
+    console.log("PedidoDet: ", pedidoDet);
+    console.log("Lista Aceptados: ", this.listIdPedidosAceptadosBar);
+    let pedidoAceptado: any = this.listIdPedidosAceptadosBar.find(pedido => pedido.id == pedidoDet.id_pedido);
+    console.log("Pedido encontrado: ", pedidoAceptado);
+    let key: string = pedidoAceptado.key;
+    delete pedidoAceptado.key;
+    pedidoAceptado.estado = 'preparacion';
+    this.baseService.updateItem('pedidos', key, pedidoAceptado);
+    this.traerPedidosPerfilBar();
+  }
   
+  actualizoPedidoFin(pedidoDet) {
+    console.log("PedidoDet: ", pedidoDet);
+    console.log("Lista Aceptados: ", this.listIdPedidosAceptadosBar);
+    let pedidoAceptado: any = this.listIdPedidosAceptadosBar.find(pedido => pedido.id == pedidoDet.id_pedido);
+    console.log("Pedido encontrado: ", pedidoAceptado);
+    let key: string = pedidoAceptado.key;
+    delete pedidoAceptado.key;
+    pedidoAceptado.estado = 'finalizado';
+    this.baseService.updateItem('pedidos', key, pedidoAceptado);
+    this.traerPedidosPerfilBar();
+  }
+
   terminarPedido(pedidoDet) {
     this.spinner = true;
     console.log("Pedido det: ", pedidoDet) ;
@@ -306,10 +321,11 @@ aceptarPedido(mesa: string) {
     delete pedidoAceptado.key;
     pedidoAceptado.estado = 'finalizado';
     this.baseService.updateItem('pedidoDetalle', pedidoKey, pedidoAceptado);
-     
+
+    this.actualizoPedidoFin(pedidoAceptado);
     setTimeout(() => this.traerPedidosPerfilBar() , 1300);  
     setTimeout(() => this.traerPedidosActivosPorPerfilBarTermina(pedidoDet) , 1000);  
-  
+    
   }
 
 }
