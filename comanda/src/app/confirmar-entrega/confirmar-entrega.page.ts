@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FirebaseService } from "../services/firebase.service";
 import { ToastController } from "@ionic/angular";
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 @Component({
   selector: 'app-confirmar-entrega',
@@ -13,9 +14,11 @@ export class ConfirmarEntregaPage implements OnInit {
   pedidoDetalle: any[] = [];
   hayPedidoDelivery: boolean = false;
   hayPedidoEnLocal: boolean = false;
+  datosEscaneados: any;
 
   constructor(private baseService: FirebaseService,
-    private toastCtrl: ToastController) {
+    private toastCtrl: ToastController,
+    private scanner: BarcodeScanner) {
     this.traerPedidos();
   }
 
@@ -47,26 +50,44 @@ export class ConfirmarEntregaPage implements OnInit {
     });
   }
 
-  confirmarEntrega(){
-    if(this.hayPedidoEnLocal){
+  propina() {
+    this.scanner.scan().then((data) => {
+    //   this.datosEscaneados = data;
+      let propina: string = JSON.parse(this.datosEscaneados.text);
+
+      this.pedidoDelivery.preciototal += parseInt(propina) * this.pedidoDelivery.preciototal / 100;
+
+      let key = this.pedidoDelivery.key;
+      delete this.pedidoDelivery['key'];
+      this.baseService.updateItem('pedidosDelivery', key, this.pedidoDelivery);
+
+      this.presentToast('Propina cargada');
+      this.traerDetalle(this.pedidoDelivery.id);
+    }, (err) => {
+        console.log("Error: " + err);
+      });
+  }
+
+  confirmarEntrega() {
+    if (this.hayPedidoEnLocal) {
       let key: string = this.pedidoEnLocal.key;
       delete this.pedidoEnLocal['key'];
       this.pedidoEnLocal.estado = 'entregado';
       this.baseService.updateItem('pedidos', key, this.pedidoEnLocal);
     }
-    if(this.hayPedidoDelivery){
+    if (this.hayPedidoDelivery) {
       let key: string = this.pedidoDelivery.key;
       delete this.pedidoDelivery['key'];
       this.pedidoDelivery.estado = 'cobrado';
       this.baseService.updateItem('pedidosDelivery', key, this.pedidoDelivery);
     }
-    this.presentToast();
+    this.presentToast('Entrega confirmada');
     this.traerPedidos();
   }
 
-  async presentToast() {
+  async presentToast(mensaje: string) {
     const toast = await this.toastCtrl.create({
-      message: 'Entrega confirmada',
+      message: mensaje,
       color: 'success',
       showCloseButton: false,
       position: 'bottom',
