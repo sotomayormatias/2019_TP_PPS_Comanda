@@ -39,12 +39,12 @@ export class ReservasPage implements OnInit {
   
   hora: any;
   clienteEnEspera: any;
-  reservaRealizada: any;
+  reservaRealizada: any = null;
 
-  listaEsperaClientes: any[];
+  // listaEsperaClientes: any[];
   key: any;
-  mesas: any[];
-  PickerOptions: any;
+  mesas: any = null;
+  // PickerOptions: any;
   mesaSeleccionada: any;
   // cantPersonas: any;
   spinner:boolean ; 
@@ -86,19 +86,16 @@ export class ReservasPage implements OnInit {
       // );
       
 
-      this.eventSource = this.createEvents();
+      this.eventSource = this.createEvents();  
  
-      
-       
+   }
+
+  ngOnInit() {
     this.baseService.getItems('mesas').then(mesa => {
       this.mesas = mesa
 
 
     });
-   }
-
-  ngOnInit() {
-
    
   }
 
@@ -129,113 +126,77 @@ export class ReservasPage implements OnInit {
     this.fechaElegida.dia = splitFecha[2].split('T')[0];
     this.fechaElegida.mes = splitFecha[1];
 
-    
-
-   
-  
-   
-
   }
  
+
  
 
   guardar(){
 
-    localStorage.setItem("tienereserva","false");
-    let usuarioLogueado: any = JSON.parse(sessionStorage.getItem('usuario'));
-    this.baseService.getItems('reservademesas').then(lista => {
-    this.reservaRealizada = lista.find(cliente => cliente.correo == usuarioLogueado.correo);
-    // if(this.reservaRealizada != undefined)
-    // {   
-    
-    //   localStorage.setItem("tienereserva","true");
-    //   console.log(localStorage.getItem("tienereserva"));
-    //   this.muestroToast("Usted ya tiene una reserva asignada.");
-   
-
-    // }
-
-
-  });
-
-  console.log(localStorage.getItem("tienereserva"));
-  // if( localStorage.getItem("tienereserva") == "false")
-
-  // {
+    //VARIABLES
+    // localStorage.setItem("tienereserva","false");
     let horaminutoseg = this.hora.substr(11,this.hora.length-21);
+    // console.log(this.hora);
     let splitHoraMinSeg= horaminutoseg.split(':');
-
     this.fechaElegida.hora = splitHoraMinSeg[0];
     this.fechaElegida.minuto = splitHoraMinSeg[1];
-  
- 
+    // let usuarioLogueado: any = JSON.parse(sessionStorage.getItem('usuario'));
 
-    this.baseService.getItems('listaEsperaClientes').then(lista => {
+    //TABLA RESERVAMESAS
+    this.guardarReservas();
 
-
-
-    this.clienteEnEspera = lista.find(cliente => cliente.correo == usuarioLogueado.correo);
- 
-
-  
-
-  //   firebase.database().ref('listaEsperaClientes/'+ this.clienteEnEspera.key)
-  //   .update({
-  //     reserva: {
-  //       "fechaElegida": this.fechaElegida,
-  //       "mesaSeleccionada": this.mesaSeleccionada
-       
-    
-  //     }
-  
-  //  });
-
-   firebase.database().ref('reservademesas/'+ this.clienteEnEspera.key)
-   .update({
-    
-       "correo": usuarioLogueado.correo,
-       "fechaElegida": this.fechaElegida,
-       "mesaSeleccionada": this.mesaSeleccionada
-      //  "cantidadPersonas": this.cantPersonas
- 
-  });
-
-  firebase.database().ref('mesas/'+ this.clienteEnEspera.key)
-  .update({
    
-      "reservada": "si",
-      "correo": usuarioLogueado.correo,
-      "fechaElegida": this.fechaElegida,
-      "mesaSeleccionada": this.mesaSeleccionada
-     //  "cantidadPersonas": this.cantPersonas
-
- });
-
-  localStorage.setItem("dia",this.fechaElegida.dia);
-  localStorage.setItem("mes",this.fechaElegida.mes);
-  localStorage.setItem("hora",this.fechaElegida.hora);
-  localStorage.setItem("minuto",this.fechaElegida.minuto);
-
-  localStorage.setItem("reservaStatus","si");
 
 
-  this.spinner = true;
-  this.eventSource = this.createEvents(); 
+    localStorage.setItem("dia",this.fechaElegida.dia);
+    localStorage.setItem("mes",this.fechaElegida.mes);
+    localStorage.setItem("hora",this.fechaElegida.hora);
+    localStorage.setItem("minuto",this.fechaElegida.minuto);
   
-  setTimeout(() => this.spinner = false , 3000);
-
-   this.muestroToast("Su reserva fue guardada con exito.");
-
-
-  });
-
-
+    localStorage.setItem("reservaStatus","si");
+  
+  
+    this.spinner = true;
+    this.eventSource = this.createEvents(); 
     
-  // } FIN IF tienereserva
-
-    
+    setTimeout(() => this.spinner = false , 3000);
+  
+     this.muestroToast("Su reserva fue guardada con exito.");
   
   }
+
+  guardarReservas(){
+
+      let usuarioLogueado: any = JSON.parse(sessionStorage.getItem('usuario'));
+      this.baseService.getItems('reservademesas').then(lista => {
+      this.reservaRealizada = lista.find(cliente => cliente.correo == usuarioLogueado.correo);
+      let objetoEnviar = {
+        "correo": usuarioLogueado.correo,
+        "fechaElegida": this.fechaElegida,
+        "mesaSeleccionada": this.mesaSeleccionada,
+        "estadoConfirmacion": "pendiente"
+      }
+      if(this.reservaRealizada == undefined)
+      {
+        this.baseService.addItem('reservademesas', objetoEnviar);  
+
+      }
+      else{
+        this.baseService.updateItem('reservademesas', this.reservaRealizada.key, objetoEnviar);  
+
+      }
+    
+      });
+
+  }
+
+ 
+
+
+
+
+
+
 
   async muestroToast(mensaje: string) {
     const toast = await this.toastcontroler.create({
@@ -259,41 +220,41 @@ export class ReservasPage implements OnInit {
 //     );
 // }
 
-createEventsTrue() {
-  var events = [];
-  let usuarioLogueado: any = JSON.parse(sessionStorage.getItem('usuario'));
-  this.baseService.getItems('reservademesas').then(lista => {
-  this.reservaRealizada = lista.find(cliente => cliente.correo == usuarioLogueado.correo);
+// createEventsTrue() {
+//   var events = [];
+//   let usuarioLogueado: any = JSON.parse(sessionStorage.getItem('usuario'));
+//   this.baseService.getItems('reservademesas').then(lista => {
+//   this.reservaRealizada = lista.find(cliente => cliente.correo == usuarioLogueado.correo);
   
-  var date = new Date();
-  date.setHours(parseInt(this.reservaRealizada.fechaElegida.hora));
-  date.setMinutes(parseInt(this.reservaRealizada.fechaElegida.minuto));
-  date.setMonth(parseInt(this.reservaRealizada.fechaElegida.mes));
-  date.setDate(parseInt(this.reservaRealizada.fechaElegida.dia));
-  date.setFullYear(2019);
-      var startDay = parseInt(this.reservaRealizada.fechaElegida.dia);
-      var endDay = startDay;
-      var startMinute = parseInt(this.reservaRealizada.fechaElegida.minuto);
-      var endMinute = Math.floor(2 * 180) + startMinute;
+//   var date = new Date();
+//   date.setHours(parseInt(this.reservaRealizada.fechaElegida.hora));
+//   date.setMinutes(parseInt(this.reservaRealizada.fechaElegida.minuto));
+//   date.setMonth(parseInt(this.reservaRealizada.fechaElegida.mes));
+//   date.setDate(parseInt(this.reservaRealizada.fechaElegida.dia));
+//   date.setFullYear(2019);
+//       var startDay = parseInt(this.reservaRealizada.fechaElegida.dia);
+//       var endDay = startDay;
+//       var startMinute = parseInt(this.reservaRealizada.fechaElegida.minuto);
+//       var endMinute = Math.floor(2 * 180) + startMinute;
 
-      var startTime;
-      var endTime;
+//       var startTime;
+//       var endTime;
 
-      startTime = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, date.getMinutes());
-      endTime = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-      // console.log(startTime);
-      events.push({
-        title: 'Reserva: ' + startTime,
-        startTime: startTime,
-        allDay: false
-    });
+//       startTime = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, date.getMinutes());
+//       endTime = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+//       // console.log(startTime);
+//       events.push({
+//         title: 'Reserva: ' + startTime,
+//         startTime: startTime,
+//         allDay: false
+//     });
  
-  });
-  // console.log(events);
-  return events;
+//   });
+//   // console.log(events);
+//   return events;
   
   
-}
+// }
 
 createEvents(){
 
@@ -304,7 +265,6 @@ createEvents(){
   this.baseService.getItems('reservademesas').then(lista => {
     this.reservaRealizada = lista.find(cliente => cliente.correo == usuarioLogueado.correo);
     
-
     if(this.reservaRealizada == undefined)
     {
       
@@ -317,6 +277,8 @@ createEvents(){
       localStorage.setItem("mes",this.reservaRealizada.fechaElegida.mes);
       localStorage.setItem("hora",this.reservaRealizada.fechaElegida.hora);
       localStorage.setItem("minuto",this.reservaRealizada.fechaElegida.minuto);
+      localStorage.setItem("estadoConfirmacion",this.reservaRealizada.estadoConfirmacion);
+      // console.log(localStorage.getItem("estadoConfirmacion"));
       localStorage.setItem("reservaStatus","si");
 
     }
@@ -326,18 +288,30 @@ createEvents(){
     // this.startMinute = parseInt();
   });
   
-  var date = new Date();
-  var eventType = Math.floor(Math.random() * 2);
+  // var date = new Date();
+  // var eventType = Math.floor(Math.random() * 2);
+
+
+
+
+  // var startDay = parseInt(localStorage.getItem("dia"));
+  // var endDay = parseInt(localStorage.getItem("dia")) ;
+  // var startMinute = parseInt(localStorage.getItem("minuto"));
+  // var startHora = parseInt(localStorage.getItem("hora"));
+  // var startMes = parseInt(localStorage.getItem("mes"));
+  // var startStatus = localStorage.getItem("reservaStatus");
   var startDay = parseInt(localStorage.getItem("dia"));
   var endDay = parseInt(localStorage.getItem("dia")) ;
   var startMinute = parseInt(localStorage.getItem("minuto"));
   var startHora = parseInt(localStorage.getItem("hora"));
   var startMes = parseInt(localStorage.getItem("mes"));
   var startStatus = localStorage.getItem("reservaStatus");
+  var confirmadaStatus = localStorage.getItem("estadoConfirmacion");
+
   var startTime;
   var endTime;
  
-  var endMinute = Math.floor(60) + startMinute;
+  var endMinute = Math.floor(120) + startMinute;
 
     for (var i = 0; i < 1; i += 1) {
       
@@ -355,7 +329,8 @@ createEvents(){
           // console.log(endTime);
 
           events.push({
-              title: "Reserva Programada",
+              title: 'Estado Reserva: '+ confirmadaStatus,
+              // notes: 'notas',
               startTime: startTime,
               endTime: endTime,
               allDay: false

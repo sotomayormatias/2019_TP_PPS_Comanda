@@ -105,6 +105,12 @@ export class AppComponent {
               url: '/list-confirmar-cliente-alta',
               icon: 'checkbox-outline'
             },
+            // CONFIRMA RESERVA
+            {
+              title: 'OK - Confirmar Reservas',
+              url: '/list-reserva-conf',
+              icon: 'calendar'
+            },
             // (F) QR Ingreso
             {
               title: 'OK - QR Ingreso',
@@ -307,7 +313,7 @@ export class AppComponent {
 
             // (N) HACER RESERVAS AGENDADAS 
             {
-              title: 'NOK - Hacer reservas',
+              title: 'OK - Hacer reservas',
               url: '/reservas',
               icon: 'calendar'
             },

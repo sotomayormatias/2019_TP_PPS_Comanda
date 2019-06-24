@@ -1,0 +1,31 @@
+<ion-header>
+    <ion-toolbar color="dark">
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>
+        Lista de Reservas
+      </ion-title>
+      <ion-buttons slot="end">
+        <img id="iconToolBar" src="../../assets/imgs/icon.png">
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+    <ion-list>
+      <ion-item *ngFor="let reserva of reservas">
+        <!-- <ion-icon [name]="item.icon" slot="start"></ion-icon> -->
+        Cliente: {{reserva.correo}} 
+        Fecha: {{reserva.fechaElegida.dia}}/{{reserva.fechaElegida.mes}}
+        Horario: {{reserva.fechaElegida.hora}} - {{reserva.fechaElegida.minuto}} 
+        Mesa Seleccionada: {{reserva.mesaSeleccionada}}
+        <!-- <div class="item-note" slot="end"> -->
+            <ion-button  size="small" (click)="confirmarReserva(reserva.correo)">Confirmar</ion-button>
+        <!-- </div> -->
+      </ion-item>
+      <!-- <ion-item>
+          
+      </ion-item> -->
+    </ion-list>
+  </ion-content>
