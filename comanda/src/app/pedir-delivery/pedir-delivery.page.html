@@ -13,14 +13,9 @@
 </ion-header>
 
 <ion-content>
-  <!-- <ion-item>
+  <ion-toolbar class="toolbarText">
     <ion-label position="floating">Ingrese dirección</ion-label>
-    <ion-input type="text" [(ngModel)]="direccion" name="direccion" placeholder="Ej: Mitre 750, Avellaneda"
-      (keyup.enter)="buscarDireccion()"></ion-input>
-  </ion-item> -->
-  <ion-toolbar  class="toolbarText">
-    <ion-label position="floating">Ingrese dirección</ion-label>
-    <ion-input type="text" [(ngModel)]="direccion" name="direccion" placeholder="Ej: Mitre 750, Avellaneda"></ion-input>
+    <ion-input type="text" [(ngModel)]="direccion" id="direccion" name="direccion" placeholder="Ej: Mitre 750, Avellaneda"></ion-input>
     <ion-buttons slot="end">
       <ion-button (click)="buscarDireccion()">
         <ion-icon name="search" color="primary" slot="icon-only"></ion-icon>
@@ -59,6 +54,7 @@
       </ion-item>
     </ion-list>
   </div>
+  <div>Los pedidos de delivery tienen un cargo adicional de $50 sobre el precio final.</div>
   <input type="hidden" id="latitud">
   <input type="hidden" id="longitud">
 </ion-content>
