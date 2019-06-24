@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Camera, CameraOptions, PictureSourceType } from "@ionic-native/camera/ngx";
-// import { QRScanner, QRScannerStatus } from "@ionic-native/qr-scanner/ngx";
 import { BarcodeScanner, BarcodeScannerOptions } from "@ionic-native/barcode-scanner/ngx";
 import { AlertController } from '@ionic/angular';
 import * as firebase from "firebase";
@@ -14,12 +13,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./abm-cliente.page.scss'],
 })
 export class AbmClientePage implements OnInit {
-  formClienteAnonimo: FormGroup;
+  // formClienteAnonimo: FormGroup;
   formClienteRegistrado: FormGroup;
   captureDataUrl: Array<string>;
   hayFotos: boolean = false;
   cantidadFotos: number = 0;
-  esAnonimo: boolean = false;
+  // esAnonimo: boolean = false;
   datosEscaneados: any;
   datosCliente: any;
 
@@ -37,9 +36,9 @@ export class AbmClientePage implements OnInit {
       correoRegistrado: new FormControl('', Validators.required),
       claveRegistrado: new FormControl('', Validators.required)
     });
-    this.formClienteAnonimo = new FormGroup({
-      nombreAnonimo: new FormControl('', Validators.required)
-    });
+    // this.formClienteAnonimo = new FormGroup({
+    //   nombreAnonimo: new FormControl('', Validators.required)
+    // });
     this.captureDataUrl = new Array<string>();
   }
 
@@ -80,19 +79,20 @@ export class AbmClientePage implements OnInit {
     let storageRef = firebase.storage().ref();
     let errores: number = 0;
 
-   
+
     this.datosCliente = {
-        'nombre': this.formClienteRegistrado.get('nombreRegistrado').value,
-        'apellido': this.formClienteRegistrado.get('apellidoRegistrado').value,
-        'dni': this.formClienteRegistrado.get('dniRegistrado').value,
-        'correo': this.formClienteRegistrado.get('correoRegistrado').value,
-        'clave': this.formClienteRegistrado.get('claveRegistrado').value,
-        'estado': 'pendiente',
-        'esAnonimo': false
-   
+      'nombre': this.formClienteRegistrado.get('nombreRegistrado').value,
+      'apellido': this.formClienteRegistrado.get('apellidoRegistrado').value,
+      'dni': this.formClienteRegistrado.get('dniRegistrado').value,
+      'correo': this.formClienteRegistrado.get('correoRegistrado').value,
+      'clave': this.formClienteRegistrado.get('claveRegistrado').value,
+      'estado': 'pendiente',
+      'esAnonimo': false
+
     };
 
-    this.guardardatosDeCliente(this.datosCliente);
+    // this.guardardatosDeCliente(this.datosCliente);
+    this.baseService.addItem('clientes', this.datosCliente);
 
     this.captureDataUrl.forEach(foto => {
       let filename: string = (this.formClienteRegistrado.get('nombreRegistrado').value).replace(' ', '_');
@@ -115,13 +115,13 @@ export class AbmClientePage implements OnInit {
       this.subidaErronea("Error en al menos una foto");
   }
 
-  guardardatosDeCliente(datos) {
-    let storageRef = firebase.database().ref('clientes/');
-    let imageData = storageRef.push();
-    imageData.set(datos);
- 
-    this.baseService.addItem('usuarios', { 'clave':  this.formClienteRegistrado.get('claveRegistrado').value, 'correo': this.formClienteRegistrado.get('correoRegistrado').value , 'perfil': 'cliente' });
-  }
+  // guardardatosDeCliente(datos) {
+  //   // let storageRef = firebase.database().ref('clientes/');
+  //   // let imageData = storageRef.push();
+  //   // imageData.set(datos);
+  //   this.baseService.addItem('clientes', datos);
+  //   this.baseService.addItem('usuarios', { 'clave': this.formClienteRegistrado.get('claveRegistrado').value, 'correo': this.formClienteRegistrado.get('correoRegistrado').value, 'perfil': 'cliente' });
+  // }
 
   async subidaExitosa(mensaje) {
     const alert = await this.alertCtrl.create({
@@ -161,12 +161,12 @@ export class AbmClientePage implements OnInit {
     let nombre = parsedData[2].toString();
     let apellido = parsedData[1].toString();
     let dni: number = +parsedData[4];
-    if (this.esAnonimo) {
-      this.formClienteAnonimo.get('nombreAnonimo').setValue(nombre);
-    } else {
-      this.formClienteRegistrado.get('nombreRegistrado').setValue(nombre);
-      this.formClienteRegistrado.get('apellidoRegistrado').setValue(apellido);
-      this.formClienteRegistrado.get('dniRegistrado').setValue(dni);
-    }
+    // if (this.esAnonimo) {
+    //   this.formClienteAnonimo.get('nombreAnonimo').setValue(nombre);
+    // } else {
+    this.formClienteRegistrado.get('nombreRegistrado').setValue(nombre);
+    this.formClienteRegistrado.get('apellidoRegistrado').setValue(apellido);
+    this.formClienteRegistrado.get('dniRegistrado').setValue(dni);
+    // }
   }
 }

@@ -14,7 +14,7 @@
   <!-- <ion-label>Anónimo</ion-label>
   <ion-toggle color="dark" [(ngModel)]="esAnonimo" [ngModelOptions]="{standalone: true}"></ion-toggle> -->
 
-  <div *ngIf="esAnonimo">
+  <!-- <div *ngIf="esAnonimo">
     <form [formGroup]="formClienteAnonimo" (submit)="agregarCliente()">
       <div class="body"></div>
       <ion-list>
@@ -39,9 +39,9 @@
         </div>
       </ion-list>
     </form>
-  </div>
+  </div> -->
 
-  <div id="formularioRegistrado" *ngIf="!esAnonimo">
+  <div id="formularioRegistrado">
     <form [formGroup]="formClienteRegistrado" (submit)="agregarCliente()">
       <div class="body"></div>
       <ion-list>
