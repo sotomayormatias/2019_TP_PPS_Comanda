@@ -59,22 +59,35 @@ export class ModalRutaPage implements OnInit {
 
     var lat = parseFloat(this.pedidoDelivery.latitud);
     var lng = parseFloat(this.pedidoDelivery.longitud);
-    
+
     var request = {
-      origin: { lat: -34.706458, lng: -58.384059 },
+      origin: { lat: -34.6623821, lng: -58.3645907 },
       destination: new google.maps.LatLng(lat, lng),
       travelMode: 'DRIVING'
     };
 
     directionsService.route(request, function (result, status) {
       if (status == 'OK') {
+        let tiempoRuta = 0;
+        let distanciaRuta = 0;
+        let legs = result.routes[0].legs;
+        for (var i = 0; i < legs.length; ++i) {
+          tiempoRuta += legs[i].duration.value;
+          distanciaRuta += legs[i].distance.value;
+        }
+        tiempoRuta = tiempoRuta / 60;
+        distanciaRuta = distanciaRuta / 1000;
+        var elementTiempo: HTMLElement = document.getElementById('tiempoRuta');
+        var elementDistancia: HTMLElement = document.getElementById('distanciaRuta');
+        elementTiempo.innerHTML = 'Tiempo: ' + Math.floor(tiempoRuta) + ' minutos';
+        elementDistancia.innerHTML = 'Distancia: ' + distanciaRuta.toFixed(1) + ' kilometros';
         directionsDisplay.setDirections(result);
       }
     });
 
     const elementoMapa: HTMLElement = document.getElementById('mapa');
     this.mapa = new google.maps.Map(elementoMapa, {
-      center: { lat: -34.706458, lng: -58.384059 },
+      center: { lat: -34.6623821, lng: -58.3645907 },
       zoom: 12
     });
 
