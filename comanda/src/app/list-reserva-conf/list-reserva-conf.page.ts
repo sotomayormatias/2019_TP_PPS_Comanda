@@ -34,7 +34,32 @@ export class ListReservaConfPage implements OnInit {
     this.baseService.updateItem('reservademesas', key, reservaConfirmado);
     // this.baseService.addItem('usuarios', { 'clave': clienteConfirmado.clave, 'correo': correo, 'perfil': 'cliente' });
     // this.enviarCorreo(correo);
+
+
+     //TABLA MESAS
+     this.guardarMesas();   
+
+
     this.traerReservasPendientes();
+  }
+
+  guardarMesas (){
+
+  //   let usuarioLogueado: any = JSON.parse(sessionStorage.getItem('usuario'));
+  //   this.baseService.getItems('mesas').then(mesas => {
+  //     this.mesas = mesas.find(mesaEl => mesaEl.nromesa == this.mesaSeleccionada);
+    
+  //     this.mesas.reservada = "si";
+
+  //     this.baseService.updateItem('mesas', this.mesas.key , this.mesas);
+
+    
+      
+    
+  
+  
+  //   });
+
   }
 
 }

@@ -145,8 +145,7 @@ export class ReservasPage implements OnInit {
     //TABLA RESERVAMESAS
     this.guardarReservas();
 
-    //TABLA MESAS
-    this.guardarMesas();   
+   
 
 
     localStorage.setItem("dia",this.fechaElegida.dia);
@@ -191,36 +190,7 @@ export class ReservasPage implements OnInit {
 
   }
 
-  guardarMesas (){
-
-    let usuarioLogueado: any = JSON.parse(sessionStorage.getItem('usuario'));
-    this.baseService.getItems('mesas').then(mesas => {
-      this.mesas = mesas.find(mesaEl => mesaEl.nromesa == this.mesaSeleccionada);
-      // console.log(this.mesaSeleccionada);
-      // let key = this.mesas.key;
-      // let objetoEnviar = {
-      //   "reservada": "si",
-      // }
-      this.mesas.reservada = "si";
-
-      this.baseService.updateItem('mesas', this.mesas.key , this.mesas);
-
-      // if(key == undefined)
-      // {
-      //   this.baseService.addItem('mesas', objetoEnviar);  
-
-      // }
-      // else{
-       
-
-      // }
-      
-    
-  
-  
-    });
-
-  }
+ 
 
 
 
