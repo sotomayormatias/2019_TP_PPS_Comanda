@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FirebaseService } from '../services/firebase.service';
 import { EmailComposer } from "@ionic-native/email-composer/ngx";
+import { ToastController } from "@ionic/angular";
 
 @Component({
   selector: 'app-list-confirmar-cliente-alta',
@@ -10,10 +11,12 @@ import { EmailComposer } from "@ionic-native/email-composer/ngx";
 export class ListConfirmarClienteAltaPage implements OnInit {
 
   clientes: any[];
+  hayClientes: boolean = true;
 
   constructor(
     private baseService: FirebaseService,
-    private sendEmail: EmailComposer) {
+    private sendEmail: EmailComposer,
+    private toastCtrl: ToastController) {
     this.traerClientesPendientes();
   }
 
@@ -24,6 +27,7 @@ export class ListConfirmarClienteAltaPage implements OnInit {
     this.baseService.getItems('clientes').then(clients => {
       this.clientes = clients
       this.clientes = this.clientes.filter(cliente => cliente.estado == "pendiente");
+      this.hayClientes = this.clientes.length > 0;
     });
   }
 
@@ -36,6 +40,15 @@ export class ListConfirmarClienteAltaPage implements OnInit {
     this.baseService.addItem('usuarios', { 'clave': clienteConfirmado.clave, 'correo': correo, 'perfil': 'cliente' });
     this.enviarCorreo(correo);
     this.traerClientesPendientes();
+    this.presentToast('Cliente confirmado');
+  }
+
+  rechazarCliente(correo: string) {
+    let clienteRechazado: any = this.clientes.find(cliente => cliente.correo == correo);
+    let key: string = clienteRechazado.key;
+    this.baseService.removeItem('clientes', key);
+    this.traerClientesPendientes();
+    this.presentToast('Cliente rechazado');
   }
 
   enviarCorreo(correo: string) {
@@ -47,5 +60,17 @@ export class ListConfirmarClienteAltaPage implements OnInit {
     }
     // Send a text message using default options
     this.sendEmail.open(email);
+  }
+
+  async presentToast(mensaje: string) {
+    const toast = await this.toastCtrl.create({
+      message: mensaje,
+      color: 'success',
+      showCloseButton: false,
+      position: 'bottom',
+      closeButtonText: 'Done',
+      duration: 2000
+    });
+    toast.present();
   }
 }

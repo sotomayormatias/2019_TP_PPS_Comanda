@@ -13,13 +13,23 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
+  <ion-list *ngIf="hayClientes">
     <ion-item *ngFor="let cliente of clientes">
-      <!-- <ion-icon [name]="item.icon" slot="start"></ion-icon> -->
       {{cliente.nombre}} {{cliente.apellido}}
       <div class="item-note" slot="end">
-        <ion-button size="small" (click)="confirmarCliente(cliente.correo)">Confirmar</ion-button>
+        <ion-button size="small" color="primary" (click)="confirmarCliente(cliente.correo)">
+          <ion-icon slot="icon-only" name="checkmark"></ion-icon>
+        </ion-button>
+        <ion-button size="small" color="danger" (click)="rechazarCliente(cliente.correo)">
+          <ion-icon slot="icon-only" name="close"></ion-icon>
+        </ion-button>
       </div>
     </ion-item>
   </ion-list>
+
+  <ion-card *ngIf="!hayClientes">
+    <ion-card-content>
+      No hay clientes para confirmar.
+    </ion-card-content>
+  </ion-card>
 </ion-content>
