@@ -12,16 +12,27 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-list *ngIf="perfil == 'dueño' || perfil == 'supervisor'">
+<ion-content *ngIf="perfil == 'dueño' || perfil == 'supervisor'">
+  <ion-list *ngIf="hayPedidosAConfirmar">
     <ion-item *ngFor="let pedido of pedidosAConfirmar">
       Cliente: {{pedido.cliente}} - Dirección: {{pedido.direccion}}
-      <div class="item-note" slot="end">
-        <ion-button size="small" (click)="confirmarPedido(pedido.cliente)">Confirmar</ion-button>
-      </div>
+      <ion-button size="small" color="primary" (click)="confirmarPedido(pedido.cliente)">
+        <ion-icon slot="icon-only" name="checkmark"></ion-icon>
+      </ion-button>
+      <ion-button size="small" color="danger" (click)="rechazarPedido(pedido.cliente)">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
     </ion-item>
   </ion-list>
-  <ion-list *ngIf="perfil == 'delivery'">
+  <ion-card *ngIf="!hayPedidosAConfirmar">
+    <ion-card-content>
+      No hay pedidos de delivery para confirmar.
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+<ion-content *ngIf="perfil == 'delivery'">
+  <ion-list *ngIf="hayPedidosAEntregar">
     <ion-item *ngFor="let pedido of pedidosAEntregar">
       Cliente: {{pedido.cliente}} - Dirección: {{pedido.direccion}}
       <div class="item-note" slot="end">
@@ -29,4 +40,9 @@
       </div>
     </ion-item>
   </ion-list>
+  <ion-card *ngIf="!hayPedidosAEntregar">
+    <ion-card-content>
+      No hay pedidos de delivery para entregar.
+    </ion-card-content>
+  </ion-card>
 </ion-content>

@@ -13,24 +13,24 @@
     <ion-label>Pedido:</ion-label>
     <ion-list>
       <ion-item *ngFor="let producto of pedidoDetalle">
-        <ion-row>
-          <ion-col>
-            <ion-label>{{producto?.producto}}</ion-label>
-          </ion-col>
-        </ion-row>
+        {{producto?.producto}}
+        <div slot="end">{{producto?.cantidad}}</div>
       </ion-item>
     </ion-list>
   </div>
-
+  <div id="datosRuta">
+    <ion-card>
+      <ion-card-content>
+        <ion-card-title id="tiempoRuta"></ion-card-title>
+        <ion-card-title id="distanciaRuta"></ion-card-title>
+      </ion-card-content>
+    </ion-card>
+  </div>
   <div id="datosPedido">
     <ion-card>
       <img [src]="cliente?.foto">
-      <ion-card-header>
-        <ion-card-title>
-          Dirección: {{pedidoDelivery?.direccion}}
-        </ion-card-title>
-      </ion-card-header>
       <ion-card-content>
+        <ion-card-title>Dirección: {{pedidoDelivery?.direccion}}</ion-card-title>
         <ion-card-title>Cliente: {{cliente?.nombre}} {{cliente?.apellido}}</ion-card-title>
         <ion-card-title>Precio: ${{pedidoDelivery?.preciototal}}</ion-card-title>
       </ion-card-content>

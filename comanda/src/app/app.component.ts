@@ -331,7 +331,7 @@ export class AppComponent {
             },
             // (R) DELIV - PEDIDO GPS / DIRECCIÓN (LOGUEADO, no anonimo)
             {
-              title: 'NOK - Delivery',
+              title: 'OK - Delivery',
               url: '/pedir-delivery',
               icon: 'pin'
             },
@@ -583,17 +583,11 @@ export class AppComponent {
               url: '/home',
               icon: 'home'
             },
-            // (13) VER PEDIDOS
+            // (13)(S) VER PEDIDOS Y RUTA
             {
               title: 'OK - Ver pedidos',
               url: '/list-confirmar-delivery',
               icon: 'checkbox-outline'
-            },
-            // (S) MAPA DE RUTA HASTA DOMICILIO Y DETALLE DE PEDIDO
-            {
-              title: 'NOK - Ruta H.Domicilio',
-              url: '/',
-              icon: 'logo-model-s'
             },
             // (S) CHAT
             {

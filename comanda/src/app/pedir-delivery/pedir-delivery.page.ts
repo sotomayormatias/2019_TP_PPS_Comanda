@@ -4,6 +4,8 @@ import { ToastController, ModalController } from "@ionic/angular";
 import { ModalPedidoPage } from "../modal-pedido/modal-pedido.page";
 
 declare var google;
+var map;
+var markers = [];
 
 @Component({
   selector: 'app-pedir-delivery',
@@ -48,7 +50,6 @@ export class PedirDeliveryPage implements OnInit {
   }
 
   generarPedido() {
-    // Se genera una copia de la lista de productos
     let productosPedidos = this.productos.filter(prod => prod.cantidad > 0);
 
     if (productosPedidos.length > 0 && this.direccion != "") {
@@ -67,7 +68,6 @@ export class PedirDeliveryPage implements OnInit {
         'latitud': latitud.value,
         'longitud': longitud.value,
         'estado': 'creado'
-
       };
       this.baseService.addItem('pedidosDelivery', pedido);
 
@@ -93,7 +93,7 @@ export class PedirDeliveryPage implements OnInit {
     pedido.forEach(producto => {
       precioTotal += (producto.precio * producto.cantidad);
     });
-
+    precioTotal += 50;
     return precioTotal;
   }
 
@@ -126,9 +126,34 @@ export class PedirDeliveryPage implements OnInit {
 
   cargarMapa() {
     const elementoMapa: HTMLElement = document.getElementById('mapa');
-    this.mapa = new google.maps.Map(elementoMapa, {
-      center: { lat: -34.706458, lng: -58.384059 },
+    map = new google.maps.Map(elementoMapa, {
+      center: { lat: -34.6623821, lng: -58.3645907 },
       zoom: 12
+    });
+
+    map.addListener('click', function (e) {
+      markers.forEach(mark => {
+        mark.setMap(null);
+      });
+      var marker = new google.maps.Marker({
+        position: e.latLng,
+        map: map
+      });
+      markers.push(marker);
+      map.panTo(e.latLng);
+      
+      new google.maps.Geocoder().geocode({'location': e.latLng}, function(results, status) {
+        if (status === 'OK') {
+          if (results[0]) {
+            var direccion = <HTMLInputElement>document.getElementById('direccion');
+            direccion.value = results[0].formatted_address;
+          } else {
+           alert('No results found');
+          }
+        } else {
+          alert('Geocoder failed due to: ' + status);
+        }
+      });
     });
   }
 
@@ -136,20 +161,20 @@ export class PedirDeliveryPage implements OnInit {
     this.geocoder = new google.maps.Geocoder();
     this.geocoder.geocode({ 'address': this.direccion }, function (results, status) {
       if (status == 'OK') {
+        map.setCenter(results[0].geometry.location);
+        map.setZoom(16);
+        var marker = new google.maps.Marker({
+          position: results[0].geometry.location,
+          map: map,
+          title: 'Tu ubicación'
+        });
+
+        // Cargo las coordenadas en hiddens para despues obtenerlas para guardar en firebase
         var latitud = (<HTMLInputElement>document.getElementById('latitud'));
         var longitud = (<HTMLInputElement>document.getElementById('longitud'));
         latitud.value = results[0].geometry.location.lat();
         longitud.value = results[0].geometry.location.lng();
-        const elementoMapa: HTMLElement = document.getElementById('mapa');
-        this.mapa = new google.maps.Map(elementoMapa, {
-          center: { lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng() },
-          zoom: 16
-        });
-        var marker = new google.maps.Marker({
-          position: { lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng() },
-          map: this.mapa,
-          title: 'Tu ubicación'
-        });
+       
       } else {
         alert('Geocode was not successful for the following reason: ' + status);
       }
