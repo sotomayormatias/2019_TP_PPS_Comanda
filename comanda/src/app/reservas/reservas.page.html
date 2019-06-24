@@ -23,7 +23,7 @@
                   <ion-card-title >Calendario</ion-card-title>
                 </ion-card-header>
               
-                <ion-card-content>
+                <!-- <ion-card-content> -->
                     <ion-grid style="height: 100%">
                         <ion-row justify-content-center align-items-center style="height: 100%; flex-direction: column">
                         <ion-spinner *ngIf="spinner" name="lines"></ion-spinner>
@@ -31,15 +31,15 @@
                           </ion-row>
                         </ion-grid>
 
-                  <div class="dark">
-                  <calendar *ngIf="!spinner" style="color: white"  [eventSource]="eventSource" [markDisabled]="markDisabled" 
+                  <!-- <div class="dark"> -->
+                  <calendar *ngIf="!spinner"   [eventSource]="eventSource" [markDisabled]="markDisabled" 
                     [calendarMode]="calendar.mode" [currentDate]="calendar.currentDate"
                     (onCurrentDateChanged)="onCurrentDateChanged($event)" 
                     (onTimeSelected)="onTimeSelected($event)" step="30">
                   
                   </calendar>
-                </div>
-        </ion-card-content>
+                <!-- </div> -->
+        <!-- </ion-card-content> -->
         </ion-card>
           <!-- </div> -->
           <div *ngIf="!spinner" class="botones" >
