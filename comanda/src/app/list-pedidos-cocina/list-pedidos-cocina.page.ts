@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FirebaseService } from "../services/firebase.service";
+import { PickerController } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-list-pedidos-cocina',
@@ -13,6 +15,7 @@ export class ListPedidosCocinaPage implements OnInit {
   
   spinner: boolean;
   listaRecorreAux: any;
+  hayLista: any; 
 
 
   listIdPedidosAceptados: any;
@@ -40,13 +43,42 @@ export class ListPedidosCocinaPage implements OnInit {
 
   ngOnInit() {
     this.traerPedidosPerfil();
-    this.traerProductosPerfil();
-    this.traerPedidosActivosPorPerfil();
+    // this.traerProductosPerfil();
+    // this.traerPedidosActivosPorPerfil();
   }
 
-  traerProductosPerfil() {
+
+  ionRefresh(event) {
+    // console.log('Pull Event Triggered!');
+    setTimeout(() => {
+      // console.log('Async operation has ended');
+
+      // complete()  signify that the refreshing has completed and to close the refresher
+      event.target.complete();
+      this.pedidosMostrarFil = [];
+      this.listIdPedidosAceptados = null ;
+      this.listProductos  = [];
+      this.traerPedidosPerfil();
+    }, 2000);
+    }
+    ionPull(event) {
+      // Emitted while the user is pulling down the content and exposing the refresher.
+      // console.log('ionPull Event Triggered!');
+     
+    }
+    ionStart(event) {
+      // Emitted when the user begins to start pulling down.
+      // console.log('ionStart Event Triggered!');
+      // this.pedidosMostrarBarFil = [];
+      // this.listIdPedidosAceptadosBar = null ;
+      // this.listProductosBar  = [];
+      // this.traerPedidosPerfilBar();
+    }
+
+
+    async traerProductosPerfil() {
     // TRAIGO PEDIDOS Y ME QUEDO CON LOS ACEPTADOS
-    this.baseService.getItems('productos').then(prod => {
+    await this.baseService.getItems('productos').then(async prod => {
       this.productosPerfil = prod;
       // console.log("Todos Pedidos: ", this.pedidos);
       this.productosPerfil = this.productosPerfil.filter(producto => producto.quienPuedever == "cocinero");
@@ -60,39 +92,36 @@ export class ListPedidosCocinaPage implements OnInit {
             
           }
         );
-      // console.log("Productos perfil: ", this.productosPerfil);
-      
-      // localStorage.setItem("listProductos", "" ); 
-      
-      localStorage.removeItem("listProductos"); 
-      localStorage.setItem("listProductos", JSON.stringify(this.listProductos) ); 
-      
-      // console.log("List Productos: ", this.listProductos);
+      // localStorage.removeItem("listProductosBar"); 
+      // localStorage.setItem("listProductosBar", JSON.stringify(this.listProductosBar) ); 
+      // await this.traerPedidosPerfilBar();
+      // console.log("List Productos: ", this.listProductosBar);
     });
+    await this.traerPedidosActivosPorPerfil();  
 
   }
 
-  traerPedidosPerfil() {
+  async traerPedidosPerfil() {
 
     // this.pedidosMostrar = [];
     // while (this.pedidosMostrar.length) { this.pedidosMostrarFil.pop(); }
     this.pedidosMostrar = [] ; 
 
     // TRAIGO PEDIDOS Y ME QUEDO CON LOS ACEPTADOS
-    this.baseService.getItems('pedidos').then(ped => {
+    await this.baseService.getItems('pedidos').then(ped => {
     
       this.pedidos = ped;
       // console.log("Todos Pedidos: ", this.pedidos);
-      this.pedidos = this.pedidos.filter(pedido => pedido.estado == "aceptado" || pedido.estado == "preparacion" );
+      this.pedidos = this.pedidos.filter(pedido => pedido.estado == "aceptado" || pedido.estado == "preparacion" || pedido.estado == "listoEntrega" );
       this.listIdPedidosAceptados =  this.pedidos;
       // console.log("Pedidos Aceptados: ", this.listIdPedidosAceptados);
     });
 
-    this.baseService.getItems('pedidosDelivery').then(ped => {
+    await this.baseService.getItems('pedidosDelivery').then(ped => {
 
       this.pedidos = ped;
       // console.log("Todos Pedidos: ", this.pedidos);
-      this.pedidos = this.pedidos.filter(pedido => pedido.estado == "aceptado" || pedido.estado == "preparacion"  );
+      this.pedidos = this.pedidos.filter(pedido => pedido.estado == "aceptado" || pedido.estado == "preparacion" || pedido.estado == "listoEntrega"  );
       
       this.pedidos.forEach(pedido =>  {
         pedido.delivery = true ;
@@ -103,7 +132,7 @@ export class ListPedidosCocinaPage implements OnInit {
     });
 
     // RECORRO DETALLE DE PEDIDOS POR ID
-    this.baseService.getItems('pedidoDetalle').then(detalle => {
+    await this.baseService.getItems('pedidoDetalle').then(detalle => {
       
       this.detalle = detalle;
       // console.log("Pedidos Detalles: ", this.detalle);
@@ -145,20 +174,23 @@ export class ListPedidosCocinaPage implements OnInit {
       // console.log("Pedidos a mostrar: ",  this.pedidosMostrar ) ;   
       
       // localStorage.setItem("listaPedidosAceptados", "" );  
-      localStorage.removeItem("listaPedidosAceptados"); 
-      localStorage.setItem("listaPedidosAceptados", JSON.stringify(this.pedidosMostrar) );  
+      // localStorage.removeItem("listaPedidosAceptados"); 
+      // localStorage.setItem("listaPedidosAceptados", JSON.stringify(this.pedidosMostrar) );  
       });
       
- 
+    await this.traerProductosPerfil();  
 
     }
 
     traerPedidosActivosPorPerfil() {
       this.pedidosMostrarFil = [];
 
-      let listaRecorre = localStorage.getItem("listaPedidosAceptados").toString();
+      // let listaRecorre = localStorage.getItem("listaPedidosAceptados").toString();
 
-      let listaProductos = localStorage.getItem("listProductos");
+      // let listaProductos = localStorage.getItem("listProductos");
+      let listaRecorre = JSON.stringify(this.pedidosMostrar).toString();
+      
+      let listaProductos = JSON.stringify(this.listProductos);
       let listaProductosParsed = JSON.parse(listaProductos);
 
       JSON.parse(listaRecorre).forEach(idDetalle => {
@@ -178,7 +210,7 @@ export class ListPedidosCocinaPage implements OnInit {
                     'delivery': idDetalle.delivery,
                     'key': idDetalle.key
                   };
-                  console.log("Pedido detalle: ", pedido_detalle);
+                  // console.log("Pedido detalle: ", pedido_detalle);
                   this.pedidosMostrarFil.push( JSON.parse(JSON.stringify(pedido_detalle))   ); 
                 }
               
@@ -186,17 +218,27 @@ export class ListPedidosCocinaPage implements OnInit {
               }
         });
       this.spinner = false;
-      console.log("Lista Filtrada: ", this.pedidosMostrarFil);
+      // console.log("Lista Filtrada: ", this.pedidosMostrarFil);
+      if (this.pedidosMostrarFil.length == 0) {
+        this.hayLista = false;
+      } else {
+        this.hayLista = true;
       }
+      
+    }  
+    
     
 
 
-    traerPedidosActivosPorPerfilPrepara(pedidoDet) {
+traerPedidosActivosPorPerfilPrepara(pedidoDet) {
 
         this.pedidosMostrarFil = [];
-        let listaRecorre = localStorage.getItem("listaPedidosAceptados").toString();
+        // let listaRecorre = localStorage.getItem("listaPedidosAceptados").toString();
   
-        let listaProductos = localStorage.getItem("listProductos");
+        // let listaProductos = localStorage.getItem("listProductos");
+        let listaRecorre = JSON.stringify(this.pedidosMostrar).toString();
+        let listaProductos = JSON.stringify(this.listProductos);
+
         let listaProductosParsed = JSON.parse(listaProductos);
   
         JSON.parse(listaRecorre).forEach(idDetalle => {
@@ -239,14 +281,17 @@ export class ListPedidosCocinaPage implements OnInit {
           });
         this.spinner = false;
         console.log("Lista Prepara: ", this.pedidosMostrarFil);
+        this.traerPedidosPerfil();
         }
 
         traerPedidosActivosPorPerfilTermina(pedidoDet) {
 
           this.pedidosMostrarFil = [];
-          let listaRecorre = localStorage.getItem("listaPedidosAceptados").toString();
+          // let listaRecorre = localStorage.getItem("listaPedidosAceptados").toString();
     
-          let listaProductos = localStorage.getItem("listProductos");
+          // let listaProductos = localStorage.getItem("listProductos");
+          let listaRecorre = JSON.stringify(this.pedidosMostrar).toString();
+          let listaProductos = JSON.stringify(this.listProductos);
           let listaProductosParsed = JSON.parse(listaProductos);
     
           JSON.parse(listaRecorre).forEach(idDetalle => {
@@ -265,7 +310,7 @@ export class ListPedidosCocinaPage implements OnInit {
                         'estado': "finalizado",
                         'key': idDetalle.key
                       };
-                      console.log("Pedido detalle modificado: ", pedido_detalle);
+                      // console.log("Pedido detalle modificado: ", pedido_detalle);
                       this.pedidosMostrarFil.push( JSON.parse(JSON.stringify(pedido_detalle))   ); 
                     } else if ( idDetalle.producto == iterator) {
                 
@@ -279,14 +324,15 @@ export class ListPedidosCocinaPage implements OnInit {
                         'delivery': idDetalle.delivery,
                         'key': idDetalle.key
                       };
-                      console.log("Pedido detalle: ", pedido_detalle);
+                      // console.log("Pedido detalle: ", pedido_detalle);
                       this.pedidosMostrarFil.push( JSON.parse(JSON.stringify(pedido_detalle))   ); 
                     }
     
                   }
             });
           this.spinner = false;
-          console.log("Lista Prepara: ", this.pedidosMostrarFil);
+          // console.log("Lista Prepara: ", this.pedidosMostrarFil);
+          this.traerPedidosPerfil();
           }
 
   // GESTION
@@ -294,11 +340,11 @@ export class ListPedidosCocinaPage implements OnInit {
 
   prepararPedido(pedidoDet) {
     this.spinner = true;
-    console.log("Pedido det: ", pedidoDet) ;
+    // console.log("Pedido det: ", pedidoDet) ;
     let pedidoAceptado = pedidoDet ;
     let pedidoKey = pedidoAceptado.key ;
 
-    console.log("Pedido key: ", pedidoDet.key) ;
+    // console.log("Pedido key: ", pedidoDet.key) ;
     
     delete pedidoAceptado.key;
     pedidoAceptado.tiempo = this.TEstimado;
@@ -306,96 +352,102 @@ export class ListPedidosCocinaPage implements OnInit {
     this.baseService.updateItem('pedidoDetalle', pedidoKey, pedidoAceptado);
 
     this.actualizoPedido (pedidoDet);
-    setTimeout(() => this.traerPedidosPerfil() , 1300);  
-    setTimeout(() => this.traerPedidosActivosPorPerfilPrepara(pedidoDet) , 1000);  
+    // setTimeout(() => this.traerPedidosPerfil() , 1300);  
+    // setTimeout(() => this.traerPedidosActivosPorPerfilPrepara(pedidoDet) , 1000);  
     }
   
 
-    actualizoPedido(pedidoDet) {
-      console.log("PedidoDet: ", pedidoDet);
-      console.log("Lista Aceptados: ", this.listIdPedidosAceptados);
+    async actualizoPedido(pedidoDet) {
+      // console.log("PedidoDet: ", pedidoDet);
+      // console.log("Lista Aceptados: ", this.listIdPedidosAceptados);
       let pedidoAceptado: any = this.listIdPedidosAceptados.find(pedido => pedido.id == pedidoDet.id_pedido);
-      console.log("Pedido encontrado: ", pedidoAceptado);
+      // console.log("Pedido encontrado: ", pedidoAceptado);
       let key: string = pedidoAceptado.key;
       delete pedidoAceptado.key;
       pedidoAceptado.estado = 'preparacion';
   
       
-      this.baseService.getItems('pedidos').then(ped => {
+      await this.baseService.getItems('pedidos').then(ped => {
   
         this.pedidoEnLocal = ped.find(pedido => pedido.id == pedidoDet.id_pedido);
-        console.log("Pedido en local: ", this.pedidoEnLocal);
+        // console.log("Pedido en local: ", this.pedidoEnLocal);
         this.hayPedidoEnLocal = this.pedidoEnLocal != undefined;
-        console.log("Hay Pedido en local: ", this.hayPedidoEnLocal);
+        // console.log("Hay Pedido en local: ", this.hayPedidoEnLocal);
         
         if (this.hayPedidoEnLocal)
         this.baseService.updateItem('pedidos', key, pedidoAceptado);
       });
   
-      this.baseService.getItems('pedidosDelivery').then(ped => {
+      await this.baseService.getItems('pedidosDelivery').then(ped => {
         this.pedidoDelivery = ped.find(pedido =>  pedido.id == pedidoDet.id_pedido);
-        console.log("Pedido Delivery: ", this.pedidoDelivery);
+        // console.log("Pedido Delivery: ", this.pedidoDelivery);
         this.hayPedidoDelivery = this.pedidoDelivery != undefined;
-        console.log("Hay Pedido Delivery: ", this.hayPedidoDelivery);
+        // console.log("Hay Pedido Delivery: ", this.hayPedidoDelivery);
   
         if (this.hayPedidoDelivery)
   
         this.baseService.updateItem('pedidosDelivery', key, pedidoAceptado);
       });
       // this.baseService.updateItem('pedidos', key, pedidoAceptado);
+      this.pedidosMostrarFil = [];
+      this.listIdPedidosAceptados = null ;
+      this.listProductos  = [];
       this.traerPedidosPerfil();
     }
     
-    actualizoPedidoFin(pedidoDet) {
+    async actualizoPedidoFin(pedidoDet) {
      
       // SUMARLE 1 AL CONTADOR DE PEDIDO
       // VERIFICAR SI SON = CON EL cantDet para actualizar con el listoEntrega
       let pedidoAceptado: any = this.listIdPedidosAceptados.find(pedido => pedido.id == pedidoDet.id_pedido);
-      console.log("Pedido encontrado: ", pedidoAceptado);
+      // console.log("Pedido encontrado: ", pedidoAceptado);
       let key: string = pedidoAceptado.key;
       delete pedidoAceptado.key;
       pedidoAceptado.estado = 'listoEntrega';
   
-      this.baseService.getItems('pedidos').then(ped => {
+      await this.baseService.getItems('pedidos').then(ped => {
   
         this.pedidoEnLocal = ped.find(pedido => pedido.id == pedidoDet.id_pedido);
-        console.log("Pedido en local: ", this.pedidoEnLocal);
+        // console.log("Pedido en local: ", this.pedidoEnLocal);
         this.hayPedidoEnLocal = this.pedidoEnLocal != undefined;
-        console.log("Hay Pedido en local: ", this.hayPedidoEnLocal);
+        // console.log("Hay Pedido en local: ", this.hayPedidoEnLocal);
         
         if (this.hayPedidoEnLocal)
         this.baseService.updateItem('pedidos', key, pedidoAceptado);
       });
   
-      this.baseService.getItems('pedidosDelivery').then(ped => {
+      await this.baseService.getItems('pedidosDelivery').then(ped => {
         this.pedidoDelivery = ped.find(pedido =>  pedido.id == pedidoDet.id_pedido);
-        console.log("Pedido Delivery: ", this.pedidoDelivery);
+        // console.log("Pedido Delivery: ", this.pedidoDelivery);
         this.hayPedidoDelivery = this.pedidoDelivery != undefined;
-        console.log("Hay Pedido Delivery: ", this.hayPedidoDelivery);
+        // console.log("Hay Pedido Delivery: ", this.hayPedidoDelivery);
   
         if (this.hayPedidoDelivery)
   
         this.baseService.updateItem('pedidosDelivery', key, pedidoAceptado);
       });
       // this.baseService.updateItem('pedidos', key, pedidoAceptado);
+      this.pedidosMostrarFil = [];
+      this.listIdPedidosAceptados = null ;
+      this.listProductos  = [];
       this.traerPedidosPerfil();
     }
   
   terminarPedido(pedidoDet) {
     this.spinner = true;
-    console.log("Pedido det: ", pedidoDet) ;
+    // console.log("Pedido det: ", pedidoDet) ;
     let pedidoAceptado = pedidoDet ;
     let pedidoKey = pedidoAceptado.key ;
 
-    console.log("Pedido key: ", pedidoDet.key) ;
+    // console.log("Pedido key: ", pedidoDet.key) ;
     
     delete pedidoAceptado.key;
     pedidoAceptado.estado = 'finalizado';
     this.baseService.updateItem('pedidoDetalle', pedidoKey, pedidoAceptado);
     
     this.actualizoPedidoFin(pedidoAceptado);
-    setTimeout(() => this.traerPedidosPerfil() , 1300);  
-    setTimeout(() => this.traerPedidosActivosPorPerfilTermina(pedidoDet) , 1000);  
+    // setTimeout(() => this.traerPedidosPerfil() , 1300);  
+    // setTimeout(() => this.traerPedidosActivosPorPerfilTermina(pedidoDet) , 1000);  
   
   }
 }
