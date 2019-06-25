@@ -52,7 +52,19 @@ export class GenerarPedidoPage implements OnInit {
         let idPedido = sessionStorage.getItem('pedido');
         this.existePedidoAbierto = !(typeof pedidos.find(pedido => pedido.id == idPedido && pedido.estado != 'cerrado') === 'undefined');
         if (this.existePedidoAbierto) {
-          this.actualizarPedido();
+          this.baseService.getItems('pedidoDetalle').then(productos => {
+            let pedidoEnPreparacion: boolean = false;
+            productos.forEach(prod => {
+              if (prod.id_pedido == idPedido && prod.estado == 'preparacion') {
+                pedidoEnPreparacion = true;
+              }
+            });
+            if (pedidoEnPreparacion) {
+              this.presentAlertPedidoEnProceso();
+            } else {
+              this.actualizarPedido();
+            }
+          });
         } else {
           this.generarPedido();
         }
@@ -98,6 +110,15 @@ export class GenerarPedidoPage implements OnInit {
     const alert = await this.alertCtrl.create({
       subHeader: 'Cliente sin mesa',
       message: 'Usted no está asignado a ninguna mesa.',
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
+
+  async presentAlertPedidoEnProceso() {
+    const alert = await this.alertCtrl.create({
+      subHeader: 'El pedido no puede modificarse',
+      message: 'El pedido ya se encuentra en preparación.',
       buttons: ['OK']
     });
     await alert.present();
@@ -155,27 +176,27 @@ export class GenerarPedidoPage implements OnInit {
       let productosPedidos = this.productos.filter(prod => prod.cantidad > 0);
 
       if (productosPedidos.length > 0) {
-          productosPedidos.forEach(producto => {
-            let pedido_detalle = {
-              'id_pedido': idPedido,
-              'producto': producto.nombre,
-              'precio': producto.precio,
-              'cantidad': producto.cantidad,
-              'estado': 'creado'
-            };
-            this.baseService.addItem('pedidoDetalle', pedido_detalle);
-          });
-          this.presentToast("Pedido actualizado.");
+        productosPedidos.forEach(producto => {
+          let pedido_detalle = {
+            'id_pedido': idPedido,
+            'producto': producto.nombre,
+            'precio': producto.precio,
+            'cantidad': producto.cantidad,
+            'estado': 'creado'
+          };
+          this.baseService.addItem('pedidoDetalle', pedido_detalle);
+        });
+        this.presentToast("Pedido actualizado.");
       }
     });
   }
-  
+
   async muestraModal() {
     let pedido = '0';
     if (sessionStorage.getItem('pedido')) {
       pedido = sessionStorage.getItem('pedido');
     }
-    
+
     const modal = await this.modalCtrl.create({
       component: ModalPedidoPage,
       componentProps: {
@@ -185,10 +206,10 @@ export class GenerarPedidoPage implements OnInit {
     return await modal.present();
   }
 
-  cargarPedidoExistente(){
+  cargarPedidoExistente() {
     this.baseService.getItems('pedidos').then(pedidos => {
       this.existePedidoAbierto = !(typeof pedidos.find(pedido => pedido.mesa == this.mesaDelPedido.nromesa && pedido.estado != 'cerrado') === 'undefined');
-      if(this.existePedidoAbierto && !sessionStorage.getItem('pedido')){
+      if (this.existePedidoAbierto && !sessionStorage.getItem('pedido')) {
         sessionStorage.setItem('pedido', pedidos.find(pedido => pedido.mesa == this.mesaDelPedido.nromesa && pedido.estado != 'cerrado').id);
       }
     });
