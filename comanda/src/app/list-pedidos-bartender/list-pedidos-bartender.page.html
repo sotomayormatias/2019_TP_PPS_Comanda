@@ -10,12 +10,16 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content  *ngIf="spinner"  padding class="spinnerCenter">
+
+<p *ngIf="!hayLista"> NO HAY PEDIDOS</p>
+<p *ngIf="hayLista"> HAY PEDIDOS </p>
+
+<ion-content  *ngIf="spinner && !hayLista"  padding class="spinnerCenter">
     <!-- <ion-spinner name="crescent"></ion-spinner> -->
     <ion-spinner *ngIf="spinner" name="bubbles" color="dark"></ion-spinner>
 </ion-content>
 
-<ion-content  *ngIf="!spinner" >
+<ion-content  *ngIf="!spinner && hayLista" >
     <ion-list *ngIf="!spinner">
       <ion-item class="item-text-wrap card" *ngFor="let pedido of pedidosMostrarBarFil; index as i">
         <ion-col col-12 col-md-6 col-lg-4 col-xl-3>
