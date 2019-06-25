@@ -43,7 +43,7 @@
         </ion-card>
           <!-- </div> -->
           <div *ngIf="!spinner" class="botones" >
-          <ion-datetime  class="round" [(ngModel)]="hora" display-format="H:mm" placeholder="Seleccione Hora"></ion-datetime>
+          <ion-datetime  class="round" [(ngModel)]="hora" display-format="HH:mm" hourValues="24,1,2,17,18,19,20,21,22,23" minuteValues="0,5,15,20,25,30,35,40,45,50,55" pickerFormat="HH:mm" placeholder="Seleccione Hora"></ion-datetime>
           <!-- </ion-item> -->
           <!-- <ion-item color="dark" class="round"> -->
            <!-- <ion-label position="floating">Mesa</ion-label>  -->
