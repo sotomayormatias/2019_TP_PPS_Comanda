@@ -10,6 +10,7 @@ import { FirebaseService } from '../services/firebase.service';
 export class ListReservaConfPage implements OnInit {
 
   reservas: any[];
+  // itemReservas:any;
 
 
   constructor(  private baseService: FirebaseService) { 
@@ -46,6 +47,25 @@ export class ListReservaConfPage implements OnInit {
 
 
      this.traerReservasPendientes();
+  }
+
+  rechazarReserva(correo: string) {
+    let reservaRechazada: any = this.reservas.find(cliente => cliente.correo == correo);
+    if(reservaRechazada !== undefined)
+    {
+      let key: string = reservaRechazada.key;
+      // delete reservaConfirmado['key'];
+      reservaRechazada.estadoConfirmacion = 'rechazada';
+      this.baseService.updateItem('reservademesas', key, reservaRechazada);
+      // this.baseService.addItem('usuarios', { 'clave': clienteConfirmado.clave, 'correo': correo, 'perfil': 'cliente' });
+      // this.enviarCorreo(correo);
+     
+       //TABLA MESAS
+      //  this.guardarMesas();     
+
+    }
+    this.traerReservasPendientes();
+    
   }
 
   guardarMesas (){

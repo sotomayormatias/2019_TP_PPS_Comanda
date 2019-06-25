@@ -12,20 +12,31 @@
     </ion-toolbar>
   </ion-header>
   
-  <ion-content>
-    <ion-list>
-      <ion-item *ngFor="let reserva of reservas">
+  <ion-content padding>
+    <!-- <ion-list> -->
+    <ion-grid shape="round" *ngFor="let reserva of reservas" >
+
+    <ion-row>
+      <ion-col shape="round">
+      <ion-item   padding>
         <!-- <ion-icon [name]="item.icon" slot="start"></ion-icon> -->
         Cliente: {{reserva.correo}} 
         Fecha: {{reserva.fechaElegida.dia}}/{{reserva.fechaElegida.mes}}
         Horario: {{reserva.fechaElegida.hora}} - {{reserva.fechaElegida.minuto}} 
         Mesa Seleccionada: {{reserva.mesaSeleccionada}}
-        <!-- <div class="item-note" slot="end"> -->
-            <ion-button  size="small" (click)="confirmarReserva(reserva.correo)">Confirmar</ion-button>
-        <!-- </div> -->
+        <!-- <div>
+            <ion-button color="danger" size="small" (click)="confirmarReserva(reserva.correo)">Rechazar</ion-button>
+            <ion-button color="success" size="small" (click)="confirmarReserva(reserva.correo)">Confirmar</ion-button>
+        </div> -->
+
+      <!-- <ion-item> -->
+         
+        <!-- </ion-item> -->
       </ion-item>
-      <!-- <ion-item>
-          
-      </ion-item> -->
-    </ion-list>
+      <ion-button color="danger" size="small" (click)="rechazarReserva(reserva.correo)">Rechazar</ion-button>
+      <ion-button color="success" size="small" (click)="confirmarReserva(reserva.correo)">Confirmar</ion-button>
+      </ion-col>
+      </ion-row>
+    </ion-grid>
+    <!-- </ion-list> -->
   </ion-content>
