@@ -40,7 +40,7 @@ export class QrIngresoLocalPage implements OnInit {
       let usuarioLogueado = JSON.parse(sessionStorage.getItem("usuario"));
       // this.presentAlertIngresoLocal();
 
-      if (usuarioLogueado.perfil == "cliente") {
+      if (usuarioLogueado.perfil == "cliente" || usuarioLogueado.perfil == "clienteAnonimo" ) {
         // this.presentAlertCliente();
         // PONGO AL CLIENTE EN LA LISTA DE ESPERA
         let datos: any = { 'correo': usuarioLogueado.correo, 'perfil': usuarioLogueado.perfil, 'key': usuarioLogueado.key, 'estado': "confirmacionMozo" };
