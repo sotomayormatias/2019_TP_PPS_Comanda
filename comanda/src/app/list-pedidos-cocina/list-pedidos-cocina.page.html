@@ -9,15 +9,39 @@
   </ion-toolbar>
 </ion-header>
 
-
-<ion-content  *ngIf="spinner"  padding class="spinnerCenter">
-    <!-- <ion-spinner name="crescent"></ion-spinner> -->
-    <ion-spinner *ngIf="spinner" name="bubbles" color="dark"></ion-spinner>
+<ion-content *ngIf="!hayLista">
+  <ion-refresher slot="fixed" 
+  (ionRefresh)="ionRefresh($event)" 
+  (ionPull)="ionPull($event)" 
+  (ionStart)="ionStart($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Estire para actualizar"
+      refreshingSpinner="circles"
+      refreshingText="Actualizando...">
+    </ion-refresher-content>
+  </ion-refresher>   
+<ion-card *ngIf="!hayLista">
+<ion-card-content>
+  No hay pedidos para tomar.
+</ion-card-content>
+</ion-card>
 </ion-content>
 
+<ion-content *ngIf="hayLista" >
+  <ion-refresher slot="fixed" 
+  (ionRefresh)="ionRefresh($event)"
+  >
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Estire para actualizar"
+      refreshingSpinner="circles"
+      refreshingText="Actualizando...">
 
-<ion-content *ngIf="!spinner">
-    <!-- <ion-spinner *ngIf="spinner" name="bubbles" color="dark"></ion-spinner> -->
+
+    </ion-refresher-content>
+  </ion-refresher>
+
   <ion-list *ngIf="!spinner">
       <ion-item class="item-text-wrap card" *ngFor="let pedido of pedidosMostrarFil; index as i">
       <ion-col col-12 col-md-6 col-lg-4 col-xl-3>
