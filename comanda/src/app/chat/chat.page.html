@@ -20,7 +20,56 @@
   </ion-card>
 </ion-content>
 
-<ion-content padding *ngIf="esClienteConPedido || esDeliveryBoy">
+<ion-content padding *ngIf="esDeliveryBoy">
+
+  <ion-select [(ngModel)]="cliente" (ngModelChange)="onChangeCliente()" class="round" placeholder="Seleccione un cliente">
+    <ion-select-option *ngFor="let cli of clientesConPedido" [value]="cli">{{cli}}</ion-select-option>
+  </ion-select>
+
+  <div class="message-wrap">
+    <div *ngFor="let chat of chats">
+      <div class="sender" *ngIf="chat.usuario != usuario.correo">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="10">
+              <div class="caja">
+                <div class="remitente">
+                  {{chat.usuario}}
+                </div>
+                <div class="mensaje">
+                  {{chat.texto}}
+                </div>
+                <div class="fecha">
+                  {{chat.hora}}
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+
+      <div class="me" *ngIf="chat.usuario == usuario.correo">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="2"></ion-col>
+            <ion-col size="10">
+              <div class="caja">
+                <div class="mensaje">
+                  {{chat.texto}}
+                </div>
+                <div class="fecha">
+                  {{chat.hora}}
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<ion-content padding *ngIf="esClienteConPedido">
   <div class="message-wrap">
     <div *ngFor="let chat of chats">
       <div class="sender" *ngIf="chat.usuario != usuario.correo">
@@ -66,9 +115,9 @@
 
 <ion-footer no-border *ngIf="esClienteConPedido || esDeliveryBoy">
   <ion-toolbar color="primary" class="toolbarText">
-    <ion-textarea [(ngModel)]="inputText" placeholder="Ingrese su mensaje" name="message" class="input"></ion-textarea>
+    <ion-textarea [(ngModel)]="inputText" [disabled]="esDeliveryBoy && cliente == ''" placeholder="Ingrese su mensaje" name="message" class="input"></ion-textarea>
     <ion-buttons slot="end">
-      <ion-button (click)="doSend()">
+      <ion-button (click)="doSend()" [disabled]="esDeliveryBoy && cliente == ''">
         <ion-icon name="send" color="light" slot="icon-only"></ion-icon>
       </ion-button>
     </ion-buttons>
