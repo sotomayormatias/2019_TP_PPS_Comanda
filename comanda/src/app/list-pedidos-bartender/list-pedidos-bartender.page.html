@@ -32,9 +32,8 @@
 
   <ion-content *ngIf="hayLista" >
       <ion-refresher slot="fixed" 
-      (ionRefresh)="ionRefresh($event)" 
-      (ionPull)="ionPull($event)" 
-      (ionStart)="ionStart($event)">
+      (ionRefresh)="ionRefresh($event)"
+      >
         <ion-refresher-content
           pullingIcon="arrow-dropdown"
           pullingText="Estire para actualizar"

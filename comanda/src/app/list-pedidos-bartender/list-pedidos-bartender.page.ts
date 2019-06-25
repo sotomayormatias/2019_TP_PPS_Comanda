@@ -54,6 +54,10 @@ export class ListPedidosBartenderPage implements OnInit {
 
       // complete()  signify that the refreshing has completed and to close the refresher
       event.target.complete();
+      this.pedidosMostrarBarFil = [];
+      this.listIdPedidosAceptadosBar = null ;
+      this.listProductosBar  = [];
+      this.traerPedidosPerfilBar();
     }, 2000);
     }
     ionPull(event) {
@@ -64,15 +68,11 @@ export class ListPedidosBartenderPage implements OnInit {
     ionStart(event) {
       // Emitted when the user begins to start pulling down.
       // console.log('ionStart Event Triggered!');
-      this.pedidosMostrarBarFil = [];
-      this.listIdPedidosAceptadosBar = null ;
-      this.listProductosBar  = [];
-      this.traerPedidosPerfilBar();
+      // this.pedidosMostrarBarFil = [];
+      // this.listIdPedidosAceptadosBar = null ;
+      // this.listProductosBar  = [];
+      // this.traerPedidosPerfilBar();
     }
-
-
-
-
 
 
   async traerProductosPerfilBar() {
