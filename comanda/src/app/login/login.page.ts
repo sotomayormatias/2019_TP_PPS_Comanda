@@ -67,11 +67,11 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
     
-    this.traerPedidosPerfilBar();
-    this.traerProductosPerfilBar();
+    // this.traerPedidosPerfilBar();
+    // this.traerProductosPerfilBar();
 
-    this.traerPedidosPerfil();
-    this.traerProductosPerfil();
+    // this.traerPedidosPerfil();
+    // this.traerProductosPerfil();
   }
 
   ionViewDidEnter() {
@@ -117,7 +117,7 @@ export class LoginPage implements OnInit {
 
   loginAnonimo() {
     this.spinner = true;
-    let usuarioLogueado = { nombre: "anonimo", perfil: "cliente" };
+    let usuarioLogueado = { nombre: this.cuenta.usuario , perfil: "clienteAnonimo" };
     setTimeout(() => this.spinner = false, 2000);
     sessionStorage.setItem('usuario', JSON.stringify(usuarioLogueado));
     this.events.publish('usuarioLogueado: ', 'clienteAnonimo');

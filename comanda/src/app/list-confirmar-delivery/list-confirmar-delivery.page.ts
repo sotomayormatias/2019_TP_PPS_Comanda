@@ -30,12 +30,15 @@ export class ListConfirmarDeliveryPage implements OnInit {
 
   traerPedidosAConfirmar() {
     this.baseService.getItems('pedidosDelivery').then(ped => {
-      this.pedidosAConfirmar = ped
+      this.pedidosAConfirmar = ped;
       this.pedidosAConfirmar = this.pedidosAConfirmar.filter(pedido => pedido.estado == "creado");
       if (this.pedidosAConfirmar.length == 0) {
         this.hayPedidosAConfirmar = false;
       }
+      console.log("prueba async dentro funcion");
     });
+
+    console.log("prueba async dsp funcion");
   }
 
   traerPedidosAEntregar() {
