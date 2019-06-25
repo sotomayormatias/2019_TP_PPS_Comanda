@@ -107,7 +107,7 @@ export class ListPedidosBartenderPage implements OnInit {
     await this.baseService.getItems('pedidos').then(ped => {
     
       this.pedidos = ped;
-      this.pedidos = this.pedidos.filter(pedido => pedido.estado == "aceptado" || pedido.estado == "preparacion" );
+      this.pedidos = this.pedidos.filter(pedido => pedido.estado == "aceptado" || pedido.estado == "preparacion" || pedido.estado == "listoEntrega" );
       this.listIdPedidosAceptadosBar =  this.pedidos;
       // console.log("Dentro de pedidos");
     });
@@ -120,7 +120,7 @@ export class ListPedidosBartenderPage implements OnInit {
 
       this.pedidos = ped;
       
-      this.pedidos = this.pedidos.filter(pedido => pedido.estado == "aceptado" || pedido.estado == "preparacion"  );
+      this.pedidos = this.pedidos.filter(pedido => pedido.estado == "aceptado" || pedido.estado == "preparacion" || pedido.estado == "listoEntrega" );
       
       this.pedidos.forEach(pedido =>  {
         pedido.delivery = true ;
@@ -281,6 +281,7 @@ export class ListPedidosBartenderPage implements OnInit {
           });
         this.spinner = false;
         // console.log("Lista Prepara: ", this.pedidosMostrarBarFil);
+        this.traerPedidosPerfilBar();
         }
 
         traerPedidosActivosPorPerfilBarTermina(pedidoDet) {
@@ -332,6 +333,7 @@ export class ListPedidosBartenderPage implements OnInit {
             });
           this.spinner = false;
           // console.log("Lista Prepara: ", this.pedidosMostrarBarFil);
+          this.traerPedidosPerfilBar();
           }
 
   // GESTION
@@ -348,12 +350,14 @@ export class ListPedidosBartenderPage implements OnInit {
     pedidoAceptado.estado = 'preparacion';
     this.baseService.updateItem('pedidoDetalle', pedidoKey, pedidoAceptado);
 
+  
     this.actualizoPedido (pedidoDet);
-    setTimeout(() => this.traerPedidosPerfilBar() , 1300);  
-    setTimeout(() => this.traerPedidosActivosPorPerfilBarPrepara(pedidoDet) , 1000); 
+    // this.traerPedidosPerfilBar();
+    // setTimeout(() => this.traerPedidosPerfilBar() , 1300);  
+    // setTimeout(() => this.traerPedidosActivosPorPerfilBarPrepara(pedidoDet) , 1000); 
   }
 
-  actualizoPedido(pedidoDet) {
+  async actualizoPedido(pedidoDet) {
     // console.log("PedidoDet: ", pedidoDet);
     // console.log("Lista Aceptados: ", this.listIdPedidosAceptadosBar);
     let pedidoAceptado: any = this.listIdPedidosAceptadosBar.find(pedido => pedido.id == pedidoDet.id_pedido);
@@ -363,7 +367,7 @@ export class ListPedidosBartenderPage implements OnInit {
     pedidoAceptado.estado = 'preparacion';
 
     
-    this.baseService.getItems('pedidos').then(ped => {
+    await this.baseService.getItems('pedidos').then(ped => {
 
       this.pedidoEnLocal = ped.find(pedido => pedido.id == pedidoDet.id_pedido);
       // console.log("Pedido en local: ", this.pedidoEnLocal);
@@ -374,7 +378,7 @@ export class ListPedidosBartenderPage implements OnInit {
       this.baseService.updateItem('pedidos', key, pedidoAceptado);
     });
 
-    this.baseService.getItems('pedidosDelivery').then(ped => {
+    await this.baseService.getItems('pedidosDelivery').then(ped => {
       this.pedidoDelivery = ped.find(pedido =>  pedido.id == pedidoDet.id_pedido);
       // console.log("Pedido Delivery: ", this.pedidoDelivery);
       this.hayPedidoDelivery = this.pedidoDelivery != undefined;
@@ -385,10 +389,13 @@ export class ListPedidosBartenderPage implements OnInit {
       this.baseService.updateItem('pedidosDelivery', key, pedidoAceptado);
     });
     // this.baseService.updateItem('pedidos', key, pedidoAceptado);
+    this.pedidosMostrarBarFil = [];
+    this.listIdPedidosAceptadosBar = null ;
+    this.listProductosBar  = [];
     this.traerPedidosPerfilBar();
   }
   
-  actualizoPedidoFin(pedidoDet) {
+  async actualizoPedidoFin(pedidoDet) {
     // console.log("PedidoDet: ", pedidoDet);
     // console.log("Lista Aceptados: ", this.listIdPedidosAceptadosBar);
     // SUMARLE 1 AL CONTADOR DE PEDIDO
@@ -399,7 +406,7 @@ export class ListPedidosBartenderPage implements OnInit {
     delete pedidoAceptado.key;
     pedidoAceptado.estado = 'listoEntrega';
 
-    this.baseService.getItems('pedidos').then(ped => {
+    await this.baseService.getItems('pedidos').then(ped => {
 
       this.pedidoEnLocal = ped.find(pedido => pedido.id == pedidoDet.id_pedido);
       // console.log("Pedido en local: ", this.pedidoEnLocal);
@@ -410,7 +417,7 @@ export class ListPedidosBartenderPage implements OnInit {
       this.baseService.updateItem('pedidos', key, pedidoAceptado);
     });
 
-    this.baseService.getItems('pedidosDelivery').then(ped => {
+    await this.baseService.getItems('pedidosDelivery').then(ped => {
       this.pedidoDelivery = ped.find(pedido =>  pedido.id == pedidoDet.id_pedido);
       // console.log("Pedido Delivery: ", this.pedidoDelivery);
       this.hayPedidoDelivery = this.pedidoDelivery != undefined;
@@ -421,6 +428,9 @@ export class ListPedidosBartenderPage implements OnInit {
       this.baseService.updateItem('pedidosDelivery', key, pedidoAceptado);
     });
     // this.baseService.updateItem('pedidos', key, pedidoAceptado);
+    this.pedidosMostrarBarFil = [];
+    this.listIdPedidosAceptadosBar = null ;
+    this.listProductosBar  = [];
     this.traerPedidosPerfilBar();
   }
 
@@ -436,9 +446,10 @@ export class ListPedidosBartenderPage implements OnInit {
     pedidoAceptado.estado = 'finalizado';
     this.baseService.updateItem('pedidoDetalle', pedidoKey, pedidoAceptado);
 
+   
     this.actualizoPedidoFin(pedidoAceptado);
-    setTimeout(() => this.traerPedidosPerfilBar() , 1300);  
-    setTimeout(() => this.traerPedidosActivosPorPerfilBarTermina(pedidoDet) , 1000);  
+    // setTimeout(() => this.traerPedidosPerfilBar() , 1300);  
+    // setTimeout(() => this.traerPedidosActivosPorPerfilBarTermina(pedidoDet) , 1000);  
     
   }
 
