@@ -10,13 +10,18 @@
   </ion-toolbar>
 </ion-header>
 
+<ion-content *ngIf="!hayLista">
+<ion-card *ngIf="!hayLista">
+  <ion-card-content>
+    No hay pedidos para tomar.
+  </ion-card-content>
+</ion-card>
+</ion-content>
 
-<p *ngIf="!hayLista"> NO HAY PEDIDOS</p>
-<p *ngIf="hayLista"> HAY PEDIDOS </p>
 
 <ion-content  *ngIf="spinner && !hayLista"  padding class="spinnerCenter">
     <!-- <ion-spinner name="crescent"></ion-spinner> -->
-    <ion-spinner *ngIf="spinner" name="bubbles" color="dark"></ion-spinner>
+
 </ion-content>
 
 <ion-content  *ngIf="!spinner && hayLista" >
