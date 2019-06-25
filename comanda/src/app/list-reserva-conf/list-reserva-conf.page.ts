@@ -13,14 +13,20 @@ export class ListReservaConfPage implements OnInit {
 
 
   constructor(  private baseService: FirebaseService) { 
-    this.traerReservasPendientes();
+  
   }
 
   ngOnInit() {
+    this.cargoReservasPendientes()
   }
 
-  traerReservasPendientes() {
-    this.baseService.getItems('reservademesas').then(lista => {
+  async cargoReservasPendientes(){
+    await this.traerReservasPendientes();
+  }
+ 
+
+  async traerReservasPendientes() {
+    await this.baseService.getItems('reservademesas').then(async lista => {
       this.reservas = lista
       this.reservas = this.reservas.filter(reserva => reserva.estadoConfirmacion == "pendiente");
     });
@@ -35,12 +41,11 @@ export class ListReservaConfPage implements OnInit {
     // this.baseService.addItem('usuarios', { 'clave': clienteConfirmado.clave, 'correo': correo, 'perfil': 'cliente' });
     // this.enviarCorreo(correo);
 
-
      //TABLA MESAS
      this.guardarMesas();   
 
 
-    this.traerReservasPendientes();
+     this.traerReservasPendientes();
   }
 
   guardarMesas (){

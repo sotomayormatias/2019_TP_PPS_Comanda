@@ -40,23 +40,16 @@ export class ReservasPage implements OnInit {
   hora: any;
   clienteEnEspera: any;
   reservaRealizada: any = null;
-
-  // listaEsperaClientes: any[];
   key: any;
   mesas: any = null;
-  // PickerOptions: any;
+
   mesaSeleccionada: any;
-  // cantPersonas: any;
+
   spinner:boolean ; 
   tienereserva: boolean = false;
 
-  // calendario: any;
-
-  // startDay: number = 1;
-  // endDay : number = 1;
-  // startMinute : number = 1;
-  // startTime : any;
-  // endTime :any;
+  min: any;
+  max: any;
 
   constructor(
     public calendario: Calendar,
@@ -64,40 +57,47 @@ export class ReservasPage implements OnInit {
     public toastcontroler: ToastController,
     private baseService: FirebaseService
     ) {
+      // this.max=(new Date((new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).getTime() + 30 * 24 * 60 * 60 * 1000).toISOString());
+      // this.min= (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString();
+
+      // let date = new Date();
+      // date.setFullYear(2019);
+      // date.setDate(25);
+      // date.setMonth(6);
+      // date.setHours(1);
+      // date.setMinutes(30);
+
+      // this.max = "2019-6-25T01:30";
+
+      // date.setHours(19);
+      // date.setMinutes(30);
 
 
+      // this.min = "2019-6-25T19:30";
 
-      // this.PickerOptions = {
-      //   buttons: [{
-      //     text: 'guardo',
-      //     handler: () => console.log('Prueba guardo')
-      //   }, {
-      //     text: 'Salgo',
-      //     handler: () => {
-      //       console.log('salir');
-      //       return false;
-      //     }
-      //   }]
-      // }
-
-      // this.calendario.createCalendar('MyCalendar').then(
-      //   (msg) => { console.log(msg); },
-      //   (err) => { console.log(err); }
-      // );
-      
-
-      this.eventSource = this.createEvents();  
+     
  
    }
 
   ngOnInit() {
-    this.baseService.getItems('mesas').then(mesa => {
-      this.mesas = mesa
 
-
-    });
+    this.cargoEventoCalendario();
+    this.cargoMesas();
+    
    
   }
+
+  async cargoEventoCalendario(){
+    this.eventSource = await this.createEvents();  
+
+  }
+
+  cargoMesas(){
+    this.baseService.getItems('mesas').then(mesa => {
+      this.mesas = mesa
+    });
+  }
+
 
   changeMode(mode) {
     this.calendar.mode = mode;
@@ -131,44 +131,53 @@ export class ReservasPage implements OnInit {
 
  
 
-  guardar(){
+  async guardar(){
 
     //VARIABLES
-    // localStorage.setItem("tienereserva","false");
     let horaminutoseg = this.hora.substr(11,this.hora.length-21);
-    // console.log(this.hora);
     let splitHoraMinSeg= horaminutoseg.split(':');
-    this.fechaElegida.hora = splitHoraMinSeg[0];
-    this.fechaElegida.minuto = splitHoraMinSeg[1];
-    // let usuarioLogueado: any = JSON.parse(sessionStorage.getItem('usuario'));
+    let date = new Date()
+    let dateCreada = new Date();
+  
 
-    //TABLA RESERVAMESAS
-    this.guardarReservas();
+    dateCreada.setHours(parseInt(horaminutoseg));
+    dateCreada.setMinutes(parseInt(splitHoraMinSeg[1]));
 
+    console.log(date);
+    console.log(dateCreada);
+
+
+    if(dateCreada < date)
+    {
+      this.muestroToastError("Error en el tiempo seleccionado.");
+      
+      
+    }
+    else{
+      this.fechaElegida.hora = splitHoraMinSeg[0];
+      this.fechaElegida.minuto = splitHoraMinSeg[1];
+      //TABLA RESERVAMESAS
+      await this.guardarReservas();
+      this.spinner = true;
+      this.eventSource = await this.createEvents();
+
+      setTimeout(() => this.spinner = false , 3000);
+
+      this.muestroToast("Su reserva fue guardada con exito.");
+    }
    
 
 
-    localStorage.setItem("dia",this.fechaElegida.dia);
-    localStorage.setItem("mes",this.fechaElegida.mes);
-    localStorage.setItem("hora",this.fechaElegida.hora);
-    localStorage.setItem("minuto",this.fechaElegida.minuto);
-  
-    localStorage.setItem("reservaStatus","si");
-  
-  
-    this.spinner = true;
-    this.eventSource = this.createEvents(); 
+   
     
-    setTimeout(() => this.spinner = false , 3000);
-  
-     this.muestroToast("Su reserva fue guardada con exito.");
   
   }
 
-  guardarReservas(){
+  async guardarReservas(){
 
+      // localStorage.setItem("reservaStatus","si");
       let usuarioLogueado: any = JSON.parse(sessionStorage.getItem('usuario'));
-      this.baseService.getItems('reservademesas').then(lista => {
+      await this.baseService.getItems('reservademesas').then(async lista => {
       this.reservaRealizada = lista.find(cliente => cliente.correo == usuarioLogueado.correo);
       let objetoEnviar = {
         "correo": usuarioLogueado.correo,
@@ -176,14 +185,13 @@ export class ReservasPage implements OnInit {
         "mesaSeleccionada": this.mesaSeleccionada,
         "estadoConfirmacion": "pendiente"
       }
-      if(this.reservaRealizada == undefined)
+      if(this.reservaRealizada !== undefined)
       {
-        this.baseService.addItem('reservademesas', objetoEnviar);  
+        this.baseService.updateItem('reservademesas', this.reservaRealizada.key, objetoEnviar);  
 
       }
       else{
-        this.baseService.updateItem('reservademesas', this.reservaRealizada.key, objetoEnviar);  
-
+         this.baseService.addItem('reservademesas', objetoEnviar);
       }
     
       });
@@ -211,6 +219,22 @@ export class ReservasPage implements OnInit {
 
     toast.present();
   }
+
+  async muestroToastError(mensaje: string) {
+    const toast = await this.toastcontroler.create({
+    
+      message: mensaje,
+      color: 'danger',
+      showCloseButton: true,
+      position: 'top',
+      closeButtonText: 'OK',
+      // duration: 3000
+    });
+
+    toast.present();
+  }
+
+  
 
 
 //   openCalendar(){
@@ -256,97 +280,70 @@ export class ReservasPage implements OnInit {
   
 // }
 
-createEvents(){
+async createEvents(){
 
   var events = [];
 
  
   let usuarioLogueado: any = JSON.parse(sessionStorage.getItem('usuario'));
-  this.baseService.getItems('reservademesas').then(lista => {
-    this.reservaRealizada = lista.find(cliente => cliente.correo == usuarioLogueado.correo);
+  await this.baseService.getItems('reservademesas').then(async lista => {
+   this.reservaRealizada = lista;
+   this.reservaRealizada = this.reservaRealizada.find(cliente => cliente.correo == usuarioLogueado.correo);
     
-    if(this.reservaRealizada == undefined)
+    if(this.reservaRealizada !== undefined)
     {
-      
-      localStorage.setItem("reservaStatus","no");
+      // var eventType = Math.floor(Math.random() * 2);
+      var startDay = parseInt(this.reservaRealizada.fechaElegida.dia);
+      var endDay = parseInt(this.reservaRealizada.fechaElegida.dia) ;
+      var startMinute = parseInt(this.reservaRealizada.fechaElegida.minuto);
+      var startHora = parseInt(this.reservaRealizada.fechaElegida.hora);
+      var startMes = parseInt(this.reservaRealizada.fechaElegida.mes);
+      // var startStatus = localStorage.getItem("reservaStatus");
+      var confirmadaStatus = this.reservaRealizada.estadoConfirmacion;
 
+      var startTime;
+      var endTime;
+     
+      var endMinute = Math.floor(120) + startMinute;
 
-    }
-    else{
-      localStorage.setItem("dia",this.reservaRealizada.fechaElegida.dia);
-      localStorage.setItem("mes",this.reservaRealizada.fechaElegida.mes);
-      localStorage.setItem("hora",this.reservaRealizada.fechaElegida.hora);
-      localStorage.setItem("minuto",this.reservaRealizada.fechaElegida.minuto);
-      localStorage.setItem("estadoConfirmacion",this.reservaRealizada.estadoConfirmacion);
-      // console.log(localStorage.getItem("estadoConfirmacion"));
-      localStorage.setItem("reservaStatus","si");
-
-    }
-   
-    // this.startDay = parseInt(this.reservaRealizada.fechaElegida.dia);
-    // this.endDay = parseInt(this.reservaRealizada.fechaElegida.dia);
-    // this.startMinute = parseInt();
-  });
+      for (var i = 0; i < 1; i += 1) {
+        // if(startStatus == "si")
+        // {
+        
+          startTime = new Date(2019, startMes-1, startDay, startHora, startMinute);
+          endTime = new Date(2019, startMes-1, endDay,startHora, endMinute);
   
+          events.push({
+              title: 'Estado Reserva: '+ confirmadaStatus,
+              startTime: startTime,
+              endTime: endTime,
+              allDay: false
+          });
+  
+  
+        // }
+     
+
+       
+    
+      }
+
+      
+  }
+    // else{
+    //   localStorage.setItem("reservaStatus","no");
+    // }
+  });
+
+  return events;
+}
   // var date = new Date();
-  // var eventType = Math.floor(Math.random() * 2);
-
-
-
-
+ 
   // var startDay = parseInt(localStorage.getItem("dia"));
   // var endDay = parseInt(localStorage.getItem("dia")) ;
   // var startMinute = parseInt(localStorage.getItem("minuto"));
   // var startHora = parseInt(localStorage.getItem("hora"));
   // var startMes = parseInt(localStorage.getItem("mes"));
   // var startStatus = localStorage.getItem("reservaStatus");
-  var startDay = parseInt(localStorage.getItem("dia"));
-  var endDay = parseInt(localStorage.getItem("dia")) ;
-  var startMinute = parseInt(localStorage.getItem("minuto"));
-  var startHora = parseInt(localStorage.getItem("hora"));
-  var startMes = parseInt(localStorage.getItem("mes"));
-  var startStatus = localStorage.getItem("reservaStatus");
-  var confirmadaStatus = localStorage.getItem("estadoConfirmacion");
-
-  var startTime;
-  var endTime;
- 
-  var endMinute = Math.floor(120) + startMinute;
-
-    for (var i = 0; i < 1; i += 1) {
-      
-        // if (eventType === 0) {
-          
-        // } else {
-
-        if(startStatus == "si")
-        {
-          // console.log(startStatus);
-          startTime = new Date(2019, startMes-1, startDay, startHora, startMinute);
-          endTime = new Date(2019, startMes-1, endDay,startHora, endMinute);
-
-          // console.log(startTime);
-          // console.log(endTime);
-
-          events.push({
-              title: 'Estado Reserva: '+ confirmadaStatus,
-              // notes: 'notas',
-              startTime: startTime,
-              endTime: endTime,
-              allDay: false
-          });
-
-
-        }
-            
-        // }
-    }
-    return events;
-
-}
-
-
-
-
 
 }
