@@ -13,14 +13,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./abm-cliente.page.scss'],
 })
 export class AbmClientePage implements OnInit {
-  // formClienteAnonimo: FormGroup;
   formClienteRegistrado: FormGroup;
   captureDataUrl: Array<string>;
   hayFotos: boolean = false;
   cantidadFotos: number = 0;
-  // esAnonimo: boolean = false;
+  yaExisteCorreo: boolean = false;
   datosEscaneados: any;
   datosCliente: any;
+  clientesRegistrados: any[] = [];
 
   constructor(
     private camera: Camera,
@@ -36,10 +36,8 @@ export class AbmClientePage implements OnInit {
       correoRegistrado: new FormControl('', Validators.required),
       claveRegistrado: new FormControl('', Validators.required)
     });
-    // this.formClienteAnonimo = new FormGroup({
-    //   nombreAnonimo: new FormControl('', Validators.required)
-    // });
     this.captureDataUrl = new Array<string>();
+    this.traerClientesRegistrados();
   }
 
   ngOnInit() {
@@ -90,38 +88,39 @@ export class AbmClientePage implements OnInit {
       'esAnonimo': false
 
     };
-
-    // this.guardardatosDeCliente(this.datosCliente);
-    this.baseService.addItem('clientes', this.datosCliente);
-
-    this.captureDataUrl.forEach(foto => {
-      let filename: string = (this.formClienteRegistrado.get('nombreRegistrado').value).replace(' ', '_');
-      const imageRef = storageRef.child(`clientes/${filename}.jpg`);
-
-      imageRef.putString(foto, firebase.storage.StringFormat.DATA_URL).then((snapshot) => {
-      })
-        .catch(() => {
-          errores++;
-        });
+    
+    this.clientesRegistrados.forEach(cli => {
+      if (cli.correo == this.datosCliente.correo) {
+        this.yaExisteCorreo = true;
+      }
     });
 
-    if (errores == 0) {
-      this.subidaExitosa("En pedido de aprobación");
-      this.formClienteRegistrado.get('nombreRegistrado').setValue('');
-      this.formClienteRegistrado.get('apellidoRegistrado').setValue('');
-      this.formClienteRegistrado.get('dniRegistrado').setValue('');
-      this.router.navigateByUrl('/login');
-    } else
-      this.subidaErronea("Error en al menos una foto");
-  }
+    if (this.yaExisteCorreo) {
+      this.AlertYaExisteUsuario();
+    } else {
+      this.baseService.addItem('clientes', this.datosCliente);
 
-  // guardardatosDeCliente(datos) {
-  //   // let storageRef = firebase.database().ref('clientes/');
-  //   // let imageData = storageRef.push();
-  //   // imageData.set(datos);
-  //   this.baseService.addItem('clientes', datos);
-  //   this.baseService.addItem('usuarios', { 'clave': this.formClienteRegistrado.get('claveRegistrado').value, 'correo': this.formClienteRegistrado.get('correoRegistrado').value, 'perfil': 'cliente' });
-  // }
+      this.captureDataUrl.forEach(foto => {
+        let filename: string = (this.formClienteRegistrado.get('nombreRegistrado').value).replace(' ', '_');
+        const imageRef = storageRef.child(`clientes/${filename}.jpg`);
+
+        imageRef.putString(foto, firebase.storage.StringFormat.DATA_URL).then((snapshot) => {
+        })
+          .catch(() => {
+            errores++;
+          });
+      });
+
+      if (errores == 0) {
+        this.subidaExitosa("En pedido de aprobación");
+        this.formClienteRegistrado.get('nombreRegistrado').setValue('');
+        this.formClienteRegistrado.get('apellidoRegistrado').setValue('');
+        this.formClienteRegistrado.get('dniRegistrado').setValue('');
+        this.router.navigateByUrl('/login');
+      } else
+        this.subidaErronea("Error en al menos una foto");
+    }
+  }
 
   async subidaExitosa(mensaje) {
     const alert = await this.alertCtrl.create({
@@ -147,6 +146,15 @@ export class AbmClientePage implements OnInit {
     await alert.present();
   }
 
+  async AlertYaExisteUsuario() {
+    const alert = await this.alertCtrl.create({
+      header: 'Usuario existente',
+      message: 'Ya existe un usuario con el correo ' + this.datosCliente.correo,
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
+
   doScan() {
     this.scanner.scan({ "formats": "PDF_417" }).then((data) => {
       this.datosEscaneados = data;
@@ -161,12 +169,15 @@ export class AbmClientePage implements OnInit {
     let nombre = parsedData[2].toString();
     let apellido = parsedData[1].toString();
     let dni: number = +parsedData[4];
-    // if (this.esAnonimo) {
-    //   this.formClienteAnonimo.get('nombreAnonimo').setValue(nombre);
-    // } else {
+
     this.formClienteRegistrado.get('nombreRegistrado').setValue(nombre);
     this.formClienteRegistrado.get('apellidoRegistrado').setValue(apellido);
     this.formClienteRegistrado.get('dniRegistrado').setValue(dni);
-    // }
+  }
+
+  traerClientesRegistrados() {
+    this.baseService.getItems('clientes').then(cli => {
+      this.clientesRegistrados = cli;
+    });
   }
 }
