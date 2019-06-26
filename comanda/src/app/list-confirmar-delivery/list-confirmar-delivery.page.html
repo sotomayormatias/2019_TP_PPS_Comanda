@@ -13,6 +13,12 @@
 </ion-header>
 
 <ion-content *ngIf="perfil == 'dueño' || perfil == 'supervisor'">
+  <ion-refresher slot="fixed" (ionRefresh)="ionRefresh($event)" (ionPull)="ionPull($event)"
+    (ionStart)="ionStart($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Estire para actualizar" refreshingSpinner="circles"
+      refreshingText="Actualizando...">
+    </ion-refresher-content>
+  </ion-refresher>
   <ion-list *ngIf="hayPedidosAConfirmar">
     <ion-item *ngFor="let pedido of pedidosAConfirmar">
       Cliente: {{pedido.cliente}} - Dirección: {{pedido.direccion}}
@@ -34,6 +40,12 @@
 </ion-content>
 
 <ion-content *ngIf="perfil == 'delivery'">
+  <ion-refresher slot="fixed" (ionRefresh)="ionRefresh($event)" (ionPull)="ionPull($event)"
+    (ionStart)="ionStart($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Estire para actualizar" refreshingSpinner="circles"
+      refreshingText="Actualizando...">
+    </ion-refresher-content>
+  </ion-refresher>
   <ion-list *ngIf="hayPedidosAEntregar">
     <ion-item *ngFor="let pedido of pedidosAEntregar">
       Cliente: {{pedido.cliente}} - Dirección: {{pedido.direccion}}

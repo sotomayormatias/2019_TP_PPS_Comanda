@@ -9,8 +9,8 @@ import { ModalRutaPage } from "../modal-ruta/modal-ruta.page";
   styleUrls: ['./list-confirmar-delivery.page.scss'],
 })
 export class ListConfirmarDeliveryPage implements OnInit {
-  pedidosAConfirmar: any;
-  pedidosAEntregar: any;
+  pedidosAConfirmar: any[] = [];
+  pedidosAEntregar: any[] = [];
   perfil: string = "";
   hayPedidosAConfirmar: boolean = true;
   hayPedidosAEntregar: boolean = true;
@@ -97,5 +97,28 @@ export class ListConfirmarDeliveryPage implements OnInit {
       duration: 2000
     });
     toast.present();
+  }
+
+  ionRefresh(event) {
+    setTimeout(() => {
+      event.target.complete();
+      this.pedidosAConfirmar = [];
+      this.pedidosAEntregar = [];
+      this.hayPedidosAConfirmar = true;
+      this.hayPedidosAEntregar = true;
+      if (this.perfil == 'delivery')
+        this.traerPedidosAEntregar();
+      else
+        this.traerPedidosAConfirmar();
+    }, 2000);
+  }
+  ionPull(event) {
+    // Emitted while the user is pulling down the content and exposing the refresher.
+    // console.log('ionPull Event Triggered!');
+
+  }
+  ionStart(event) {
+    // Emitted when the user begins to start pulling down.
+    // console.log('ionStart Event Triggered!');
   }
 }
