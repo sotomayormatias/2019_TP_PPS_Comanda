@@ -14,11 +14,15 @@ export class QrIngresoLocalPage implements OnInit {
   datosEscaneados: any;
   parsedDatosEscaneados: any;
   mesaEscaneada: any;
+  mesas: any[] = [];
+  listaEspera: any[] = [];
 
   constructor(private scanner: BarcodeScanner,
     private baseService: FirebaseService,
     private alertCtrl: AlertController,
     private router: Router) {
+    this.traerMesas();
+    this.traerListaEspera();
   }
 
   ngOnInit() {
@@ -36,15 +40,23 @@ export class QrIngresoLocalPage implements OnInit {
         if (usuarioLogueado.perfil == "cliente" || usuarioLogueado.perfil == "clienteAnonimo") {
           let tieneMesa: boolean = false;
           let nroMesa: number;
-          this.baseService.getItems('mesas').then(mesas => {
-            mesas.forEach(mesa => {
-              if (mesa.cliente == usuarioLogueado.correo) {
-                tieneMesa = true;
-                nroMesa = mesa.nromesa;
+          this.mesas.forEach(mesa => {
+            if (mesa.cliente == usuarioLogueado.correo) {
+              tieneMesa = true;
+              nroMesa = mesa.nromesa;
+            }
+          });
+          if (tieneMesa) {
+            this.presentAlertTieneMesa(nroMesa);
+          } else {
+            let estaEnLista: boolean = false;
+            this.listaEspera.forEach(lista => {
+              if (lista.correo == usuarioLogueado.correo) {
+                estaEnLista = true;
               }
             });
-            if (tieneMesa) {
-              this.presentAlertTieneMesa(nroMesa);
+            if (estaEnLista) {
+              this.presentAlertEstaEnLista();
             } else {
               // PONGO AL CLIENTE EN LA LISTA DE ESPERA
               let datos: any = { 'correo': usuarioLogueado.correo, 'perfil': usuarioLogueado.perfil, 'estado': "confirmacionMozo" };
@@ -53,8 +65,7 @@ export class QrIngresoLocalPage implements OnInit {
               // LO DIRIJO A LA LISTA DE ESPERA DE CLIENTES
               this.router.navigateByUrl('/list-confirmar-cliente-mesa');
             }
-          });
-
+          }
         } else {
           // VOY A MOSTRAR ESTADISTICAS DE CLIENTES
           this.router.navigateByUrl('/est-satisfaccion');
@@ -85,5 +96,26 @@ export class QrIngresoLocalPage implements OnInit {
       buttons: ['OK']
     });
     await alert.present();
+  }
+
+  async presentAlertEstaEnLista() {
+    const alert = await this.alertCtrl.create({
+      subHeader: 'Ya esta en lista',
+      message: 'Usted ya se encuentra en lista de espera',
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
+
+  traerMesas() {
+    this.baseService.getItems('mesas').then(mesas => {
+      this.mesas = mesas;
+    });
+  }
+
+  traerListaEspera() {
+    this.baseService.getItems('listaEsperaClientes').then(lista => {
+      this.listaEspera = lista;
+    });
   }
 }
