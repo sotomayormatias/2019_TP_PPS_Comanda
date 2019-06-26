@@ -13,13 +13,29 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
+  <ion-refresher slot="fixed" (ionRefresh)="ionRefresh($event)" (ionPull)="ionPull($event)"
+    (ionStart)="ionStart($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Estire para actualizar" refreshingSpinner="circles"
+      refreshingText="Actualizando...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <ion-list *ngIf="hayPedidos">
     <ion-item *ngFor="let pedido of pedidos">
       <!-- <ion-icon [name]="item.icon" slot="start"></ion-icon> -->
       Mesa {{pedido.mesa}}
-      <div class="item-note" slot="end">
-        <ion-button size="small" (click)="aceptarPedido(pedido.mesa)">Aceptar</ion-button>
+      <div slot="end">
+        <ion-button size="small" color="primary" (click)="aceptarPedido(pedido.mesa)">
+          <ion-icon slot="icon-only" name="checkmark"></ion-icon>
+        </ion-button>
+        <ion-button size="small" color="danger" (click)="rechazarPedido(pedido.mesa)">
+          <ion-icon slot="icon-only" name="close"></ion-icon>
+        </ion-button>
       </div>
     </ion-item>
   </ion-list>
+  <ion-card *ngIf="!hayPedidos">
+    <ion-card-content>
+      No hay pedidos para confirmar.
+    </ion-card-content>
+  </ion-card>
 </ion-content>

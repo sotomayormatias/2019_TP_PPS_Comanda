@@ -13,6 +13,12 @@
 </ion-header>
 
 <ion-content *ngIf="esMozo">
+  <ion-refresher slot="fixed" (ionRefresh)="ionRefresh($event)" (ionPull)="ionPull($event)"
+    (ionStart)="ionStart($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Estire para actualizar" refreshingSpinner="circles"
+      refreshingText="Actualizando...">
+    </ion-refresher-content>
+  </ion-refresher>
   <ion-list *ngIf="hayCliente">
     <ion-item *ngFor="let cliente of clientes">
       {{cliente.correo}}
@@ -34,6 +40,12 @@
 </ion-content>
 
 <ion-content *ngIf="!esMozo">
+  <ion-refresher slot="fixed" (ionRefresh)="ionRefresh($event)" (ionPull)="ionPull($event)"
+    (ionStart)="ionStart($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Estire para actualizar" refreshingSpinner="circles"
+      refreshingText="Actualizando...">
+    </ion-refresher-content>
+  </ion-refresher>
   <ion-list *ngIf="hayCliente">
     <ion-item *ngFor="let cliente of clientes">
       {{cliente.correo}}
