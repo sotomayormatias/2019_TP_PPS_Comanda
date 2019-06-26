@@ -39,6 +39,10 @@ export class QrMesaPage implements OnInit {
   }
 
   doScan() {
+    this.traerPedidos();
+    this.traerListaEspera();
+    this.verificarSiOcupaMesa();
+
     this.scanner.scan().then((data) => {
       this.datosEscaneados = data;
       if ((this.datosEscaneados.text).includes("mesa")) {
@@ -83,32 +87,31 @@ export class QrMesaPage implements OnInit {
       //FIJARSE SI LA MESA ESTA RESERVADA, si lo esta => fijarse hora minutos y usuario (40 min antes)
       //SI NO ESTA RESERVADA QUE AGARRE LA MESA
 
-      // if(this.mesaEscaneada.)
       if (usuarioLogueado.perfil == "cliente") { // Logica para cuando escanea el cliente
-        if (!this.estaEnMesa) { //valido que el cliente no tenga ya asignada una mesa
-          if (this.mesaEscaneada.estado == 'libre') { // si la mesa esta libre
-            if (this.estaEnLista) { // si el cliente esta en lista de espera
-              if (this.listaEspera.find(espera => espera.correo == usuarioLogueado.correo && espera.estado == 'esperandoMesa')) {
-                this.presentAlertCliente();
-              } else {
-                this.presentAlertSigueEnLista();
-              }
-            } else { // si el cliente no esta en lista de espera
+        if (this.mesaEscaneada.estado == 'libre') { // si la mesa esta libre
+          if (this.estaEnLista) { // si el cliente esta en lista de espera
+            if (this.listaEspera.find(espera => espera.correo == usuarioLogueado.correo && espera.estado == 'esperandoMesa')) {
+              this.presentAlertCliente();
+            } else {
+              this.presentAlertSigueEnLista();
+            }
+          } else { // si el cliente no esta en lista de espera
+            if (this.estaEnMesa) { //valido que el cliente no tenga ya asignada una mesa
+              this.presentAlertYaOcupaMesa();
+            } else {
               this.presentAlertNoEstaEnLista();
             }
-          } else { // Si la mesa esta ocupada
-            if (this.mesaEscaneada.cliente == usuarioLogueado.correo) { // Si el que escanea es el que ocupa la mesa
-              if (this.verificarPedidoEnPreparacion()) { //Si ya hizo un pedido
-                this.presentAlertConPedido();
-              } else { // Si aun no hizo un pedido
-                this.presentAlertSinPedido();
-              }
-            } else { // Si el que escanea no es quien ocupa la mesa
-              this.presentAlertEmpleado();
-            }
           }
-        } else {
-          this.presentAlertYaOcupaMesa();
+        } else { // Si la mesa esta ocupada
+          if (this.mesaEscaneada.cliente == usuarioLogueado.correo) { // Si el que escanea es el que ocupa la mesa
+            if (this.verificarPedidoEnPreparacion()) { //Si ya hizo un pedido
+              this.presentAlertConPedido();
+            } else { // Si aun no hizo un pedido
+              this.presentAlertSinPedido();
+            }
+          } else { // Si el que escanea no es quien ocupa la mesa
+            this.presentAlertEmpleado();
+          }
         }
       } else { // Logica para cuando escanea un empleado
         this.presentAlertEmpleado();
