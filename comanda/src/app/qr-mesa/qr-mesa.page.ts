@@ -22,6 +22,7 @@ export class QrMesaPage implements OnInit {
   estaEnLista: boolean;
   keyPuestoListaEspera: string;
   listareservas: any;
+  estaEnMesa: any = false;
 
   constructor(private scanner: BarcodeScanner,
     private baseService: FirebaseService,
@@ -31,6 +32,7 @@ export class QrMesaPage implements OnInit {
     this.traerDatosCliente(JSON.parse(sessionStorage.getItem('usuario')).correo);
     this.traerPedidos();
     this.traerListaEspera();
+    this.verificarSiOcupaMesa();
   }
 
   ngOnInit() {
@@ -39,7 +41,7 @@ export class QrMesaPage implements OnInit {
   doScan() {
     this.scanner.scan().then((data) => {
       this.datosEscaneados = data;
-      if((this.datosEscaneados.text).includes("mesa")){
+      if ((this.datosEscaneados.text).includes("mesa")) {
         this.parsedDatosEscaneados = JSON.parse(this.datosEscaneados.text);
         this.mostrarInformacion();
       } else {
@@ -55,7 +57,7 @@ export class QrMesaPage implements OnInit {
 
     // this.baseService.getItems('reservademesas').then(lista => {
     //   this.listareservas = lista.find(cliente => cliente.correo == usuarioLogueado.correo);
-      
+
     //   if(this.reserva != undefined)
     //   {
     //     localStorage.setItem("correoReserva",usuarioLogueado.correo);
@@ -64,17 +66,17 @@ export class QrMesaPage implements OnInit {
     //     localStorage.setItem("horaReserva",this.reserva.fechaElegida.hora);
     //     localStorage.setItem("minutoReserva",this.reserva.fechaElegida.minuto);
     //     localStorage.setItem("mesaReserva",this.reserva.mesaSeleccionada);
-        
+
     //   localStorage.setItem("reservada","si");
 
     //   }
-    
+
     // });
 
-   
-    
+
+
     this.baseService.getItems('mesas').then(mesas => {
-      let nroMesa = this.parsedDatosEscaneados.mesa;
+      let nroMesa = 3; //this.parsedDatosEscaneados.mesa;
       this.mesaEscaneada = mesas.find(mesa => mesa.nromesa == nroMesa);
       let usuarioLogueado: any = JSON.parse(sessionStorage.getItem('usuario'));
 
@@ -83,32 +85,36 @@ export class QrMesaPage implements OnInit {
 
       // if(this.mesaEscaneada.)
       if (usuarioLogueado.perfil == "cliente") { // Logica para cuando escanea el cliente
-        if (this.mesaEscaneada.estado == 'libre') { // si la mesa esta libre
-          if (this.estaEnLista) { // si el cliente esta en lista de espera
-            if(this.listaEspera.find(espera => espera.correo == usuarioLogueado.correo && espera.estado == 'esperandoMesa')){
-              this.presentAlertCliente();
-            } else {
-              this.presentAlertSigueEnLista();
+        if (!this.estaEnMesa) { //valido que el cliente no tenga ya asignada una mesa
+          if (this.mesaEscaneada.estado == 'libre') { // si la mesa esta libre
+            if (this.estaEnLista) { // si el cliente esta en lista de espera
+              if (this.listaEspera.find(espera => espera.correo == usuarioLogueado.correo && espera.estado == 'esperandoMesa')) {
+                this.presentAlertCliente();
+              } else {
+                this.presentAlertSigueEnLista();
+              }
+            } else { // si el cliente no esta en lista de espera
+              this.presentAlertNoEstaEnLista();
             }
-          } else { // si el cliente no esta en lista de espera
-            this.presentAlertNoEstaEnLista();
-          }
-        } else { // Si la mesa esta ocupada
-          if (this.mesaEscaneada.cliente == usuarioLogueado.correo) { // Si el que escanea es el que ocupa la mesa
-            if (this.verificarPedidoEnPreparacion()) { //Si ya hizo un pedido
-              this.presentAlertConPedido();
-            } else { // Si aun no hizo un pedido
-              this.presentAlertSinPedido();
+          } else { // Si la mesa esta ocupada
+            if (this.mesaEscaneada.cliente == usuarioLogueado.correo) { // Si el que escanea es el que ocupa la mesa
+              if (this.verificarPedidoEnPreparacion()) { //Si ya hizo un pedido
+                this.presentAlertConPedido();
+              } else { // Si aun no hizo un pedido
+                this.presentAlertSinPedido();
+              }
+            } else { // Si el que escanea no es quien ocupa la mesa
+              this.presentAlertEmpleado();
             }
-          } else { // Si el que escanea no es quien ocupa la mesa
-            this.presentAlertEmpleado();
           }
+        } else {
+          this.presentAlertYaOcupaMesa();
         }
       } else { // Logica para cuando escanea un empleado
         this.presentAlertEmpleado();
       }
     });
-  
+
   }
 
   async presentAlertEmpleado() {
@@ -144,6 +150,15 @@ export class QrMesaPage implements OnInit {
     const alert = await this.alertCtrl.create({
       subHeader: 'Usted sigue en lista de espera',
       message: 'Debe esperar a que el mozo lo confirme',
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
+
+  async presentAlertYaOcupaMesa() {
+    const alert = await this.alertCtrl.create({
+      subHeader: 'Ya tiene mesa',
+      message: 'Usted ya se encuentra ocupando una mesa',
       buttons: ['OK']
     });
     await alert.present();
@@ -232,7 +247,7 @@ export class QrMesaPage implements OnInit {
     this.baseService.getItems('listaEsperaClientes').then(lista => {
       this.listaEspera = lista;
       let usuarioLogueado: any = JSON.parse(sessionStorage.getItem('usuario'));
-      if(this.listaEspera.find(espera => espera.correo == usuarioLogueado.correo)){
+      if (this.listaEspera.find(espera => espera.correo == usuarioLogueado.correo)) {
         this.estaEnLista = true;
         this.keyPuestoListaEspera = this.listaEspera.find(espera => espera.correo == usuarioLogueado.correo).key;
       } else {
@@ -248,6 +263,17 @@ export class QrMesaPage implements OnInit {
     } else {
       return false;
     };
+  }
+
+  verificarSiOcupaMesa() {
+    this.baseService.getItems('mesas').then(mesas => {
+      let usuarioLogueado: any = JSON.parse(sessionStorage.getItem('usuario'));
+      mesas.forEach(mesa => {
+        if (mesa.cliente == usuarioLogueado.correo) {
+          this.estaEnMesa = true;
+        }
+      });
+    });
   }
 
   verPedido() {

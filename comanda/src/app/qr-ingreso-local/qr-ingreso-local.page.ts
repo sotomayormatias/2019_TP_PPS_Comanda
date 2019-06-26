@@ -34,13 +34,27 @@ export class QrIngresoLocalPage implements OnInit {
         let usuarioLogueado = JSON.parse(sessionStorage.getItem("usuario"));
 
         if (usuarioLogueado.perfil == "cliente" || usuarioLogueado.perfil == "clienteAnonimo") {
+          let tieneMesa: boolean = false;
+          let nroMesa: number;
+          this.baseService.getItems('mesas').then(mesas => {
+            mesas.forEach(mesa => {
+              if (mesa.cliente == usuarioLogueado.correo) {
+                tieneMesa = true;
+                nroMesa = mesa.nromesa;
+              }
+            });
+            if (tieneMesa) {
+              this.presentAlertTieneMesa(nroMesa);
+            } else {
+              // PONGO AL CLIENTE EN LA LISTA DE ESPERA
+              let datos: any = { 'correo': usuarioLogueado.correo, 'perfil': usuarioLogueado.perfil, 'estado': "confirmacionMozo" };
+              this.baseService.addItem('listaEsperaClientes', datos);
 
-          // PONGO AL CLIENTE EN LA LISTA DE ESPERA
-          let datos: any = { 'correo': usuarioLogueado.correo, 'perfil': usuarioLogueado.perfil, 'estado': "confirmacionMozo" };
-          this.baseService.addItem('listaEsperaClientes', datos);
+              // LO DIRIJO A LA LISTA DE ESPERA DE CLIENTES
+              this.router.navigateByUrl('/list-confirmar-cliente-mesa');
+            }
+          });
 
-          // LO DIRIJO A LA LISTA DE ESPERA DE CLIENTES
-          this.router.navigateByUrl('/list-confirmar-cliente-mesa');
         } else {
           // VOY A MOSTRAR ESTADISTICAS DE CLIENTES
           this.router.navigateByUrl('/est-satisfaccion');
@@ -58,6 +72,16 @@ export class QrIngresoLocalPage implements OnInit {
       header: 'QR Erroneo',
       subHeader: 'El codigo QR no pertenece a ingreso de mesa',
       message: 'Por favor apunte al código QR de Ingreso Local',
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
+
+  async presentAlertTieneMesa(nroMesa: number) {
+    const alert = await this.alertCtrl.create({
+      // header: 'QR Erroneo',
+      subHeader: 'Ya tiene mesa',
+      message: 'Usted tiene asignada la mesa ' + nroMesa,
       buttons: ['OK']
     });
     await alert.present();
