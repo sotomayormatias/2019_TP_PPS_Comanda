@@ -305,7 +305,7 @@ export class AppComponent {
             // (H) QR PROPINA
             {
               // ESTE NO VA ACA PERO LO DEJO POR AHORA
-              title: 'OK - QR PROPINA',
+              title: 'OK - QR Propina',
               url: '/qr-propina',
               icon: 'trash'
             },
