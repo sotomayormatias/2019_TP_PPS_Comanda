@@ -141,7 +141,8 @@ export class GenerarPedidoPage implements OnInit {
           'preciototal': this.calcularPrecioTotal(productosPedidos),
           'mesa': this.mesaDelPedido.nromesa,
           'estado': 'creado',
-          'cantDet': productosPedidos.length
+          'cantDet': productosPedidos.length,
+          'cantEnt': 0
         };
         this.baseService.addItem('pedidos', pedido);
 
