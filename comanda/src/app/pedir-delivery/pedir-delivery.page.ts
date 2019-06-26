@@ -65,6 +65,7 @@ export class PedirDeliveryPage implements OnInit {
         'preciototal': this.calcularPrecioTotal(productosPedidos),
         'direccion': this.direccion,
         'cantDet': productosPedidos.length,
+        'cantEnt': 0,
         'latitud': latitud.value,
         'longitud': longitud.value,
         'estado': 'creado'

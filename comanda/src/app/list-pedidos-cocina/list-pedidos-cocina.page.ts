@@ -112,7 +112,7 @@ export class ListPedidosCocinaPage implements OnInit {
     
       this.pedidos = ped;
       // console.log("Todos Pedidos: ", this.pedidos);
-      this.pedidos = this.pedidos.filter(pedido => pedido.estado == "aceptado" || pedido.estado == "preparacion" || pedido.estado == "listoEntrega" );
+      this.pedidos = this.pedidos.filter(pedido => pedido.estado == "aceptado" || pedido.estado == "preparacion"  );
       this.listIdPedidosAceptados =  this.pedidos;
       // console.log("Pedidos Aceptados: ", this.listIdPedidosAceptados);
     });
@@ -121,7 +121,7 @@ export class ListPedidosCocinaPage implements OnInit {
 
       this.pedidos = ped;
       // console.log("Todos Pedidos: ", this.pedidos);
-      this.pedidos = this.pedidos.filter(pedido => pedido.estado == "aceptado" || pedido.estado == "preparacion" || pedido.estado == "listoEntrega"  );
+      this.pedidos = this.pedidos.filter(pedido => pedido.estado == "aceptado" || pedido.estado == "preparacion"  );
       
       this.pedidos.forEach(pedido =>  {
         pedido.delivery = true ;
@@ -198,10 +198,12 @@ export class ListPedidosCocinaPage implements OnInit {
 
         for (const iterator of listaProductosParsed) {
           if ( idDetalle.producto == iterator ) {
-            
+            let idRecortado = idDetalle.id_pedido.toString() ;
+            idRecortado = idRecortado.substr(10, idDetalle.id_pedido.length );
                   // tslint:disable-next-line:variable-name
-                  let pedido_detalle = {
+            let pedido_detalle = {
                     'id_pedido': idDetalle.id_pedido ,
+                    'idRecortado': idRecortado,
                     'producto': idDetalle.producto,
                     'precio': idDetalle.precio,
                     'cantidad': idDetalle.cantidad,
@@ -211,7 +213,7 @@ export class ListPedidosCocinaPage implements OnInit {
                     'key': idDetalle.key
                   };
                   // console.log("Pedido detalle: ", pedido_detalle);
-                  this.pedidosMostrarFil.push( JSON.parse(JSON.stringify(pedido_detalle))   ); 
+            this.pedidosMostrarFil.push( JSON.parse(JSON.stringify(pedido_detalle))   ); 
                 }
               
 
@@ -350,7 +352,7 @@ traerPedidosActivosPorPerfilPrepara(pedidoDet) {
     pedidoAceptado.tiempo = this.TEstimado;
     pedidoAceptado.estado = 'preparacion';
     this.baseService.updateItem('pedidoDetalle', pedidoKey, pedidoAceptado);
-
+    this.TEstimado = '';
     this.actualizoPedido (pedidoDet);
     // setTimeout(() => this.traerPedidosPerfil() , 1300);  
     // setTimeout(() => this.traerPedidosActivosPorPerfilPrepara(pedidoDet) , 1000);  
@@ -364,7 +366,15 @@ traerPedidosActivosPorPerfilPrepara(pedidoDet) {
       // console.log("Pedido encontrado: ", pedidoAceptado);
       let key: string = pedidoAceptado.key;
       delete pedidoAceptado.key;
+
+      pedidoAceptado.cantEnt += 1;
+
+      // if (pedidoAceptado.cantEnt == pedidoAceptado.cantDet ) {
+      //   pedidoAceptado.estado = 'listoEntrega';
+      // } else {
       pedidoAceptado.estado = 'preparacion';
+      // }
+      
   
       
       await this.baseService.getItems('pedidos').then(ped => {
@@ -403,7 +413,11 @@ traerPedidosActivosPorPerfilPrepara(pedidoDet) {
       // console.log("Pedido encontrado: ", pedidoAceptado);
       let key: string = pedidoAceptado.key;
       delete pedidoAceptado.key;
-      pedidoAceptado.estado = 'listoEntrega';
+      if (pedidoAceptado.cantEnt == pedidoAceptado.cantDet ) {
+        pedidoAceptado.estado = 'listoEntrega';
+      } else {
+        pedidoAceptado.estado = 'preparacion';
+      }
   
       await this.baseService.getItems('pedidos').then(ped => {
   
@@ -430,6 +444,7 @@ traerPedidosActivosPorPerfilPrepara(pedidoDet) {
       this.pedidosMostrarFil = [];
       this.listIdPedidosAceptados = null ;
       this.listProductos  = [];
+      this.TEstimado = '';
       this.traerPedidosPerfil();
     }
   
