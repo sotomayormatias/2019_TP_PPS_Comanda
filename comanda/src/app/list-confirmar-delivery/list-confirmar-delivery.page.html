@@ -16,12 +16,14 @@
   <ion-list *ngIf="hayPedidosAConfirmar">
     <ion-item *ngFor="let pedido of pedidosAConfirmar">
       Cliente: {{pedido.cliente}} - Dirección: {{pedido.direccion}}
-      <ion-button size="small" color="primary" (click)="confirmarPedido(pedido.cliente)">
-        <ion-icon slot="icon-only" name="checkmark"></ion-icon>
-      </ion-button>
-      <ion-button size="small" color="danger" (click)="rechazarPedido(pedido.cliente)">
-        <ion-icon slot="icon-only" name="close"></ion-icon>
-      </ion-button>
+      <div slot="end">
+        <ion-button size="small" color="primary" (click)="confirmarPedido(pedido.cliente)">
+          <ion-icon slot="icon-only" name="checkmark"></ion-icon>
+        </ion-button>
+        <ion-button size="small" color="danger" (click)="rechazarPedido(pedido.cliente)">
+          <ion-icon slot="icon-only" name="close"></ion-icon>
+        </ion-button>
+      </div>
     </ion-item>
   </ion-list>
   <ion-card *ngIf="!hayPedidosAConfirmar">
