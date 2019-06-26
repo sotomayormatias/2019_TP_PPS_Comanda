@@ -46,7 +46,7 @@
       <ion-item class="item-text-wrap card" *ngFor="let pedido of pedidosMostrarFil; index as i">
       <ion-col col-12 col-md-6 col-lg-4 col-xl-3>
           <ion-card class="lindas" expand="full">
-            <ion-card-header  color="medium" > <b>NRO FILA: {{i+1}}</b><br> <b>ID PEDIDO: {{pedido.id_pedido}} <br> </b></ion-card-header>
+            <ion-card-header  color="medium" > <b>NRO COLA: {{i+1}}</b><br> <b>NRO PEDIDO: {{pedido.idRecortado}} <br> </b></ion-card-header>
             <ion-card-content class="cardContent" style="color: black; font-weight: bolder; font-size: xx-large;    
             ">
                <ion-icon *ngIf="!pedido.delivery" name="home"></ion-icon>
@@ -57,10 +57,10 @@
               <div *ngIf="pedido.estado == 'preparacion' "  >{{pedido.tiempo}} MIN</div>
               <ion-select *ngIf="pedido.estado == 'creado'"  class="round"  [(ngModel)]="TEstimado"  cancelText="Cancelar" okText="Confirmar"  placeholder="Tiempo" >
            
-                <ion-select-option  value="10">10 Minutos</ion-select-option>
-                <ion-select-option  value="30">30 Minutos</ion-select-option>
-                <ion-select-option  value="45">45 Minutos</ion-select-option>
-                <ion-select-option  value="60">60 Minutos</ion-select-option>
+                <ion-select-option  value="10">10 MIN</ion-select-option>
+                <ion-select-option  value="30">30 MIN</ion-select-option>
+                <ion-select-option  value="45">45 MIN</ion-select-option>
+                <ion-select-option  value="60">60 MIN</ion-select-option>
 
               </ion-select>
 
