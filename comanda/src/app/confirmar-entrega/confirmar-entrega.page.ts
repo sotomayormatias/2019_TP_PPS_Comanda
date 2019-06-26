@@ -52,7 +52,7 @@ export class ConfirmarEntregaPage implements OnInit {
 
   propina() {
     this.scanner.scan().then((data) => {
-    //   this.datosEscaneados = data;
+      this.datosEscaneados = data;
       let propina: string = JSON.parse(this.datosEscaneados.text);
 
       this.pedidoDelivery.preciototal += parseInt(propina) * this.pedidoDelivery.preciototal / 100;

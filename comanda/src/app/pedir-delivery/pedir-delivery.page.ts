@@ -94,7 +94,7 @@ export class PedirDeliveryPage implements OnInit {
     pedido.forEach(producto => {
       precioTotal += (producto.precio * producto.cantidad);
     });
-    precioTotal += 50;
+    precioTotal += 20;
     return precioTotal;
   }
 
