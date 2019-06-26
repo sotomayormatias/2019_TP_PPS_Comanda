@@ -76,7 +76,7 @@ export class QrMesaPage implements OnInit {
 
 
     this.baseService.getItems('mesas').then(mesas => {
-      let nroMesa = 3; //this.parsedDatosEscaneados.mesa;
+      let nroMesa = this.parsedDatosEscaneados.mesa;
       this.mesaEscaneada = mesas.find(mesa => mesa.nromesa == nroMesa);
       let usuarioLogueado: any = JSON.parse(sessionStorage.getItem('usuario'));
 
