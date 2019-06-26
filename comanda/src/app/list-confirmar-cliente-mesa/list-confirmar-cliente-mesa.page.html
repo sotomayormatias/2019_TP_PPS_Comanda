@@ -12,14 +12,36 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-list>
+<ion-content *ngIf="esMozo">
+  <ion-list *ngIf="hayCliente">
     <ion-item *ngFor="let cliente of clientes">
-      <!-- <ion-icon [name]="item.icon" slot="start"></ion-icon> -->
-      {{cliente.correo}} {{cliente.estado}}
-      <div class="item-note" slot="end">
-        <ion-button *ngIf="esMozo" size="small" (click)="confirmarCliente(cliente.correo)">Confirmar</ion-button>
+      {{cliente.correo}}
+      <div slot="end">
+        <ion-button size="small" color="primary" (click)="confirmarCliente(cliente.correo)">
+          <ion-icon slot="icon-only" name="checkmark"></ion-icon>
+        </ion-button>
+        <ion-button size="small" color="danger" (click)="rechazarCliente(cliente.correo)">
+          <ion-icon slot="icon-only" name="close"></ion-icon>
+        </ion-button>
       </div>
     </ion-item>
   </ion-list>
+  <ion-card *ngIf="!hayCliente">
+    <ion-card-content>
+      No hay clientes para confirmar.
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+<ion-content *ngIf="!esMozo">
+  <ion-list *ngIf="hayCliente">
+    <ion-item *ngFor="let cliente of clientes">
+      {{cliente.correo}}
+    </ion-item>
+  </ion-list>
+  <ion-card *ngIf="!hayCliente">
+    <ion-card-content>
+      No hay clientes en lista de espera.
+    </ion-card-content>
+  </ion-card>
 </ion-content>

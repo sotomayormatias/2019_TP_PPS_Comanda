@@ -85,7 +85,11 @@ export class QrMesaPage implements OnInit {
       if (usuarioLogueado.perfil == "cliente") { // Logica para cuando escanea el cliente
         if (this.mesaEscaneada.estado == 'libre') { // si la mesa esta libre
           if (this.estaEnLista) { // si el cliente esta en lista de espera
-            this.presentAlertCliente();
+            if(this.listaEspera.find(espera => espera.correo == usuarioLogueado.correo && espera.estado == 'esperandoMesa')){
+              this.presentAlertCliente();
+            } else {
+              this.presentAlertSigueEnLista();
+            }
           } else { // si el cliente no esta en lista de espera
             this.presentAlertNoEstaEnLista();
           }
@@ -129,9 +133,17 @@ export class QrMesaPage implements OnInit {
 
   async presentAlertNoEstaEnLista() {
     const alert = await this.alertCtrl.create({
-      // header: 'Mesa: ' + this.mesaEscaneada.nromesa,
       subHeader: 'No se encuentra en lista de espera',
       message: 'Debe escanear el QR de ingreso al local',
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
+
+  async presentAlertSigueEnLista() {
+    const alert = await this.alertCtrl.create({
+      subHeader: 'Usted sigue en lista de espera',
+      message: 'Debe esperar a que el mozo lo confirme',
       buttons: ['OK']
     });
     await alert.present();
