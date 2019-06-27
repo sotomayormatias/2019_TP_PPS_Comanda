@@ -77,7 +77,7 @@ export class AbmProductoPage implements OnInit {
       let filename: string = this.nombre + "_" + contador;
       const imageRef = storageRef.child(`productos/${filename}.jpg`);
 
-      let datos: any = { 'nombre': this.nombre, 'descripcion': this.descripcion, 'tiempo': this.tiempo, 'precio': this.precio, 'quienPuedever': this.quienPuedever };
+      let datos: any = { 'nombre': this.nombre, 'descripcion': this.descripcion, 'tiempo': this.tiempo, 'precio': this.precio, 'quienPuedever': this.quienPuedever, 'foto': foto  };
       this.guardardatosDeProducto(datos);
 
       imageRef.putString(foto, firebase.storage.StringFormat.DATA_URL).then((snapshot) => {
