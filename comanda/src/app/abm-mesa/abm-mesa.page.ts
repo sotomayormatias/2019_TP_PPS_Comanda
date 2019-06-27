@@ -15,13 +15,12 @@ import { BarcodeScanner, BarcodeScannerOptions } from "@ionic-native/barcode-sca
 })
 export class AbmMesaPage implements OnInit {
   formMesas: FormGroup;
-  nromesa: number;
-  cantcomen: number;
-  tmesa: number;
+  nromesa: string = '';
+  cantcomen: string = '';
+  tmesa: string = '';
   captureDataUrl: Array<string>;
   hayFotos: boolean = false;
   cantidadFotos: number = 0;
-  datosEscaneados: any;
   datos: any;
 
   constructor(
@@ -72,7 +71,24 @@ export class AbmMesaPage implements OnInit {
   }
 
   agregarMesas() {
-    // let usuario = JSON.parse(sessionStorage.getItem('usuario'));
+
+    if (this.nromesa == '') {
+      this.mostrarFaltanDatos('El nro. de mesa es obligatorio');
+      return true;
+    }
+    if (this.cantcomen == '') {
+      this.mostrarFaltanDatos('El nro. de personas es obligatorio');
+      return true;
+    }
+    if (this.tmesa == '') {
+      this.mostrarFaltanDatos('El tipo de mesa es obligatorio');
+      return true;
+    }
+    if (this.captureDataUrl.length == 0) {
+      this.mostrarFaltanDatos('Debe subir una foto');
+      return true;
+    }
+
     let storageRef = firebase.storage().ref();
     let errores: number = 0;
     let contador: number = 0;
@@ -92,9 +108,9 @@ export class AbmMesaPage implements OnInit {
     });
 
     if (errores == 0)
-      this.subidaExitosa("Las imagenes se han subido correctamente");
+      this.subidaExitosa("El alta se realizó de manera exitosa.");
     else
-      this.subidaErronea("Error en al menos una foto");
+      this.subidaErronea("Error al realizar el alta.");
   }
 
   guardardatosDeProducto(datos) {
@@ -129,33 +145,22 @@ export class AbmMesaPage implements OnInit {
     await alert.present();
   }
 
-  
-  doScan() {
-    this.scanner.scan({ "formats": "PDF_417" }).then((data) => {
-      this.datosEscaneados = data;
-      this.cargarDatosDesdeDni(this.datosEscaneados);
-    }, (err) => {
-      console.log("Error: " + err);
-    });
-  }
-
-  cargarDatosDesdeDni(datos: any) {
-    let parsedData = datos.text.split('@');
-    let nombre = parsedData[2].toString();
-    let apellido = parsedData[1].toString();
-    let dni: number = +parsedData[4];
-    
-    this.formMesas.get('nromesaCtrl').setValue(nombre);
-    this.formMesas.get('cantcomenCtrl').setValue(apellido);
-    this.formMesas.get('tmesaCtrl').setValue(dni);
-  }
-
   clearInputs() {
       this.formMesas.get('nromesaCtrl').setValue("");
       this.formMesas.get('cantcomenCtrl').setValue("");
       this.formMesas.get('tmesaCtrl').setValue("");
-  
+  }
 
+  async mostrarFaltanDatos(mensaje: string) {
+    const toast = await this.toastController.create({
+      message: mensaje,
+      color: 'danger',
+      showCloseButton: false,
+      position: 'bottom',
+      closeButtonText: 'Done',
+      duration: 2000
+    });
+    toast.present();
   }
 }
 
