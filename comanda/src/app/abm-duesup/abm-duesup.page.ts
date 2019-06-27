@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Camera, CameraOptions, PictureSourceType } from "@ionic-native/camera/ngx";
 import { BarcodeScanner, BarcodeScannerOptions } from "@ionic-native/barcode-scanner/ngx";
-import { AlertController } from '@ionic/angular';
-import { ToastController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 import * as firebase from "firebase";
 
 @Component({
@@ -14,13 +13,13 @@ import * as firebase from "firebase";
 export class AbmDuesupPage implements OnInit {
   // Datos Dueño/Sup
   formDueSup: FormGroup;
-  nombre: string;
-  apellido: string;
-  DNI: number;
-  CUIL: string;
-  perfil: string;
-  correo: string;
-  clave: string;
+  nombre: string = '';
+  apellido: string = '';
+  DNI: any = '';
+  CUIL: string = '';
+  perfil: string = '';
+  correo: string = '';
+  clave: string = '';
 
   nombreCtrl;
   apellidoCtrl;
@@ -41,7 +40,7 @@ export class AbmDuesupPage implements OnInit {
     private scanner: BarcodeScanner,
     public toastController: ToastController,
     private alertCtrl: AlertController
-    ) {
+  ) {
     this.formDueSup = new FormGroup({
       nombreCtrl: new FormControl('', Validators.required),
       apellidoCtrl: new FormControl('', Validators.required),
@@ -94,26 +93,58 @@ export class AbmDuesupPage implements OnInit {
     let errores: number = 0;
     let contador: number = 0;
 
+    let datos: any = {
+      'nombre': this.nombre,
+      'apellido': this.apellido,
+      'DNI': this.DNI,
+      'CUIL': this.CUIL,
+      'perfil': this.perfil
+    };
+    let datosUsuario: any = {
+      'correo': this.correo,
+      'clave': this.clave,
+      'perfil': this.perfil
+    }
+
+    if (this.nombre == '') {
+      this.mostrarFaltanDatos('El nombre es obligatorio');
+      return true;
+    }
+    if (this.apellido == '') {
+      this.mostrarFaltanDatos('El apellido es obligatorio');
+      return true;
+    }
+    if (this.DNI == '') {
+      this.mostrarFaltanDatos('El DNI es obligatorio');
+      return true;
+    }
+    if (this.CUIL == '') {
+      this.mostrarFaltanDatos('El CUIL es obligatorio');
+      return true;
+    }
+    if (this.correo == '') {
+      this.mostrarFaltanDatos('El correo es obligatorio');
+      return true;
+    }
+    if (this.clave == '') {
+      this.mostrarFaltanDatos('La clave es obligatoria');
+      return true;
+    }
+    if (this.perfil == '') {
+      this.mostrarFaltanDatos('Debe seleccionar un perfil');
+      return true;
+    }
+    if (this.captureDataUrl.length == 0) {
+      this.mostrarFaltanDatos('Debe subir una foto');
+      return true;
+    }
+
+    this.guardardatosDeDueSup(datos);
+    this.guardardatosUsuarios(datosUsuario);
+
     this.captureDataUrl.forEach(foto => {
       let filename: string = this.correo + "_" + contador;
       const imageRef = storageRef.child(`dueSup/${filename}.jpg`);
-
-      let datos: any = { 'nombre': this.nombre, 
-                         'apellido': this.apellido, 
-                         'DNI': this.DNI, 
-                         'CUIL': this.CUIL , 
-                         'perfil': this.perfil };
-      let datosUsuario: any = {
-                         'correo': this.correo,
-                         'clave': this.clave,
-                         'perfil': this.perfil
-
-      }
-      console.log(datos);
-
-      this.guardardatosDeDueSup(datos);
-      this.guardardatosUsuarios(datosUsuario);
-
       imageRef.putString(foto, firebase.storage.StringFormat.DATA_URL).then((snapshot) => {
       })
         .catch(() => {
@@ -182,8 +213,6 @@ export class AbmDuesupPage implements OnInit {
     let nombre = parsedData[2].toString();
     let apellido = parsedData[1].toString();
     let dni: number = +parsedData[4];
-    
-    // this.guardardatosDeDueSup(datos);
 
     this.formDueSup.get('nombreCtrl').setValue(nombre);
     this.formDueSup.get('apellidoCtrl').setValue(apellido);
@@ -191,29 +220,25 @@ export class AbmDuesupPage implements OnInit {
   }
 
   clearInputs() {
-      this.formDueSup.get('nombreCtrl').setValue("");
-      this.formDueSup.get('apellidoCtrl').setValue("");
-      this.formDueSup.get('DNICtrl').setValue("");
-      this.formDueSup.get('CUILCtrl').setValue("");
-      
-      this.formDueSup.get('correoCtrl').setValue("");
-      this.formDueSup.get('claveCtrl').setValue("");
-      this.formDueSup.get('PerfilCtrl').setValue("");
+    this.formDueSup.get('nombreCtrl').setValue("");
+    this.formDueSup.get('apellidoCtrl').setValue("");
+    this.formDueSup.get('DNICtrl').setValue("");
+    this.formDueSup.get('CUILCtrl').setValue("");
 
-
-
+    this.formDueSup.get('correoCtrl').setValue("");
+    this.formDueSup.get('claveCtrl').setValue("");
+    this.formDueSup.get('PerfilCtrl').setValue("");
   }
 
-  // radioResp(questionID,answer){
-
-  //   if
-
-
-  // }
-
-//   radioGroupChange(event) {
-// console.log(“radioGroupChange”,event.detail);
-// this.selectedRadioGroup = event.detail;
-// }
-
+  async mostrarFaltanDatos(mensaje: string) {
+    const toast = await this.toastController.create({
+      message: mensaje,
+      color: 'danger',
+      showCloseButton: false,
+      position: 'bottom',
+      closeButtonText: 'Done',
+      duration: 2000
+    });
+    toast.present();
+  }
 }
