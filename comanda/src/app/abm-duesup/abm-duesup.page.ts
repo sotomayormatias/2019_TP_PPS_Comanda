@@ -126,6 +126,10 @@ export class AbmDuesupPage implements OnInit {
       this.mostrarFaltanDatos('El correo es obligatorio');
       return true;
     }
+    if(this.correo != '' && !this.validarCorreo()){
+      this.mostrarFaltanDatos('El correo es inválido');
+      return true;
+    }
     if (this.clave == '') {
       this.mostrarFaltanDatos('La clave es obligatoria');
       return true;
@@ -240,5 +244,10 @@ export class AbmDuesupPage implements OnInit {
       duration: 2000
     });
     toast.present();
+  }
+  
+  validarCorreo(): boolean {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(this.correo).toLowerCase());
   }
 }
