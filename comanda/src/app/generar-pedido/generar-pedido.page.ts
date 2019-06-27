@@ -16,6 +16,7 @@ export class GenerarPedidoPage implements OnInit {
   productosCocina: any;
   productosBartender: any;
   spinner: boolean = true ;
+  totalPedido: any = 0;
 
   cart = [];
   items = [];
@@ -65,13 +66,22 @@ export class GenerarPedidoPage implements OnInit {
 
   restarProducto(key: string) {
     let producto = this.productos.find(prod => prod.key == key);
-    if (producto.cantidad > 0)
+    if (producto.cantidad > 0) {
       producto.cantidad -= 1;
+    } else {
+      producto.cantidad = 0 ;
+    }
+      
+    let productosPedidos = this.productos.filter(prod => prod.cantidad > 0);
+    this.totalPedido = this.calcularPrecioTotal(productosPedidos);
   }
 
   sumarProducto(key: string) {
     let producto = this.productos.find(prod => prod.key == key);
     producto.cantidad += 1;
+
+    let productosPedidos = this.productos.filter(prod => prod.cantidad > 0);
+    this.totalPedido = this.calcularPrecioTotal(productosPedidos);
   }
 
   pedir() {
