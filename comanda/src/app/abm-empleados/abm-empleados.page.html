@@ -57,11 +57,11 @@
 
       <div class="botones">
 
-      <ion-button  shape="round" color="secondary" fill="solid" (click)="tomarFoto()">Agregar foto
+      <ion-button  shape="round" color="secondary" fill="solid" [disabled]="cantidadFotos >= 1" (click)="tomarFoto()">Agregar foto
       </ion-button>
       <ion-button  shape="round" fill="solid" color="secondary" (click)="doScan()">Cargar desde DNI</ion-button>
     
-      <ion-button type="submit" expand="block" color="primary" fill="solid" [disabled]="!formEmpleado.valid">Agregar
+      <ion-button type="submit" expand="block" color="primary" fill="solid">Agregar
       </ion-button>
       </div>
     </ion-list>

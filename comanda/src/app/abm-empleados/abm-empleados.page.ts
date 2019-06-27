@@ -15,18 +15,18 @@ import { FirebaseService } from '../services/firebase.service';
 })
 export class AbmEmpleadosPage implements OnInit {
   formEmpleado: FormGroup;
-  nombre: string;
-  apellido: string;
-  dni: number;
-  cuil: number;
-  templeado: string;
+  nombre: string = '';
+  apellido: string = '';
+  dni: string = '';
+  cuil: string = '';
+  templeado: string = '';
   captureDataUrl: Array<string>;
   hayFotos: boolean = false;
   cantidadFotos: number = 0;
   datosEscaneados: any;
   datos: any;
-  correo: any;
-  clave: any;
+  correo: string = '';
+  clave: string = '';
 
   constructor(
     private camera: Camera,
@@ -81,7 +81,40 @@ export class AbmEmpleadosPage implements OnInit {
   }
 
   agregarEmpleado() {
-    // let usuario = JSON.parse(sessionStorage.getItem('usuario'));
+    
+    if (this.nombre == '') {
+      this.mostrarFaltanDatos('El nombre es obligatorio');
+      return true;
+    }
+    if (this.apellido == '') {
+      this.mostrarFaltanDatos('El apellido es obligatorio');
+      return true;
+    }
+    if (this.dni == '') {
+      this.mostrarFaltanDatos('El DNI es obligatorio');
+      return true;
+    }
+    if (this.cuil == '') {
+      this.mostrarFaltanDatos('El CUIL es obligatorio');
+      return true;
+    }
+    if (this.correo == '') {
+      this.mostrarFaltanDatos('El correo es obligatorio');
+      return true;
+    }
+    if (this.clave == '') {
+      this.mostrarFaltanDatos('La clave es obligatoria');
+      return true;
+    }
+    if (this.templeado == '') {
+      this.mostrarFaltanDatos('Debe seleccionar un tipo');
+      return true;
+    }
+    if (this.captureDataUrl.length == 0) {
+      this.mostrarFaltanDatos('Debe subir una foto');
+      return true;
+    }
+
     let storageRef = firebase.storage().ref();
     let errores: number = 0;
     let contador: number = 0;
@@ -91,11 +124,7 @@ export class AbmEmpleadosPage implements OnInit {
       const imageRef = storageRef.child(`empleados/${filename}.jpg`);
 
       let datos: any = { 'nombre': this.nombre, 'apellido': this.apellido, 'dni': this.dni, 'cuil': this.cuil, 'templeado': this.templeado };
-      // let datosUsuario: any = { 'clave': this.clave, 'correo': this.correo, 'perfil': this.templeado }
       this.guardardatosDeProducto(datos);
-
-      // let datosUsuario = { 'clave': this.clave, 'correo': this.correo, 'perfil': this.templeado};
-      // this.guardarDatosUsuario(datosUsuario);
 
       imageRef.putString(foto, firebase.storage.StringFormat.DATA_URL).then((snapshot) => {
       })
@@ -106,9 +135,9 @@ export class AbmEmpleadosPage implements OnInit {
    
 
     if (errores == 0)
-      this.subidaExitosa("Las imagenes se han subido correctamente");
+      this.subidaExitosa("El alta se realizó de manera exitosa.");
     else
-      this.subidaErronea("Error en al menos una foto");
+      this.subidaErronea("Error al realizar el alta.");
   }
 
   guardardatosDeProducto(datos) {
@@ -172,9 +201,21 @@ export class AbmEmpleadosPage implements OnInit {
       this.formEmpleado.get('apellidoCtrl').setValue("");
       this.formEmpleado.get('dniCtrl').setValue("");
       this.formEmpleado.get('cuilCtrl').setValue("");
+      this.formEmpleado.get('correoCtrl').setValue("");
+      this.formEmpleado.get('claveCtrl').setValue("");
       this.formEmpleado.get('templeadoCtrl').setValue("");
+  }
 
-
+  async mostrarFaltanDatos(mensaje: string) {
+    const toast = await this.toastController.create({
+      message: mensaje,
+      color: 'danger',
+      showCloseButton: false,
+      position: 'bottom',
+      closeButtonText: 'Done',
+      duration: 2000
+    });
+    toast.present();
   }
 }
 
