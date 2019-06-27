@@ -13,6 +13,20 @@ export class GenerarPedidoPage implements OnInit {
   clienteLogueado: any;
   mesaDelPedido: any;
   existePedidoAbierto: boolean;
+  productosCocina: any;
+  productosBartender: any;
+  spinner: boolean = true ;
+
+  cart = [];
+  items = [];
+
+  // categorias = ['cocinero' , 'bartender'];
+ 
+  sliderConfig = {
+    slidesPerView: 1.2,
+    spaceBetween: 5,
+    centeredSlides: false
+  };
 
   constructor(private baseService: FirebaseService,
     public toastController: ToastController,
@@ -24,14 +38,28 @@ export class GenerarPedidoPage implements OnInit {
   }
 
   ngOnInit() {
+    this.traerProductos();
+  }
+
+  
+  addToCart(product) {
+    // this.cartService.addProduct(product);
+  }
+ 
+  openCart() {
+    // this.router.navigate(['cart']);
   }
 
   traerProductos() {
+    this.spinner = true;
     this.baseService.getItems('productos').then(prods => {
       this.productos = prods;
       this.productos.forEach(producto => {
         producto.cantidad = 0;
       });
+      this.productosBartender = this.productos.filter(producto => producto.quienPuedever == "bartender" );
+      this.productosCocina = this.productos.filter(producto => producto.quienPuedever == "cocinero" );
+      this.spinner = false;
     });
   }
 
