@@ -10,14 +10,13 @@
 </ion-header>
 
 <ion-content>
-
-
-  <div *ngIf="esAnonimo">
+  <div>
     <form [formGroup]="formClienteAnonimo" (submit)="agregarCliente()">
       <div class="body"></div>
       <ion-list>
         <span>
-          <input class="gate" [(ngModel)]="nombreAnon" formControlName="nombreAnonimo" type="text" name="nombre"><label>Nombre</label>
+          <input class="gate" formControlName="nombreAnonimo" type="text"
+            name="nombre"><label>Nombre</label>
         </span>
         <ion-slides>
           <ion-slide *ngFor="let foto of captureDataUrl">
@@ -25,14 +24,13 @@
           </ion-slide>
         </ion-slides>
         <div class="botones">
-  
-          <ion-button type="submit" expand="block" fill="outline" color="primary"
-            [disabled]="!formClienteAnonimo.valid">
-            Agregar
-          </ion-button>
+          <ion-button type="button" shape="round" color="secondary" [disabled]="cantidadFotos >= 1"
+            (click)="tomarFoto()">
+            Agregar foto</ion-button>
+            <ion-button type="submit" expand="block" fill="outline" color="primary">
+              Agregar
+            </ion-button>
         </div>
       </ion-list>
     </form>
   </div>
-
- 

@@ -464,13 +464,12 @@ export class AppComponent {
               url: '/home',
               icon: 'home'
             },
-
-            // // (J) ENCUESTA EMPLEADO
-            // {
-            //   title: 'NOK - Encuesta Empleado',
-            //   url: '/',
-            //   icon: 'clipboard'
-            // },
+            // (C) ALTA PRODUCTO
+            {
+              title: 'OK - Alta Productos',
+              url: '/abm-producto',
+              icon: 'beer'
+            },
             // (13) LISTADO DE PEDIDOS PENDIENTES POR SECTOR
             {
               title: 'OK - Pedidos Pendientes',
@@ -499,12 +498,12 @@ export class AppComponent {
               url: '/home',
               icon: 'home'
             },
-            // (J) ENCUESTA EMPLEADO
-            //  {
-            //   title: 'NOK - Encuesta Empleado',
-            //   url: '/',
-            //   icon: 'clipboard'
-            // },
+            // (C) ALTA PRODUCTO
+            {
+              title: 'OK - Alta Productos',
+              url: '/abm-producto',
+              icon: 'beer'
+            },
             // (13) LISTADO DE PEDIDOS PENDIENTES POR SECTOR
             {
               title: 'OK - Pedidos Pendientes',
