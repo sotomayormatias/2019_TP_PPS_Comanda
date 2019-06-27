@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Camera, CameraOptions, PictureSourceType } from "@ionic-native/camera/ngx";
-import { AlertController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 import * as firebase from "firebase";
 
 @Component({
@@ -11,18 +11,19 @@ import * as firebase from "firebase";
 })
 export class AbmProductoPage implements OnInit {
   formProducto: FormGroup;
-  nombre: string;
-  descripcion: string;
-  tiempo: number;
-  precio: number;
+  nombre: string = '';
+  descripcion: string = '';
+  tiempo: string = '';
+  precio: string = '';
   captureDataUrl: Array<string>;
   hayFotos: boolean = false;
   cantidadFotos: number = 0;
-  quienPuedever: string;
+  quienPuedever: string = '';
 
   constructor(
     private camera: Camera,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private toastCtrl: ToastController
     ) {
     this.formProducto = new FormGroup({
       nombreCtrl: new FormControl('', Validators.required),
@@ -68,7 +69,31 @@ export class AbmProductoPage implements OnInit {
   }
 
   agregarProducto() {
-    // let usuario = JSON.parse(sessionStorage.getItem('usuario'));
+    if (this.nombre == '') {
+      this.mostrarFaltanDatos('El nombre es obligatorio');
+      return true;
+    }
+    if (this.descripcion == '') {
+      this.mostrarFaltanDatos('La descripción es obligatoria');
+      return true;
+    }
+    if (this.tiempo == '') {
+      this.mostrarFaltanDatos('El tiempo es obligatorio');
+      return true;
+    }
+    if (this.precio == '') {
+      this.mostrarFaltanDatos('El precio es obligatorio');
+      return true;
+    }
+    if (this.quienPuedever == '') {
+      this.mostrarFaltanDatos('El perfil es obligatorio');
+      return true;
+    }
+    if (this.captureDataUrl.length == 0) {
+      this.mostrarFaltanDatos('Debe subir al menos una foto');
+      return true;
+    }
+
     let storageRef = firebase.storage().ref();
     let errores: number = 0;
     let contador: number = 0;
@@ -88,9 +113,9 @@ export class AbmProductoPage implements OnInit {
     });
 
     if (errores == 0)
-      this.subidaExitosa("Las imagenes se han subido correctamente");
+      this.subidaExitosa("El alta se realizó de manera exitosa.");
     else
-      this.subidaErronea("Error en al menos una foto");
+      this.subidaErronea("Error al realizar el alta.");
   }
 
   guardardatosDeProducto(datos) {
@@ -110,6 +135,7 @@ export class AbmProductoPage implements OnInit {
     await alert.present();
     // clear the previous photo data in the variable
     this.captureDataUrl.length = 0;
+    this.clearInputs();
   }
 
   async subidaErronea(mensaje: string) {
@@ -121,5 +147,25 @@ export class AbmProductoPage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  clearInputs() {
+    this.formProducto.get('nombreCtrl').setValue("");
+    this.formProducto.get('descCtrl').setValue("");
+    this.formProducto.get('tiempoCtrl').setValue("");
+    this.formProducto.get('precioCtrl').setValue("");
+    this.formProducto.get('quienPuedeverCtrl').setValue("");
+}
+
+  async mostrarFaltanDatos(mensaje: string) {
+    const toast = await this.toastCtrl.create({
+      message: mensaje,
+      color: 'danger',
+      showCloseButton: false,
+      position: 'bottom',
+      closeButtonText: 'Done',
+      duration: 2000
+    });
+    toast.present();
   }
 }

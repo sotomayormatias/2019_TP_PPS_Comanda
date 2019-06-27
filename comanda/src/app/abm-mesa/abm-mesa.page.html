@@ -54,9 +54,9 @@
       </ion-slides>
 
      <div class="botones">
-      <ion-button type="button" shape="round" color="secondary" fill="solid" (click)="tomarFoto()">Agregar foto
+      <ion-button type="button" shape="round" color="secondary" fill="solid" [disabled]="cantidadFotos >= 1" (click)="tomarFoto()">Agregar foto
       </ion-button>
-      <ion-button type="submit" expand="block" color="primary" fill="solid" [disabled]="!formMesas.valid">Agregar
+      <ion-button type="submit" expand="block" color="primary" fill="solid">Agregar
       </ion-button>
       </div>
     </ion-list>

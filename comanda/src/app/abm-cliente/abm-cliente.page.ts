@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Camera, CameraOptions, PictureSourceType } from "@ionic-native/camera/ngx";
 import { BarcodeScanner, BarcodeScannerOptions } from "@ionic-native/barcode-scanner/ngx";
-import { AlertController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 import * as firebase from "firebase";
 import { FirebaseService } from '../services/firebase.service';
 import { Router } from '@angular/router';
@@ -27,7 +27,8 @@ export class AbmClientePage implements OnInit {
     private scanner: BarcodeScanner,
     private alertCtrl: AlertController,
     private router: Router,
-    private baseService: FirebaseService
+    private baseService: FirebaseService,
+    private toastCtrl: ToastController
   ) {
     this.formClienteRegistrado = new FormGroup({
       nombreRegistrado: new FormControl('', Validators.required),
@@ -88,7 +89,36 @@ export class AbmClientePage implements OnInit {
       'esAnonimo': false
 
     };
-    
+
+    if (this.datosCliente.nombre == '') {
+      this.mostrarFaltanDatos('El nombre es obligatorio');
+      return true;
+    }
+    if (this.datosCliente.apellido == '') {
+      this.mostrarFaltanDatos('El apellido es obligatorio');
+      return true;
+    }
+    if (this.datosCliente.dni == '') {
+      this.mostrarFaltanDatos('El DNI es obligatorio');
+      return true;
+    }
+    if (this.datosCliente.correo == '') {
+      this.mostrarFaltanDatos('El correo es obligatorio');
+      return true;
+    }
+    if(this.datosCliente.correo != '' && !this.validarCorreo()){
+      this.mostrarFaltanDatos('El correo es inválido');
+      return true;
+    }
+    if (this.datosCliente.clave == '') {
+      this.mostrarFaltanDatos('La clave es obligatoria');
+      return true;
+    }
+    if (this.captureDataUrl.length == 0) {
+      this.mostrarFaltanDatos('Debe subir una foto');
+      return true;
+    }
+
     this.clientesRegistrados.forEach(cli => {
       if (cli.correo == this.datosCliente.correo) {
         this.yaExisteCorreo = true;
@@ -97,6 +127,7 @@ export class AbmClientePage implements OnInit {
 
     if (this.yaExisteCorreo) {
       this.AlertYaExisteUsuario();
+      this.yaExisteCorreo = false;
     } else {
       this.baseService.addItem('clientes', this.datosCliente);
 
@@ -179,5 +210,22 @@ export class AbmClientePage implements OnInit {
     this.baseService.getItems('clientes').then(cli => {
       this.clientesRegistrados = cli;
     });
+  }
+
+  async mostrarFaltanDatos(mensaje: string) {
+    const toast = await this.toastCtrl.create({
+      message: mensaje,
+      color: 'danger',
+      showCloseButton: false,
+      position: 'bottom',
+      closeButtonText: 'Done',
+      duration: 2000
+    });
+    toast.present();
+  }
+
+  validarCorreo(): boolean {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(this.datosCliente.correo).toLowerCase());
   }
 }

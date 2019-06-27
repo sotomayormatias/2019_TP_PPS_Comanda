@@ -13,70 +13,66 @@
 </ion-header>
 
 <ion-content>
-    <form  [(formGroup)]="formDueSup" (submit)="agregarDueSup()">
-      <!-- IMAGEN DE FONDO -->
-      <div class="body"></div>
+  <form [(formGroup)]="formDueSup" (submit)="agregarDueSup()">
+    <!-- IMAGEN DE FONDO -->
+    <div class="body"></div>
 
-      <ion-list>
-          <span>
-            <input  [(ngModel)]="nombre" class="balloon" formControlName="nombreCtrl" type="text" name="nombre">
-            <label>Nombre</label>
-          </span>
-        
-          <span>
-            <input  [(ngModel)]="apellido" class="balloon" formControlName="apellidoCtrl" type="text" name="apellido">
-            <label>Apellido</label>
-          </span>
-       
-          <span>
-            <input  [(ngModel)]="DNI" class="balloon" formControlName="DNICtrl" type="number" name="DNI">
-            <label>DNI</label>
-          </span>
+    <ion-list>
+      <span>
+        <input [(ngModel)]="nombre" class="balloon" formControlName="nombreCtrl" type="text" name="nombre">
+        <label>Nombre</label>
+      </span>
 
-          <span>
-            <input [(ngModel)]="CUIL" class="balloon" formControlName="CUILCtrl" type="number" name="CUIL">
-            <label>CUIL</label>
-          </span>
+      <span>
+        <input [(ngModel)]="apellido" class="balloon" formControlName="apellidoCtrl" type="text" name="apellido">
+        <label>Apellido</label>
+      </span>
 
-          <span>
-            <input [(ngModel)]="correo" class="balloon" formControlName="correoCtrl" type="email" name="correo">
-            <label>Correo</label>
-          </span>
+      <span>
+        <input [(ngModel)]="DNI" class="balloon" formControlName="DNICtrl" type="number" name="DNI">
+        <label>DNI</label>
+      </span>
 
-          <span>
-            <input [(ngModel)]="clave" class="balloon" formControlName="claveCtrl" type="password" name="clave">
-            <label>Clave</label>
-          </span>
-        
+      <span>
+        <input [(ngModel)]="CUIL" class="balloon" formControlName="CUILCtrl" type="number" name="CUIL">
+        <label>CUIL</label>
+      </span>
 
-          <ion-select [(ngModel)]="perfil" class="round" formControlName="perfilCtrl" placeholder="Seleccione perfil" >
-            <ion-select-option value="dueño" checked>Dueño</ion-select-option>
-            <ion-select-option value="supervisor">Supervisor</ion-select-option>
-          </ion-select>
-              
-          <!-- <span></span> -->
+      <span>
+        <input [(ngModel)]="correo" class="balloon" formControlName="correoCtrl" type="email" name="correo">
+        <label>Correo</label>
+      </span>
 
-          <ion-slides>
-            <ion-slide *ngFor="let foto of captureDataUrl">
-              <img class="vistaprevia" [src]="foto" *ngIf="captureDataUrl" />
-            </ion-slide>
-          </ion-slides>
-      
-     
-          <div class="botones">
-            <ion-button  shape="round"  color="medium"   (click)="tomarFoto()">Agregar foto  
-              <!-- [disabled]="cantidadFotos >= 3"   -->
-              <ion-icon  name="image"></ion-icon>
-            </ion-button>
+      <span>
+        <input [(ngModel)]="clave" class="balloon" formControlName="claveCtrl" type="password" name="clave">
+        <label>Clave</label>
+      </span>
 
-            <ion-button  shape="round"  color="medium" (click)="doScan()">Cargar desde DNI
-                <ion-icon name="copy"></ion-icon>
-            </ion-button>
 
-            <ion-button type="submit"  expand="block"  color="dark" [disabled]="!formDueSup.valid" >Agregar
-                <!--  -->
-            </ion-button> 
-          </div>
-      </ion-list>
+      <ion-select [(ngModel)]="perfil" class="round" formControlName="perfilCtrl" placeholder="Seleccione perfil">
+        <ion-select-option value="dueño" checked>Dueño</ion-select-option>
+        <ion-select-option value="supervisor">Supervisor</ion-select-option>
+      </ion-select>
+
+      <!-- <span></span> -->
+
+      <ion-slides>
+        <ion-slide *ngFor="let foto of captureDataUrl">
+          <img class="vistaprevia" [src]="foto" *ngIf="captureDataUrl" />
+        </ion-slide>
+      </ion-slides>
+
+
+      <div class="botones">
+        <ion-button shape="round" color="medium" [disabled]="cantidadFotos >= 1" (click)="tomarFoto()">Agregar foto
+          <ion-icon name="image"></ion-icon>
+        </ion-button>
+        <ion-button shape="round" color="medium" (click)="doScan()">Cargar desde DNI
+          <ion-icon name="copy"></ion-icon>
+        </ion-button>
+        <ion-button type="submit" expand="block" color="dark">Agregar
+        </ion-button>
+      </div>
+    </ion-list>
   </form>
 </ion-content>

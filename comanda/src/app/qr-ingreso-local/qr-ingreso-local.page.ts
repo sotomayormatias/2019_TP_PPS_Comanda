@@ -76,6 +76,7 @@ export class QrIngresoLocalPage implements OnInit {
     }, (err) => {
       console.log("Error: " + err);
     });
+    this.traerListaEspera();
   }
 
   async presentAlertQRErroneo() {
