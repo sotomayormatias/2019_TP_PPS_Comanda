@@ -119,7 +119,6 @@ export class LoginPage implements OnInit {
     this.spinner = true;
     let usuarioLogueado = { nombre: this.cuenta.usuario , perfil: "clienteAnonimo" };
     setTimeout(() => this.spinner = false, 2000);
-    sessionStorage.setItem('usuario', JSON.stringify(usuarioLogueado));
     this.events.publish('usuarioLogueado: ', 'clienteAnonimo');
     this.router.navigateByUrl('/abm-cliente-anonimo');
   }

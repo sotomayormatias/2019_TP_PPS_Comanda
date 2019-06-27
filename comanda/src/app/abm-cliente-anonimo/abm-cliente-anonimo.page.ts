@@ -1,13 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup , Validators , FormControl } from '@angular/forms';
-// import { Camera, CameraOptions, PictureSourceType } from "@ionic-native/camera/ngx";
-// import { QRScanner, QRScannerStatus } from "@ionic-native/qr-scanner/ngx";
-// import { BarcodeScanner, BarcodeScannerOptions } from "@ionic-native/barcode-scanner/ngx";
-import { AlertController } from '@ionic/angular';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { Camera, CameraOptions, PictureSourceType } from "@ionic-native/camera/ngx";
+import { AlertController, ToastController, Events } from '@ionic/angular';
 import * as firebase from "firebase";
 import { FirebaseService } from '../services/firebase.service';
 import { Router } from "@angular/router";
-import { Events } from '@ionic/angular';
 
 @Component({
   selector: 'app-abm-cliente-anonimo',
@@ -19,24 +16,24 @@ export class AbmClienteAnonimoPage implements OnInit {
   captureDataUrl: Array<string>;
   hayFotos: boolean = false;
   cantidadFotos: number = 0;
-  esAnonimo: boolean = true;
-  datosEscaneados: any;
-  datosCliente: any;
   datosUsuario: any;
   nombreAnonimo: any;
-  nombreAnon: any;
+  usuariosAnonimos: any[] = [];
+  yaExisteUsuario: boolean = false;
 
   constructor(
     private alertCtrl: AlertController,
     private baseService: FirebaseService,
     public events: Events,
-    private router: Router
+    private router: Router,
+    private camera: Camera,
+    public toastCtrl: ToastController
   ) {
-  
     this.formClienteAnonimo = new FormGroup({
       nombreAnonimo: new FormControl('', Validators.required)
     });
     this.captureDataUrl = new Array<string>();
+    this.traerUsuariosAnonimos();
   }
 
   ngOnInit() {
@@ -54,54 +51,63 @@ export class AbmClienteAnonimoPage implements OnInit {
   }
 
   agregarCliente() {
-    let storageRef = firebase.storage().ref();
-    let errores: number = 0;
-
-    this.datosCliente = {
-        'nombre': this.formClienteAnonimo.get('nombreAnonimo').value,
-        'esAnonimo': true
-    };
-
-    this.guardardatosDeCliente(this.datosCliente);
-
-   
-
-    if (errores == 0) {
-      this.subidaExitosa("Logueo ANONIMO ok");
-      
-      this.router.navigateByUrl('/home');
-    } else
-      this.subidaErronea("Error en al menos una foto");
-  }
-
-  guardardatosDeCliente(datos) {
+    // valido el campo nombre
+    if (this.formClienteAnonimo.get('nombreAnonimo').value == "") {
+      this.mostrarFaltanDatos('El nombre es obligatorio.');
+      return true;
+    }
+    //valido que exista al menos una foto
+    if (this.captureDataUrl.length == 0) {
+      this.mostrarFaltanDatos('Debe cargar una foto.');
+      return true;
+    }
     
-    let clave = '1234';
-    let perfil = 'clienteAnonimo';
-
-    this.datosUsuario = {
-      'clave': clave,
-      'correo': this.nombreAnon ,
-      'perfil': perfil
-    };
-
-    
-    this.baseService.addItem('usuarios', this.datosUsuario );
-    this.events.publish('usuarioLogueado', 'clienteAnonimo');
-
-  }
-
-  async subidaExitosa(mensaje) {
-    const alert = await this.alertCtrl.create({
-      header: 'Alert',
-      subHeader: 'Éxito',
-      message: mensaje,
-      buttons: ['OK']
+    this.usuariosAnonimos.forEach(cli => {
+      if (cli.correo == this.formClienteAnonimo.get('nombreAnonimo').value) {
+        this.yaExisteUsuario = true;
+      }
     });
 
-    await alert.present();
-    // clear the previous photo data in the variable
-    this.captureDataUrl.length = 0;
+    if (this.yaExisteUsuario) {
+      this.AlertYaExisteUsuario();
+      this.yaExisteUsuario = false;
+    } else {
+
+      let storageRef = firebase.storage().ref();
+
+      this.datosUsuario = {
+        'correo': this.formClienteAnonimo.get('nombreAnonimo').value,
+        'clave': '1234',
+        'perfil': 'clienteAnonimo'
+      };
+      this.baseService.addItem('usuarios', this.datosUsuario);
+
+      this.captureDataUrl.forEach(foto => {
+        let filename: string = (this.formClienteAnonimo.get('nombreAnonimo').value).replace(' ', '_');
+        const imageRef = storageRef.child(`clientes/${filename}.jpg`);
+
+        imageRef.putString(foto, firebase.storage.StringFormat.DATA_URL).then((snapshot) => {
+        });
+      });
+
+      this.captureDataUrl.length = 0;
+      this.events.publish('usuarioLogueado', 'clienteAnonimo');
+      this.creoToast();
+      sessionStorage.setItem('usuario', JSON.stringify(this.datosUsuario));
+      this.router.navigateByUrl('/home');
+    }
+  }
+
+  async creoToast() {
+    const toast = await this.toastCtrl.create({
+      message: 'Autenticación exitosa.',
+      color: 'success',
+      showCloseButton: false,
+      position: 'bottom',
+      closeButtonText: 'Done',
+      duration: 2000
+    });
+    toast.present();
   }
 
   async subidaErronea(mensaje: string) {
@@ -115,22 +121,49 @@ export class AbmClienteAnonimoPage implements OnInit {
     await alert.present();
   }
 
-  // doScan() {
-  //   this.scanner.scan({ "formats": "PDF_417" }).then((data) => {
-  //     this.datosEscaneados = data;
-  //     this.cargarDatosDesdeDni(this.datosEscaneados);
-  //   }, (err) => {
-  //     console.log("Error: " + err);
-  //   });
-  // }
+  tomarFoto() {
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      correctOrientation: true,
+      sourceType: PictureSourceType.PHOTOLIBRARY
+    };
 
-  // cargarDatosDesdeDni(datos: any) {
-  //   let parsedData = datos.text.split('@');
-  //   let nombre = parsedData[2].toString();
-  //   let apellido = parsedData[1].toString();
-  //   let dni: number = +parsedData[4];
-    
-  //   this.formClienteAnonimo.get('nombreAnonimo').setValue(nombre);
-  
-  // }
+    this.camera.getPicture(options).then((imageData) => {
+      this.captureDataUrl.push('data:image/jpeg;base64,' + imageData);
+      this.hayFotos = true;
+      this.cantidadFotos += 1;
+    }, (err) => {
+      this.presentAlert(err);
+    });
+  }
+
+  traerUsuariosAnonimos() {
+    this.baseService.getItems('usuarios').then(usuarios => {
+      this.usuariosAnonimos = usuarios.filter(usu => usu.perfil == 'clienteAnonimo');
+    });
+  }
+
+  async mostrarFaltanDatos(mensaje: string) {
+    const toast = await this.toastCtrl.create({
+      message: mensaje,
+      color: 'danger',
+      showCloseButton: false,
+      position: 'bottom',
+      closeButtonText: 'Done',
+      duration: 2000
+    });
+    toast.present();
+  }
+
+  async AlertYaExisteUsuario() {
+    const alert = await this.alertCtrl.create({
+      header: 'Usuario existente',
+      message: 'Ya existe un usuario con el nombre ' + this.formClienteAnonimo.get('nombreAnonimo').value,
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
 }
