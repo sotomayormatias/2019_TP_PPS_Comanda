@@ -21,7 +21,7 @@ export class ReservasPage implements OnInit {
   isToday: boolean = true;
   markDisabled = (date: Date) => {
     var d = new Date();
-    // d.setDate(d.getDate() - 1);
+    d.setDate(d.getDate() - 1);
     return date < d;
   };
   calendar = {
@@ -126,6 +126,7 @@ export class ReservasPage implements OnInit {
     this.fechaElegida.dia = splitFecha[2].split('T')[0];
     this.fechaElegida.mes = splitFecha[1];
 
+
   }
  
 
@@ -140,6 +141,7 @@ export class ReservasPage implements OnInit {
     let dateCreada = new Date();
   
 
+    dateCreada.setDate(parseInt(this.fechaElegida.dia));
     dateCreada.setHours(parseInt(horaminutoseg));
     dateCreada.setMinutes(parseInt(splitHoraMinSeg[1]));
 
@@ -294,25 +296,44 @@ async createEvents(){
     {
       // var eventType = Math.floor(Math.random() * 2);
       var startDay = parseInt(this.reservaRealizada.fechaElegida.dia);
-      var endDay = parseInt(this.reservaRealizada.fechaElegida.dia) ;
+      var endDay = parseInt(this.reservaRealizada.fechaElegida.dia);
       var startMinute = parseInt(this.reservaRealizada.fechaElegida.minuto);
       var startHora = parseInt(this.reservaRealizada.fechaElegida.hora);
       var startMes = parseInt(this.reservaRealizada.fechaElegida.mes);
       // var startStatus = localStorage.getItem("reservaStatus");
       var confirmadaStatus = this.reservaRealizada.estadoConfirmacion;
+      // console.log(startDay);
 
-      var startTime;
-      var endTime;
+      // let inicio: Date = new Date();
+
+      // inicio.setDate(parseInt(this.reservaRealizada.fechaElegida.dia));
+      // inicio.setMinutes(parseInt(this.reservaRealizada.fechaElegida.minuto));
+      // inicio.setHours(parseInt(this.reservaRealizada.fechaElegida.hora));
+      // inicio.setmon(parseInt(this.reservaRealizada.fechaElegida.minuto));
+
+
+
+
+
+
+      let startTime;
+      let endTime;
+      
      
       var endMinute = Math.floor(120) + startMinute;
 
-      for (var i = 0; i < 1; i += 1) {
+      // for (var i = 0; i < 1; i += 1) {
         // if(startStatus == "si")
         // {
         
-          startTime = new Date(2019, startMes-1, startDay, startHora, startMinute);
-          endTime = new Date(2019, startMes-1, endDay,startHora, endMinute);
+          // startTime = new Date(2019, startMes-1, startDay-1, startHora, startMinute);
+          startTime = new Date(2019,startMes-1,startDay,startHora,startMinute)
+          endTime = new Date(2019, startMes-1, endDay, startHora, endMinute);
   
+          // console.log(startTime);
+          // console.log(endTime);
+
+
           events.push({
               title: 'Estado Reserva: '+ confirmadaStatus,
               startTime: startTime,
@@ -326,7 +347,7 @@ async createEvents(){
 
        
     
-      }
+      // }
 
       
   }
