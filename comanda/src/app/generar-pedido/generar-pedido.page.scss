@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=Alfa+Slab+One&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Special+Elite&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Rancho&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Anton&display=swap');
+
 ion-badge {
     color: #fff;
     position: absolute;
@@ -27,6 +29,10 @@ ion-content {
 
 .tituloClase {
     font-family: 'Alfa Slab One', cursive;
+}
+
+.descripcionPlato {
+    font-family: 'Anton', sans-serif;
 }
 
 .precioClase {
