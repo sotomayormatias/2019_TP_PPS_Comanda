@@ -19,6 +19,24 @@ export class PedirDeliveryPage implements OnInit {
   geocoder: any;
   mapa: any;
 
+  clienteLogueado: any;
+  mesaDelPedido: any;
+  existePedidoAbierto: boolean;
+  productosCocina: any;
+  productosBartender: any;
+  spinner: boolean = true ;
+  totalPedido: any = 0;
+
+  cart = [];
+  items = [];
+
+  sliderConfig = {
+    slidesPerView: 1.2,
+    spaceBetween: 5,
+    centeredSlides: false,
+    zoom: false
+  };
+
   constructor(public baseService: FirebaseService,
     public toastCtrl: ToastController,
     public modalCtrl: ModalController) {
@@ -27,26 +45,41 @@ export class PedirDeliveryPage implements OnInit {
 
   ngOnInit() {
     this.cargarMapa();
+    this.traerProductos();
   }
 
   traerProductos() {
+    this.spinner = true;
     this.baseService.getItems('productos').then(prods => {
       this.productos = prods;
       this.productos.forEach(producto => {
         producto.cantidad = 0;
       });
+      this.productosBartender = this.productos.filter(producto => producto.quienPuedever == "bartender" );
+      this.productosCocina = this.productos.filter(producto => producto.quienPuedever == "cocinero" );
+      this.spinner = false;
     });
   }
 
   restarProducto(key: string) {
     let producto = this.productos.find(prod => prod.key == key);
-    if (producto.cantidad > 0)
+    if (producto.cantidad > 0) {
       producto.cantidad -= 1;
+    } else {
+      producto.cantidad = 0 ;
+    }
+
+    let productosPedidos = this.productos.filter(prod => prod.cantidad > 0);
+    this.totalPedido = this.calcularPrecioTotal(productosPedidos);
   }
 
   sumarProducto(key: string) {
     let producto = this.productos.find(prod => prod.key == key);
     producto.cantidad += 1;
+
+    let productosPedidos = this.productos.filter(prod => prod.cantidad > 0);
+    this.totalPedido = this.calcularPrecioTotal(productosPedidos);
+ 
   }
 
   generarPedido() {
