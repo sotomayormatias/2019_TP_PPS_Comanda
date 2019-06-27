@@ -137,12 +137,11 @@ export class ReservasPage implements OnInit {
     //VARIABLES
     let horaminutoseg = this.hora.substr(11,this.hora.length-21);
     let splitHoraMinSeg= horaminutoseg.split(':');
-    let date = new Date()
+    let date: Date = new Date()
     let dateCreada = new Date();
   
 
-    dateCreada.setDate(parseInt(this.fechaElegida.dia));
-    dateCreada.setHours(parseInt(horaminutoseg));
+    dateCreada.setHours(parseInt(splitHoraMinSeg[0]));
     dateCreada.setMinutes(parseInt(splitHoraMinSeg[1]));
 
     console.log(date);
@@ -330,8 +329,8 @@ async createEvents(){
           startTime = new Date(2019,startMes-1,startDay,startHora,startMinute)
           endTime = new Date(2019, startMes-1, endDay, startHora, endMinute);
   
-          // console.log(startTime);
-          // console.log(endTime);
+          console.log(startTime);
+          console.log(endTime);
 
 
           events.push({

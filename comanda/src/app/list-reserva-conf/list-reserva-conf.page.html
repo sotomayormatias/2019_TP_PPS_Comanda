@@ -14,11 +14,11 @@
   
   <ion-content padding>
     <!-- <ion-list> -->
-    <ion-grid shape="round" *ngFor="let reserva of reservas" >
+    <ion-grid shape="round" *ngFor="let reserva of reservasPendientes" >
 
     <ion-row>
       <ion-col shape="round">
-      <ion-item   padding>
+      <ion-item padding>
         <!-- <ion-icon [name]="item.icon" slot="start"></ion-icon> -->
         Cliente: {{reserva.correo}} 
         Fecha: {{reserva.fechaElegida.dia}}/{{reserva.fechaElegida.mes}}
