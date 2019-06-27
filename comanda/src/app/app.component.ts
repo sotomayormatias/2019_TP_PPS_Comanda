@@ -351,7 +351,7 @@ export class AppComponent {
             // (T) 10% DTO
             {
               title: 'NOK - J.Descuento',
-              url: '/',
+              url: '/juego-descuento',
               icon: 'rocket'
             },
             // (U) BEBIDA GRATIS
@@ -362,7 +362,7 @@ export class AppComponent {
             },
             // (V) POSTRE GRATIS
             {
-              title: 'NOK - J.Postre',
+              title: 'NOK - J.Comida',
               url: '/',
               icon: 'cafe'
             },
