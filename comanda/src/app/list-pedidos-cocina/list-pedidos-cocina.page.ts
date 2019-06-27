@@ -367,7 +367,7 @@ traerPedidosActivosPorPerfilPrepara(pedidoDet) {
       let key: string = pedidoAceptado.key;
       delete pedidoAceptado.key;
 
-      pedidoAceptado.cantEnt += 1;
+    
 
       // if (pedidoAceptado.cantEnt == pedidoAceptado.cantDet ) {
       //   pedidoAceptado.estado = 'listoEntrega';
@@ -413,6 +413,7 @@ traerPedidosActivosPorPerfilPrepara(pedidoDet) {
       // console.log("Pedido encontrado: ", pedidoAceptado);
       let key: string = pedidoAceptado.key;
       delete pedidoAceptado.key;
+      pedidoAceptado.cantEnt += 1;
       if (pedidoAceptado.cantEnt == pedidoAceptado.cantDet ) {
         pedidoAceptado.estado = 'listoEntrega';
       } else {

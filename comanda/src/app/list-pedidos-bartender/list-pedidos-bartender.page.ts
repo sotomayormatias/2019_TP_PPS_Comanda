@@ -368,7 +368,7 @@ export class ListPedidosBartenderPage implements OnInit {
     let key: string = pedidoAceptado.key;
     delete pedidoAceptado.key;
     
-    pedidoAceptado.cantEnt += 1;
+    // pedidoAceptado.cantEnt += 1;
 
     // if (pedidoAceptado.cantEnt == pedidoAceptado.cantDet ) {
     //   pedidoAceptado.estado = 'listoEntrega';
@@ -417,6 +417,8 @@ export class ListPedidosBartenderPage implements OnInit {
     let key: string = pedidoAceptado.key;
     delete pedidoAceptado.key;
     
+    pedidoAceptado.cantEnt += 1;
+
     // if (pedidoAceptado.cantEnt == pedidoAceptado.cantDet ) {
     //   pedidoAceptado.estado = 'listoEntrega';
     // } 
