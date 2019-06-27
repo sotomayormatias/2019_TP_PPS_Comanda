@@ -1,51 +1,3 @@
-<!-- <ion-header>
-  <ion-toolbar color="dark">
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>
-      Realizar Pedido
-    </ion-title>
-    <ion-buttons slot="end">
-      <ion-button color="light" size="small" (click)="pedir()">Pedir</ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content>
-  <ion-list>
-    <ion-item *ngFor="let producto of productos">
-      <ion-row>
-        <ion-col size="7">
-          <ion-label>{{producto.descripcion}}</ion-label>
-          <ion-label>${{producto.precio}}</ion-label>
-        </ion-col>
-        <ion-col size="5">
-          <ion-row>
-            <ion-col size="4">
-              <ion-button (click)="restarProducto(producto.key)">
-                <ion-icon name="remove-circle"></ion-icon>
-              </ion-button>
-            </ion-col>
-            <ion-col size="4">
-              <ion-input type="number">{{producto.cantidad}}</ion-input>
-            </ion-col>
-            <ion-col size="4">
-              <ion-button (click)="sumarProducto(producto.key)">
-                <ion-icon name="add-circle"></ion-icon>
-              </ion-button>
-            </ion-col>
-          </ion-row>
-        </ion-col>
-      </ion-row>
-    </ion-item>
-  </ion-list>
-</ion-content>
-
-<ion-footer>
-  <ion-button color="primary" expand="block" (click)="muestraModal()">Ver pedido</ion-button>
-</ion-footer> -->
-
  <ion-header>
   <ion-toolbar color="dark">
     <ion-buttons slot="start">
@@ -78,7 +30,7 @@
           <ion-card>
             <ion-card-header>
               <ion-card-title>
-                {{ producto.descripcion }}
+               <b class="descripcionPlato">  {{ producto.descripcion }} </b>
               </ion-card-title>
               <ion-card-subtitle>
                   <h1 class="precioClase"><b>Precio: ${{ producto.precio }}</b></h1>
@@ -118,7 +70,7 @@
             <ion-card>
               <ion-card-header>
                 <ion-card-title>
-                  {{ producto.descripcion }}
+                  <b class="descripcionPlato">  {{ producto.descripcion }} </b>
                 </ion-card-title>
                 <ion-card-subtitle>
                     <h1 class="precioClase"><b>Precio: ${{ producto.precio }}</b></h1>
