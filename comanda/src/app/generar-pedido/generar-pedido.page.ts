@@ -26,8 +26,11 @@ export class GenerarPedidoPage implements OnInit {
   sliderConfig = {
     slidesPerView: 1.2,
     spaceBetween: 5,
-    centeredSlides: false
+    centeredSlides: false,
+    zoom: false
   };
+
+  
 
   constructor(private baseService: FirebaseService,
     public toastController: ToastController,
@@ -90,7 +93,18 @@ export class GenerarPedidoPage implements OnInit {
         let idPedido = sessionStorage.getItem('pedido');
         this.existePedidoAbierto = !(typeof pedidos.find(pedido => pedido.id == idPedido && pedido.estado != 'cerrado') === 'undefined');
         if (this.existePedidoAbierto) {
-          this.baseService.getItems('pedidoDetalle').then(productos => {
+          // ACTUALIZO PEDIDO
+        
+           let pedidoAceptado = pedidos.find(pedido => pedido.id == idPedido);
+           let productosPedidos = this.productos.filter(prod => prod.cantidad > 0);
+           // console.log("Pedido encontrado: ", pedidoAceptado);
+           let key: string = pedidoAceptado.key;
+           delete pedidoAceptado.key;
+           pedidoAceptado.cantDet = productosPedidos.length ;
+           pedidoAceptado.cantEnt = 0;
+           this.baseService.updateItem('pedidos', key, pedidoAceptado);
+          //  ACTUALIZO DETALLE
+           this.baseService.getItems('pedidoDetalle').then(productos => {
             let pedidoEnPreparacion: boolean = false;
             productos.forEach(prod => {
               if (prod.id_pedido == idPedido && prod.estado == 'preparacion') {

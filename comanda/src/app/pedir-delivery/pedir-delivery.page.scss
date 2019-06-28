@@ -1,10 +1,66 @@
+@import url('https://fonts.googleapis.com/css?family=Alfa+Slab+One&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Special+Elite&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Rancho&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Anton&display=swap');
+
+ion-badge {
+    color: #fff;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    border-radius: 100%;
+}
+
+ion-content {
+    --background: whitesmoke;
+}
+ 
+.category-block {
+    margin-bottom: 4px;
+    height: 40%;
+}
+ 
+.category-banner-cocinero {
+    border-left: 8px solid var(--ion-color-medium);
+    background: var(--ion-color-light);
+    height: 40px;
+    padding: 10px;
+    font-weight: 500;
+}
+
+.tituloClase {
+    font-family: 'Alfa Slab One', cursive;
+}
+
+.descripcionPlato {
+    font-family: 'Anton', sans-serif;
+}
+
+.precioClase {
+    font-family: 'Special Elite', cursive;
+}
+
+.cantidadPedido {
+    font-family: 'Rancho', cursive;
+    font-size: xx-large;
+}
+
+.category-banner-bartender {
+    border-left: 8px solid var(--ion-color-primary);
+    background: var(--ion-color-light);
+    height: 40px;
+    padding: 10px;
+    font-weight: 500;
+}
+
+ion-card-title {
+    font-family: 'Anton', sans-serif;
+}
+
 #mapa {
     height: 30%;
     width: 100%;
     display: block;
 }
 
-#listaProductos {
-    height: 60%;
-    overflow-y: scroll;
-}
+
