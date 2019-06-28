@@ -11,6 +11,7 @@ import { LoadingController } from '@ionic/angular';
 
 import { FirebaseService } from '../services/firebase.service';
 import { Events } from '@ionic/angular';
+import { FCM } from '@ionic-native/fcm/ngx';
 
 @Component({
   selector: 'app-login',
@@ -61,9 +62,16 @@ export class LoginPage implements OnInit {
     public alertController: AlertController,
     public events: Events,
     private router: Router,
+    private fcm: FCM,
     public toastController: ToastController,
     public actionSheetController: ActionSheetController
-  ) { }
+  ) { 
+
+    this.fcm.unsubscribeFromTopic('notificacionPedido');
+    this.fcm.unsubscribeFromTopic('notificacionMesa');
+    this.fcm.unsubscribeFromTopic('notificacionReservas');
+
+  }
 
   ngOnInit() {
     
@@ -94,6 +102,8 @@ export class LoginPage implements OnInit {
         if ( usuarioLogueado.perfil == 'dueño' || 
              usuarioLogueado.perfil == 'supervisor' || 
              usuarioLogueado.perfil == 'cliente') {
+
+         
           this.router.navigateByUrl('/home');
         } else {
 

@@ -27,10 +27,14 @@ export class AppComponent {
   ) {
     this.initializeApp();
 
+   
+
     this.events.subscribe('usuarioLogueado', data => {
       console.log('event received');
       console.log('perfil recibidos:', data);
-
+    
+      // SUSCRIPCIONs
+      console.log('perfil recibidos:', data);
       // ROUTING DEL MENU
       switch (data) {
 
@@ -46,7 +50,7 @@ export class AppComponent {
           // (I - J - K) GRAFICOS DE ENCUESTAS
           // (N) HACER RESERVAS AGENDADAS (opcional - supervisor)
           // (Q) NPUSH - HACER RESERVA / DELIVERY (VA PARA EL MOZO / DELIVERY)
-
+          // this.fcm.subscribeToTopic('notificacionReservas');
           this.appPages = [
             {
               title: 'Home',
@@ -618,17 +622,24 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       
+      // ME DESUSCRIBO DE LOS TOPICOS
+      // this.fcm.unsubscribeFromTopic('notificacionPedido');
+      // this.fcm.unsubscribeFromTopic('notificacionMesa');
+      // this.fcm.unsubscribeFromTopic('notificacionReservas');
+
       firebase.initializeApp(FIREBASE_CONFIG);
 
-      // PUSH A MOSOS Y SUPERVISORES - O 
-      this.fcm.subscribeToTopic('notificacionPedido');
-      // PLATOS Y BEBIDAS CIERRE DE CUENTA
-      this.fcm.subscribeToTopic('notificacionMesa');
-      // HACER RESERVAS AGENDAR DELIVERY
-      this.fcm.subscribeToTopic('notificacionReservas');
-      this.fcm.getToken().then(token => {
-        console.log(token);
-      });
+     
+
+      // // PUSH A MOSOS Y SUPERVISORES - O 
+      // this.fcm.subscribeToTopic('notificacionPedido');
+      // // PLATOS Y BEBIDAS CIERRE DE CUENTA
+      // this.fcm.subscribeToTopic('notificacionMesa');
+      // // HACER RESERVAS AGENDAR DELIVERY
+      // this.fcm.subscribeToTopic('notificacionReservas');
+      // this.fcm.getToken().then(token => {
+      //   console.log(token);
+      // });
       
       // this.fcm.onTokenRefresh().subscribe(token => {
       //   console.log(token);
