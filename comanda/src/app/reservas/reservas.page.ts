@@ -212,10 +212,10 @@ export class ReservasPage implements OnInit {
     
       message: mensaje,
       color: 'success',
-      showCloseButton: true,
+      showCloseButton: false,
       position: 'top',
-      closeButtonText: 'OK',
-      // duration: 3000
+      // closeButtonText: 'OK',
+      duration: 2000
     });
 
     toast.present();
@@ -226,10 +226,10 @@ export class ReservasPage implements OnInit {
     
       message: mensaje,
       color: 'danger',
-      showCloseButton: true,
+      showCloseButton: false,
       position: 'top',
-      closeButtonText: 'OK',
-      // duration: 3000
+      // closeButtonText: 'OK',
+      duration: 2000
     });
 
     toast.present();
