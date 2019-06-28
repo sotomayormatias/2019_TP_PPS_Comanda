@@ -11,9 +11,9 @@ export class ConfirmarCierreMesaPage implements OnInit {
   pedidoAceptado: any;
   pedidos: any[] = [];
   spinner: boolean;
-  // mesas: any[] = [];
   mesaAceptado: any;
   hayPedidosACerrar: boolean = false;
+  cliente: any;
 
   constructor(private baseService: FirebaseService,
     private toastCtrl: ToastController) {
@@ -33,8 +33,15 @@ export class ConfirmarCierreMesaPage implements OnInit {
     });
   }
 
-  cerrarMesa(pedido) {
-    // ARMO STRINGS Y TRAIGO MESAS Y PEDIDOS
+  cerrarPedido(pedido) {
+    this.liberarMesa(pedido);
+    this.finalizarPedido(pedido);
+    if(JSON.parse(sessionStorage.getItem('usuario')).perfil == 'clienteAnonimo'){
+      this.eliminarClienteAnonimo();
+    }
+  }
+
+  liberarMesa(pedido: any){
     this.baseService.getItems('mesas').then(mesas => {
       this.mesaAceptado = mesas.find(listMesa => listMesa.nromesa == pedido.mesa);
 
@@ -43,19 +50,29 @@ export class ConfirmarCierreMesaPage implements OnInit {
       this.mesaAceptado.cliente = '';
       this.mesaAceptado.estado = 'libre';
       this.baseService.updateItem('mesas', mesaKey, this.mesaAceptado);
+    });
+  }
+  
+  finalizarPedido(pedido: any) {
+    this.baseService.getItems('pedidos').then(ped => {
+      this.pedidoAceptado = ped.find(listPedido => listPedido.id == pedido.id);
 
-      this.baseService.getItems('pedidos').then(ped => {
-        this.pedidoAceptado = ped.find(listPedido => listPedido.id == pedido.id);
+      let pedidoKey = pedido.key;
+      delete this.pedidoAceptado['key'];
+      this.pedidoAceptado.estado = 'finalizado';
+      this.baseService.updateItem('pedidos', pedidoKey, this.pedidoAceptado);
 
-        let pedidoKey = pedido.key;
-        delete this.pedidoAceptado['key'];
-        this.pedidoAceptado.estado = 'finalizado';
-        this.baseService.updateItem('pedidos', pedidoKey, this.pedidoAceptado);
+      this.presentToast();
+      this.traerPedidos();
+      this.spinner = false;
+    });
+  }
 
-        this.presentToast();
-        this.traerPedidos();
-        this.spinner = false;
-      });
+  eliminarClienteAnonimo(){
+    this.baseService.getItems('usuarios').then(usuarios => {
+      let clienteAnonimo = usuarios.find(usu => usu.correo == this.pedidoAceptado.cliente);
+      let key = clienteAnonimo.key;
+      this.baseService.removeItem('usuarios', key);
     });
   }
 

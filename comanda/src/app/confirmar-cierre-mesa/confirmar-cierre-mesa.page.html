@@ -27,7 +27,7 @@
   <ion-list *ngIf="hayPedidosACerrar">
     <ion-item *ngFor="let pedido of pedidos">
       Cierre Mesa: {{pedido.mesa}}
-      <ion-button slot="end" color="primary" expand="block" (click)="cerrarMesa(pedido)">Cerrar Mesa
+      <ion-button slot="end" color="primary" expand="block" (click)="cerrarPedido(pedido)">Cerrar Mesa
       </ion-button>
     </ion-item>
   </ion-list>

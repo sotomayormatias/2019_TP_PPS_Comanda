@@ -5,6 +5,7 @@ import { AlertController, ToastController, Events } from '@ionic/angular';
 import * as firebase from "firebase";
 import { FirebaseService } from '../services/firebase.service';
 import { Router } from "@angular/router";
+import { AudioService } from "../services/audio.service";
 
 @Component({
   selector: 'app-abm-cliente-anonimo',
@@ -27,7 +28,8 @@ export class AbmClienteAnonimoPage implements OnInit {
     public events: Events,
     private router: Router,
     private camera: Camera,
-    public toastCtrl: ToastController
+    public toastCtrl: ToastController,
+    public audioService: AudioService
   ) {
     this.formClienteAnonimo = new FormGroup({
       nombreAnonimo: new FormControl('', Validators.required)
@@ -92,6 +94,7 @@ export class AbmClienteAnonimoPage implements OnInit {
 
       this.captureDataUrl.length = 0;
       this.events.publish('usuarioLogueado', 'clienteAnonimo');
+      this.audioService.play('hola');
       this.creoToast();
       sessionStorage.setItem('usuario', JSON.stringify(this.datosUsuario));
       this.router.navigateByUrl('/home');
