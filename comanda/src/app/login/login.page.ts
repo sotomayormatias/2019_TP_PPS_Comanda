@@ -11,6 +11,7 @@ import { AudioService } from "../services/audio.service";
 
 import { FirebaseService } from '../services/firebase.service';
 import { Events } from '@ionic/angular';
+import { FCM } from '@ionic-native/fcm/ngx';
 
 @Component({
   selector: 'app-login',
@@ -61,10 +62,18 @@ export class LoginPage implements OnInit {
     public alertController: AlertController,
     public events: Events,
     private router: Router,
+    private fcm: FCM,
     public toastController: ToastController,
     public actionSheetController: ActionSheetController,
     public audioService: AudioService
-  ) { }
+  ) { 
+
+    this.fcm.unsubscribeFromTopic('notificacionPedido');
+    this.fcm.unsubscribeFromTopic('notificacionMesa');
+    this.fcm.unsubscribeFromTopic('notificacionReservas');
+
+  }
+  
 
   ngOnInit() {
 
@@ -93,9 +102,11 @@ export class LoginPage implements OnInit {
         this.audioService.play('hola');
         this.creoToast(true);
 
+
         if (usuarioLogueado.perfil == 'dueño' ||
           usuarioLogueado.perfil == 'supervisor' ||
           usuarioLogueado.perfil == 'cliente') {
+
           this.router.navigateByUrl('/home');
         } else {
           this.router.navigateByUrl('/encuesta-empleado');

@@ -19,6 +19,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { ModalPagePageModule } from './modal-page/modal-page.module';
 import { ModalPedidoPageModule } from "./modal-pedido/modal-pedido.module";
 import { ModalRutaPageModule } from "./modal-ruta/modal-ruta.module";
+import { FCM } from '@ionic-native/fcm/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -41,6 +42,7 @@ import { ModalRutaPageModule } from "./modal-ruta/modal-ruta.module";
     Calendar,
     BarcodeScanner,
     EmailComposer,
+    FCM,
     NativeAudio,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
