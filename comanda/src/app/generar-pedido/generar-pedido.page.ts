@@ -26,8 +26,11 @@ export class GenerarPedidoPage implements OnInit {
   sliderConfig = {
     slidesPerView: 1.2,
     spaceBetween: 5,
-    centeredSlides: false
+    centeredSlides: false,
+    zoom: false
   };
+
+  
 
   constructor(private baseService: FirebaseService,
     public toastController: ToastController,

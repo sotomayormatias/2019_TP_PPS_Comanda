@@ -25,7 +25,7 @@
 
   <div id="mapa"></div>
 
-  <div id="listaProductos">
+  <!-- <div id="listaProductos">
     <ion-list>
       <ion-item *ngFor="let producto of productos">
         <ion-row>
@@ -53,11 +53,108 @@
         </ion-row>
       </ion-item>
     </ion-list>
+  </div> -->
+
+  <ion-spinner name="lines" *ngIf="spinner"></ion-spinner>
+  
+  <div class="category-block" *ngIf="!spinner" >
+ 
+    <div>Los pedidos de delivery tienen un cargo adicional de $20 sobre el precio final.</div> 
+
+    <ion-row no-padding class="category-banner-cocinero">
+      <ion-col text-left button tappable (click)="true" align-self-center>
+       <b class="tituloClase"> COCINERO </b>
+      </ion-col>
+    </ion-row>
+ 
+    <ion-slides [options]="sliderConfig">
+      <ion-slide *ngFor="let producto of productosCocina">
+        <div  >
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>
+               <b class="descripcionPlato">  {{ producto.descripcion }} </b>
+              </ion-card-title>
+              <ion-card-subtitle>
+                  <h1 class="precioClase"><b>Precio: ${{ producto.precio }}</b></h1>
+               
+                </ion-card-subtitle>
+
+              <ion-card-content>
+                 
+                
+                  <img [src]="producto.foto">
+
+               <br>
+                <h6> <b class="cantidadPedido"> Cant. en Pedido: {{producto.cantidad}} </b></h6>
+
+                <ion-button  expand="full" (click)="sumarProducto(producto.key)" color="medium" *ngIf="producto.cantidad==0" ><ion-icon name="add-circle"></ion-icon> Agregar</ion-button>
+                <ion-button  (click)="sumarProducto(producto.key)" *ngIf="producto.cantidad>0" color="medium" ><ion-icon name="add-circle"></ion-icon> Agregar</ion-button>
+              
+                <ion-button (click)="restarProducto(producto.key)" *ngIf="producto.cantidad>0" color="medium"> <ion-icon name="remove-circle"></ion-icon> Restar </ion-button>
+
+              </ion-card-content>
+            </ion-card-header>
+          
+          </ion-card>
+        </div>
+      </ion-slide>
+    </ion-slides>
+
+    <ion-row no-padding class="category-banner-bartender">
+      <ion-col text-left button tappable (click)="true" align-self-center>
+      <b class="tituloClase">  BARTENDER </b>
+      </ion-col>
+    </ion-row>
+ 
+    <ion-slides [options]="sliderConfig">
+        <ion-slide *ngFor="let producto of productosBartender">
+          <div  >
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title>
+                  <b class="descripcionPlato">  {{ producto.descripcion }} </b>
+                </ion-card-title>
+                <ion-card-subtitle>
+                    <h1 class="precioClase"><b>Precio: ${{ producto.precio }}</b></h1>
+                 
+                  </ion-card-subtitle>
+  
+                <ion-card-content>
+                    <img [src]="producto.foto">
+                 
+                 <br>
+                  <h6> <b class="cantidadPedido"> Cant. en Pedido: {{producto.cantidad}} </b></h6>
+  
+                  <ion-button  expand="full" (click)="sumarProducto(producto.key)" color="primary" *ngIf="producto.cantidad==0" ><ion-icon name="add-circle"></ion-icon> Agregar</ion-button>
+                  <ion-button  (click)="sumarProducto(producto.key)" *ngIf="producto.cantidad>0" color="primary" ><ion-icon name="add-circle"></ion-icon> Agregar</ion-button>
+                
+                  <ion-button (click)="restarProducto(producto.key)" *ngIf="producto.cantidad>0" color="primary"> <ion-icon name="remove-circle"></ion-icon> Restar </ion-button>
+  
+                </ion-card-content>
+              </ion-card-header>
+            
+            </ion-card>
+          </div>
+        </ion-slide>
+      </ion-slides>
+ 
   </div>
-  <div>Los pedidos de delivery tienen un cargo adicional de $20 sobre el precio final.</div>
+  
   <input type="hidden" id="latitud">
   <input type="hidden" id="longitud">
+  
+<ion-fab *ngIf="!spinner" vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab-button color="secondary" *ngIf="totalPedido==0">
+    <b>TOTAL</b>
+  </ion-fab-button>
+  <ion-fab-button color="success" *ngIf="totalPedido!=0" >
+      ${{totalPedido}}
+     </ion-fab-button>
+</ion-fab>
 </ion-content>
+
+
 <ion-footer>
   <ion-button color="primary" expand="block" (click)="muestraModal()">Ver pedido</ion-button>
 </ion-footer>
