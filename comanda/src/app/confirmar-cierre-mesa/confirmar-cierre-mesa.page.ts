@@ -8,21 +8,15 @@ import { ToastController } from "@ionic/angular";
   styleUrls: ['./confirmar-cierre-mesa.page.scss'],
 })
 export class ConfirmarCierreMesaPage implements OnInit {
-
-  pedidoEnLocal: any = null;
-  pedidoDetalle: any[] = [];
-  hayPedidoEnLocal: boolean = false;
-  pedidoAceptado: any ;
-  pedidos: any; 
+  pedidoAceptado: any;
+  pedidos: any[] = [];
   spinner: boolean;
-  mesas: any; 
+  // mesas: any[] = [];
   mesaAceptado: any;
-
-  
-  listIdPedidosAceptadosBar: any;
+  hayPedidosACerrar: boolean = false;
 
   constructor(private baseService: FirebaseService,
-              private toastCtrl: ToastController) {
+    private toastCtrl: ToastController) {
     this.traerPedidos();
   }
 
@@ -30,74 +24,39 @@ export class ConfirmarCierreMesaPage implements OnInit {
   }
 
   traerPedidos() {
-    // this.pedidosMostrarBar = [] ; 
-
     this.spinner = true;
-
     this.baseService.getItems('pedidos').then(ped => {
-  
       this.pedidos = ped;
-      this.pedidos = this.pedidos.filter(pedido => pedido.estado == "entregado" );
-      this.listIdPedidosAceptadosBar =  this.pedidos;
-        
+      this.pedidos = this.pedidos.filter(pedido => pedido.estado == "entregado");
+      this.hayPedidosACerrar = this.pedidos.length > 0;
       this.spinner = false;
     });
-    
   }
-
 
   cerrarMesa(pedido) {
     // ARMO STRINGS Y TRAIGO MESAS Y PEDIDOS
     this.baseService.getItems('mesas').then(mesas => {
-      
-      this.mesas = mesas;
-      console.log("mesas get: ", mesas);
-      this.mesas = this.mesas.filter( listMesa => listMesa.nromesa == pedido.mesa );
-      this.mesaAceptado =  this.mesas[0];
-      console.log("mesas Aceptado: ", this.mesaAceptado);
-      let mesasKey = this.mesaAceptado.key ;
-  
-      console.log("mesas key: ", mesasKey) ;
-      
+      this.mesaAceptado = mesas.find(listMesa => listMesa.nromesa == pedido.mesa);
+
+      let mesaKey = this.mesaAceptado.key;
       delete this.mesaAceptado['key'];
       this.mesaAceptado.cliente = '';
       this.mesaAceptado.estado = 'libre';
-      this.baseService.updateItem('mesas', mesasKey , this.mesaAceptado);
-      this.traerPedidos();
+      this.baseService.updateItem('mesas', mesaKey, this.mesaAceptado);
 
-      this.spinner = false;
+      this.baseService.getItems('pedidos').then(ped => {
+        this.pedidoAceptado = ped.find(listPedido => listPedido.id == pedido.id);
+
+        let pedidoKey = pedido.key;
+        delete this.pedidoAceptado['key'];
+        this.pedidoAceptado.estado = 'finalizado';
+        this.baseService.updateItem('pedidos', pedidoKey, this.pedidoAceptado);
+
+        this.presentToast();
+        this.traerPedidos();
+        this.spinner = false;
+      });
     });
-
-    this.baseService.getItems('pedidos').then(ped => {
-  
-      this.pedidos = ped;
-      console.log("Pedidos get: ", this.pedidos);
-      this.pedidos = this.pedidos.filter( listPedido => listPedido.id == pedido.id );
-      this.pedidoAceptado =  this.pedidos[0];
-      console.log("Pedido Aceptado: ", this.pedidoAceptado);
-      let pedidoKey = pedido.key ;
-  
-      console.log("Pedido key: ", pedidoKey) ;
-      
-      delete this.pedidoAceptado['key'];
-      this.pedidoAceptado.estado = 'finalizado';
-      this.baseService.updateItem('pedidos', pedidoKey , this.pedidoAceptado);
-      this.traerPedidos();
-
-      this.spinner = false;
-    });
-
-    // LIBERAR MESA Y ACTUALIZARLE CLIENTE
-
-
-      // //CERRAR PEDIDO
-      // let key: string = this.pedidoEnLocal.key;
-      // delete this.pedidoEnLocal['key'];
-      // this.pedidoEnLocal.estado = 'entregado';
-      // this.baseService.updateItem('pedidos', key, this.pedidoEnLocal);
-    
-      // this.presentToast();
-   
   }
 
   async presentToast() {
@@ -112,4 +71,21 @@ export class ConfirmarCierreMesaPage implements OnInit {
     toast.present();
   }
 
+  ionRefresh(event) {
+    setTimeout(() => {
+      event.target.complete();
+      this.pedidos = [];
+      this.hayPedidosACerrar = false;
+      this.traerPedidos();
+    }, 2000);
+  }
+  ionPull(event) {
+    // Emitted while the user is pulling down the content and exposing the refresher.
+    // console.log('ionPull Event Triggered!');
+
+  }
+  ionStart(event) {
+    // Emitted when the user begins to start pulling down.
+    // console.log('ionStart Event Triggered!');
+  }
 }
