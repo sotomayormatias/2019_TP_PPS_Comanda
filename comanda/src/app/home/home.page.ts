@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { MenuController } from '@ionic/angular';
+import { MenuController, ToastController } from '@ionic/angular';
+import { AudioService } from "../services/audio.service";
 
 @Component({
   selector: 'app-home',
@@ -7,8 +8,12 @@ import { MenuController } from '@ionic/angular';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-
-  constructor(private menu: MenuController) { }
+  sounds: boolean;
+  constructor(private menu: MenuController,
+    private audioService: AudioService,
+    private toastCtrl: ToastController) {
+    this.sounds = this.audioService.activo;
+  }
 
   openFirst() {
     this.menu.enable(true, 'first');
@@ -22,6 +27,27 @@ export class HomePage {
   openCustom() {
     this.menu.enable(true, 'custom');
     this.menu.open('custom');
+  }
+
+  toggleSound() {
+    this.audioService.toggleSound();
+    this.sounds = this.audioService.activo;
+    if (this.sounds)
+      this.presentToast('Sonido activado');
+    else
+      this.presentToast('Sonido desactivado');
+  }
+
+  async presentToast(mensaje: string) {
+    const toast = await this.toastCtrl.create({
+      message: mensaje,
+      color: 'success',
+      showCloseButton: false,
+      position: 'bottom',
+      closeButtonText: 'Done',
+      duration: 2000
+    });
+    toast.present();
   }
 
 }

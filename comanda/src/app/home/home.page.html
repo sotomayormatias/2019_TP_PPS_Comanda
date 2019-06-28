@@ -1,31 +1,36 @@
 <ion-header>
   <ion-toolbar color="dark">
-    
+
     <ion-buttons slot="start">
       <ion-menu-button autoHide="false"></ion-menu-button>
     </ion-buttons>
     <ion-buttons slot="end">
-        <img id="iconToolBar" src="../../assets/imgs/icon.png">
-      </ion-buttons>
+      <ion-button (click)="toggleSound()" *ngIf="sounds">
+        <ion-icon name="volume-off" color="light" slot="icon-only"></ion-icon>
+      </ion-button>
+      <ion-button (click)="toggleSound()" *ngIf="!sounds">
+        <ion-icon name="volume-high" color="light" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
   <div class="body"></div>
-  
-      <!-- <div class="inner"> -->
-             <!-- </div> -->
+
+  <!-- <div class="inner"> -->
+  <!-- </div> -->
 
 
-      <ion-card class="card" >
-          
-        
-          <ion-card-content>
-              <h1>Radix</h1>
-              <p>Bienvenido a nuestra app.</p>
-          </ion-card-content>
-        </ion-card>
+  <ion-card class="card">
 
-  
+
+    <ion-card-content>
+      <h1>Radix</h1>
+      <p>Bienvenido a nuestra app.</p>
+    </ion-card-content>
+  </ion-card>
+
+
 </ion-content>
