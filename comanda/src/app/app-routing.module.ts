@@ -94,7 +94,9 @@ const routes: Routes = [
   { path: 'list-confirmar-delivery', loadChildren: './list-confirmar-delivery/list-confirmar-delivery.module#ListConfirmarDeliveryPageModule' },
   { path: 'confirmar-entrega', loadChildren: './confirmar-entrega/confirmar-entrega.module#ConfirmarEntregaPageModule' },
   { path: 'confirmar-cierre-mesa', loadChildren: './confirmar-cierre-mesa/confirmar-cierre-mesa.module#ConfirmarCierreMesaPageModule' },  { path: 'list-reserva-conf', loadChildren: './list-reserva-conf/list-reserva-conf.module#ListReservaConfPageModule' },
-  { path: 'juego-descuento', loadChildren: './juego-descuento/juego-descuento.module#JuegoDescuentoPageModule' }
+  { path: 'juego-descuento', loadChildren: './juego-descuento/juego-descuento.module#JuegoDescuentoPageModule' },
+  { path: 'juego-comida', loadChildren: './juego-comida/juego-comida.module#JuegoComidaPageModule' },
+  { path: 'juego-bebida', loadChildren: './juego-bebida/juego-bebida.module#JuegoBebidaPageModule' }
 
 
 
