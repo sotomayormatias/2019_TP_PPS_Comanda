@@ -61,79 +61,79 @@ export class AppComponent {
             },
             // (A) ALTA DUEÑO
             {
-              title: 'OK - Alta Dueño/Supervisor',
+              title: 'Alta Dueño/Supervisor',
               url: '/abm-duesup',
               icon: 'key'
             },
             // (B) ALTA EMPLEADO
             {
-              title: 'OK - Alta Empleados',
+              title: 'Alta Empleados',
               url: '/abm-empleados',
               icon: 'person'
             },
             // (C) ALTA PRODUCTO
             {
-              title: 'OK - Alta Productos',
+              title: 'Alta Productos',
               url: '/abm-producto',
               icon: 'beer'
             },
             // (E) ALTA MESAS
             {
-              title: 'OK - Alta Mesas',
+              title: 'Alta Mesas',
               url: '/abm-mesa',
               icon: 'help-buoy'
             },
             // (I - J - K) GRAFICOS DE ENCUESTAS
             {
-              title: 'OK - Estadística Satisfacción',
+              title: 'Estadística Satisfacción',
               url: '/est-satisfaccion',
               icon: 'pie'
             },
             // (J) ESTADISTICA EMPLEADO
             {
-              title: 'OK - Estadística Empleado',
+              title: 'Estadística Empleado',
               url: '/est-empleado',
               icon: 'person-add'
             },
             //  GRAFICOS DE AGREGADO
             {
-              title: 'OK - Estadística Supervisor',
+              title: 'Estadística Supervisor',
               url: '/est-supervisor',
               icon: 'information-circle-outline'
             },
             // (K) GRAFICOS DE ENCUESTAS
             {
-              title: 'OK - Encuesta Supervisor',
+              title: 'Encuesta Supervisor',
               url: '/encuesta-sup',
               icon: 'alert'
             },
             // (8) (9) - CONFIRMA CLIENTE Y ENVIA MAIL
             {
-              title: 'OK - Confirmar Clientes',
+              title: 'Confirmar Clientes',
               url: '/list-confirmar-cliente-alta',
               icon: 'checkbox-outline'
             },
             // CONFIRMA RESERVA
             {
-              title: 'OK - Confirmar Reservas',
+              title: 'Confirmar Reservas',
               url: '/list-reserva-conf',
               icon: 'calendar'
             },
             // (F) QR Ingreso
             {
-              title: 'OK - QR Ingreso',
+              title: 'QR Ingreso',
               url: '/qr-ingreso-local',
               icon: 'barcode'
             },
             // (13) CONFIRMAR DELIVERY
             {
-              title: 'OK - Confirmar Delivery',
+              title: 'Confirmar Delivery',
               url: '/list-confirmar-delivery',
               icon: 'checkbox-outline'
             },
             // (N) HACER RESERVAS AGENDADAS (opcional - supervisor)
             // {
-            // title: 'NOK - Hacer Reservas Agendadas',
+            // title: 'Hacer Reservas Agendadas',
             // url: '/reservas',
             // icon: 'calendar'
             // },
@@ -167,50 +167,50 @@ export class AppComponent {
             },
             // (A) ALTA DUEÑO
             {
-              title: 'OK - Alta Dueño/Supervisor',
+              title: 'Alta Dueño/Supervisor',
               url: '/abm-duesup',
               icon: 'key'
             },
             // (B) ALTA EMPLEADO
             {
-              title: 'OK - Alta Empleados',
+              title: 'Alta Empleados',
               url: '/abm-empleados',
               icon: 'person'
             },
             // (C) ALTA PRODUCTO
             {
-              title: 'OK - Alta Productos',
+              title: 'Alta Productos',
               url: '/abm-producto',
               icon: 'beer'
             },
             // (E) ALTA MESAS
             {
-              title: 'OK - Alta Mesas',
+              title: 'Alta Mesas',
               url: '/abm-mesa',
               icon: 'help-buoy'
             },
             // (I - J - K) GRAFICOS DE ENCUESTAS
             {
-              title: 'OK - Estadística Satisfacción',
+              title: 'Estadística Satisfacción',
               url: '/est-satisfaccion',
               icon: 'pie'
             },
             // (K) GRAFICOS DE ENCUESTAS
             {
-              title: 'OK - Encuesta Supervisor',
+              title: 'Encuesta Supervisor',
               url: '/encuesta-sup',
               icon: 'alert'
             },
             // (J) ESTADISTICA EMPLEADO
             {
-              title: 'OK - Estadística Empleado',
+              title: 'Estadística Empleado',
               url: '/est-empleado',
               icon: 'person-add'
             },
             // I
 
             {
-              title: 'NOK - Estadística Supervisor',
+              title: 'Estadística Supervisor',
               url: '/est-supervisor',
               icon: 'information-circle-outline'
             },
@@ -225,31 +225,31 @@ export class AppComponent {
             },
              // CONFIRMA RESERVA
              {
-              title: 'OK - Confirmar Reservas',
+              title: 'Confirmar Reservas',
               url: '/list-reserva-conf',
               icon: 'calendar'
             },
             // (F) QR Ingreso
             {
-              title: 'OK - QR Ingreso',
+              title: 'QR Ingreso',
               url: '/qr-ingreso-local',
               icon: 'barcode'
             },
             // (13) CONFIRMAR DELIVERY
             {
-              title: 'OK - Confirmar Delivery',
+              title: 'Confirmar Delivery',
               url: '/list-confirmar-delivery',
               icon: 'checkbox-outline'
             },
             // (N) HACER RESERVAS AGENDADAS (opcional - supervisor)
             // {
-            // title: 'NOK - Hacer Reservas Agendadas',
+            // title: 'Hacer Reservas Agendadas',
             // url: '/',
             // icon: 'calendar'
             // },
             // (J) ENCUESTA EMPLEADO
             //   {
-            //   title: 'OK - Encuesta Empleado',
+            //   title: 'Encuesta Empleado',
             //   url: '/encuesta-empleado',
             //   icon: 'clipboard'
             // },
@@ -293,85 +293,85 @@ export class AppComponent {
            
             // (F) QR INGRESO
             {
-              title: 'OK - QR Ingreso',
+              title: 'QR Ingreso',
               url: '/qr-ingreso-local',
               icon: 'list-box'
             },
             // (G) QR MESA
             {
 
-              title: 'OK - QR Mesa',
+              title: 'QR Mesa',
               url: '/qr-mesa',
               icon: 'git-pull-request'
             },
 
             {
-              title: 'OK - Listado de espera',
+              title: 'Listado de espera',
               url: '/list-confirmar-cliente-mesa',
               icon: 'log-in'
             },
             // (H) QR PROPINA
             {
               // ESTE NO VA ACA PERO LO DEJO POR AHORA
-              title: 'OK - QR Propina',
+              title: 'QR Propina',
               url: '/qr-propina',
               icon: 'trash'
             },
 
             // (I) ENCUESTA CLIENTE
             {
-              title: 'OK - Encuesta Satisfacción',
+              title: 'Encuesta Satisfacción',
               url: '/encuesta-cliente',
               icon: 'book'
             },
 
             // (N) HACER RESERVAS AGENDADAS 
             {
-              title: 'OK - Hacer reservas',
+              title: 'Hacer reservas',
               url: '/reservas',
               icon: 'calendar'
             },
             // (L) PEDIDO PLATO / BEBIDAS
             {
-              title: 'OK - Menu platos / bebidas',
+              title: 'Menu platos / bebidas',
               url: '/generar-pedido',
               icon: 'restaurant'
             },
             // (R) DELIV - PEDIDO GPS / DIRECCIÓN (LOGUEADO, no anonimo)
             {
-              title: 'OK - Delivery',
+              title: 'Delivery',
               url: '/pedir-delivery',
               icon: 'pin'
             },
             // (S) CHAT
             {
-              title: 'OK - Chat',
+              title: 'Chat',
               url: '/chat',
               icon: 'chatboxes'
             },
             // (11) CONFIRMAR ENTREGA
             {
-              title: 'OK - Confirmar entrega',
+              title: 'Confirmar entrega',
               url: '/confirmar-entrega',
               icon: 'checkmark'
             },
             // JUEGOS
             // (T) 10% DTO
             {
-              title: 'NOK - J.Descuento',
+              title: 'Juego Descuento',
               url: '/juego-descuento',
               icon: 'rocket'
             },
             // (U) BEBIDA GRATIS
             {
-              title: 'NOK - J.Bebida',
-              url: '/',
+              title: 'NOK - Juego Bebida',
+              url: '/juego-bebida',
               icon: 'beer'
             },
             // (V) POSTRE GRATIS
             {
-              title: 'NOK - J.Comida',
-              url: '/',
+              title: 'NOK - Juego Comida',
+              url: '/juego-comida',
               icon: 'cafe'
             },
             {
@@ -410,33 +410,33 @@ export class AppComponent {
 
             // (F) QR INGRESO
             {
-              title: 'OK - QR Ingreso',
+              title: 'QR Ingreso',
               url: '/qr-ingreso-local',
               icon: 'list-box'
             },
             // (G) QR MESA
             {
 
-              title: 'OK - QR Mesa',
+              title: 'QR Mesa',
               url: '/qr-mesa',
               icon: 'git-pull-request'
             },
 
             {
-              title: 'OK - Listado de espera',
+              title: 'Listado de espera',
               url: '/list-confirmar-cliente-mesa',
               icon: 'log-in'
             },
             // (H) QR PROPINA
             {
-              title: 'OK - QR PROPINA',
+              title: 'QR Propina',
               url: '/qr-propina',
               icon: 'trash'
             },
 
             // (I) ENCUESTA CLIENTE
             {
-              title: 'OK - Encuesta Satisfacción',
+              title: 'Encuesta Satisfacción',
               url: '/encuesta-cliente',
               icon: 'book'
             },
@@ -444,14 +444,14 @@ export class AppComponent {
 
             // (L) PEDIDO PLATO / BEBIDAS
             {
-              title: 'OK - Menu platos / bebidas',
+              title: 'Menu platos / bebidas',
               url: '/generar-pedido',
               icon: 'restaurant'
             },
 
             // (11) CONFIRMAR ENTREGA
             {
-              title: 'OK - Confirmar entrega',
+              title: 'Confirmar entrega',
               url: '/confirmar-entrega',
               icon: 'checkmark'
             },
@@ -474,13 +474,13 @@ export class AppComponent {
             },
             // (C) ALTA PRODUCTO
             {
-              title: 'OK - Alta Productos',
+              title: 'Alta Productos',
               url: '/abm-producto',
               icon: 'beer'
             },
             // (13) LISTADO DE PEDIDOS PENDIENTES POR SECTOR
             {
-              title: 'OK - Pedidos Pendientes',
+              title: 'Pedidos Pendientes',
               url: '/list-pedidos-cocina',
               icon: 'nutrition'
             },
@@ -508,13 +508,13 @@ export class AppComponent {
             },
             // (C) ALTA PRODUCTO
             {
-              title: 'OK - Alta Productos',
+              title: 'Alta Productos',
               url: '/abm-producto',
               icon: 'beer'
             },
             // (13) LISTADO DE PEDIDOS PENDIENTES POR SECTOR
             {
-              title: 'OK - Pedidos Pendientes',
+              title: 'Pedidos Pendientes',
               url: '/list-pedidos-bartender',
               icon: 'beer'
             },
@@ -545,31 +545,31 @@ export class AppComponent {
 
             // // (L) PEDIDO PLATO / BEBIDAS
             // {
-            //   title: 'OK - Menu platos / bebidas',
+            //   title: 'Menu platos / bebidas',
             //   url: '/generar-pedido',
             //   icon: 'restaurant'
             // },
 
             // (M) TOMAR PEDIDOS
             {
-              title: 'OK - Tomar pedido',
+              title: 'Tomar pedido',
               url: '/list-confirmar-pedido',
               icon: 'paper'
             },
             // (F) QR INGRESO
             {
-              title: 'OK - Confirmar cliente mesa',
+              title: 'Confirmar cliente mesa',
               url: '/list-confirmar-cliente-mesa',
               icon: 'log-in'
             },
             {
-              title: 'OK - Cerrar Mesa',
+              title: 'Cerrar Mesa',
               url: '/confirmar-cierre-mesa',
               icon: 'walk'
             },
             // (K) ENCUESTA EMPLEADO
             // {
-            //   title: 'NOK - Encuesta Empleado',
+            //   title: 'Encuesta Empleado',
             //   url: '/',
             //   icon: 'clipboard'
             // },
@@ -592,13 +592,13 @@ export class AppComponent {
             },
             // (13)(S) VER PEDIDOS Y RUTA
             {
-              title: 'OK - Ver pedidos',
+              title: 'Ver pedidos',
               url: '/list-confirmar-delivery',
               icon: 'checkbox-outline'
             },
             // (S) CHAT
             {
-              title: 'OK - Chat',
+              title: 'Chat',
               url: '/chat',
               icon: 'chatboxes'
             },
@@ -680,21 +680,21 @@ export class AppComponent {
 
 // | ABM - DUEÑO/SUP	A
 // {
-//   title: 'OK - Alta Dueño/Supervisor',
+//   title: 'Alta Dueño/Supervisor',
 //   url: '/abm-duesup',
 //   icon: 'key'
 // },
 
 // | ABM - EMPLEADO	B
 // {
-//   title: 'OK - Alta Empleados',
+//   title: 'Alta Empleados',
 //   url: '/abm-empleados',
 //   icon: 'person'
 // },
 
 // | ABM - PRODUCTO	C
 // {
-//   title: 'OK - Alta Productos',
+//   title: 'Alta Productos',
 //   url: '/abm-producto',
 //   icon: 'beer'
 // },
@@ -708,7 +708,7 @@ export class AppComponent {
 
 // | ABM - MESA	E
 // {
-//   title: 'OK - Alta Mesas',
+//   title: 'Alta Mesas',
 //   url: '/abm-mesa',
 //   icon: 'help-buoy'
 // },
@@ -716,21 +716,21 @@ export class AppComponent {
 
 // | QR INGRESO AL LOCAL	F
 // {
-//   title: 'NOK - QR INGRESO',
+//   title: 'QR INGRESO',
 //   url: '/',
 //   icon: 'list-box'
 // },
 
 // QR | MESA	G
 // {
-//   title: 'NOK - QR Ingreso',
+//   title: 'QR Ingreso',
 //   url: '/',
 //   icon: 'git-pull-request'
 // },
 
 // | QR PROPINA	H
 // {
-//   title: 'NOK - QR Propina',
+//   title: 'QR Propina',
 //   url: '/',
 //   icon: 'cash'
 // },
@@ -744,49 +744,49 @@ export class AppComponent {
 
 // | ENCUESTA EMPLEADO	J
 // {
-//   title: 'NOK - Encuesta Empleado',
+//   title: 'Encuesta Empleado',
 //   url: '/',
 //   icon: 'clipboard'
 // },
 
 // | ENCUESTA SUPERVISOR	K
 // {
-//   title: 'OK - Encuesta Supervisor',
+//   title: 'Encuesta Supervisor',
 //   url: '/encuesta-sup',
 //   icon: 'alert'
 // },
 
 // | PEDIR PLATO	L
 // {
-//   title: 'NOK - Menu platos / bebidas',
+//   title: 'Menu platos / bebidas',
 //   url: '/',
 //   icon: 'restaurant'
 // },
 
 // | TOMAR PEDIDO	M
 // {
-//   title: 'NOK - Tomar pedido',
+//   title: 'Tomar pedido',
 //   url: '/',
 //   icon: 'paper'
 // },
 
 // | HACER RESERVAS	N
 // {
-//   title: 'NOK - Hacer Reservas Agendadas',
+//   title: 'Hacer Reservas Agendadas',
 //   url: '/',
 //   icon: 'calendar'
 // },
 
 // | DELIVERY PEDIDO	R
 // {
-//   title: 'NOK - Delivery',
+//   title: 'Delivery',
 //   url: '/encuesta-cliente',
 //   icon: 'pin'
 // },
 
 // DELIVERY RUTA	S
 // {
-//   title: 'NOK - Ruta H.Domicilio',
+//   title: 'Ruta H.Domicilio',
 //   url: '/',
 //   icon: 'logo-model-s'
 // },
@@ -794,21 +794,21 @@ export class AppComponent {
 
 // | JUEGO 1	T
 // {
-//   title: 'NOK - J.Descuento',
+//   title: 'J.Descuento',
 //   url: '/',
 //   icon: 'rocket'
 // },
 
 // | JUEGO 2	U
 // {
-//   title: 'NOK - J.Bebida',
+//   title: 'J.Bebida',
 //   url: '/',
 //   icon: 'beer'
 // },
 
 // | JUEGO 3	V
 // {
-//   title: 'NOK - J.Postre',
+//   title: 'J.Postre',
 //   url: '/',
 //   icon: 'cafe'
 // },
