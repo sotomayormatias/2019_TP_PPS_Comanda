@@ -12,20 +12,28 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content  *ngIf="spinner"  padding class="spinnerCenter">
-  <!-- <ion-spinner name="crescent"></ion-spinner> -->
+<ion-content *ngIf="spinner" padding class="spinnerCenter">
   <ion-spinner *ngIf="spinner" name="bubbles" color="dark"></ion-spinner>
 </ion-content>
 
-
 <!-- content si existe pedido en local -->
-<ion-content  *ngIf="!spinner" >
-  <ion-list *ngIf="!spinner">
-    <ion-item *ngFor="let pedido of listIdPedidosAceptadosBar">
-       <b>Cierre Mesa:</b> {{pedido.mesa}}
+<ion-content *ngIf="!spinner">
+  <ion-refresher slot="fixed" (ionRefresh)="ionRefresh($event)" (ionPull)="ionPull($event)"
+    (ionStart)="ionStart($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Estire para actualizar" refreshingSpinner="circles"
+      refreshingText="Actualizando...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <ion-list *ngIf="hayPedidosACerrar">
+    <ion-item *ngFor="let pedido of pedidos">
+      Cierre Mesa: {{pedido.mesa}}
       <ion-button slot="end" color="primary" expand="block" (click)="cerrarMesa(pedido)">Cerrar Mesa
       </ion-button>
     </ion-item>
   </ion-list>
+  <ion-card *ngIf="!hayPedidosACerrar">
+    <ion-card-content>
+      No hay Pedidos para cerrar.
+    </ion-card-content>
+  </ion-card>
 </ion-content>
-
