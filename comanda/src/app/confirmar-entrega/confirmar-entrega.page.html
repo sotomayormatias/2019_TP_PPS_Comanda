@@ -14,6 +14,12 @@
 
 <!-- content si existe pedido en local -->
 <ion-content *ngIf="hayPedidoEnLocal">
+  <ion-refresher slot="fixed" (ionRefresh)="ionRefresh($event)" (ionPull)="ionPull($event)"
+    (ionStart)="ionStart($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Estire para actualizar" refreshingSpinner="circles"
+      refreshingText="Actualizando...">
+    </ion-refresher-content>
+  </ion-refresher>
   <ion-list>
     <ion-item *ngFor="let producto of pedidoDetalle">
       {{ producto.producto }}
@@ -27,6 +33,12 @@
 
 <!-- content si existe pedido de delivery -->
 <ion-content *ngIf="hayPedidoDelivery">
+  <ion-refresher slot="fixed" (ionRefresh)="ionRefresh($event)" (ionPull)="ionPull($event)"
+    (ionStart)="ionStart($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Estire para actualizar" refreshingSpinner="circles"
+      refreshingText="Actualizando...">
+    </ion-refresher-content>
+  </ion-refresher>
   <ion-list>
     <ion-item *ngFor="let producto of pedidoDetalle">
       ({{ producto.cantidad }}) {{ producto.producto }}
@@ -54,6 +66,12 @@
 
 <!-- content si no existe pedido -->
 <ion-content *ngIf="!hayPedidoEnLocal && !hayPedidoDelivery">
+  <ion-refresher slot="fixed" (ionRefresh)="ionRefresh($event)" (ionPull)="ionPull($event)"
+    (ionStart)="ionStart($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Estire para actualizar" refreshingSpinner="circles"
+      refreshingText="Actualizando...">
+    </ion-refresher-content>
+  </ion-refresher>
   <ion-card>
     <ion-card-content>
       Aún no existen pedidos a entregar.
@@ -62,6 +80,7 @@
 </ion-content>
 
 <ion-footer>
-  <ion-button [disabled]="!hayPedidoEnLocal && !hayPedidoDelivery" color="primary" expand="block" (click)="confirmarEntrega()">Confirmar entrega
+  <ion-button [disabled]="!hayPedidoEnLocal && !hayPedidoDelivery" color="primary" expand="block"
+    (click)="confirmarEntrega()">Confirmar entrega
   </ion-button>
 </ion-footer>

@@ -28,7 +28,7 @@ export class ListConfirmarClienteMesaPage implements OnInit {
   traerPendientes() {
     let usuarioLogueado = JSON.parse(sessionStorage.getItem("usuario")).perfil;
 
-    if (usuarioLogueado == "cliente") {
+    if (usuarioLogueado == "cliente" || usuarioLogueado == "clienteAnonimo") {
       // this.esMozo = false;
       this.baseService.getItems('listaEsperaClientes').then(clients => {
         this.clientes = clients;
