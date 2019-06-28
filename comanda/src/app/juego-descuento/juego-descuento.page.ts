@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FirebaseService } from "../services/firebase.service";
 import { AlertController } from "@ionic/angular";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-juego-descuento',
@@ -19,7 +20,8 @@ export class JuegoDescuentoPage implements OnInit {
   mensajeNoPuedeJugar: string = '';
 
   constructor(private baseService: FirebaseService,
-    private alertCtrl: AlertController) { }
+    private alertCtrl: AlertController,
+    private router: Router) { }
 
   ngOnInit() {
   }
@@ -141,5 +143,6 @@ export class JuegoDescuentoPage implements OnInit {
       pedido.juegoDescuento = true;
       this.baseService.updateItem('pedidos', key, pedido);
     }
+    this.router.navigateByUrl('/home');
   }
 }
