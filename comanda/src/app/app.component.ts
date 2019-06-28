@@ -8,6 +8,7 @@ import * as firebase from 'firebase';
 import { FIREBASE_CONFIG } from './app.firebase.config';
 
 import { Events } from '@ionic/angular';
+import { FCM } from '@ionic-native/fcm/ngx';
 
 @Component({
   selector: 'app-root',
@@ -21,6 +22,7 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private router: Router,
+    private fcm: FCM,
     public events: Events
   ) {
     this.initializeApp();
@@ -612,9 +614,29 @@ export class AppComponent {
 
   initializeApp() {
     this.platform.ready().then(() => {
+    
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.fcm.subscribeToTopic('people');
+      this.fcm.getToken().then(token => {
+        console.log(token);
+      });
+      this.fcm.onTokenRefresh().subscribe(token => {
+        console.log(token);
+      });
+      this.fcm.onNotification().subscribe(data => {
+        console.log(data);
+        if (data.wasTapped) {
+          console.log('Received in background');
+          this.router.navigateByUrl('/home');
+        } else {
+          console.log('Received in foreground');
+          this.router.navigateByUrl('/login');
+        }
+      });
+      
     });
+  
     firebase.initializeApp(FIREBASE_CONFIG);
   }
 
