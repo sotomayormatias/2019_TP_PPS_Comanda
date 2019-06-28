@@ -620,7 +620,12 @@ export class AppComponent {
       
       firebase.initializeApp(FIREBASE_CONFIG);
 
+      // PUSH A MOSOS Y SUPERVISORES - O 
       this.fcm.subscribeToTopic('notificacionPedido');
+      // PLATOS Y BEBIDAS CIERRE DE CUENTA
+      this.fcm.subscribeToTopic('notificacionMesa');
+      // HACER RESERVAS AGENDAR DELIVERY
+      this.fcm.subscribeToTopic('notificacionReservas');
       this.fcm.getToken().then(token => {
         console.log(token);
       });
