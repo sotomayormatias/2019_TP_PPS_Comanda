@@ -194,7 +194,10 @@ export class GenerarPedidoPage implements OnInit {
           'mesa': this.mesaDelPedido.nromesa,
           'estado': 'creado',
           'cantDet': productosPedidos.length,
-          'cantEnt': 0
+          'cantEnt': 0,
+          'juegoDescuento': false,
+          'juegoBebida': false,
+          'juegoComida': false
         };
         this.baseService.addItem('pedidos', pedido);
 
