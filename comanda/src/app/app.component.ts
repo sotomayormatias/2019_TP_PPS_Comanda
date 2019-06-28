@@ -617,18 +617,22 @@ export class AppComponent {
     
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      this.fcm.subscribeToTopic('people');
+      
+      firebase.initializeApp(FIREBASE_CONFIG);
+
+      this.fcm.subscribeToTopic('notificacionPedido');
       this.fcm.getToken().then(token => {
         console.log(token);
       });
-      this.fcm.onTokenRefresh().subscribe(token => {
-        console.log(token);
-      });
+      
+      // this.fcm.onTokenRefresh().subscribe(token => {
+      //   console.log(token);
+      // });
       this.fcm.onNotification().subscribe(data => {
         console.log(data);
         if (data.wasTapped) {
           console.log('Received in background');
-          this.router.navigateByUrl('/home');
+          this.router.navigateByUrl('/login');
         } else {
           console.log('Received in foreground');
           this.router.navigateByUrl('/login');
@@ -637,7 +641,7 @@ export class AppComponent {
       
     });
   
-    firebase.initializeApp(FIREBASE_CONFIG);
+    // firebase.initializeApp(FIREBASE_CONFIG);
   }
 
   navegoPagina(pagina) {
