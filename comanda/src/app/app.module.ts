@@ -9,8 +9,10 @@ import { Camera } from "@ionic-native/camera/ngx";
 import { BarcodeScanner } from "@ionic-native/barcode-scanner/ngx";
 import { EmailComposer } from "@ionic-native/email-composer/ngx";
 import { FirebaseService } from "../app/services/firebase.service";
+import { AudioService } from "../app/services/audio.service";
 import { FormsModule } from '@angular/forms';
 import { Calendar } from "@ionic-native/calendar/ngx";
+import { NativeAudio } from "@ionic-native/native-audio/ngx";
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -34,10 +36,12 @@ import { ModalRutaPageModule } from "./modal-ruta/modal-ruta.module";
     StatusBar,
     SplashScreen,
     FirebaseService,
+    AudioService,
     Camera,
     Calendar,
     BarcodeScanner,
     EmailComposer,
+    NativeAudio,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

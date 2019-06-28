@@ -7,7 +7,7 @@ import { MenuController, Platform, AlertController, ActionSheetController } from
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 // import { Router } from "@angular/router";
 import { LoadingController } from '@ionic/angular';
-
+import { AudioService } from "../services/audio.service";
 
 import { FirebaseService } from '../services/firebase.service';
 import { Events } from '@ionic/angular';
@@ -31,22 +31,22 @@ export class LoginPage implements OnInit {
   counter: number = 10;
 
   // PEDIDOS
-  
+
   pedidos: any;
   detalle: any;
 
   listIdPedidosAceptadosBar: any;
-  listProductosBar: string[] = [] ; 
+  listProductosBar: string[] = [];
 
-  pedidosMostrarBar: string[] = [] ; 
+  pedidosMostrarBar: string[] = [];
   pedidosMostrarBarFil: string[] = [];
   productosPerfilBar: any;
   cantidadPedidos = 1;
 
   listIdPedidosAceptados: any;
-  listProductos: string[] = [] ; 
+  listProductos: string[] = [];
 
-  pedidosMostrar: string[] = [] ; 
+  pedidosMostrar: string[] = [];
   pedidosMostrarFil: string[] = [];
   productosPerfil: any;
 
@@ -62,11 +62,12 @@ export class LoginPage implements OnInit {
     public events: Events,
     private router: Router,
     public toastController: ToastController,
-    public actionSheetController: ActionSheetController
+    public actionSheetController: ActionSheetController,
+    public audioService: AudioService
   ) { }
 
   ngOnInit() {
-    
+
     // this.traerPedidosPerfilBar();
     // this.traerProductosPerfilBar();
 
@@ -89,20 +90,16 @@ export class LoginPage implements OnInit {
       if (usuarioLogueado !== undefined) {
         sessionStorage.setItem('usuario', JSON.stringify(usuarioLogueado));
         this.events.publish('usuarioLogueado', usuarioLogueado.perfil);
+        this.audioService.play('hola');
         this.creoToast(true);
 
-        if ( usuarioLogueado.perfil == 'dueño' || 
-             usuarioLogueado.perfil == 'supervisor' || 
-             usuarioLogueado.perfil == 'cliente') {
+        if (usuarioLogueado.perfil == 'dueño' ||
+          usuarioLogueado.perfil == 'supervisor' ||
+          usuarioLogueado.perfil == 'cliente') {
           this.router.navigateByUrl('/home');
         } else {
-
           this.router.navigateByUrl('/encuesta-empleado');
-      
-
         }
-    
-
       } else {
         setTimeout(() => this.spinner = false, 2000);
         this.creoToast(false);
@@ -117,7 +114,7 @@ export class LoginPage implements OnInit {
 
   loginAnonimo() {
     this.spinner = true;
-    let usuarioLogueado = { nombre: this.cuenta.usuario , perfil: "clienteAnonimo" };
+    let usuarioLogueado = { nombre: this.cuenta.usuario, perfil: "clienteAnonimo" };
     setTimeout(() => this.spinner = false, 2000);
     this.events.publish('usuarioLogueado: ', 'clienteAnonimo');
     this.router.navigateByUrl('/abm-cliente-anonimo');
@@ -153,72 +150,72 @@ export class LoginPage implements OnInit {
       this.productosPerfilBar = prod;
       // console.log("Todos Pedidos: ", this.pedidos);
       this.productosPerfilBar = this.productosPerfilBar.filter(producto => producto.quienPuedever == "bartender");
-      
+
       this.productosPerfilBar.forEach
-      ( 
-        productoActivo => { 
-        // ARMO EL DETALLE DE LOS PEDIDOS ACEPTADOS
-            let nombreProducto = productoActivo.nombre; 
-            this.listProductosBar.push( nombreProducto ); 
-            
+        (
+          productoActivo => {
+            // ARMO EL DETALLE DE LOS PEDIDOS ACEPTADOS
+            let nombreProducto = productoActivo.nombre;
+            this.listProductosBar.push(nombreProducto);
+
           }
         );
       // console.log("Productos perfil: ", this.productosPerfilBar);
-      localStorage.removeItem("listProductosBar"); 
-      localStorage.setItem("listProductosBar", JSON.stringify(this.listProductosBar) ); 
-      
+      localStorage.removeItem("listProductosBar");
+      localStorage.setItem("listProductosBar", JSON.stringify(this.listProductosBar));
+
       // console.log("List Productos: ", this.listProductosBar);
     });
 
   }
 
- 
+
   traerPedidosPerfilBar() {
 
-    this.pedidosMostrarBar = [] ; 
+    this.pedidosMostrarBar = [];
 
-   
+
     this.baseService.getItems('pedidos').then(ped => {
-    
+
       this.pedidos = ped;
-      this.pedidos = this.pedidos.filter(pedido => pedido.estado == "aceptado" || pedido.estado == "preparacion" );
-      this.listIdPedidosAceptadosBar =  this.pedidos;
+      this.pedidos = this.pedidos.filter(pedido => pedido.estado == "aceptado" || pedido.estado == "preparacion");
+      this.listIdPedidosAceptadosBar = this.pedidos;
     });
 
     this.baseService.getItems('pedidosDelivery').then(ped => {
 
       this.pedidos = ped;
-      
-      this.pedidos = this.pedidos.filter(pedido => pedido.estado == "aceptado" || pedido.estado == "preparacion"  );
-      
-      this.pedidos.forEach(pedido =>  {
-        pedido.delivery = true ;
-        this.listIdPedidosAceptadosBar.push(pedido) ;
-      } );
+
+      this.pedidos = this.pedidos.filter(pedido => pedido.estado == "aceptado" || pedido.estado == "preparacion");
+
+      this.pedidos.forEach(pedido => {
+        pedido.delivery = true;
+        this.listIdPedidosAceptadosBar.push(pedido);
+      });
       console.log("Pedidos Aceptados2: ", this.listIdPedidosAceptadosBar);
     });
 
     // RECORRO DETALLE DE PEDIDOS POR ID
     this.baseService.getItems('pedidoDetalle').then(detalle => {
-      
+
       this.detalle = detalle;
       // console.log("Pedidos Detalles: ", this.detalle);
-    
+
       // HAGO MATCH DE LOS PEDIDOS ACEPTADOS Y SU DETALLE
       this.detalle.forEach(producto => {
 
         // console.log("Pedido detalle Analizado: ", producto);
 
         this.listIdPedidosAceptadosBar.forEach
-        ( 
-          idDetalle => { 
-           
-          // ARMO EL DETALLE DE LOS PEDIDOS ACEPTADOS
-            if ( idDetalle.id == producto.id_pedido ) {
+          (
+            idDetalle => {
+
+              // ARMO EL DETALLE DE LOS PEDIDOS ACEPTADOS
+              if (idDetalle.id == producto.id_pedido) {
                 // tslint:disable-next-line:variable-name
 
                 let pedido_detalle = {
-                  'id_pedido': producto.id_pedido ,
+                  'id_pedido': producto.id_pedido,
                   'producto': producto.producto,
                   'precio': producto.precio,
                   'cantidad': producto.cantidad,
@@ -228,121 +225,121 @@ export class LoginPage implements OnInit {
                   'key': producto.key
                 };
                 // INSERTO EN EL ARRAY LOS PEDIDOS PENDIENTES
-                this.pedidosMostrarBar.push( JSON.parse(JSON.stringify(pedido_detalle))   ); 
+                this.pedidosMostrarBar.push(JSON.parse(JSON.stringify(pedido_detalle)));
               }
             }
           );
-        });
-      localStorage.removeItem("listaPedidosAceptadosBar"); 
-      localStorage.setItem("listaPedidosAceptadosBar", JSON.stringify(this.pedidosMostrarBar) );  
       });
-    }
+      localStorage.removeItem("listaPedidosAceptadosBar");
+      localStorage.setItem("listaPedidosAceptadosBar", JSON.stringify(this.pedidosMostrarBar));
+    });
+  }
 
-    traerProductosPerfil() {
-      // TRAIGO PEDIDOS Y ME QUEDO CON LOS ACEPTADOS
-      this.baseService.getItems('productos').then(prod => {
-        this.productosPerfil = prod;
-        // console.log("Todos Pedidos: ", this.pedidos);
-        this.productosPerfil = this.productosPerfil.filter(producto => producto.quienPuedever == "cocinero");
-        
-        this.productosPerfil.forEach
-        ( 
-          productoActivo => { 
-          // ARMO EL DETALLE DE LOS PEDIDOS ACEPTADOS
-              let nombreProducto = productoActivo.nombre; 
-              this.listProductos.push( nombreProducto ); 
-              
-            }
-          );
-        // console.log("Productos perfil: ", this.productosPerfil);
-        localStorage.removeItem("listProductos"); 
-        localStorage.setItem("listProductos", JSON.stringify(this.listProductos) ); 
-        
-        // console.log("List Productos: ", this.listProductos);
-      });
-  
-    }
-  
-    traerPedidosPerfil() {
-  
-      this.pedidosMostrar = [] ; 
+  traerProductosPerfil() {
+    // TRAIGO PEDIDOS Y ME QUEDO CON LOS ACEPTADOS
+    this.baseService.getItems('productos').then(prod => {
+      this.productosPerfil = prod;
+      // console.log("Todos Pedidos: ", this.pedidos);
+      this.productosPerfil = this.productosPerfil.filter(producto => producto.quienPuedever == "cocinero");
 
-   
-      this.baseService.getItems('pedidos').then(ped => {
-      
-        this.pedidos = ped;
-        this.pedidos = this.pedidos.filter(pedido => pedido.estado == "aceptado" || pedido.estado == "preparacion" );
-        this.listIdPedidosAceptados =  this.pedidos;
-      });
-  
-      this.baseService.getItems('pedidosDelivery').then(ped => {
-  
-        this.pedidos = ped;
-        
-        this.pedidos = this.pedidos.filter(pedido => pedido.estado == "aceptado" || pedido.estado == "preparacion"  );
-        
-        this.pedidos.forEach(pedido =>  {
-          pedido.delivery = true ;
-          this.listIdPedidosAceptados.push(pedido) ;
-        } );
-        console.log("Pedidos Aceptados2: ", this.listIdPedidosAceptados);
-      });
-  
-      // RECORRO DETALLE DE PEDIDOS POR ID
-      this.baseService.getItems('pedidoDetalle').then(detalle => {
-        
-        this.detalle = detalle;
-        // console.log("Pedidos Detalles: ", this.detalle);
-      
-        // HAGO MATCH DE LOS PEDIDOS ACEPTADOS Y SU DETALLE
-        this.detalle.forEach(producto => {
-  
-          // console.log("Pedido detalle Analizado: ", producto);
-  
-          this.listIdPedidosAceptados.forEach
-          ( 
-            idDetalle => { 
-             
+      this.productosPerfil.forEach
+        (
+          productoActivo => {
             // ARMO EL DETALLE DE LOS PEDIDOS ACEPTADOS
-              if ( idDetalle.id == producto.id_pedido ) {
-                  // tslint:disable-next-line:variable-name
-  
-                  let pedido_detalle = {
-                    'id_pedido': producto.id_pedido ,
-                    'producto': producto.producto,
-                    'precio': producto.precio,
-                    'cantidad': producto.cantidad,
-                    'estado': producto.estado,
-                    'tiempo': producto.tiempo,
-                    'delivery': idDetalle.delivery,
-                    'key': producto.key
-                  };
-                  // INSERTO EN EL ARRAY LOS PEDIDOS PENDIENTES
-                  this.pedidosMostrar.push( JSON.parse(JSON.stringify(pedido_detalle))   ); 
-                }
+            let nombreProducto = productoActivo.nombre;
+            this.listProductos.push(nombreProducto);
+
+          }
+        );
+      // console.log("Productos perfil: ", this.productosPerfil);
+      localStorage.removeItem("listProductos");
+      localStorage.setItem("listProductos", JSON.stringify(this.listProductos));
+
+      // console.log("List Productos: ", this.listProductos);
+    });
+
+  }
+
+  traerPedidosPerfil() {
+
+    this.pedidosMostrar = [];
+
+
+    this.baseService.getItems('pedidos').then(ped => {
+
+      this.pedidos = ped;
+      this.pedidos = this.pedidos.filter(pedido => pedido.estado == "aceptado" || pedido.estado == "preparacion");
+      this.listIdPedidosAceptados = this.pedidos;
+    });
+
+    this.baseService.getItems('pedidosDelivery').then(ped => {
+
+      this.pedidos = ped;
+
+      this.pedidos = this.pedidos.filter(pedido => pedido.estado == "aceptado" || pedido.estado == "preparacion");
+
+      this.pedidos.forEach(pedido => {
+        pedido.delivery = true;
+        this.listIdPedidosAceptados.push(pedido);
+      });
+      console.log("Pedidos Aceptados2: ", this.listIdPedidosAceptados);
+    });
+
+    // RECORRO DETALLE DE PEDIDOS POR ID
+    this.baseService.getItems('pedidoDetalle').then(detalle => {
+
+      this.detalle = detalle;
+      // console.log("Pedidos Detalles: ", this.detalle);
+
+      // HAGO MATCH DE LOS PEDIDOS ACEPTADOS Y SU DETALLE
+      this.detalle.forEach(producto => {
+
+        // console.log("Pedido detalle Analizado: ", producto);
+
+        this.listIdPedidosAceptados.forEach
+          (
+            idDetalle => {
+
+              // ARMO EL DETALLE DE LOS PEDIDOS ACEPTADOS
+              if (idDetalle.id == producto.id_pedido) {
+                // tslint:disable-next-line:variable-name
+
+                let pedido_detalle = {
+                  'id_pedido': producto.id_pedido,
+                  'producto': producto.producto,
+                  'precio': producto.precio,
+                  'cantidad': producto.cantidad,
+                  'estado': producto.estado,
+                  'tiempo': producto.tiempo,
+                  'delivery': idDetalle.delivery,
+                  'key': producto.key
+                };
+                // INSERTO EN EL ARRAY LOS PEDIDOS PENDIENTES
+                this.pedidosMostrar.push(JSON.parse(JSON.stringify(pedido_detalle)));
               }
-            );
-          });
-        localStorage.removeItem("listaPedidosAceptados"); 
-        localStorage.setItem("listaPedidosAceptados", JSON.stringify(this.pedidosMostrar) );  
-        });
-   
-  
-      }
+            }
+          );
+      });
+      localStorage.removeItem("listaPedidosAceptados");
+      localStorage.setItem("listaPedidosAceptados", JSON.stringify(this.pedidosMostrar));
+    });
 
 
-  
+  }
+
+
+
 
   async creoSheetEmpleados() {
     const actionSheet = await this.actionSheetController.create({
-      
+
       // SUPERVISOR - DUEÑO
       // CLIENTE
       // BARTENDER
       // COCINERO
       // MOZO
       // DELIVERY
-     
+
       // SUPERVISOR
       header: 'Ingresar como ...',
       cssClass: 'actSheet',
@@ -374,9 +371,9 @@ export class LoginPage implements OnInit {
           this.cuenta.password = '8888';
         }
       },
-      
+
       // BARTENDER
-      
+
       {
         text: 'Bartender',
         icon: 'beer',
@@ -396,8 +393,8 @@ export class LoginPage implements OnInit {
         }
       },
 
-       // MOZO
-       {
+      // MOZO
+      {
         text: 'Mozo',
         icon: 'restaurant',
         handler: () => {
@@ -415,7 +412,7 @@ export class LoginPage implements OnInit {
           this.cuenta.password = '7777';
         }
       },
-    
+
       {
         text: 'Cancelar',
         icon: 'close',
@@ -443,7 +440,7 @@ export class LoginPage implements OnInit {
       }];
     } else {
 
-      profileButtons =  [{
+      profileButtons = [{
         text: 'Supervisor',
         icon: 'finger-print',
         handler: () => {
@@ -471,9 +468,9 @@ export class LoginPage implements OnInit {
           this.cuenta.password = '8888';
         }
       },
-      
+
       // BARTENDER
-      
+
       {
         text: 'Bartender',
         icon: 'beer',
@@ -493,8 +490,8 @@ export class LoginPage implements OnInit {
         }
       },
 
-       // MOZO
-       {
+      // MOZO
+      {
         text: 'Mozo',
         icon: 'restaurant',
         handler: () => {
@@ -512,7 +509,7 @@ export class LoginPage implements OnInit {
           this.cuenta.password = '7777';
         }
       },
-    
+
       {
         text: 'Cancelar',
         icon: 'close',
@@ -535,8 +532,8 @@ export class LoginPage implements OnInit {
     this.tipoUsuario = tipo;
   }
 
-  
+
   vuelvoSeleccion() {
-    this.tipoUsuario = '' ;
+    this.tipoUsuario = '';
   }
 }

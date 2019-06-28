@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FirebaseService } from "../services/firebase.service";
 import { AlertController } from "@ionic/angular";
 import { Router } from '@angular/router';
+import { AudioService } from "../services/audio.service";
 
 @Component({
   selector: 'app-juego-descuento',
@@ -21,7 +22,8 @@ export class JuegoDescuentoPage implements OnInit {
 
   constructor(private baseService: FirebaseService,
     private alertCtrl: AlertController,
-    private router: Router) { }
+    private router: Router,
+    private audioService: AudioService) { }
 
   ngOnInit() {
   }
@@ -93,8 +95,10 @@ export class JuegoDescuentoPage implements OnInit {
     this.deshabilitarInput = true;
     this.mensajeResultado = "";
     if (this.numeroIngresado == this.numeroSecreto) {
+      this.audioService.play('ganador');
       this.mostrarAlertGana();
     } else {
+      this.audioService.play('perdedor');
       this.mostrarAlertPierde();
     }
   }

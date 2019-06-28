@@ -3,7 +3,7 @@ import { BarcodeScanner } from "@ionic-native/barcode-scanner/ngx";
 import { FirebaseService } from "../services/firebase.service";
 import { ToastController } from '@ionic/angular';
 import { AlertController } from "@ionic/angular";
-
+import { AudioService } from "../services/audio.service";
 
 import * as firebase from "firebase";
 
@@ -27,7 +27,8 @@ export class QrPropinaPage implements OnInit {
   constructor(private scanner: BarcodeScanner,
     private baseService: FirebaseService,
     private toastcontroler: ToastController,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private audioService: AudioService
   ) {
     this.traerPedido();
   }
@@ -86,6 +87,7 @@ export class QrPropinaPage implements OnInit {
         {
           text: 'Confirmar',
           handler: () => {
+            this.audioService.play('clink');
             this.cargarenlaBD();
             this.subidaCorrecta();
           }
