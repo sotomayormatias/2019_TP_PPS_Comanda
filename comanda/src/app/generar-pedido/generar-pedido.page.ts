@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FirebaseService } from "../services/firebase.service";
 import { ToastController, AlertController, ModalController } from '@ionic/angular';
 import { ModalPedidoPage } from "../modal-pedido/modal-pedido.page";
+import { AudioService } from "../services/audio.service";
 
 @Component({
   selector: 'app-generar-pedido',
@@ -15,14 +16,14 @@ export class GenerarPedidoPage implements OnInit {
   existePedidoAbierto: boolean;
   productosCocina: any;
   productosBartender: any;
-  spinner: boolean = true ;
+  spinner: boolean = true;
   totalPedido: any = 0;
 
   cart = [];
   items = [];
 
   // categorias = ['cocinero' , 'bartender'];
- 
+
   sliderConfig = {
     slidesPerView: 1.2,
     spaceBetween: 5,
@@ -30,12 +31,13 @@ export class GenerarPedidoPage implements OnInit {
     zoom: false
   };
 
-  
+
 
   constructor(private baseService: FirebaseService,
     public toastController: ToastController,
     public alertCtrl: AlertController,
-    public modalCtrl: ModalController) {
+    public modalCtrl: ModalController,
+    public audioService: AudioService) {
     this.traerProductos();
     this.traerDatosCliente();
     this.traerMesa(JSON.parse(sessionStorage.getItem('usuario')).correo);
@@ -45,11 +47,11 @@ export class GenerarPedidoPage implements OnInit {
     this.traerProductos();
   }
 
-  
+
   addToCart(product) {
     // this.cartService.addProduct(product);
   }
- 
+
   openCart() {
     // this.router.navigate(['cart']);
   }
@@ -61,8 +63,8 @@ export class GenerarPedidoPage implements OnInit {
       this.productos.forEach(producto => {
         producto.cantidad = 0;
       });
-      this.productosBartender = this.productos.filter(producto => producto.quienPuedever == "bartender" );
-      this.productosCocina = this.productos.filter(producto => producto.quienPuedever == "cocinero" );
+      this.productosBartender = this.productos.filter(producto => producto.quienPuedever == "bartender");
+      this.productosCocina = this.productos.filter(producto => producto.quienPuedever == "cocinero");
       this.spinner = false;
     });
   }
@@ -72,9 +74,9 @@ export class GenerarPedidoPage implements OnInit {
     if (producto.cantidad > 0) {
       producto.cantidad -= 1;
     } else {
-      producto.cantidad = 0 ;
+      producto.cantidad = 0;
     }
-      
+
     let productosPedidos = this.productos.filter(prod => prod.cantidad > 0);
     this.totalPedido = this.calcularPrecioTotal(productosPedidos);
   }
@@ -94,17 +96,17 @@ export class GenerarPedidoPage implements OnInit {
         this.existePedidoAbierto = !(typeof pedidos.find(pedido => pedido.id == idPedido && pedido.estado != 'cerrado') === 'undefined');
         if (this.existePedidoAbierto) {
           // ACTUALIZO PEDIDO
-        
-           let pedidoAceptado = pedidos.find(pedido => pedido.id == idPedido);
-           let productosPedidos = this.productos.filter(prod => prod.cantidad > 0);
-           // console.log("Pedido encontrado: ", pedidoAceptado);
-           let key: string = pedidoAceptado.key;
-           delete pedidoAceptado.key;
-           pedidoAceptado.cantDet = productosPedidos.length ;
-           pedidoAceptado.cantEnt = 0;
-           this.baseService.updateItem('pedidos', key, pedidoAceptado);
+
+          let pedidoAceptado = pedidos.find(pedido => pedido.id == idPedido);
+          let productosPedidos = this.productos.filter(prod => prod.cantidad > 0);
+          // console.log("Pedido encontrado: ", pedidoAceptado);
+          let key: string = pedidoAceptado.key;
+          delete pedidoAceptado.key;
+          pedidoAceptado.cantDet = productosPedidos.length;
+          pedidoAceptado.cantEnt = 0;
+          this.baseService.updateItem('pedidos', key, pedidoAceptado);
           //  ACTUALIZO DETALLE
-           this.baseService.getItems('pedidoDetalle').then(productos => {
+          this.baseService.getItems('pedidoDetalle').then(productos => {
             let pedidoEnPreparacion: boolean = false;
             productos.forEach(prod => {
               if (prod.id_pedido == idPedido && prod.estado == 'preparacion') {
@@ -194,7 +196,10 @@ export class GenerarPedidoPage implements OnInit {
           'mesa': this.mesaDelPedido.nromesa,
           'estado': 'creado',
           'cantDet': productosPedidos.length,
-          'cantEnt': 0
+          'cantEnt': 0,
+          'juegoDescuento': false,
+          'juegoBebida': false,
+          'juegoComida': false
         };
         this.baseService.addItem('pedidos', pedido);
 
@@ -208,6 +213,7 @@ export class GenerarPedidoPage implements OnInit {
           };
           this.baseService.addItem('pedidoDetalle', pedido_detalle);
         });
+        this.audioService.play('mmm');
         this.presentToast("Pedido generado.");
         sessionStorage.setItem('pedido', id.toString());
       }

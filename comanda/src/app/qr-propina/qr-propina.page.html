@@ -12,13 +12,48 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-    <img src="../../assets/imgs/qrReader.png" id="qrimg">
-  <ion-button class="botonEscanear" color="dark" expand="block" (click)="doScan()">Escanear</ion-button>
-  <!-- <div *ngIf="datosEscaneados && parsedEscaneados">
-    <ion-label>datos escaneados: {{datosEscaneados}}</ion-label>
-    <ion-label>datos escaneados parseados: {{parsedEscaneados}}</ion-label>
-    <ion-label>mesa: {{parsedEscaneados.mesa}}</ion-label>
-    <ion-label>mesa parseada: {{parsedEscaneados.mesa}}</ion-label>
-  </div> -->
+<ion-content *ngIf="existePedido">
+  <ion-list>
+    <ion-item *ngFor="let producto of pedidoDetalle">
+      ({{ producto.cantidad }}) {{ producto.producto }}
+      <div class="item-note" slot="end">
+        ${{ producto.cantidad * producto.precio }}
+      </div>
+    </ion-item>
+    <ion-item *ngIf="pedidoCliente.juegoDescuento">
+      Descuento del 10%
+      <div class="item-note" slot="end">
+        - ${{ preciototalAnterior * 10 / 100 }}
+      </div>
+    </ion-item>
+    <ion-item *ngIf="pedidoCliente.juegoBebida">
+      Descuento en bebida
+      <div class="item-note" slot="end">
+        - ${{ precioBebidaMasBarata }}
+      </div>
+    </ion-item>
+    <ion-item *ngIf="pedidoCliente.juegoComida">
+      Descuento en comida
+      <div class="item-note" slot="end">
+        - ${{ precioComidaMasBarata }}
+      </div>
+    </ion-item>
+  </ion-list>
+  <ion-card>
+    <ion-card-content>
+      <ion-card-title>
+        PRECIO FINAL: ${{pedidoCliente.preciototal}}
+      </ion-card-title>
+    </ion-card-content>
+  </ion-card>
+  <ion-button class="botonEscanear" color="dark" expand="block" (click)="doScan()">Propina</ion-button>
 </ion-content>
+
+<ion-content *ngIf="!existePedido">
+    <ion-card>
+      <ion-card-content>
+        Aún no le han entregado el pedido.
+      </ion-card-content>
+    </ion-card>
+  </ion-content>
+  

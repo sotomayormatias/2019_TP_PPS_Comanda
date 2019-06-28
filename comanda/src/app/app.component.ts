@@ -6,6 +6,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import * as firebase from 'firebase';
 import { FIREBASE_CONFIG } from './app.firebase.config';
+import { AudioService } from "../app/services/audio.service";
 
 import { Events } from '@ionic/angular';
 import { FCM } from '@ionic-native/fcm/ngx';
@@ -23,7 +24,8 @@ export class AppComponent {
     private statusBar: StatusBar,
     private router: Router,
     private fcm: FCM,
-    public events: Events
+    public events: Events,
+    public audioService: AudioService
   ) {
     this.initializeApp();
 
@@ -357,7 +359,7 @@ export class AppComponent {
             // (T) 10% DTO
             {
               title: 'NOK - J.Descuento',
-              url: '/',
+              url: '/juego-descuento',
               icon: 'rocket'
             },
             // (U) BEBIDA GRATIS
@@ -368,7 +370,7 @@ export class AppComponent {
             },
             // (V) POSTRE GRATIS
             {
-              title: 'NOK - J.Postre',
+              title: 'NOK - J.Comida',
               url: '/',
               icon: 'cafe'
             },
@@ -656,8 +658,13 @@ export class AppComponent {
       });
       
     });
-  
     // firebase.initializeApp(FIREBASE_CONFIG);
+
+    this.audioService.preload('hola', '../assets/sounds/hola.mp3');
+    this.audioService.preload('clink', '../assets/sounds/clink.mp3');
+    this.audioService.preload('mmm', '../assets/sounds/mmm.mp3');
+    this.audioService.preload('perdedor', '../assets/sounds/perdedor.mp3');
+    this.audioService.preload('ganador', '../assets/sounds/ganador.mp3');
   }
 
   navegoPagina(pagina) {

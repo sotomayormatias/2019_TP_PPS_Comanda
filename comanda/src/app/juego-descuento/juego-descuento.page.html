@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Ganá 10% de descuento!
+    </ion-title>
+    <ion-buttons slot="end">
+      <img id="iconToolBar" src="../../assets/imgs/icon.png">
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card *ngIf="puedeJugar">
+    <img [src]="imagen">
+    <ion-card-content>
+      <ion-card-title>
+        <div id="titulo">Ingrese un número del 1 al 100</div>
+      </ion-card-title>
+      <span class="input">
+        <input type="number" placeholder="Número" [(ngModel)]="numeroIngresado"
+          [disabled]="deshabilitarInput">
+        <span></span>
+      </span>
+      <ion-button color="primary" expand="block" size="large" (click)="verificar()" [disabled]="deshabilitarInput">
+        Probar suerte
+      </ion-button>
+      <ion-card-title>
+        <div id="titulo">{{mensajeResultado}}</div>
+      </ion-card-title>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="!puedeJugar">
+    <ion-card-content>
+      {{mensajeNoPuedeJugar}}
+    </ion-card-content>
+  </ion-card>
+</ion-content>
