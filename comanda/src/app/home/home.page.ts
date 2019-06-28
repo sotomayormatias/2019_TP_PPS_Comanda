@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MenuController, ToastController } from '@ionic/angular';
 import { AudioService } from "../services/audio.service";
+import { FCM } from '@ionic-native/fcm/ngx';
 
 @Component({
   selector: 'app-home',
@@ -9,10 +10,20 @@ import { AudioService } from "../services/audio.service";
 })
 export class HomePage {
   sounds: boolean;
+
   constructor(private menu: MenuController,
     private audioService: AudioService,
-    private toastCtrl: ToastController) {
+    private toastCtrl: ToastController,
+    private fcm: FCM) {
     this.sounds = this.audioService.activo;
+    let usuario = JSON.parse(sessionStorage.getItem('usuario'));
+    if (usuario.perfil == "supervisor") {
+      this.fcm.subscribeToTopic('notificacionReservas');
+    } else if (usuario.perfil == "mozo") {
+      this.fcm.subscribeToTopic('notificacionMesa');
+    } else if (usuario.perfil == "cocinero" || usuario.perfil == "bartender") {
+      this.fcm.subscribeToTopic('notificacionPedido');
+    }
   }
 
   openFirst() {

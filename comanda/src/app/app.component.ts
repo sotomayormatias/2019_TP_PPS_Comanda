@@ -9,6 +9,7 @@ import { FIREBASE_CONFIG } from './app.firebase.config';
 import { AudioService } from "../app/services/audio.service";
 
 import { Events } from '@ionic/angular';
+import { FCM } from '@ionic-native/fcm/ngx';
 
 @Component({
   selector: 'app-root',
@@ -22,15 +23,20 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private router: Router,
+    private fcm: FCM,
     public events: Events,
     public audioService: AudioService
   ) {
     this.initializeApp();
 
+   
+
     this.events.subscribe('usuarioLogueado', data => {
       console.log('event received');
       console.log('perfil recibidos:', data);
-
+    
+      // SUSCRIPCIONs
+      console.log('perfil recibidos:', data);
       // ROUTING DEL MENU
       switch (data) {
 
@@ -46,7 +52,7 @@ export class AppComponent {
           // (I - J - K) GRAFICOS DE ENCUESTAS
           // (N) HACER RESERVAS AGENDADAS (opcional - supervisor)
           // (Q) NPUSH - HACER RESERVA / DELIVERY (VA PARA EL MOZO / DELIVERY)
-
+          // this.fcm.subscribeToTopic('notificacionReservas');
           this.appPages = [
             {
               title: 'Home',
@@ -614,10 +620,46 @@ export class AppComponent {
 
   initializeApp() {
     this.platform.ready().then(() => {
+    
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      
+      // ME DESUSCRIBO DE LOS TOPICOS
+      // this.fcm.unsubscribeFromTopic('notificacionPedido');
+      // this.fcm.unsubscribeFromTopic('notificacionMesa');
+      // this.fcm.unsubscribeFromTopic('notificacionReservas');
+
+      firebase.initializeApp(FIREBASE_CONFIG);
+
+     
+
+      // // PUSH A MOSOS Y SUPERVISORES - O 
+      // this.fcm.subscribeToTopic('notificacionPedido');
+      // // PLATOS Y BEBIDAS CIERRE DE CUENTA
+      // this.fcm.subscribeToTopic('notificacionMesa');
+      // // HACER RESERVAS AGENDAR DELIVERY
+      // this.fcm.subscribeToTopic('notificacionReservas');
+      // this.fcm.getToken().then(token => {
+      //   console.log(token);
+      // });
+      
+      // this.fcm.onTokenRefresh().subscribe(token => {
+      //   console.log(token);
+      // });
+      this.fcm.onNotification().subscribe(data => {
+        console.log(data);
+        if (data.wasTapped) {
+          console.log('Received in background');
+          this.router.navigateByUrl('/login');
+        } else {
+          console.log('Received in foreground');
+          this.router.navigateByUrl('/login');
+        }
+      });
+      
     });
-    firebase.initializeApp(FIREBASE_CONFIG);
+    // firebase.initializeApp(FIREBASE_CONFIG);
+
     this.audioService.preload('hola', '../assets/sounds/hola.mp3');
     this.audioService.preload('clink', '../assets/sounds/clink.mp3');
     this.audioService.preload('mmm', '../assets/sounds/mmm.mp3');

@@ -9,7 +9,9 @@ import { FirebaseService } from '../services/firebase.service';
 })
 export class ListReservaConfPage implements OnInit {
 
-  reservas: any[];
+  reservas: any;
+  reservasPendientes:any;
+  mesas: any;
   // itemReservas:any;
 
 
@@ -29,7 +31,8 @@ export class ListReservaConfPage implements OnInit {
   async traerReservasPendientes() {
     await this.baseService.getItems('reservademesas').then(async lista => {
       this.reservas = lista
-      this.reservas = this.reservas.filter(reserva => reserva.estadoConfirmacion == "pendiente");
+      // this.reserva
+      this.reservasPendientes = this.reservas.filter(reserva => reserva.estadoConfirmacion == "pendiente");
     });
   }
 
@@ -39,8 +42,6 @@ export class ListReservaConfPage implements OnInit {
     // delete reservaConfirmado['key'];
     reservaConfirmado.estadoConfirmacion = 'confirmado';
     this.baseService.updateItem('reservademesas', key, reservaConfirmado);
-    // this.baseService.addItem('usuarios', { 'clave': clienteConfirmado.clave, 'correo': correo, 'perfil': 'cliente' });
-    // this.enviarCorreo(correo);
 
      //TABLA MESAS
      this.guardarMesas();   
@@ -68,22 +69,38 @@ export class ListReservaConfPage implements OnInit {
     
   }
 
-  guardarMesas (){
+  async guardarMesas (){
 
-  //   let usuarioLogueado: any = JSON.parse(sessionStorage.getItem('usuario'));
-  //   this.baseService.getItems('mesas').then(mesas => {
-  //     this.mesas = mesas.find(mesaEl => mesaEl.nromesa == this.mesaSeleccionada);
+    let usuarioLogueado: any = JSON.parse(sessionStorage.getItem('usuario'));
+
+
+    await this.baseService.getItems('reservademesas').then(async lista => {
+      this.reservas = lista;
+      // console.log(this.reservas);
+      // let mesareserva = this.reservas.mesaSeleccionada;
+
+      this.reservas.forEach(element => {
+
+          this.baseService.getItems('mesas').then(mesas => {
+          this.mesas = mesas.find(mesaEl => mesaEl.nromesa == element.mesaSeleccionada);
+          console.log(this.reservas.mesaSeleccionada);
+          this.mesas.reservada = "si";
     
-  //     this.mesas.reservada = "si";
-
-  //     this.baseService.updateItem('mesas', this.mesas.key , this.mesas);
-
-    
+          this.baseService.updateItem('mesas', this.mesas.key , this.mesas);
       
+        });
+        
+      });
+
     
-  
-  
-  //   });
+     
+    
+    
+    });
+
+
+
+    
 
   }
 
