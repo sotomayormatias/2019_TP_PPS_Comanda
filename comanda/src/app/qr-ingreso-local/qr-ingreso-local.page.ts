@@ -5,6 +5,11 @@ import { AlertController } from '@ionic/angular';
 import * as firebase from "firebase";
 import { Router } from '@angular/router';
 
+import { Http, Headers, Response, RequestOptions } from '@angular/http';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
+
 @Component({
   selector: 'app-qr-ingreso-local',
   templateUrl: './qr-ingreso-local.page.html',
@@ -16,17 +21,69 @@ export class QrIngresoLocalPage implements OnInit {
   mesaEscaneada: any;
   mesas: any[] = [];
   listaEspera: any[] = [];
+  
+  apiFCM = 'https://fcm.googleapis.com/fcm/send';
 
   constructor(private scanner: BarcodeScanner,
-    private baseService: FirebaseService,
-    private alertCtrl: AlertController,
-    private router: Router) {
+              private baseService: FirebaseService,
+              private alertCtrl: AlertController,
+              public http: Http,
+              public httpClient: HttpClient,
+              private router: Router) {
     this.traerMesas();
     this.traerListaEspera();
   }
 
   ngOnInit() {
   }
+
+  
+  envioPost() {
+    // console.log("estoy en envioPost. Pedido: ", pedido);
+    // console.log("estoy en envioPost. Pedido cliente: ", pedido.cliente);
+    let usuarioLogueado = JSON.parse(sessionStorage.getItem("usuario"));
+
+    let tituloNotif = "Aceptar - Cliente en espera";
+
+
+    let bodyNotif = "El cliente " + usuarioLogueado.correo + " se agregó a la lista de espera. Ingrese para confirmar" ; 
+
+    let header = this.initHeaders();
+    let options = new RequestOptions({ headers: header, method: 'post'});
+    let data =  {
+      "notification": {
+        "title": tituloNotif   ,
+        "body": bodyNotif ,
+        "sound": "default",
+        "click_action": "FCM_PLUGIN_ACTIVITY",
+        "icon": "fcm_push_icon"
+      },
+      "data": {
+        "landing_page": "home",
+        "price": "$3,000.00"
+      },
+        "to": "/topics/notificacionMesa",
+        "priority": "high",
+        "restricted_package_name": ""
+    };
+
+    console.log("Data: ", data);
+   
+    return this.http.post(this.apiFCM, data, options).pipe(map(res => res.json())).subscribe(result => {
+      console.log(result);
+    });
+
+               
+  }
+
+  
+ private initHeaders(): Headers {
+  let apiKey = 'key=AAAA2wftesY:APA91bHz-jR4toOu4DkoWYMARt9hfF8sR9YoV0dzGCdS3SGw30JlgFFiVB7-seK3Yll9yC2Rqf22CGwoPhh-7D7rWKdM2N2gT-CgNbk7GGv9VVwx_5Ut48qjWNEItZTIXclH-mnw8St1' ;
+  var headers = new Headers();
+  headers.append('Authorization', apiKey);
+  headers.append('Content-Type', 'application/json');
+  return headers;
+}
 
   doScan() {
     this.scanner.scan().then((data) => {
@@ -76,6 +133,7 @@ export class QrIngresoLocalPage implements OnInit {
     }, (err) => {
       console.log("Error: " + err);
     });
+    this.envioPost();
     this.traerListaEspera();
   }
 

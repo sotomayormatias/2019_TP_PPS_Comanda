@@ -56,14 +56,24 @@ export class GenerarPedidoPage implements OnInit {
     this.traerProductos();
   }
 
-  envioPost() {
+  envioPost(pedido) {
+    // console.log("estoy en envioPost. Pedido: ", pedido);
+    // console.log("estoy en envioPost. Pedido cliente: ", pedido.cliente);
+
+    let tituloNotif = "Nuevo Pedido - Mesa: " + pedido.mesa ;
+
+    
+    let idRecortado = pedido.id.toString() ;
+    idRecortado = idRecortado.substr(10, pedido.id.length );
+
+    let bodyNotif = "Tiene " + pedido.cantDet + " nuevo/s producto/s para preparar. Pedido NRO: " + idRecortado + " Cliente: " + pedido.cliente ; 
 
     let header = this.initHeaders();
     let options = new RequestOptions({ headers: header, method: 'post'});
     let data =  {
       "notification": {
-        "title": "COMIRADIX - Nuevo PEDIDO DISPONIBLE",
-        "body": "Tiene un nuevo producto para preparar.",
+        "title": tituloNotif   ,
+        "body": bodyNotif ,
         "sound": "default",
         "click_action": "FCM_PLUGIN_ACTIVITY",
         "icon": "fcm_push_icon"
@@ -76,17 +86,12 @@ export class GenerarPedidoPage implements OnInit {
         "priority": "high",
         "restricted_package_name": ""
     };
+
+    console.log("Data: ", data);
    
     return this.http.post(this.apiFCM, data, options).pipe(map(res => res.json())).subscribe(result => {
       console.log(result);
     });
-
-    // return this.http.post(this.apiFCM, options)
-    //            .map(res => {
-    //                return res.json();
-    //            })
-    //            .catch(this.handleError.bind(this));
-
 
                
   }
@@ -272,6 +277,7 @@ generarPedido() {
           this.baseService.addItem('pedidoDetalle', pedido_detalle);
         });
         this.audioService.play('mmm');
+        this.envioPost(pedido);
         this.presentToast("Pedido generado.");
         sessionStorage.setItem('pedido', id.toString());
         // ENVIO PUSH NOTIFICATION
