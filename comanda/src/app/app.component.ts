@@ -364,13 +364,13 @@ export class AppComponent {
             },
             // (U) BEBIDA GRATIS
             {
-              title: 'NOK - Juego Bebida',
+              title: 'Juego Bebida',
               url: '/juego-bebida',
               icon: 'beer'
             },
             // (V) POSTRE GRATIS
             {
-              title: 'NOK - Juego Comida',
+              title: 'Juego Comida',
               url: '/juego-comida',
               icon: 'cafe'
             },
