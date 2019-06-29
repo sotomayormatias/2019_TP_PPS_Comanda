@@ -177,7 +177,7 @@ Link: https://docs.google.com/document/d/1oEnzlbxtO-LMAgVBkn0KqyZpL6Fi04EdTZu34W
 ##Tareas  
 ![alt text](Screenshots/Sprint7-29-06-AvanceTareas.JPG)  
 ##Funcionalidades  
-![alt text](Screenshots/Sprint7-29-06-Funcionalidades.JPG) 
+![alt text](Screenshots/Sprint7-29-06-AvanceFuncionalidades.JPG) 
 ##Diagrama flujo QR  
 ![alt text](Screenshots/Sprint7-29-06-Diagrama_QR_MESA.JPG)  
 ##Pruebas Circuitos 
