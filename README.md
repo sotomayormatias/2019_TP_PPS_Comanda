@@ -175,13 +175,13 @@ Link: https://docs.google.com/document/d/1oEnzlbxtO-LMAgVBkn0KqyZpL6Fi04EdTZu34W
 
 ###Status Sprint 7
 ##Tareas  
-![alt text](Screenshots/Sprint7-29-06-AvanceTareas.JPG)  
+![alt text](Screenshots/Sprint7-29-06-AvanceTareas.jpg)  
 ##Funcionalidades  
-![alt text](Screenshots/Sprint7-29-06-AvanceFuncionalidades.JPG) 
+![alt text](Screenshots/Sprint7-29-06-AvanceFuncionalidades.jpg) 
 ##Diagrama flujo QR  
 ![alt text](Screenshots/Sprint7-29-06-Diagrama_QR_MESA.JPG)  
 ##Pruebas Circuitos 
-![alt text](Screenshots/Circuito_Tests.JPG)  
+![alt text](Screenshots/Circuito_Tests.jpg)  
 
 
 
