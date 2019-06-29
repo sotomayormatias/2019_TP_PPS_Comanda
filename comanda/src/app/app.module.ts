@@ -20,6 +20,9 @@ import { ModalPagePageModule } from './modal-page/modal-page.module';
 import { ModalPedidoPageModule } from "./modal-pedido/modal-pedido.module";
 import { ModalRutaPageModule } from "./modal-ruta/modal-ruta.module";
 import { FCM } from '@ionic-native/fcm/ngx';
+import {HttpClientModule} from '@angular/common/http';
+import { HttpModule } from '@angular/http';
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -29,6 +32,10 @@ import { FCM } from '@ionic-native/fcm/ngx';
     FormsModule,
     IonicModule.forRoot(),
     AppRoutingModule,
+    
+    HttpModule,
+    HttpClientModule,
+
     ModalPagePageModule,
     ModalPedidoPageModule,
     ModalRutaPageModule

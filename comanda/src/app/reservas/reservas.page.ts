@@ -4,6 +4,11 @@ import { Calendar } from "@ionic-native/calendar/ngx";
 import { FirebaseService } from "../services/firebase.service";
 import { ToastController } from '@ionic/angular';
 
+import { Http, Headers, Response, RequestOptions } from '@angular/http';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
+
 
 import * as firebase from "firebase";
 
@@ -24,6 +29,7 @@ export class ReservasPage implements OnInit {
     d.setDate(d.getDate() - 1);
     return date < d;
   };
+
   calendar = {
     mode: 'month',
     currentDate: this.selectedDate
@@ -51,10 +57,14 @@ export class ReservasPage implements OnInit {
   min: any;
   max: any;
 
+  apiFCM = 'https://fcm.googleapis.com/fcm/send';
+
   constructor(
     public calendario: Calendar,
     public navCtrl: NavController,
     public toastcontroler: ToastController,
+    public http: Http,
+    public httpClient: HttpClient,
     private baseService: FirebaseService
     ) {
       // this.max=(new Date((new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).getTime() + 30 * 24 * 60 * 60 * 1000).toISOString());
@@ -86,6 +96,54 @@ export class ReservasPage implements OnInit {
     
    
   }
+
+  
+  envioPost() {
+    // console.log("estoy en envioPost. Pedido: ", pedido);
+    // console.log("estoy en envioPost. Pedido cliente: ", pedido.cliente);
+    let usuarioLogueado = JSON.parse(sessionStorage.getItem("usuario"));
+    let reservaRealizada = this.reservaRealizada;
+
+    let tituloNotif = "Aceptar - Reserva de cliente";
+
+    let bodyNotif = "El cliente " + usuarioLogueado.correo + " realizo una reserva para el dia " + this.fechaElegida.dia + " del mes " + this.fechaElegida.mes + ". La mesa a confirmar es la Nro " + reservaRealizada.mesaSeleccionada + " y el horario " + this.fechaElegida.hora + ":" + this.fechaElegida.minuto ; 
+
+    let header = this.initHeaders();
+    let options = new RequestOptions({ headers: header, method: 'post'});
+    let data =  {
+      "notification": {
+        "title": tituloNotif   ,
+        "body": bodyNotif ,
+        "sound": "default",
+        "click_action": "FCM_PLUGIN_ACTIVITY",
+        "icon": "fcm_push_icon"
+      },
+      "data": {
+        "landing_page": "home",
+        "price": "$3,000.00"
+      },
+        "to": "/topics/notificacionReservas",
+        "priority": "high",
+        "restricted_package_name": ""
+    };
+
+    console.log("Data: ", data);
+   
+    return this.http.post(this.apiFCM, data, options).pipe(map(res => res.json())).subscribe(result => {
+      console.log(result);
+    });
+
+               
+  }
+
+  
+ private initHeaders(): Headers {
+  let apiKey = 'key=AAAA2wftesY:APA91bHz-jR4toOu4DkoWYMARt9hfF8sR9YoV0dzGCdS3SGw30JlgFFiVB7-seK3Yll9yC2Rqf22CGwoPhh-7D7rWKdM2N2gT-CgNbk7GGv9VVwx_5Ut48qjWNEItZTIXclH-mnw8St1' ;
+  var headers = new Headers();
+  headers.append('Authorization', apiKey);
+  headers.append('Content-Type', 'application/json');
+  return headers;
+}
 
   async cargoEventoCalendario(){
     this.eventSource = await this.createEvents();  
@@ -121,10 +179,13 @@ export class ReservasPage implements OnInit {
     var date = new Date().getTime();
 
     let fechaElegida = JSON.stringify(event.selectedTime);
-    fechaElegida = fechaElegida.substr(1,fechaElegida.length-1);
+    fechaElegida = fechaElegida.substr(1,fechaElegida.length - 1);
     let splitFecha = fechaElegida.split('-');
     this.fechaElegida.dia = splitFecha[2].split('T')[0];
-    this.fechaElegida.mes = splitFecha[1];
+    this.fechaElegida.mes = splitFecha[
+      
+      
+      1];
 
 
   }
@@ -135,8 +196,8 @@ export class ReservasPage implements OnInit {
   async guardar(){
 
     //VARIABLES
-    let horaminutoseg = this.hora.substr(11,this.hora.length-21);
-    let splitHoraMinSeg= horaminutoseg.split(':');
+    let horaminutoseg = this.hora.substr(11,this.hora.length - 21);
+    let splitHoraMinSeg = horaminutoseg.split(':');
     let date: Date = new Date()
     let dateCreada = new Date();
   
@@ -159,12 +220,14 @@ export class ReservasPage implements OnInit {
       this.fechaElegida.minuto = splitHoraMinSeg[1];
       //TABLA RESERVAMESAS
       await this.guardarReservas();
+
       this.spinner = true;
       this.eventSource = await this.createEvents();
 
       setTimeout(() => this.spinner = false , 3000);
 
       this.muestroToast("Su reserva fue guardada con exito.");
+      this.envioPost();
     }
    
 
@@ -194,8 +257,10 @@ export class ReservasPage implements OnInit {
       else{
          this.baseService.addItem('reservademesas', objetoEnviar);
       }
-    
+      
       });
+
+      
 
   }
 
@@ -326,15 +391,15 @@ async createEvents(){
         // {
         
           // startTime = new Date(2019, startMes-1, startDay-1, startHora, startMinute);
-          startTime = new Date(2019,startMes-1,startDay,startHora,startMinute)
-          endTime = new Date(2019, startMes-1, endDay, startHora, endMinute);
+          startTime = new Date(2019,startMes - 1,startDay,startHora,startMinute)
+          endTime = new Date(2019, startMes - 1, endDay, startHora, endMinute);
   
           console.log(startTime);
           console.log(endTime);
 
 
           events.push({
-              title: 'Estado Reserva: '+ confirmadaStatus,
+              title: 'Estado Reserva: ' + confirmadaStatus,
               startTime: startTime,
               endTime: endTime,
               allDay: false
