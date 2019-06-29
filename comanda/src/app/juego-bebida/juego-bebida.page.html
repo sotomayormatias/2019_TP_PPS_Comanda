@@ -1,9 +1,53 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>juego-bebida</ion-title>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Ganá una bebida gratis!
+    </ion-title>
+    <ion-buttons slot="end">
+      <img id="iconToolBar" src="../../assets/imgs/icon.png">
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content padding *ngIf="puedeJugar">
+  <!-- Sección header-->
+  <ion-card class="panel-juego">
+    <ion-card-header text-center>
+      ANAGRAMA
+    </ion-card-header>
+    <ion-card-content>
+      <div id="clockdiv">
+        <div>
+          <span class="seconds" id="second"></span>
+          <div class="smalltext">Segundos</div>
+        </div>
+      </div>
+      <ion-card-title>
+        <div id="desordenada">{{ palabraDesordenada }}</div>
+      </ion-card-title>
+      <span class="input">
+        <input type="text" placeholder="Palabra" [(ngModel)]="palabraIngresada" [disabled]="deshabilitarInput">
+        <span></span>
+      </span>
+      <div class="instruccion">Debes conseguir 5 aciertos</div>
+      <div class="instruccion">Nro. de aciertos: {{ palabrasAcertadas }}</div>
+      <ion-button color="primary" expand="block" size="large" (click)="verificar()" [disabled]="deshabilitarInput">
+        Probar suerte
+      </ion-button>
+      <ion-button id="btn" (click)="perder()" style="visibility:hidden;">
+        Probar suerte
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
 
+<ion-content *ngIf="!puedeJugar">
+  <ion-card>
+    <ion-card-content>
+      {{mensajeNoPuedeJugar}}
+    </ion-card-content>
+  </ion-card>
 </ion-content>

@@ -364,7 +364,7 @@ export class AppComponent {
             },
             // (U) BEBIDA GRATIS
             {
-              title: 'NOK - Juego Bebida',
+              title: 'Juego Bebida',
               url: '/juego-bebida',
               icon: 'beer'
             },
