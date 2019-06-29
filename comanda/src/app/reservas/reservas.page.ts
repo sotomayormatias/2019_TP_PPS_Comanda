@@ -26,7 +26,7 @@ export class ReservasPage implements OnInit {
   isToday: boolean = true;
   markDisabled = (date: Date) => {
     var d = new Date();
-    d.setDate(d.getDate() - 1);
+    d.setDate(d.getDate());
     return date < d;
   };
 
