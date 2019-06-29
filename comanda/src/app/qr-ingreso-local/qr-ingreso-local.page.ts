@@ -118,7 +118,7 @@ export class QrIngresoLocalPage implements OnInit {
               // PONGO AL CLIENTE EN LA LISTA DE ESPERA
               let datos: any = { 'correo': usuarioLogueado.correo, 'perfil': usuarioLogueado.perfil, 'estado': "confirmacionMozo" };
               this.baseService.addItem('listaEsperaClientes', datos);
-
+              this.envioPost();
               // LO DIRIJO A LA LISTA DE ESPERA DE CLIENTES
               this.router.navigateByUrl('/list-confirmar-cliente-mesa');
             }
@@ -133,7 +133,7 @@ export class QrIngresoLocalPage implements OnInit {
     }, (err) => {
       console.log("Error: " + err);
     });
-    this.envioPost();
+   
     this.traerListaEspera();
   }
 

@@ -60,13 +60,13 @@ export class GenerarPedidoPage implements OnInit {
     // console.log("estoy en envioPost. Pedido: ", pedido);
     // console.log("estoy en envioPost. Pedido cliente: ", pedido.cliente);
 
-    let tituloNotif = "Nuevo Pedido - Mesa: " + pedido.mesa ;
+    let tituloNotif = "Pedido Creado - Mesa: " + pedido.mesa ;
 
     
     let idRecortado = pedido.id.toString() ;
     idRecortado = idRecortado.substr(10, pedido.id.length );
 
-    let bodyNotif = "Tiene " + pedido.cantDet + " nuevo/s producto/s para preparar. Pedido NRO: " + idRecortado + " Cliente: " + pedido.cliente ; 
+    let bodyNotif = "Tiene " + pedido.cantDet + " nuevo/s producto/s para preparar. Pedido NRO: " + idRecortado + " Cliente: " + pedido.cliente + "EN ESPERA DE APROBACION POR EL MOZO" ; 
 
     let header = this.initHeaders();
     let options = new RequestOptions({ headers: header, method: 'post'});
