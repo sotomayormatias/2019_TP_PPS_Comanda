@@ -370,7 +370,7 @@ export class AppComponent {
             },
             // (V) POSTRE GRATIS
             {
-              title: 'NOK - Juego Comida',
+              title: 'Juego Comida',
               url: '/juego-comida',
               icon: 'cafe'
             },
