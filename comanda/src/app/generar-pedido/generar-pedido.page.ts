@@ -3,6 +3,12 @@ import { FirebaseService } from "../services/firebase.service";
 import { ToastController, AlertController, ModalController } from '@ionic/angular';
 import { ModalPedidoPage } from "../modal-pedido/modal-pedido.page";
 import { AudioService } from "../services/audio.service";
+// import { HttpClient } from '@angular/common/http';
+// import { Headers, RequestOptions } from '@angular/http';
+import { Http, Headers, Response, RequestOptions } from '@angular/http';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-generar-pedido',
@@ -31,13 +37,16 @@ export class GenerarPedidoPage implements OnInit {
     zoom: false
   };
 
+  apiFCM = 'https://fcm.googleapis.com/fcm/send';
 
 
   constructor(private baseService: FirebaseService,
-    public toastController: ToastController,
-    public alertCtrl: AlertController,
-    public modalCtrl: ModalController,
-    public audioService: AudioService) {
+              public toastController: ToastController,
+              public alertCtrl: AlertController,
+              public modalCtrl: ModalController,
+              public http: Http,
+              public httpClient: HttpClient,
+              public audioService: AudioService) {
     this.traerProductos();
     this.traerDatosCliente();
     this.traerMesa(JSON.parse(sessionStorage.getItem('usuario')).correo);
@@ -47,16 +56,65 @@ export class GenerarPedidoPage implements OnInit {
     this.traerProductos();
   }
 
+  envioPost() {
 
+    let header = this.initHeaders();
+    let options = new RequestOptions({ headers: header, method: 'post'});
+    let data =  {
+      "notification": {
+        "title": "COMIRADIX - Nuevo PEDIDO DISPONIBLE",
+        "body": "Tiene un nuevo producto para preparar.",
+        "sound": "default",
+        "click_action": "FCM_PLUGIN_ACTIVITY",
+        "icon": "fcm_push_icon"
+      },
+      "data": {
+        "landing_page": "home",
+        "price": "$3,000.00"
+      },
+        "to": "/topics/notificacionPedido",
+        "priority": "high",
+        "restricted_package_name": ""
+    };
+   
+    return this.http.post(this.apiFCM, data, options).pipe(map(res => res.json())).subscribe(result => {
+      console.log(result);
+    });
+
+    // return this.http.post(this.apiFCM, options)
+    //            .map(res => {
+    //                return res.json();
+    //            })
+    //            .catch(this.handleError.bind(this));
+
+
+               
+  }
+  
+
+ private initHeaders(): Headers {
+    let apiKey = 'key=AAAA2wftesY:APA91bHz-jR4toOu4DkoWYMARt9hfF8sR9YoV0dzGCdS3SGw30JlgFFiVB7-seK3Yll9yC2Rqf22CGwoPhh-7D7rWKdM2N2gT-CgNbk7GGv9VVwx_5Ut48qjWNEItZTIXclH-mnw8St1' ;
+    var headers = new Headers();
+    headers.append('Authorization', apiKey);
+    headers.append('Content-Type', 'application/json');
+    return headers;
+ }
+
+ private handleError(error: any): Observable<any> {
+     return Observable.throw(error.message || error);
+ }             
+
+
+  
   addToCart(product) {
     // this.cartService.addProduct(product);
   }
 
-  openCart() {
+openCart() {
     // this.router.navigate(['cart']);
   }
 
-  traerProductos() {
+traerProductos() {
     this.spinner = true;
     this.baseService.getItems('productos').then(prods => {
       this.productos = prods;
@@ -69,7 +127,7 @@ export class GenerarPedidoPage implements OnInit {
     });
   }
 
-  restarProducto(key: string) {
+restarProducto(key: string) {
     let producto = this.productos.find(prod => prod.key == key);
     if (producto.cantidad > 0) {
       producto.cantidad -= 1;
@@ -81,7 +139,7 @@ export class GenerarPedidoPage implements OnInit {
     this.totalPedido = this.calcularPrecioTotal(productosPedidos);
   }
 
-  sumarProducto(key: string) {
+sumarProducto(key: string) {
     let producto = this.productos.find(prod => prod.key == key);
     producto.cantidad += 1;
 
@@ -89,7 +147,7 @@ export class GenerarPedidoPage implements OnInit {
     this.totalPedido = this.calcularPrecioTotal(productosPedidos);
   }
 
-  pedir() {
+pedir() {
     if (sessionStorage.getItem('pedido')) {
       this.baseService.getItems('pedidos').then(pedidos => {
         let idPedido = sessionStorage.getItem('pedido');
@@ -128,11 +186,11 @@ export class GenerarPedidoPage implements OnInit {
     }
   }
 
-  traerDatosCliente(): any {
+traerDatosCliente(): any {
     this.clienteLogueado = JSON.parse(sessionStorage.getItem('usuario'));
   }
 
-  calcularPrecioTotal(pedido: any[]) {
+calcularPrecioTotal(pedido: any[]) {
     let precioTotal: number = 0;
     pedido.forEach(producto => {
       precioTotal += (producto.precio * producto.cantidad);
@@ -141,14 +199,14 @@ export class GenerarPedidoPage implements OnInit {
     return precioTotal;
   }
 
-  traerMesa(correo: string): any {
+traerMesa(correo: string): any {
     this.baseService.getItems('mesas').then(mesas => {
       this.mesaDelPedido = mesas.find(mes => mes.cliente == correo);
       this.cargarPedidoExistente();
     });
   }
 
-  async presentToast(mensaje: string) {
+async presentToast(mensaje: string) {
     const toast = await this.toastController.create({
       message: mensaje,
       color: 'success',
@@ -160,7 +218,7 @@ export class GenerarPedidoPage implements OnInit {
     toast.present();
   }
 
-  async presentAlertSinMesa() {
+async presentAlertSinMesa() {
     const alert = await this.alertCtrl.create({
       subHeader: 'Cliente sin mesa',
       message: 'Usted no está asignado a ninguna mesa.',
@@ -169,7 +227,7 @@ export class GenerarPedidoPage implements OnInit {
     await alert.present();
   }
 
-  async presentAlertPedidoEnProceso() {
+async presentAlertPedidoEnProceso() {
     const alert = await this.alertCtrl.create({
       subHeader: 'El pedido no puede modificarse',
       message: 'El pedido ya se encuentra en preparación.',
@@ -178,7 +236,7 @@ export class GenerarPedidoPage implements OnInit {
     await alert.present();
   }
 
-  generarPedido() {
+generarPedido() {
     // Se genera una copia de la lista de productos
     let productosPedidos = this.productos.filter(prod => prod.cantidad > 0);
 
@@ -216,11 +274,36 @@ export class GenerarPedidoPage implements OnInit {
         this.audioService.play('mmm');
         this.presentToast("Pedido generado.");
         sessionStorage.setItem('pedido', id.toString());
+        // ENVIO PUSH NOTIFICATION
+        
+      
       }
     }
   }
 
-  actualizarPedido() {
+// sendPostRequest() {
+//     let headers = new Headers();
+//     headers.append("Accept", 'application/json');
+//     headers.append('Content-Type', 'application/json' );
+//     const requestOptions = new RequestOptions({ headers: headers });
+
+//     let postData = {
+//             "name": "Customer004",
+//             "email": "customer004@email.com",
+//             "tel": "0000252525"
+//     };
+
+//     this.httpClient	.post("http://127.0.0.1:3000/customers", postData, requestOptions)
+//       .subscribe(data => {
+//         console.log(data['_body']);
+//        }, error => {
+//         console.log(error);
+//       });
+//   }
+
+
+
+actualizarPedido() {
     let idPedido = sessionStorage.getItem('pedido');
     this.baseService.getItems('pedidoDetalle').then(productos => {
       // Se borran los productos existentes
@@ -250,7 +333,7 @@ export class GenerarPedidoPage implements OnInit {
     });
   }
 
-  async muestraModal() {
+async muestraModal() {
     let pedido = '0';
     if (sessionStorage.getItem('pedido')) {
       pedido = sessionStorage.getItem('pedido');
@@ -265,7 +348,7 @@ export class GenerarPedidoPage implements OnInit {
     return await modal.present();
   }
 
-  cargarPedidoExistente() {
+cargarPedidoExistente() {
     this.baseService.getItems('pedidos').then(pedidos => {
       this.existePedidoAbierto = !(typeof pedidos.find(pedido => pedido.mesa == this.mesaDelPedido.nromesa && pedido.estado != 'cerrado') === 'undefined');
       if (this.existePedidoAbierto && !sessionStorage.getItem('pedido')) {
